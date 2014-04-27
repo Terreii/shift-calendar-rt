@@ -273,7 +273,7 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
     
     timer = setTimeout( func, countdown || 30000 ); //timer damit nicht ewig viele Meldungen da sind
     
-    return win = document.getElementById( "theBody" ).appendChild( win );//win wird erst beschrieben
+    return win = document.body.appendChild( win );//win wird erst beschrieben
     // return win;
 }
 
