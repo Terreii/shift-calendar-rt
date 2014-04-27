@@ -17,13 +17,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     <script type="text/javascript" src="./main.js"></script>
     <script type="text/javascript" src="./month.js"></script>
 </head>
-<body onload="start()" id="theBody">
+<body id="theBody">
 
     <div class="kontrollen">
         <!-- Heute-Button -->
-        <form action="javascript:displayNow()">
+        <form>
             <!--div id="jahrButtons"-->
-                <input class="buttons" value="Heute" onclick="javascript:displayNow()" type="button">
+                <input id="heuteButton" class="buttons" value="Heute" type="button"/>
             <!--/div-->
         </form>
 
@@ -31,13 +31,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
         <form id="monate" action="javascript:display(false)">
             <div>
                 Monate: 
-                <input class="goto" value="&lt;" onclick="javascript:monatVeraendern(0)" type="button">
-                <select class="eingabe" id="MonatFeld" size="1" onclick="javascript:display(false)">
+                <input id="monateMinus" class="goto" value="&lt;" type="button"/>
+                <select class="eingabe" id="MonatFeld" size="1">
                     <option selected="selected" value="0">Januar, Februar, März, April</option>
                     <option value="1">Mai, Juni, Juli, August</option>
                     <option value="2">September, Oktober, November, Dezember</option>
                 </select>
-                <input class="goto" value="&gt;" onclick="javascript:monatVeraendern(1)" type="button">
+                <input id="monatePlus" class="goto" value="&gt;" type="button"/>
             </div>
         </form>
 
@@ -45,24 +45,24 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
         <form action="javascript:display()">
             <div id="jahrAnzeige">
                 Jahr: 
-                <input class="goto" value="&lt;" onclick="javascript:jahrVeraendern(0)" type="button">
-                <input value="2014" id="jahrFeld" class="eingabe" style="visibility:visible;" size="4" maxlength="4" type="text">
-                <input class="buttons" value="start" onclick="javascript:display()" type="button">
-                <input class="goto" value="&gt;" onclick="javascript:jahrVeraendern(1)" type="button">
+                <input id="jahrMinus" class="goto" value="&lt;" type="button"/>
+                <input value="2014" id="jahrFeld" class="eingabe" style="visibility:visible;" size="4" maxlength="4" type="text"/>
+                <input id="jahrStart" class="buttons" value="start" type="button"/>
+                <input id="jahrPlus" class="goto" value="&gt;" type="button"/>
             </div>
         </form>
 
         <!-- Button "Ganzes Jahr -->
-        <form action="javascript:display(true)">
+        <form>
             <div id="ganzesJahrButton">
-                <input value="ganzes Jahr" onclick="javascript:display(true)" type="button">
+                <input id="ganzesJahrInput" value="ganzes Jahr" type="button"/>
             </div>
         </form>
         
         <form action="javascript:tagSuchen()">
             Tag suchen:
-            <input id="suchenEingabe" class="eingabe" size="10" placeholder="Tag suchen" type="date">
-            <input class="buttons" value="start" onclick="javascript:tagSuchen()" type="button">
+            <input id="suchenEingabe" class="eingabe" size="10" placeholder="Tag suchen" type="date"/>
+            <input id="tagSuchenButton" class="buttons" value="start" type="button"/>
         </form>
 
     </div>

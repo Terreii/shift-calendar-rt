@@ -1,3 +1,5 @@
+"use strict";
+
 /*
 License:
 
@@ -12,18 +14,37 @@ var Alarm2010 = false; //Variable die speichtert ob der Alarm, der wenn man das 
 var Alarm2100 = false;
 var istGanzJahr = false; // true wenn das ganze jahr angezeigt werden soll
 
-function start() {
+window.onload = function() { // Init  adding the EventListeners
+    document.getElementById( "heuteButton" ).onclick = displayNow;
+    document.getElementById( "monateMinus" ).onclick = function() {
+        monatVeraendern( 0 );
+    };
+    document.getElementById( "monatePlus" ).onclick = function() {
+        monatVeraendern( 1 );
+    };
+    document.getElementById( "MonatFeld" ).onclick = function() {
+        display( false );
+    };
+    document.getElementById( "jahrMinus" ).onclick = function() {
+        jahrVeraendern( 0 );
+    };
+    document.getElementById( "jahrPlus" ).onclick = function() {
+        jahrVeraendern( 1 );
+    };
+    document.getElementById( "jahrStart" ).onclick = display;
+    document.getElementById( "ganzesJahrInput" ).onclick = function() {
+        display( true );
+    };
+    document.getElementById( "tagSuchenButton" ).onclick = tagSuchen;
+
     displayNow();
-    if ( location.pathname.search( /w660\/Elektroniker\/gr.2\/html_source\/Docs/ ) >= 0 ) {
-        document.getElementById( "pdfAnz" ).style.display = "table-cell";
-    }
-}
+};
 
 function displayNow() {
     setYear( new Date().getFullYear() );
     setMonth();
     
-    display(false); //Und startet den ersten Prozess
+    display( false ); //Und startet den ersten Prozess
 }
 
 function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
