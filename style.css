@@ -1,0 +1,173 @@
+@charset "UTF-8";
+
+
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+
+a {
+    text-decoration: underline;
+    color: rgb(0,0,255);
+}
+
+.anzeige {
+    padding-top: 50px;
+}
+
+.WoE {
+    background-color: #D3D3D3;
+}
+
+.kontrollen {
+    position: fixed;
+    top: 5px;
+    left: 22px;
+    background-color: #DCDCDC;
+    border: 1px solid grey;
+    border-radius: 5px;
+    z-index: 10;
+    font-size:90%;
+}
+
+.kontrollen > * {
+    display: table-cell;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-left: 1px solid grey;
+}
+
+.kontrollen > *:first-child {
+    border-left: 0px solid grey;
+}
+
+.buttons {
+    width: 50px;
+}
+
+.goto {
+    width: 20px;
+}
+
+.eingabe {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.year {
+    border: 0px none black;
+    vertical-align: top;
+}
+
+th {
+    border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+    text-align: center;
+}
+
+caption {
+    border-color: black;
+    border-style: solid;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 0px;
+    padding: 1px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.license {
+    font-size: x-small;
+}
+
+
+
+.alert {
+    background: #DCDCDC;
+    position: fixed;
+    top: 50px;
+    right: 15px;
+    min-height: 100px;
+    max-width: 300px;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 5px 5px 7px 2px black;
+}
+
+.alert > p {
+    font-Size: 200%;
+}
+
+.closer {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    min-height: 20px;
+    min-width: 20px;
+    background: black;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    border: 1px solid white;
+    text-decoration: none;
+    box-shadow: 5px 5px 7px 2px black;
+}
+
+#jahrAnzeigeDruck {
+    display: none;
+}
+
+@media screen and (max-height: 7in) {
+    .kontrollen {
+        position: static;
+        background-color: #DCDCDC;
+        border: 1px solid grey;
+        border-radius: 5px;
+        z-index: 10;
+        max-height: 30px;
+        min-width: 21cm;
+        /*font-size: 150%;/**/
+    }
+}
+
+@media print {
+    .kontrollen{
+        display: none;
+    }
+
+    #jahrAnzeigeDruck {
+        display: block;
+        position: fixed;
+        top: 20px;
+        right: 21px;
+        border: 1px solid black;
+        /*border-radius: 5px;*/
+        padding: 2px;
+    }
+
+    .anzeige {
+        padding-top: 0px;
+    }
+
+    body {
+        font-size: 90%;
+    }
+
+    .license {
+        display: none;
+    }
+}
