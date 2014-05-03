@@ -158,20 +158,19 @@ function display( was ) {
     
     var jahr = checkYear( Number( document.getElementById( "jahrFeld" ).value ) ),
     // Das Jahr wird ausgelesen und überprüft
-        trital, // ein drittel eines Jahrs (0, 1 oder 2)
-        // ... ich kenn den richtigen Namen von einem Drittel nicht
+        startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4, // Start bei Monat
+        anzahl = 1, // Wieviele Monate sollen angezeigt werden?
         anzeige = document.getElementById( "anzeige" ), // DOM-Knoten wo die Tabelle angezeigt werden soll
+        month, // Übergabe variable
+        i,
         element; // entweder die Tabelle selbst oder eine Tabelle in der alle Monate enthalten sind
     
-    if ( istGanzJahr ) { element = createGanzJahrTabelle( jahr ); } //ein ganzes jahr wird angezeigt
-    else { // nur ein drittel eines Jahres
-        for ( var i = 0; i < document.getElementById( "MonatFeld" ).length; ++i ) {
-        //auslesen welche Monate ausgewählt sind
-            if ( document.getElementById( "MonatFeld" ).options[i].selected == true ) {
-                trital = document.getElementById( "MonatFeld" ).options[i].value;
-            }
-        }
-        element = create4MonthTabelle( jahr, trital );
+    element = createDiv();
+    element.className = "month";
+    anzahl = ( istGanzJahr ) ? 12 : 4;
+    for ( i = 0; i < anzahl; i++ ) {
+        month = ( istGanzJahr ) ? i : ( i + startIndex );
+        element.appendChild( createMonth( jahr, month ) );
     }
     anzeige.replaceChild( element, anzeige.firstChild );
     document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
@@ -199,34 +198,6 @@ function checkYear ( year ) {
         }
         return year;
     }
-}
-
-function createGanzJahrTabelle ( year ) {
-// erstellt eine Tabelle in der alle 12 Monate dargestellt werden
-    var tab = document.createElement( "table" );
-    tab.className = "year";
-    for ( var i = 0; i < 3; i++ ) {
-        tab.appendChild( create4MonthRow( year, i ) );
-    }
-    return tab;
-}
-
-function create4MonthTabelle ( year, trital ) { //erzeugt eine Tabelle mit einer Reihe mit 4 Monaten
-    var tab = document.createElement( "table" );
-    tab.className = "year";
-    tab.appendChild( create4MonthRow( year, trital ) );
-    return tab;
-}
-
-function create4MonthRow ( year, trital ) { // erzeugt eine Reihe von einer Tabelle mit je 4
-    //Monaten. Wird aufgerufen von createGanzJahrTabelle & create4MonthTabelle
-    var row = document.createElement( "tr" );
-    for ( var i = 0; i < 4; i++ ) {
-        var bereich = createTdObj( createMonth( year, trital * 4 + i ) );
-        bereich.className = "year";
-        row.appendChild( bereich );
-    }
-    return row;
 }
 
 function createTd ( str ) { // erstellt eine TD mit String-Inhalt

@@ -18,6 +18,21 @@ a {
     padding-top: 50px;
 }
 
+.month {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
 .WoE {
     background-color: #D3D3D3;
 }
@@ -90,6 +105,7 @@ caption {
 
 .license {
     font-size: x-small;
+    text-align: center;
 }
 
 
