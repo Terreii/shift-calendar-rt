@@ -15,7 +15,22 @@ a {
 }
 
 .anzeige {
-    padding-top: 50px;
+    padding-top: 20px;
+}
+
+#mainDisplay {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
 }
 
 .month {
@@ -38,9 +53,6 @@ a {
 }
 
 .kontrollen {
-    position: fixed;
-    top: 5px;
-    left: 22px;
     background-color: #DCDCDC;
     border: 1px solid grey;
     border-radius: 5px;
