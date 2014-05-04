@@ -200,26 +200,6 @@ function checkYear ( year ) {
     }
 }
 
-function createTd ( str ) { // erstellt eine TD mit String-Inhalt
-    var zell = document.createElement( "td" );
-    if ( str ) {
-        zell.appendChild( textNode( String( str ) ) );
-    }
-    return zell;
-}
-
-function createTdObj ( kind ) { // erstellt eine TD mit einem Object als Inhalt
-    var zell = document.createElement( "td" );
-    if ( kind ) {
-        zell.appendChild( kind );
-    }
-    return zell;
-}
-
-function textNode( str ) {
-    return document.createTextNode( str );
-}
-
 
 
 
@@ -249,8 +229,27 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
 }
 
 
+// Functionen für das Erstellen von DOM-Elemente
 
 function createDiv( child ) { return createEle( "div", child ); }
+
+function createTr( child ) { return createEle( "tr", child ); }
+
+function createTd ( str ) { // erstellt eine TD mit String-Inhalt
+    var zell = document.createElement( "td" );
+    if ( str ) {
+        zell.appendChild( textNode( String( str ) ) );
+    }
+    return zell;
+}
+
+function createTdObj ( child ) { // erstellt eine TD mit einem Object als Inhalt
+    return createEle( "td", child );
+}
+
+function textNode( str ) {
+    return document.createTextNode( str );
+}
 
 function createA( href, child ) { // erstellt ein A mit href, und wenn ein Element übergeben wurde,
                 // wird dieses gleich angehängt

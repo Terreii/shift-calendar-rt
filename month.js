@@ -1,3 +1,5 @@
+"use strict";
+
 /*
 License:
 
@@ -34,12 +36,6 @@ function createTableHead () {
     });
 
     return createEle( "thead", reihe );
-}
-
-function createTr( kind ) {
-    var reihe = document.createElement( "tr" );
-    if ( kind ) reihe.appendChild( kind );
-    return reihe;
 }
 
 function createTableBody ( year, monat ) {
