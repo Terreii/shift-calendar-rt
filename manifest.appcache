@@ -1,9 +1,10 @@
 CACHE MANIFEST
-# version 2014-04-27
+# version 2014-05-04
 ./index.html
 ./style.css
 ./main.js
 ./month.js
+./icon.png
 
 NETWORK:
 
