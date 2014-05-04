@@ -23,26 +23,17 @@ function createMonth ( year, monat ) {
 function createMonthName ( monat ) {
     var Namen = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September",
         "Oktober","November", "Dezember"];
-    var MonName = document.createElement( "caption" );
-    MonName.appendChild( textNode( Namen[ monat ] ) );
-    return MonName;
+    return createEle( "caption", textNode( Namen[ monat ] ) );
 }
 
 function createTableHead () {
-    var head = document.createElement( "thead" );
+    var reihe = createTr();
     
-    var reihe2 = document.createElement( "tr" );
-    
-    var zeilenArt = ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"];
-    for ( var i = 0; i < 8; i++ ) 	{
-        var zelle = document.createElement( "td" );
-        zelle.appendChild( textNode( zeilenArt[i] ) );
-        reihe2.appendChild( zelle );
-    }
-    
-    head.appendChild( reihe2 );
-    
-    return head;
+    ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"].forEach(function(zellText) {
+        reihe.appendChild( createEle( "td", textNode( zellText ) ) );
+    });
+
+    return createEle( "thead", reihe );
 }
 
 function createTr( kind ) {
@@ -52,8 +43,8 @@ function createTr( kind ) {
 }
 
 function createTableBody ( year, monat ) {
-    var theBody = document.createElement( "tbody" );
-    var anz, // anzahl der tage in diesen Monat
+    var theBody = createEle( "tbody" ),
+        anz, // anzahl der tage in diesen Monat
         arbeitstage = [0,0,0,0,0,0];
     switch ( monat ) {
         case 0: case 2: case 4: case 6: case 7: case 9: case 11:
@@ -69,11 +60,11 @@ function createTableBody ( year, monat ) {
     
     for ( var i = 1; i <= anz; i++ ) { // startet bei 1 weil der erste tag im monat 1 ist
         var tag = createDay( year, monat, i );
-        theBody.appendChild( tag[0] );
-        for ( var gr = 0; gr < 6; gr++ ) {
-            if ( tag[1][gr] ) arbeitstage[gr]++; // wenn an dem tag die gruppe gearbeit, dann wird
-            // deren Arbeitstage hochgezählt
-        }
+        theBody.appendChild( tag.row );
+        tag.schichten.forEach(function (is, gr) {
+            if ( is ) { arbeitstage[gr]++; }
+             // wenn an dem tag die gruppe gearbeit, dann wird deren Arbeitstage hochgezählt
+        });
     }
     
     theBody.appendChild( createArbeitsTagAnzeige( arbeitstage ) );
@@ -86,7 +77,7 @@ function isSchaltjahr ( year ) {
 }
 
 function createDay ( year, month, day ) {
-    var line = document.createElement( "tr" );
+    var line = createTr();
     line.id = "row_" + year + "_" + month + "_" + day;
     if ( isWoE( year, month, day ) ) {
         line.className = "WoE";
@@ -119,15 +110,15 @@ function createDay ( year, month, day ) {
     for ( var i = 0; i < 6; i++ ) { // die Schichtanzeige der 6 schichtgruppen wird erstellt
         var zelle = createBodyZell( year, month, day, i );
         if ( heute && i < 5 ) {
-            setBorder( "", zelle[0] );
+            setBorder( "", zelle.ele );
         }
         else if ( heute && i === 5 ) {
-            setBorder( "right", zelle[0] );
+            setBorder( "right", zelle.ele );
         }
-        line.appendChild( zelle[0] ); // die eigentliche Zelle wir übergeben
-        schichten[i] = zelle[1]; // es wird übergeben ob eine Schicht gearbeitet har
+        line.appendChild( zelle.ele ); // die eigentliche Zelle wir übergeben
+        schichten[i] = zelle.arbeit; // es wird übergeben ob eine Schicht gearbeitet har
     }
-    return [line, schichten];
+    return {row:line, schichten:schichten};
 }
 
 function setBorder ( wo, obj ) {//macht den Ramen dicker für das Feld das den Heutigen tag darstellt
@@ -166,7 +157,7 @@ function createBodyZell ( year, month, day, gr ) {
         arbeitet = true;
     }
     //zell.style
-    return [zell,arbeitet];
+    return {ele:zell, arbeit:arbeitet};
 }
 
 function feierTag ( obj, year, month, day, isNameCell ) {
@@ -217,8 +208,6 @@ function getSchicht ( year, month, day, gr ) {
     }
     return schicht;
 }
-
-//alert( getUrlaub(2013,4,1,true) );
 
 function getUrlaub ( year, month, day, isNameCell ) {
     // wenn Weihnachten oder es Ostern ist return true sonst false
