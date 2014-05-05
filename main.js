@@ -40,6 +40,17 @@ window.onload = function() { // Init  adding the EventListeners
     displayNow();
 };
 
+if ( window.applicationCache && window.applicationCache.addEventListener ) {
+// Displays, when a new version is available, a Info box, that if clicked will reload the page
+    window.applicationCache.addEventListener( "updateready", function() {
+        var info = document.getElementById( "appcacheInfo" );
+        info.style.display = "block";
+        info.addEventlistener( "click", function() {
+            document.location.reload();
+        } );
+    } );
+}
+
 function displayNow() {
     setYear( new Date().getFullYear() );
     setMonth();

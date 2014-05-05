@@ -33,6 +33,16 @@ a {
     align-items: center;
 }
 
+#appcacheInfo {
+    display: none;
+    background-color: yellow;
+    border: 3px solid red;
+    border-radius: 5px;
+    margin-top: 0.5cm;
+    padding: 0.5cm;
+    cursor: pointer;
+}
+
 .month {
     display: -ms-flexbox;
     display: -webkit-flex;
