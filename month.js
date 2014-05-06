@@ -241,38 +241,49 @@ function getUrlaub ( year, month, day, isNameCell ) {
     else return { is: false };
 }
 
-function isOstern ( Jahr, Monat, Tag ) {
-    // Gibt true zurück wenn an dem Tag Ostern ist
-    if ( Monat < 2 || Monat > 5) return false; // gibt false zurück wenn es ein Monat ist in
-    // dem Ostern garnicht sein kann
-    var k = Math.floor( Jahr / 100 );
-    var M = 15 + k - Math.floor( k / 3 ) - Math.floor( k / 4 );  // Müsste bis Jahr 2099 M = 24 sein
-    var N = 5;
-    var a = Math.round( afterDot( Jahr / 19 ) * 19 );
-    var b = Math.round( afterDot( Jahr / 4 ) * 4 );
-    var c = Math.round( afterDot( Jahr / 7 ) * 7 );
-    var d = Math.round( afterDot( ( 19 * a + M ) / 30 ) * 30);
-    var e = Math.round( afterDot( ( 2 * b + 4 * c + 6 * d + N ) / 7 ) * 7 );
-    var OTag = 22 + d + e;
-    
-    if ( Monat >= 3 ) { Tag += 31 * ( Monat - 2 ); } // Tag der zusätzlichen Monate werden addiert
-    
-    if ( ( OTag - 2 ) <= Tag && ( OTag + 1 ) >= Tag ) {
-        return { is: true, was: "Ostern" };
-    }
-    else if ( ( OTag + 50 ) <= Tag && ( OTag + 51 ) >= Tag ) {
-        return { is: true, was: "Pfingsten" };
-    }
-    else if ( ( OTag + 61 ) === Tag ) {
-        return { is: true, was: "Fronleichnam" };
-    }
-    else if ( ( OTag + 40 ) === Tag ) {
-        return { is: true, was: "Himmelfahrt" };
-    }
-    else {
-        return { is: false, was: "" };
-    }
-}
+var isOstern = (function () {
+    var memory = {}; // Speichert den Tag von einen Jahr  (wird mit der Jahreszahl abgerufen)
+    return (function isOstern ( Jahr, Monat, Tag ) {
+        // Gibt true zurück wenn an dem Tag Ostern ist
+        if ( Monat < 2 || Monat > 5) return false; // gibt false zurück wenn es ein Monat ist in
+        // dem Ostern garnicht sein kann
+        var OTag
+        if ( !memory[ Jahr ] ) {
+            var k = Math.floor( Jahr / 100 );
+            var M = 15 + k - Math.floor( k / 3 ) - Math.floor( k / 4 );  // Müsste bis Jahr 2099 M = 24 sein
+            var N = 5;
+            var a = Math.round( afterDot( Jahr / 19 ) * 19 );
+            var b = Math.round( afterDot( Jahr / 4 ) * 4 );
+            var c = Math.round( afterDot( Jahr / 7 ) * 7 );
+            var d = Math.round( afterDot( ( 19 * a + M ) / 30 ) * 30);
+            var e = Math.round( afterDot( ( 2 * b + 4 * c + 6 * d + N ) / 7 ) * 7 );
+            OTag = 22 + d + e;
+        
+            memory[ Jahr ] = OTag;
+        }
+        else {
+            OTag = memory[ Jahr ];
+        }
+        
+        if ( Monat >= 3 ) { Tag += 31 * ( Monat - 2 ); } // Tag der zusätzlichen Monate werden addiert
+
+        if ( ( OTag - 2 ) <= Tag && ( OTag + 1 ) >= Tag ) {
+            return { is: true, was: "Ostern" };
+        }
+        else if ( ( OTag + 50 ) <= Tag && ( OTag + 51 ) >= Tag ) {
+            return { is: true, was: "Pfingsten" };
+        }
+        else if ( ( OTag + 61 ) === Tag ) {
+            return { is: true, was: "Fronleichnam" };
+        }
+        else if ( ( OTag + 40 ) === Tag ) {
+            return { is: true, was: "Himmelfahrt" };
+        }
+        else {
+            return { is: false, was: "" };
+        }
+    });
+})();
 
 function afterDot ( number ) { // gibt den Wert nach dem Punkt/Komma einer Zahl zurück  1,25 -> 0,25
     return number - Math.floor( number ); // 1.1 - 1.0 = 0.1
