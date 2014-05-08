@@ -201,19 +201,20 @@ function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausg
     if ( year < 2010 ) { // alle Jahre vor 2010 werden nicht unterstützt! Das aktuelle wird dann verwendet!
         var newYear = new Date().getFullYear();
         document.getElementById( "jahrFeld" ).value = newYear;
-        createAlert("Das Jahr " + year + " ist zu niedrig!\nEs wird das Jahr " + newYear + " verwendet.");
+        createAlert( "Das Jahr " + year + " ist zu niedrig!\nEs wird das Jahr "
+            + newYear + " verwendet.", 5000 );
         return newYear;
     }
     else if ( year > 2099 && !Alarm2100 ) {
-        createAlert("Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig! Danach"
-            + " könnte die Osterangabe nicht mehr stimmen!");
+        createAlert( "Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig! Danach"
+            + " könnte die Osterangabe nicht mehr stimmen!", 5000 );
         Alarm2100 = true;
         return year;
     }
     else {
         if ( year === 2010 && !Alarm2010 ) {
             createAlert( "Achtung!\nDieser Kalender kann nur das 6-Tage-Modell anzeigen!\nAlle Tage"
-                + " vor Ostern 2010 sind falsch!" );
+                + " vor Ostern 2010 sind falsch!", 5000 );
             Alarm2010 = true;
         }
         return year;
