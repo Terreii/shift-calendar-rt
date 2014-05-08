@@ -10,14 +10,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 
 .kontrollen {
-/*
-    display:none;
-    position: static;
-    z-index: 10;
-    max-height: 30px;
-    min-width: 21cm;
-*/
-    /*font-size: 150%;/**/
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -60,7 +52,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 }
 
 
-@media screen and (max-width: 5in) {
+@media screen and (max-device-width: 4in) {
     .month {
         -webkit-flex-direction: column;
         -ms-flex-direction: column;

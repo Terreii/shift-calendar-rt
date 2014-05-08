@@ -40,6 +40,8 @@ window.onload = function() { // Init  adding the EventListeners
     displayNow();
 };
 
+
+
 if ( window.applicationCache && window.applicationCache.addEventListener ) {
 // Displays, when a new version is available, a Info box, that if clicked will reload the page
     window.applicationCache.addEventListener( "updateready", function() {
@@ -50,6 +52,8 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
         } );
     } );
 }
+
+
 
 function displayNow() {
     setYear( new Date().getFullYear() );
@@ -77,7 +81,7 @@ function toIsoDate( eingabe ) {
     if ( /\d{4}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es ISO-Datum (YYYY-MM-DD) ist
         time = eingabe; // Sollte auch bei dem Date-input rauskommen
     }
-    else if ( /\d{2}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es ISO-Datum (YYYY-MM-DD) ist
+    else if ( /\d{2}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es kurzes (fast) ISO-Datum (YY-MM-DD) ist
         time = "20" + eingabe; // Sollte auch bei dem Date-input rauskommen
     }
     else if ( /\d{1,2}.\d{1,2}.\d{4}/.test( eingabe ) ) { // Wenn De-Datum (DD.MM.YYYY) ist
@@ -96,6 +100,7 @@ function toIsoDate( eingabe ) {
         alert( "Bitte ein güldiges Datum eingeben!\n(Volle Tage & Monate)" );
         return;
     }
+
     return time.replace(/-(\d)$/, "-0$1").replace(/-(\d)(\D)/, "-0$1$2");// macht einzifrige
     // Tage & Monate zu zweizifrig (09)
 }
@@ -150,7 +155,7 @@ function monatVeraendern ( was, anzeigen ) {
         case 1: index++; break;
         default: return;
     }
-    if ( index < 0 ) {
+    if ( index < 0 ) { // anpassen des Jahres (true damit display nicht 2 mal ausgeführt wird)
         jahrVeraendern( 0, true );
         index = 2;
     }
@@ -163,6 +168,7 @@ function monatVeraendern ( was, anzeigen ) {
         display( false );
     }
 }
+
 
 function display( was ) {
     if ( typeof was === "boolean" ) { istGanzJahr = was; } // wechseln zwischen ganz Jahr und nur ein teil
@@ -178,33 +184,37 @@ function display( was ) {
     
     element = createDiv();
     element.className = "month";
+
     anzahl = ( istGanzJahr ) ? 12 : 4;
     for ( i = 0; i < anzahl; i++ ) {
         month = ( istGanzJahr ) ? i : ( i + startIndex );
         element.appendChild( createMonth( jahr, month ) );
     }
+
     anzeige.replaceChild( element, anzeige.firstChild );
     document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
     // Druck Jahr anzeige
 }
 
-function checkYear ( year ) {
-    if ( year < 2010 ) {
+
+function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausgegeben werden soll
+    if ( year < 2010 ) { // alle Jahre vor 2010 werden nicht unterstützt! Das aktuelle wird dann verwendet!
         var newYear = new Date().getFullYear();
         document.getElementById( "jahrFeld" ).value = newYear;
-        alert("Das Jahr " + year + " ist zu niedrig!\nEs wird das Jahr " + newYear + " verwendet.");
+        createAlert( "Das Jahr " + year + " ist zu niedrig!\nEs wird das Jahr "
+            + newYear + " verwendet.", 5000 );
         return newYear;
     }
     else if ( year > 2099 && !Alarm2100 ) {
-        alert("Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig! Danach"
-            + " könnte die Osterangabe nicht mehr stimmen!");
+        createAlert( "Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig! Danach"
+            + " könnte die Osterangabe nicht mehr stimmen!", 5000 );
         Alarm2100 = true;
         return year;
     }
     else {
         if ( year === 2010 && !Alarm2010 ) {
-            alert( "Achtung!\nDieser Kalender kann nur das 6-Tage-Modell anzeigen!\nAlle Tage"
-                + " vor Ostern 2010 sind falsch!" );
+            createAlert( "Achtung!\nDieser Kalender kann nur das 6-Tage-Modell anzeigen!\nAlle Tage"
+                + " vor Ostern 2010 sind falsch!", 5000 );
             Alarm2010 = true;
         }
         return year;
@@ -233,10 +243,9 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
     closer.onclick = func; // Event wird angehängt   wegen IE wird dieser benutzt
     win.appendChild( closer );
     
-    timer = setTimeout( func, countdown || 30000 ); //timer damit nicht ewig viele Meldungen da sind
+    timer = setTimeout( func, countdown || 30000 ); // timer damit nicht ewig viele Meldungen da sind
     
-    return win = document.body.appendChild( win );//win wird erst beschrieben
-    // return win;
+    return win = document.body.appendChild( win ); // win wird erst beschrieben & auch zurückgegeben
 }
 
 
@@ -246,16 +255,15 @@ function createDiv( child ) { return createEle( "div", child ); }
 
 function createTr( child ) { return createEle( "tr", child ); }
 
-function createTd ( str ) { // erstellt eine TD mit String-Inhalt
+function createTd ( child ) { // erstellt eine TD mit Inhalt
     var zell = document.createElement( "td" );
-    if ( str ) {
-        zell.appendChild( textNode( String( str ) ) );
+    if ( typeof child === "object" ) {
+        zell.appendChild( child );
+    }
+    else if ( arguments.length !== 0 && typeof child !== "undefined" ) {
+        zell.appendChild( textNode( child ) );
     }
     return zell;
-}
-
-function createTdObj ( child ) { // erstellt eine TD mit einem Object als Inhalt
-    return createEle( "td", child );
 }
 
 function textNode( str ) {
