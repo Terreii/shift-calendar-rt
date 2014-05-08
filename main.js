@@ -47,7 +47,9 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
     window.applicationCache.addEventListener( "updateready", function() {
         var info = document.getElementById( "appcacheInfo" );
         info.style.display = "block";
-        info.addEventlistener( "click", function() {
+        info.addEventlistener( "click", function(e) {
+            e.preventDefault();
+            e.stopPropagation();
             document.location.reload();
         } );
     } );
