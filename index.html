@@ -22,76 +22,73 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     <script type="text/javascript" src="./month.js"></script>
 </head>
 <body>
-    <div id="mainDisplay">
-        <div class="kontrollen">
-            <!-- Heute-Button -->
-            <form>
-                <input id="heuteButton" class="buttons" value="Heute" type="button"/>
-            </form>
+    <div class="kontrollen">
+        <!-- Heute-Button -->
+        <form>
+            <input id="heuteButton" class="buttons" value="Heute" type="button"/>
+        </form>
 
-            <!-- Monate-Auswahl -->
-            <form id="monate" action="javascript:display(false)">
-                <div>
-                    Monate: 
-                    <input id="monateMinus" class="goto" value="&lt;" type="button"/>
-                    <select class="eingabe" id="MonatFeld" size="1">
-                        <option selected="selected" value="0">Januar, Februar, März, April</option>
-                        <option value="1">Mai, Juni, Juli, August</option>
-                        <option value="2">September, Oktober, November, Dezember</option>
-                    </select>
-                    <input id="monatePlus" class="goto" value="&gt;" type="button"/>
-                </div>
-            </form>
+        <!-- Monate-Auswahl -->
+        <form id="monate" action="javascript:display(false)">
+            <div>
+                Monate:
+                <input id="monateMinus" class="goto" value="&lt;" type="button"/>
+                <select class="eingabe" id="MonatFeld" size="1">
+                    <option selected="selected" value="0">Januar, Februar, März, April</option>
+                    <option value="1">Mai, Juni, Juli, August</option>
+                    <option value="2">September, Oktober, November, Dezember</option>
+                </select>
+                <input id="monatePlus" class="goto" value="&gt;" type="button"/>
+            </div>
+        </form>
 
-            <!-- Jahr-Auswahl und Buttons -->
-            <form action="javascript:display()">
-                <div id="jahrAnzeige">
-                    Jahr: 
-                    <input id="jahrMinus" class="goto" value="&lt;" type="button"/>
-                    <input value="2014" id="jahrFeld" class="eingabe" style="visibility:visible;" size="4" maxlength="4" type="text"/>
-                    <input id="jahrStart" class="buttons" value="start" type="button"/>
-                    <input id="jahrPlus" class="goto" value="&gt;" type="button"/>
-                </div>
-            </form>
+        <!-- Jahr-Auswahl und Buttons -->
+        <form action="javascript:display()">
+            <div id="jahrAnzeige">
+                Jahr:
+                <input id="jahrMinus" class="goto" value="&lt;" type="button"/>
+                <input value="2014" id="jahrFeld" class="eingabe" style="visibility:visible;" size="4" maxlength="4" type="text"/>
+                <input id="jahrStart" class="buttons" value="start" type="button"/>
+                <input id="jahrPlus" class="goto" value="&gt;" type="button"/>
+            </div>
+        </form>
 
-            <!-- Button "Ganzes Jahr -->
-            <form>
-                <div id="ganzesJahrButton">
-                    <input id="ganzesJahrInput" value="ganzes Jahr" type="button"/>
-                </div>
-            </form>
-        
-            <form action="javascript:tagSuchen()">
-                Tag suchen:
-                <input id="suchenEingabe" class="eingabe" size="10" placeholder="Tag suchen" type="date"/>
-                <input id="tagSuchenButton" class="buttons" value="start" type="button"/>
-            </form>
+        <!-- Button "Ganzes Jahr -->
+        <form>
+            <div id="ganzesJahrButton">
+                <input id="ganzesJahrInput" value="ganzes Jahr" type="button"/>
+            </div>
+        </form>
 
-        </div>
+        <form action="javascript:tagSuchen()">
+            Tag suchen:
+            <input id="suchenEingabe" class="eingabe" size="10" placeholder="Tag suchen" type="date"/>
+            <input id="tagSuchenButton" class="buttons" value="start" type="button"/>
+        </form>
 
-        <a id="appcacheInfo" href="#">
-            Eine neue Version ist verfügbar!<br/><br/>Bitte hier klicken oder neu laden.
-        </a>
-
-        <!-- Anzeige, für den Kalender -->
-        <div id="anzeige" class="anzeige"><div>Wird geladen ...</div></div>
-
-        <p class="license">
-            Der ewige Schichtkalender 2.11.1 für Reutlingen - Jetzt auch Modern!
-            <br/>
-            Made by <a href="https://github.com/Terreii">Christopher Astfalk</a>.
-            <br/>
-            <br/>
-            Lizenz: 
-            <a href="http://mozilla.org/MPL/2.0/" target="_blank">Mozilla Public License 2.0</a>.
-            <br/>
-            <br/>
-            Get <a href="https://github.com/Terreii/shift-calendar-rt" target="_blank">the source code</a>
-            on <a href="https://github.com" target="_blank">GitHub</a>!
-        </p>
     </div>
-    
+    <a id="appcacheInfo" href="#">
+        Eine neue Version ist verfügbar!<br/><br/>Bitte hier klicken oder neu laden.
+    </a>
+
+    <!-- Anzeige, für den Kalender -->
+    <div id="anzeige" class="anzeige"><div>Wird geladen ...</div></div>
+
+    <p class="license">
+        Der ewige Schichtkalender 2.11.1 für Reutlingen - Jetzt auch Modern!
+        <br/>
+        Made by <a href="https://github.com/Terreii">Christopher Astfalk</a>.
+        <br/>
+        <br/>
+        Lizenz:
+        <a href="http://mozilla.org/MPL/2.0/" target="_blank">Mozilla Public License 2.0</a>.
+        <br/>
+        <br/>
+        Get <a href="https://github.com/Terreii/shift-calendar-rt" target="_blank">the source code</a>
+        on <a href="https://github.com" target="_blank">GitHub</a>!
+    </p>
+
     <div id="jahrAnzeigeDruck">Jahr: 2014</div>
-    
+
 
 </body></html>
