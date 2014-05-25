@@ -60,7 +60,7 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
 function displayNow() {
     setYear( new Date().getFullYear() );
     setMonth();
-    
+
     display( false ); //Und startet den ersten Prozess
 }
 
@@ -69,7 +69,7 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
         datum   = new Date( toIsoDate( eingabe ) ),
         year    = datum.getFullYear(),
         month   = datum.getMonth();
-    
+
     console.log( eingabe + "\n" + datum );
     setYear( year );
     setMonth( month / 4 );
@@ -110,7 +110,7 @@ function toIsoDate( eingabe ) {
 function setYear( year ) { //diese Function setzt das eingabe Feld auf das Aktuelle Jahr
     var oldYear = document.getElementById( "jahrFeld" ).value,
         newYear;
-    
+
     if ( !year ) {
         newYear = new Date().getFullYear();
     }
@@ -174,28 +174,45 @@ function monatVeraendern ( was, anzeigen ) {
 
 function display( was ) {
     if ( typeof was === "boolean" ) { istGanzJahr = was; } // wechseln zwischen ganz Jahr und nur ein teil
-    
+
     var jahr = checkYear( Number( document.getElementById( "jahrFeld" ).value ) ),
     // Das Jahr wird ausgelesen und überprüft
         startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4, // Start bei Monat
         anzahl = 1, // Wieviele Monate sollen angezeigt werden?
         anzeige = document.getElementById( "anzeige" ), // DOM-Knoten wo die Tabelle angezeigt werden soll
-        month, // Übergabe variable
-        i,
         element; // entweder die Tabelle selbst oder eine Tabelle in der alle Monate enthalten sind
-    
-    element = createDiv();
-    element.className = "month";
 
-    anzahl = ( istGanzJahr ) ? 12 : 4;
-    for ( i = 0; i < anzahl; i++ ) {
-        month = ( istGanzJahr ) ? i : ( i + startIndex );
-        element.appendChild( createMonth( jahr, month ) );
+    var isDesktop = [4320,2160,1200,1080,800,768].some(function( height ) {
+        return screen.height === height;
+    });
+    if (isDesktop) {
+        element = displayFullScreen( istGanzJahr, startIndex, jahr );
+    } else {
+        element = displayPhoneScreen( istGanzJahr, startIndex, jahr );
     }
 
     anzeige.replaceChild( element, anzeige.firstChild );
     document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
     // Druck Jahr anzeige
+}
+
+function displayFullScreen( ganzJahr, startIndex, jahr ) { // Alle 4 Monate werden angezeigt
+    var element = createDiv(),
+    i, month, anzahl;
+    element.className = "month";
+
+    anzahl = ( ganzJahr ) ? 12 : 4;
+    for ( i = 0; i < anzahl; i++ ) {
+        month = ( ganzJahr ) ? i : ( i + startIndex );
+        element.appendChild( createMonth( jahr, month ) );
+    }
+    return element;
+}
+
+function displayPhoneScreen( ganzJahr, startMonth, Jahr ) {
+    var ele = createDiv();
+    ele.className = "month";
+    return ele;
 }
 
 
@@ -230,23 +247,23 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
 // und wieder geschlossen werden kann
     var win = createDiv( createEle( "p", textNode( text || "Hello World" ) ) ),//Rahmen mit Nachricht
         closer, timer,
-        
+
         func = ( function() { // diese Function wird dem Schließen-Knopf angehängt.
             // die Function kann auf die var's von createAlert zugreifen
             win.parentNode.removeChild( win ); // also hier auf das Element win;
             clearTimeout( timer );
         } );
-    
+
     win.id = "alertwin" + Math.random(); // erstellen einer eindeutigen ID;
     win.className = "alert";
-    
+
     closer = createA( "#", textNode( "X" ) ); // Schließen-Knopf wird erstellt
     closer.className = "closer";
     closer.onclick = func; // Event wird angehängt   wegen IE wird dieser benutzt
     win.appendChild( closer );
-    
+
     timer = setTimeout( func, countdown || 30000 ); // timer damit nicht ewig viele Meldungen da sind
-    
+
     return win = document.body.appendChild( win ); // win wird erst beschrieben & auch zurückgegeben
 }
 
