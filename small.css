@@ -65,15 +65,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
         top: 50%;
     }
 
-    #anzeige {
-        order: 3;
+    .kontrollen {
+        order: 1;
     }
 
     .license {
         order: 2;
     }
 
-    .kontrollen {
-        order: 1;
+    #appcacheInfo {
+        order: 3;
+    }
+
+    #anzeige {
+        order: 4;
     }
 }
