@@ -60,7 +60,7 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
 function displayNow() {
     setYear( new Date().getFullYear() );
     setMonth();
-    
+
     display( false ); //Und startet den ersten Prozess
 }
 
@@ -69,7 +69,7 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
         datum   = new Date( toIsoDate( eingabe ) ),
         year    = datum.getFullYear(),
         month   = datum.getMonth();
-    
+
     console.log( eingabe + "\n" + datum );
     setYear( year );
     setMonth( month / 4 );
@@ -83,7 +83,8 @@ function toIsoDate( eingabe ) {
     if ( /\d{4}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es ISO-Datum (YYYY-MM-DD) ist
         time = eingabe; // Sollte auch bei dem Date-input rauskommen
     }
-    else if ( /\d{2}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es kurzes (fast) ISO-Datum (YY-MM-DD) ist
+    else if ( /\d{2}-\d{1,2}-\d{1,2}/.test( eingabe ) ) { // Wenn es kurzes (fast) ISO-Datum
+        // (YY-MM-DD) ist
         time = "20" + eingabe; // Sollte auch bei dem Date-input rauskommen
     }
     else if ( /\d{1,2}.\d{1,2}.\d{4}/.test( eingabe ) ) { // Wenn De-Datum (DD.MM.YYYY) ist
@@ -110,7 +111,7 @@ function toIsoDate( eingabe ) {
 function setYear( year ) { //diese Function setzt das eingabe Feld auf das Aktuelle Jahr
     var oldYear = document.getElementById( "jahrFeld" ).value,
         newYear;
-    
+
     if ( !year ) {
         newYear = new Date().getFullYear();
     }
@@ -149,7 +150,8 @@ function jahrVeraendern ( was, anzeigen ) {
 }
 
 function monatVeraendern ( was, anzeigen ) {
-//Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt den monat um 1. Wird gleich geschrieben
+//Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt den monat um 1.
+// Wird gleich geschrieben
     var element = document.getElementById( "MonatFeld" ),
         index   = element.selectedIndex;
     switch ( was ) {
@@ -173,17 +175,21 @@ function monatVeraendern ( was, anzeigen ) {
 
 
 function display( was ) {
-    if ( typeof was === "boolean" ) { istGanzJahr = was; } // wechseln zwischen ganz Jahr und nur ein teil
-    
+    if ( typeof was === "boolean" ) { // wechseln zwischen ganz Jahr und nur ein teil
+        istGanzJahr = was;
+    }
+
     var jahr = checkYear( Number( document.getElementById( "jahrFeld" ).value ) ),
     // Das Jahr wird ausgelesen und überprüft
-        startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4, // Start bei Monat
+        // Start bei Monat
+        startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4,
         anzahl = 1, // Wieviele Monate sollen angezeigt werden?
-        anzeige = document.getElementById( "anzeige" ), // DOM-Knoten wo die Tabelle angezeigt werden soll
+        // DOM-Knoten wo die Tabelle angezeigt werden soll
+        anzeige = document.getElementById( "anzeige" ),
         month, // Übergabe variable
         i,
         element; // entweder die Tabelle selbst oder eine Tabelle in der alle Monate enthalten sind
-    
+
     element = createDiv();
     element.className = "month";
 
@@ -200,7 +206,8 @@ function display( was ) {
 
 
 function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausgegeben werden soll
-    if ( year < 2010 ) { // alle Jahre vor 2010 werden nicht unterstützt! Das aktuelle wird dann verwendet!
+    if ( year < 2010 ) { // alle Jahre vor 2010 werden nicht unterstützt!
+    // Das aktuelle wird dann verwendet!
         var newYear = new Date().getFullYear();
         document.getElementById( "jahrFeld" ).value = newYear;
         createAlert( "Das Jahr " + year + " ist zu niedrig!\nEs wird das Jahr "
@@ -208,8 +215,8 @@ function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausg
         return newYear;
     }
     else if ( year > 2099 && !Alarm2100 ) {
-        createAlert( "Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig! Danach"
-            + " könnte die Osterangabe nicht mehr stimmen!", 5000 );
+        createAlert( "Achtung!!! Dieser Kalender geht nur bis zum Jahr 2099 garantiert richtig!"
+            + " Danach könnte die Osterangabe nicht mehr stimmen!", 5000 );
         Alarm2100 = true;
         return year;
     }
@@ -230,23 +237,23 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
 // und wieder geschlossen werden kann
     var win = createDiv( createEle( "p", textNode( text || "Hello World" ) ) ),//Rahmen mit Nachricht
         closer, timer,
-        
+
         func = ( function() { // diese Function wird dem Schließen-Knopf angehängt.
             // die Function kann auf die var's von createAlert zugreifen
             win.parentNode.removeChild( win ); // also hier auf das Element win;
             clearTimeout( timer );
         } );
-    
+
     win.id = "alertwin" + Math.random(); // erstellen einer eindeutigen ID;
     win.className = "alert";
-    
+
     closer = createA( "#", textNode( "X" ) ); // Schließen-Knopf wird erstellt
     closer.className = "closer";
     closer.onclick = func; // Event wird angehängt   wegen IE wird dieser benutzt
     win.appendChild( closer );
-    
-    timer = setTimeout( func, countdown || 30000 ); // timer damit nicht ewig viele Meldungen da sind
-    
+
+    timer = setTimeout( func, countdown || 30000 ); //timer damit nicht ewig viele Meldungen da sind
+
     return win = document.body.appendChild( win ); // win wird erst beschrieben & auch zurückgegeben
 }
 

@@ -18,7 +18,7 @@ a {
     padding-top: 20px;
 }
 
-#mainDisplay {
+body {
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
