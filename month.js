@@ -12,13 +12,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 function createMonth ( year, monat ) {
     var tabelle = document.createElement( "table" );
     tabelle.style.margin = "10px";
-    
+
     tabelle.appendChild( createMonthName( monat ) ); // Zelle die den Monats-Namen beinhaltet
-    
+
     tabelle.appendChild( createTableHead() );
-    
+
     tabelle.appendChild( createTableBody( year, monat ) );
-    
+
     return tabelle;
 }
 
@@ -30,7 +30,7 @@ function createMonthName ( monat ) {
 
 function createTableHead () {
     var reihe = createTr();
-    
+
     ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"].forEach(function(zellText) {
         reihe.appendChild( createEle( "td", textNode( zellText ) ) );
     });
@@ -50,10 +50,11 @@ function createTableBody ( year, monat ) {
             anz = 30;
             break;
         case 1:
-            anz = ( isSchaltjahr( year ) ) ? 29 : 28; // wenn es februar ist und ein schaltjahr ist dann 29 tage
+            // wenn es februar ist und ein schaltjahr ist dann 29 tage
+            anz = ( isSchaltjahr( year ) ) ? 29 : 28;
             break;
     }
-    
+
     for ( var i = 1; i <= anz; i++ ) { // startet bei 1 weil der erste tag im monat 1 ist
         var tag = createDay( year, monat, i );
         theBody.appendChild( tag.row );
@@ -62,9 +63,9 @@ function createTableBody ( year, monat ) {
              // wenn an dem tag die gruppe gearbeit, dann wird deren Arbeitstage hochgezählt
         });
     }
-    
+
     theBody.appendChild( createArbeitsTagAnzeige( arbeitstage ) );
-    
+
     return theBody;
 }
 
@@ -79,10 +80,10 @@ function createDay ( year, month, day ) {
         line.className = "WoE";
     }
     var schichten = []; // in diesen Array wird gespeicher welche der Schichten arbeit (true/false)
-    
+
     var zeit = new Date( year, month, day, 0, 0, 0 );
     var heute = isToday( year, month, day );
-    
+
     // Monatstag
     // hier wird die erste Spalte erstellt in der steht welcher tag im monat dieser ist
     var monthDay = createTd( zeit.getDate() );
@@ -92,7 +93,7 @@ function createDay ( year, month, day ) {
     }
 
     line.appendChild( monthDay );
-    
+
     // Wochentag
     // zeile in der die Abkürzung des Wochentagen (z.B.: Mo,Di) steht
     var Wochentag = ["So","Mo","Di","Mi","Do","Fr","Sa"];
@@ -102,7 +103,7 @@ function createDay ( year, month, day ) {
         setBorder( "", weeksDay );
     }
     line.appendChild( weeksDay );
-    
+
     for ( var i = 0; i < 6; i++ ) { // die Schichtanzeige der 6 schichtgruppen wird erstellt
         var zelle = createBodyZell( year, month, day, i );
         if ( heute && i < 5 ) {
@@ -177,8 +178,8 @@ function feierTag ( obj, year, month, day, isNameCell ) {
 function getSchicht ( year, month, day, gr ) {
     var schicht; // "F" = früh, "S" = spät, "N" = nacht, "K" = keine/frei
     var zeit = new Date( year, month, day, 0, 0, 0 );
-    var inSchicht = ( zeit.getTime() / 1000 / 60 / 60 / 24 ) / 12; // zuerst auf die anzahl von tagen von 1970.1.1
-                                                                 // dann durch 12 da ein zyklus 12 tage sind
+    // zuerst auf die anzahl von tagen von 1970.1.1, dann durch 12 da ein zyklus 12 tage sind
+    var inSchicht = ( zeit.getTime() / 1000 / 60 / 60 / 24 ) / 12;
     var grOffset;
     switch ( gr ) {
         case 0: grOffset = 5; break;  // gruppe 1
@@ -188,14 +189,14 @@ function getSchicht ( year, month, day, gr ) {
         case 4: grOffset = 1; break;  // gruppe 5
         case 5: grOffset = 7; break;  // gruppe 6
     }
-    
+
     var schichtTag = Math.floor( ( Math.round( afterDot( inSchicht ) * 12) + grOffset ) / 2);
     // es wird die dezimalzahl rausgefiltert. die anzeigt wie weit im block man ist
     // wird nur mal 6 genommen, da es nur 6 kombinationen gibt
     if (schichtTag >= 6) {
         schichtTag -= 6;
     }
-    
+
     switch ( schichtTag ) {
         case 0: schicht = "F"; break; // Früh
         case 1: schicht = "S"; break; // Spät
@@ -228,7 +229,8 @@ function getUrlaub ( year, month, day, isNameCell ) {
     if ( isNameCell && month === 11 && day === 31 ) {
         return { is: true, was: "Silvester" };
     }
-    else if ( month === 2 || month === 3 ) { // Ostern    Monats abfrage aus sicherheit und Geschwindigkeit
+    else if ( month === 2 || month === 3 ) { // Ostern
+        // Monats abfrage aus sicherheit und Geschwindigkeit
         return isOstern( year, month, day );
     }
     else if ( isNameCell && ( month === 4 || month === 5 ) ) {
@@ -250,7 +252,8 @@ var isOstern = (function () {
         var OTag
         if ( !memory[ Jahr ] ) {
             var k = Math.floor( Jahr / 100 );
-            var M = 15 + k - Math.floor( k / 3 ) - Math.floor( k / 4 );  // Müsste bis Jahr 2099 M = 24 sein
+            // Müsste bis Jahr 2099 M = 24 sein
+            var M = 15 + k - Math.floor( k / 3 ) - Math.floor( k / 4 );
             var N = 5;
             var a = Math.round( afterDot( Jahr / 19 ) * 19 );
             var b = Math.round( afterDot( Jahr / 4 ) * 4 );
@@ -258,14 +261,14 @@ var isOstern = (function () {
             var d = Math.round( afterDot( ( 19 * a + M ) / 30 ) * 30);
             var e = Math.round( afterDot( ( 2 * b + 4 * c + 6 * d + N ) / 7 ) * 7 );
             OTag = 22 + d + e;
-        
+
             memory[ Jahr ] = OTag;
         }
         else {
             OTag = memory[ Jahr ];
         }
-        
-        if ( Monat >= 3 ) { Tag += 31 * ( Monat - 2 ); } // Tag der zusätzlichen Monate werden addiert
+
+        if ( Monat >= 3 ) { Tag += 31 * ( Monat - 2 ); }//Tag der zusätzlichen Monate werden addiert
 
         if ( ( OTag - 2 ) <= Tag && ( OTag + 1 ) >= Tag ) {
             return { is: true, was: "Ostern" };
@@ -313,13 +316,13 @@ function color ( obj, what ) { // färbt die Zellen in die Gruppen-, Wochenend- 
 function createArbeitsTagAnzeige ( arbeitstage ) {
 // erstellt die Arbeitstage-Anzeige erwartet ein Array aus Zahlen [Gr1,Gr2,Gr3,Gr4,Gr5,Gr6]
     var anzeige = document.createElement( "tr" );
-    
+
     var name = createTd( "Anzahl" ); // alt: "Ar.Tag"
     name.colSpan = 2;
     name.title = "Die Anzahl der Tage, an denen eine Schichtgruppe gearbeitet hat.";
     name.style.cursor = "help";
     anzeige.appendChild( name );
-    
+
     for ( var i = 0; i < 6; i++ ) {
         var zelle = createTd( arbeitstage[i]  );
         anzeige.appendChild( zelle );
