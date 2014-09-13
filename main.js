@@ -37,7 +37,17 @@ window.onload = function() { // Init  adding the EventListeners
     };
     document.getElementById( "tagSuchenButton" ).onclick = tagSuchen;
 
-    displayNow();
+    var hash = location.hash;
+    if( hash === '' || hash === '#' ) {
+        displayNow();
+    } else {
+        document.getElementById( "suchenEingabe" ).value =
+            hash.split( '_' ).reduce(function( s, n, i ) {
+                s = (s.length > 0) ? s + '-' : s;
+                return s + n.substr( (n.charAt( 0 ) === '#') ? 2 : 1 );
+            }, '');
+        tagSuchen();
+    }
 };
 
 
@@ -76,6 +86,7 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
     display();
     document.getElementById( "row_" + year + "_" + month + "_" + datum.getDate() )
         .style.backgroundColor = "darkorange"; // Farbe setzen
+    share( {year:year, month:month + 1, day:datum.getDate()} )
 }
 
 function toIsoDate( eingabe ) {
@@ -202,6 +213,7 @@ function display( was ) {
     anzeige.replaceChild( element, anzeige.firstChild );
     document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
     // Druck Jahr anzeige
+    share();
 }
 
 
@@ -255,6 +267,16 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
     timer = setTimeout( func, countdown || 30000 ); //timer damit nicht ewig viele Meldungen da sind
 
     return win = document.body.appendChild( win ); // win wird erst beschrieben & auch zurückgegeben
+}
+
+
+function share( date ) {
+    var link = document.getElementById( "shareButton" ),
+    href = "mailto:body=Sehe%20meine%20Schicht%20unter%20" + location.host + location.pathname;
+    if( date !== undefined ) {
+        href += "#y" + date.year + "_m" + date.month + "_d" + date.day;
+    }
+    link.href = href;
 }
 
 
