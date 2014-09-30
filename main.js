@@ -111,7 +111,7 @@ function toIsoDate( eingabe ) {
         time = eingabe.replace( /(\d{1,2})\/(\d{1,2})\/(\d\d)/, "20$3-$2-$1" );
     }
     else {
-        alert( "Bitte ein güldiges Datum eingeben!\n(Volle Tage & Monate)" );
+        alert( "Bitte ein gültiges Datum eingeben!\n(Nach dem Format: TT.MM.JJJJ oder JJJJ-MM-TT)" );
         return;
     }
 
