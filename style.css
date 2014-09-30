@@ -149,6 +149,14 @@ caption {
     box-shadow: 5px 5px 7px 2px black;
 }
 
+#shareButton > img {
+    height: 14px;
+    width: 14px;
+    margin-top: auto;
+    margin-bottom: auto;
+    transform: translateY(2px);
+}
+
 #jahrAnzeigeDruck {
     display: none;
 }
