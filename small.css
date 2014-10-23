@@ -64,13 +64,24 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
         -webkit-flex-wrap: nowrap;
         -ms-flex-wrap: nowrap;
         flex-wrap: nowrap;
-        transform: scale(2,2);
+        /*transform: scale(2,2);
         position: relative;
-        top: 50%;
+        top: 50%;*/
+    }
+
+    .kontrollen {
+        order: 1;
     }
 
     .license {
-        transform: scale(2,2);
-        display: none;
+        order: 2;
+    }
+
+    #appcacheInfo {
+        order: 3;
+    }
+
+    #anzeige {
+        order: 4;
     }
 }
