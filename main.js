@@ -171,6 +171,16 @@ function monatVeraendern ( was, anzeigen ) {
     }
 }
 
+function isMobil() {
+  return navigator.userAgent.match(/Android/i)
+    || navigator.userAgent.match(/webOS/i)
+    || navigator.userAgent.match(/iPhone/i)
+    || navigator.userAgent.match(/iPad/i)
+    || navigator.userAgent.match(/iPod/i)
+    || navigator.userAgent.match(/BlackBerry/i)
+    || navigator.userAgent.match(/Windows Phone/i);
+}
+
 
 function display( was ) {
     if ( typeof was === "boolean" ) { istGanzJahr = was; } // wechseln zwischen ganz Jahr und nur ein teil
@@ -178,17 +188,15 @@ function display( was ) {
     var jahr = checkYear( Number( document.getElementById( "jahrFeld" ).value ) ),
     // Das Jahr wird ausgelesen und überprüft
         startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4, // Start bei Monat
+        mobilStartIndex = document.getElementById( "MobilMonatFeld" ).options.selectedIndex, // Start bei Monat
         anzahl = 1, // Wieviele Monate sollen angezeigt werden?
         anzeige = document.getElementById( "anzeige" ), // DOM-Knoten wo die Tabelle angezeigt werden soll
         element; // entweder die Tabelle selbst oder eine Tabelle in der alle Monate enthalten sind
 
-    var isDesktop = [4320,2160,1200,1080,800,768].some(function( height ) {
-        return screen.height === height;
-    });
-    if (isDesktop) {
-        element = displayFullScreen( istGanzJahr, startIndex, jahr );
+    if ( isMobil() ) {
+        element = displayPhoneScreen( istGanzJahr, mobilStartIndex, jahr );
     } else {
-        element = displayPhoneScreen( istGanzJahr, startIndex, jahr );
+        element = displayFullScreen( istGanzJahr, startIndex, jahr );
     }
 
     anzeige.replaceChild( element, anzeige.firstChild );
@@ -209,9 +217,14 @@ function displayFullScreen( ganzJahr, startIndex, jahr ) { // Alle 4 Monate werd
     return element;
 }
 
-function displayPhoneScreen( ganzJahr, startMonth, Jahr ) {
+function displayPhoneScreen( ganzJahr, startMonth, jahr ) {
     var ele = createDiv();
     ele.className = "month";
+    var anzahl = ( ganzJahr ) ? 12 : 2;
+    var start = ( ganzJahr ) ? 0 : startMonth;
+    for ( var i = 0; i < anzahl; ++i ) {
+        ele.appendChild( createMonth( jahr, i + start ) );
+    }
     return ele;
 }
 
