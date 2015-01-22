@@ -272,11 +272,12 @@ function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrich
 
 function share( date ) {
     var link = document.getElementById( "shareButton" ),
-    href = "mailto:body=Sehe%20meine%20Schicht%20unter%20" + location.host + location.pathname;
+    href = "mailto:?subject=Meine Schicht&body=Sehe meine Schicht unter "
+        + location.host + location.pathname;
     if( date !== undefined ) {
         href += "#y" + date.year + "_m" + date.month + "_d" + date.day;
     }
-    link.href = href;
+    link.href = encodeURI(href);
 }
 
 
