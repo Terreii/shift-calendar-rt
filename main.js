@@ -215,6 +215,7 @@ function display( was ) {
   anzeige.replaceChild( element, anzeige.firstChild );
   document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
   // Druck Jahr anzeige
+  share();
 }
 
 function displayFullScreen( ganzJahr, startIndex, jahr ) { // Alle 4 Monate werden angezeigt
