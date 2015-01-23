@@ -157,6 +157,19 @@ caption {
   transform: translateY(2px);
 }
 
+#icsDownload {
+  text-align: center;
+  background-color: #DCDCDC;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 10px;
+  line-height: 120%;
+}
+
+#icsDownload > a {
+  padding: 10px;
+}
+
 #jahrAnzeigeDruck {
   display: none;
 }
