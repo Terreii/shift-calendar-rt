@@ -9,7 +9,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 
-function createMonth ( year, monat ) {
+function createMonth( year, monat ) {
   var tabelle = document.createElement( "table" );
   tabelle.style.margin = "10px";
 
@@ -22,13 +22,13 @@ function createMonth ( year, monat ) {
   return tabelle;
 }
 
-function createMonthName ( monat ) {
+function createMonthName( monat ) {
   var Namen = ["Januar","Februar","März","April","Mai","Juni","Juli","August","September",
       "Oktober","November", "Dezember"];
   return createEle( "caption", textNode( Namen[ monat ] ) );
 }
 
-function createTableHead () {
+function createTableHead() {
   var reihe = createTr();
 
   ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"].forEach(function(zellText) {
@@ -38,7 +38,7 @@ function createTableHead () {
   return createEle( "thead", reihe );
 }
 
-function createTableBody ( year, monat ) {
+function createTableBody( year, monat ) {
   var theBody = createEle( "tbody" ),
       anz, // anzahl der tage in diesen Monat
       arbeitstage = [0,0,0,0,0,0];
@@ -69,11 +69,11 @@ function createTableBody ( year, monat ) {
   return theBody;
 }
 
-function isSchaltjahr ( year ) {
+function isSchaltjahr( year ) {
   return ( year % 4 ) === 0;
 }
 
-function createDay ( year, month, day ) {
+function createDay( year, month, day ) {
   var line = createTr();
   line.id = "row_" + year + "_" + month + "_" + day;
   if ( isWoE( year, month, day ) ) {
@@ -118,7 +118,7 @@ function createDay ( year, month, day ) {
   return {row:line, schichten:schichten};
 }
 
-function setBorder ( wo, obj ) {//macht den Ramen dicker für das Feld das den Heutigen tag darstellt
+function setBorder( wo, obj ) {//macht den Ramen dicker für das Feld das den Heutigen tag darstellt
 // wo = welcher der positionen es inne hat
   var dicke = "4px";
   obj.style.borderBottomWidth = dicke;
@@ -127,7 +127,7 @@ function setBorder ( wo, obj ) {//macht den Ramen dicker für das Feld das den H
   else if ( wo === "right" ) obj.style.borderRightWidth = dicke;
 }
 
-function isToday ( year, month, day ) {
+function isToday( year, month, day ) {
   var heute = new Date();
   heute.setTime( heute.getTime() - 21600000 ); // -6h weil neue Schicht erst um 6:00Uhr anfängt
   heute.setHours( 0 );
@@ -137,7 +137,7 @@ function isToday ( year, month, day ) {
   return ( new Date( year, month, day, 0, 0, 0, 0 ).getTime() === heute.getTime() );
 }
 
-function createBodyZell ( year, month, day, gr ) {
+function createBodyZell( year, month, day, gr ) {
   var zell;// = document.createElement("td");
   var arbeitet; // true wenn gearbeitet wird
   var schicht = getSchicht( year, month, day, gr ); // berechnung der schicht "F" = Früh
@@ -157,7 +157,7 @@ function createBodyZell ( year, month, day, gr ) {
   return {ele:zell, arbeit:arbeitet};
 }
 
-function feierTag ( obj, year, month, day, isNameCell ) {
+function feierTag( obj, year, month, day, isNameCell ) {
   // es wird überprüft of es ein Feiertag (Ostern & Weihnachten) oder ein Wochenende ist
   var urlaub = getUrlaub( year, month, day, isNameCell ) || { is: false };
   if ( urlaub.is ) {
@@ -175,7 +175,7 @@ function feierTag ( obj, year, month, day, isNameCell ) {
   }*/
 }
 
-function getSchicht ( year, month, day, gr ) {
+function getSchicht( year, month, day, gr ) {
   var schicht; // "F" = früh, "S" = spät, "N" = nacht, "K" = keine/frei
   var zeit = new Date( year, month, day, 0, 0, 0 );
   // zuerst auf die anzahl von tagen von 1970.1.1, dann durch 12 da ein zyklus 12 tage sind
@@ -206,7 +206,7 @@ function getSchicht ( year, month, day, gr ) {
   return schicht;
 }
 
-function getUrlaub ( year, month, day, isNameCell ) {
+function getUrlaub( year, month, day, isNameCell ) {
   // wenn Weihnachten oder es Ostern ist return true sonst false
   if ( isNameCell && year === 2013 && month === 8 && day === 22 ) {
     return { is: true, was: "Bundestags-Wahlen" };
@@ -245,7 +245,7 @@ function getUrlaub ( year, month, day, isNameCell ) {
 
 var isOstern = (function () {
   var memory = {}; // Speichert den Tag von einen Jahr  (wird mit der Jahreszahl abgerufen)
-  return (function isOstern ( Jahr, Monat, Tag ) {
+  return (function isOstern( Jahr, Monat, Tag ) {
     // Gibt true zurück wenn an dem Tag Ostern ist
     if ( Monat < 2 || Monat > 5) return false; // gibt false zurück wenn es ein Monat ist in
     // dem Ostern garnicht sein kann
@@ -288,16 +288,16 @@ var isOstern = (function () {
   });
 })();
 
-function afterDot ( number ) { // gibt den Wert nach dem Punkt/Komma einer Zahl zurück  1,25 -> 0,25
+function afterDot( number ) { // gibt den Wert nach dem Punkt/Komma einer Zahl zurück  1,25 -> 0,25
   return number - Math.floor( number ); // 1.1 - 1.0 = 0.1
 }
 
-function isWoE ( year, month, day ) { // gibt true zurück wenn der tag am Wochenende (Sa & So) ist
+function isWoE( year, month, day ) { // gibt true zurück wenn der tag am Wochenende (Sa & So) ist
   var tag = new Date( year, month, day, 0, 0, 0 ).getDay();
   return tag === 0 || tag === 6;
 }
 
-function color ( obj, what ) { // färbt die Zellen in die Gruppen-, Wochenend- und Feiertags-Farben
+function color( obj, what ) { // färbt die Zellen in die Gruppen-, Wochenend- und Feiertags-Farben
   var newColor;
   switch ( String( what ) ) {
     case "urlaub": newColor = "#008000"; break;
@@ -313,7 +313,7 @@ function color ( obj, what ) { // färbt die Zellen in die Gruppen-, Wochenend- 
   obj.style.backgroundColor = newColor;
 }
 
-function createArbeitsTagAnzeige ( arbeitstage ) {
+function createArbeitsTagAnzeige( arbeitstage ) {
 // erstellt die Arbeitstage-Anzeige erwartet ein Array aus Zahlen [Gr1,Gr2,Gr3,Gr4,Gr5,Gr6]
   var anzeige = document.createElement( "tr" );
 

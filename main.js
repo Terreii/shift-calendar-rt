@@ -138,7 +138,7 @@ function setYear( year ) { //diese Function setzt das eingabe Feld auf das Aktue
   document.getElementById( "jahrFeld" ).value = newYear;
 }
 
-function setMonth ( month ) {
+function setMonth( month ) {
   if ( typeof month === "undefined" ) {
     month = Math.floor( new Date().getMonth() / 4 );
   }
@@ -146,7 +146,7 @@ function setMonth ( month ) {
   document.getElementById( "MonatFeld" ).options[month].selected = true;
 }
 
-function jahrVeraendern ( was, anzeigen ) {
+function jahrVeraendern( was, anzeigen ) {
   //Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt das jahr um 1.
   //+ Wird gleich geschrieben
   var element = document.getElementById( "jahrFeld" );
@@ -160,7 +160,7 @@ function jahrVeraendern ( was, anzeigen ) {
   }
 }
 
-function monatVeraendern ( was, anzeigen ) {
+function monatVeraendern( was, anzeigen ) {
   //Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt den monat um 1.
   // Wird gleich geschrieben
   var element = document.getElementById( "MonatFeld" ),
@@ -217,7 +217,7 @@ function display( was ) {
 }
 
 
-function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausgegeben werden soll
+function checkYear( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausgegeben werden soll
   if ( year < 2010 ) { // alle Jahre vor 2010 werden nicht unterstützt!
     // Das aktuelle wird dann verwendet!
     var newYear = new Date().getFullYear();
@@ -245,7 +245,7 @@ function checkYear ( year ) { // Überprüft ob eine Meldung wegen dem Jahr ausg
 
 
 
-function createAlert ( text, countdown ) { //erstellt ein Fenter in dem Nachrichten angezeigt werden
+function createAlert( text, countdown ) { //erstellt ein Fenter in dem Nachrichten angezeigt werden
   // und wieder geschlossen werden kann
   var win = createDiv( createEle( "p", textNode( text || "Hello World" ) ) ),//Rahmen mit Nachricht
   closer, timer,
