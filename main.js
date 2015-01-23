@@ -267,7 +267,13 @@ function displayPhoneScreen( ganzJahr, startMonth, jahr ) {
   var anzahl = ( ganzJahr ) ? 12 : 2;
   var start = ( ganzJahr ) ? 0 : startMonth;
   for ( var i = 0; i < anzahl; ++i ) {
-    ele.appendChild( createMonth( jahr, i + start ) );
+    var month = i + start;
+    var displayJahr = jahr;
+    if ( month >= 12 ) {
+      month = 0;
+      displayJahr += 1;
+    }
+    ele.appendChild( createMonth( displayJahr, month ) );
   }
   return ele;
 }
