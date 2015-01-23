@@ -11,19 +11,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 
 .kontrollen {
-    z-index: 10;
-    font-size:90%;
+  z-index: 10;
+  font-size:90%;
 }
 
 .kontrollen > * {
-    display: table-cell;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border-left: 1px solid grey;
+  display: table-cell;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border-left: 1px solid grey;
 }
 
 .kontrollen > *:first-child {
-    border-left: 0px solid grey;
+  border-left: 0px solid grey;
 }
