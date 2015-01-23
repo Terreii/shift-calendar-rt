@@ -8,13 +8,14 @@ CACHE MANIFEST
 ./month.js
 ./icon.png
 ./share21.svg
+
+NETWORK:
+
 ./Schichtgruppe_1.ics
 ./Schichtgruppe_2.ics
 ./Schichtgruppe_3.ics
 ./Schichtgruppe_4.ics
 ./Schichtgruppe_5.ics
 ./Schichtgruppe_6.ics
-
-NETWORK:
 
 FALLBACK:
