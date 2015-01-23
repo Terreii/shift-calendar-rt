@@ -8,6 +8,20 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 */
 
+var dev = {
+  setMobil: function( is ) {
+    var mobil = ( is ) ? "inline" : "none";
+    var desktop = ( is ) ? "none" : "inline";
+    document.getElementById('MobilMonatFeld').style.display = mobil;
+    document.getElementById('MonatFeld').style.display = desktop;
+    displayNow();
+  }
+};
+
+
+
+
+
 
 var Alarm2010 = false; //Variable die speichtert ob der Alarm, der wenn man das Jahr 2010 auswählt
 // kommt, schonmal ausgegeben wurde (gegen Spam, für die Nerven)
@@ -82,7 +96,7 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
 
   console.log( eingabe + "\n" + datum );
   setYear( year );
-  setMonth( month / 4 );
+  setMonth( month );
   display();
   document.getElementById( "row_" + year + "_" + month + "_" + datum.getDate() )
   .style.backgroundColor = "darkorange"; // Farbe setzen
@@ -140,10 +154,17 @@ function setYear( year ) { //diese Function setzt das eingabe Feld auf das Aktue
 
 function setMonth ( month ) {
   if ( typeof month === "undefined" ) {
-    month = Math.floor( new Date().getMonth() / 4 );
+    month = Math.floor( new Date().getMonth() );
   }
-  else { month = Math.floor( Number( month ) ); }
-  document.getElementById( "MonatFeld" ).options[month].selected = true;
+  else {
+    month = Math.floor( Number( month ) );
+  }
+  if ( isMobil() ) {
+    document.getElementById( "MobilMonatFeld" ).options[month].selected = true;
+  }
+  else {
+    document.getElementById( "MonatFeld" ).options[month / 4].selected = true;
+  }
 }
 
 function jahrVeraendern ( was, anzeigen ) {
@@ -163,8 +184,11 @@ function jahrVeraendern ( was, anzeigen ) {
 function monatVeraendern ( was, anzeigen ) {
   //Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt den monat um 1.
   // Wird gleich geschrieben
-  var element = document.getElementById( "MonatFeld" ),
-  index   = element.selectedIndex;
+  var element = document.getElementById( ( isMobil() )
+    ? "MobilMonatFeld"
+    : "MonatFeld" );
+  var index = element.selectedIndex;
+  var maxIndex = element.length - 1;
   switch ( was ) {
     case 0: index--; break;
     case 1: index++; break;
@@ -172,9 +196,9 @@ function monatVeraendern ( was, anzeigen ) {
   }
   if ( index < 0 ) { // anpassen des Jahres (true damit display nicht 2 mal ausgeführt wird)
     jahrVeraendern( 0, true );
-    index = 2;
+    index = maxIndex;
   }
-  if ( index > 2 ) {
+  if ( index > maxIndex ) {
     jahrVeraendern( 1, true );
     index = 0;
   }
@@ -186,13 +210,19 @@ function monatVeraendern ( was, anzeigen ) {
 
 
 function isMobil() {
-  return navigator.userAgent.match(/Android/i)
-  || navigator.userAgent.match(/webOS/i)
-  || navigator.userAgent.match(/iPhone/i)
-  || navigator.userAgent.match(/iPad/i)
-  || navigator.userAgent.match(/iPod/i)
-  || navigator.userAgent.match(/BlackBerry/i)
-  || navigator.userAgent.match(/Windows Phone/i);
+  try {
+    var ele = document.getElementById('MonatFeld');
+    var style = window.getComputedStyle(ele);
+    return (style.display === 'none');
+  } catch (e) {
+    return (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i));
+  }
 }
 
 function display( was ) {
