@@ -39,6 +39,9 @@ window.onload = function() { // Init  adding the EventListeners
   document.getElementById( "MonatFeld" ).onclick = function() {
     display( false );
   };
+  document.getElementById( "MobilMonatFeld" ).onclick = function() {
+    display( false );
+  };
   document.getElementById( "jahrMinus" ).onclick = function() {
     jahrVeraendern( 0 );
   };
@@ -99,7 +102,7 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
   setMonth( month );
   display();
   document.getElementById( "row_" + year + "_" + month + "_" + datum.getDate() )
-  .style.backgroundColor = "darkorange"; // Farbe setzen
+    .style.backgroundColor = "darkorange"; // Farbe setzen
   share( {year:year, month:month + 1, day:datum.getDate()} )
 }
 
