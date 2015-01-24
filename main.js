@@ -8,6 +8,20 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 */
 
+var dev = {
+  setMobil: function( is ) {
+    var mobil = ( is ) ? "inline" : "none";
+    var desktop = ( is ) ? "none" : "inline";
+    document.getElementById('MobilMonatFeld').style.display = mobil;
+    document.getElementById('MonatFeld').style.display = desktop;
+    displayNow();
+  }
+};
+
+
+
+
+
 
 var Alarm2010 = false; //Variable die speichtert ob der Alarm, der wenn man das Jahr 2010 auswählt
 // kommt, schonmal ausgegeben wurde (gegen Spam, für die Nerven)
@@ -23,6 +37,9 @@ window.onload = function() { // Init  adding the EventListeners
     monatVeraendern( 1 );
   };
   document.getElementById( "MonatFeld" ).onclick = function() {
+    display( false );
+  };
+  document.getElementById( "MobilMonatFeld" ).onclick = function() {
     display( false );
   };
   document.getElementById( "jahrMinus" ).onclick = function() {
@@ -82,10 +99,10 @@ function tagSuchen() { // Setzt das Datum auf die Eingabe im Datumsuchfeld
 
   console.log( eingabe + "\n" + datum );
   setYear( year );
-  setMonth( month / 4 );
+  setMonth( month );
   display();
   document.getElementById( "row_" + year + "_" + month + "_" + datum.getDate() )
-  .style.backgroundColor = "darkorange"; // Farbe setzen
+    .style.backgroundColor = "darkorange"; // Farbe setzen
   share( {year:year, month:month + 1, day:datum.getDate()} )
 }
 
@@ -140,10 +157,17 @@ function setYear( year ) { //diese Function setzt das eingabe Feld auf das Aktue
 
 function setMonth( month ) {
   if ( typeof month === "undefined" ) {
-    month = Math.floor( new Date().getMonth() / 4 );
+    month = Math.floor( new Date().getMonth() );
   }
-  else { month = Math.floor( Number( month ) ); }
-  document.getElementById( "MonatFeld" ).options[month].selected = true;
+  else {
+    month = Math.floor( Number( month ) );
+  }
+  if ( isMobil() ) {
+    document.getElementById( "MobilMonatFeld" ).options[month].selected = true;
+  }
+  else {
+    document.getElementById( "MonatFeld" ).options[month / 4].selected = true;
+  }
 }
 
 function jahrVeraendern( was, anzeigen ) {
@@ -163,8 +187,11 @@ function jahrVeraendern( was, anzeigen ) {
 function monatVeraendern( was, anzeigen ) {
   //Diese Function wird bei den Pfeilen aufgerufen. Sie erhöht oder senkt den monat um 1.
   // Wird gleich geschrieben
-  var element = document.getElementById( "MonatFeld" ),
-  index   = element.selectedIndex;
+  var element = document.getElementById( ( isMobil() )
+    ? "MobilMonatFeld"
+    : "MonatFeld" );
+  var index = element.selectedIndex;
+  var maxIndex = element.length - 1;
   switch ( was ) {
     case 0: index--; break;
     case 1: index++; break;
@@ -172,9 +199,9 @@ function monatVeraendern( was, anzeigen ) {
   }
   if ( index < 0 ) { // anpassen des Jahres (true damit display nicht 2 mal ausgeführt wird)
     jahrVeraendern( 0, true );
-    index = 2;
+    index = maxIndex;
   }
-  if ( index > 2 ) {
+  if ( index > maxIndex ) {
     jahrVeraendern( 1, true );
     index = 0;
   }
@@ -185,35 +212,73 @@ function monatVeraendern( was, anzeigen ) {
 }
 
 
-function display( was ) {
-  if ( typeof was === "boolean" ) { // wechseln zwischen ganz Jahr und nur ein teil
-    istGanzJahr = was;
+function isMobil() {
+  try {
+    var ele = document.getElementById('MonatFeld');
+    var style = window.getComputedStyle(ele);
+    return (style.display === 'none');
+  } catch (e) {
+    return (navigator.userAgent.match(/Android/i)
+      || navigator.userAgent.match(/webOS/i)
+      || navigator.userAgent.match(/iPhone/i)
+      || navigator.userAgent.match(/iPad/i)
+      || navigator.userAgent.match(/iPod/i)
+      || navigator.userAgent.match(/BlackBerry/i)
+      || navigator.userAgent.match(/Windows Phone/i));
   }
+}
+
+function display( was ) {
+  if ( typeof was === "boolean" ) { istGanzJahr = was; } // wechseln zwischen ganz Jahr und nur ein teil
 
   var jahr = checkYear( Number( document.getElementById( "jahrFeld" ).value ) ),
   // Das Jahr wird ausgelesen und überprüft
-  // Start bei Monat
-  startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4,
+  startIndex = document.getElementById( "MonatFeld" ).options.selectedIndex * 4, // Start bei Monat
+  mobilStartIndex = document.getElementById( "MobilMonatFeld" ).options.selectedIndex, // Start bei Monat
   anzahl = 1, // Wieviele Monate sollen angezeigt werden?
-  // DOM-Knoten wo die Tabelle angezeigt werden soll
-  anzeige = document.getElementById( "anzeige" ),
-  month, // Übergabe variable
-  i,
+  anzeige = document.getElementById( "anzeige" ), // DOM-Knoten wo die Tabelle angezeigt werden soll
   element; // entweder die Tabelle selbst oder eine Tabelle in der alle Monate enthalten sind
 
-  element = createDiv();
-  element.className = "month";
-
-  anzahl = ( istGanzJahr ) ? 12 : 4;
-  for ( i = 0; i < anzahl; i++ ) {
-    month = ( istGanzJahr ) ? i : ( i + startIndex );
-    element.appendChild( createMonth( jahr, month ) );
+  if ( isMobil() ) {
+    element = displayPhoneScreen( istGanzJahr, mobilStartIndex, jahr );
+  } else {
+    element = displayFullScreen( istGanzJahr, startIndex, jahr );
   }
 
   anzeige.replaceChild( element, anzeige.firstChild );
   document.getElementById( "jahrAnzeigeDruck" ).firstChild.data = "Jahr: " + jahr;
   // Druck Jahr anzeige
   share();
+}
+
+function displayFullScreen( ganzJahr, startIndex, jahr ) { // Alle 4 Monate werden angezeigt
+  var element = createDiv(),
+  i, month, anzahl;
+  element.className = "month";
+
+  anzahl = ( ganzJahr ) ? 12 : 4;
+  for ( i = 0; i < anzahl; i++ ) {
+    month = ( ganzJahr ) ? i : ( i + startIndex );
+    element.appendChild( createMonth( jahr, month ) );
+  }
+  return element;
+}
+
+function displayPhoneScreen( ganzJahr, startMonth, jahr ) {
+  var ele = createDiv();
+  ele.className = "month";
+  var anzahl = ( ganzJahr ) ? 12 : 2;
+  var start = ( ganzJahr ) ? 0 : startMonth;
+  for ( var i = 0; i < anzahl; ++i ) {
+    var month = i + start;
+    var displayJahr = jahr;
+    if ( month >= 12 ) {
+      month = 0;
+      displayJahr += 1;
+    }
+    ele.appendChild( createMonth( displayJahr, month ) );
+  }
+  return ele;
 }
 
 
