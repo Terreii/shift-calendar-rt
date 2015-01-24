@@ -27,3 +27,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .kontrollen > *:first-child {
   border-left: 0px solid grey;
 }
+
+#MobilMonatFeld {
+  display: none;
+}
