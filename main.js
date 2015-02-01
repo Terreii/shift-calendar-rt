@@ -166,7 +166,9 @@ function setMonth( month ) {
     document.getElementById( "MobilMonatFeld" ).options[month].selected = true;
   }
   else {
-    document.getElementById( "MonatFeld" ).options[month / 4].selected = true;
+    document.getElementById( "MonatFeld" ).options[
+      Math.floor(month / 4)
+    ].selected = true;
   }
 }
 
