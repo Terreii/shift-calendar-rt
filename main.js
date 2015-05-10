@@ -61,11 +61,23 @@ window.onload = function() { // Init  adding the EventListeners
   if( hash === '' || hash === '#' ) {
     displayNow();
   } else {
+    var parts;
+    if ( /group/i.test( hash ) ) {
+      var index = /group([1-6])/i.exec( hash )[1];
+      document.getElementById( "groups" ).selectedIndex = +index;
+      var parts = hash.split( '&' );
+      if ( parts.length === 1 ) {
+        display();
+        return;
+      }
+    } else {
+      parts = [hash];
+    }
     document.getElementById( "suchenEingabe" ).value =
-    hash.split( '_' ).reduce(function( s, n, i ) {
-      s = (s.length > 0) ? s + '-' : s;
-      return s + n.substr( (n.charAt( 0 ) === '#') ? 2 : 1 );
-    }, '');
+      parts[0].split( '_' ).reduce(function( s, n, i ) {
+        s = (s.length > 0) ? s + '-' : s;
+        return s + n.substr( (n.charAt( 0 ) === '#') ? 2 : 1 );
+      }, '');
     tagSuchen();
   }
 };
@@ -344,8 +356,14 @@ function share( date ) {
   var link = document.getElementById( "shareButton" ),
   href = "mailto:?subject=Meine Schicht&body=Sehe meine Schicht unter "
   + location.host + location.pathname;
-  if( date !== undefined ) {
+  var dateAdded = false;
+  if ( date !== undefined ) {
     href += "#y" + date.year + "_m" + date.month + "_d" + date.day;
+    dateAdded = true;
+  }
+  var index = document.getElementById( "groups" ).selectedIndex;
+  if ( index !== 0 ) {
+    href += ( ( dateAdded ) ? "&group" : "#group" ) + index;
   }
   link.href = encodeURI(href);
 }
