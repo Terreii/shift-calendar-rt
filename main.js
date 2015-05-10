@@ -52,6 +52,9 @@ window.onload = function() { // Init  adding the EventListeners
   document.getElementById( "ganzesJahrInput" ).onclick = function() {
     display( true );
   };
+  document.getElementById( "groups" ).onchange = function() {
+    display();
+  }
   document.getElementById( "tagSuchenButton" ).onclick = tagSuchen;
 
   var hash = location.hash;

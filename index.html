@@ -40,17 +40,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
         </select>
         <select class="eingabe" id="MobilMonatFeld" size="1">
           <option selected="selected" value="0">Januar</option>
-          <option selected="selected" value="1">Februar</option>
-          <option selected="selected" value="2">März</option>
-          <option selected="selected" value="3">April</option>
-          <option selected="selected" value="4">Mai</option>
-          <option selected="selected" value="5">Juni</option>
-          <option selected="selected" value="6">Juli</option>
-          <option selected="selected" value="7">August</option>
-          <option selected="selected" value="8">September</option>
-          <option selected="selected" value="9">Oktober</option>
-          <option selected="selected" value="10">November</option>
-          <option selected="selected" value="11">Dezember</option>
+          <option value="1">Februar</option>
+          <option value="2">März</option>
+          <option value="3">April</option>
+          <option value="4">Mai</option>
+          <option value="5">Juni</option>
+          <option value="6">Juli</option>
+          <option value="7">August</option>
+          <option value="8">September</option>
+          <option value="9">Oktober</option>
+          <option value="10">November</option>
+          <option value="11">Dezember</option>
         </select>
         <input id="monatePlus" class="goto" value="&gt;" type="button"/>
       </div>
@@ -72,6 +72,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
       <div id="ganzesJahrButton">
         <input id="ganzesJahrInput" value="ganzes Jahr" type="button"/>
       </div>
+    </form>
+
+    <form>
+      Gruppen:
+      <select class="eingabe" id="groups" size="1">
+        <option selected="selected" value="0">Alle</option>
+        <option value="1">Gruppe 1</option>
+        <option value="2">Gruppe 2</option>
+        <option value="3">Gruppe 3</option>
+        <option value="4">Gruppe 4</option>
+        <option value="5">Gruppe 5</option>
+        <option value="6">Gruppe 6</option>
+      </select>
     </form>
 
     <form action="javascript:tagSuchen()">
