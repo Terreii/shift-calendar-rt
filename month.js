@@ -89,22 +89,14 @@ function createDay( year, month, day, allGroups ) {
   }
   var schichten = []; // in diesen Array wird gespeicher welche der Schichten arbeit (true/false)
 
-  var zeit = new Date( year, month, day, 0, 0, 0 );
   var heute = isToday( year, month, day );
 
-  // Monatstag
-  // hier wird die erste Spalte erstellt in der steht welcher tag im monat dieser ist
-  var monthDay = createTd( zeit.getDate() );
-  feierTag( monthDay, year, month, day, true );
-  if ( heute ) {
-    setBorder( "left", monthDay );
-  }
-
-  line.appendChild( monthDay );
+  line.appendChild( createMonthDay( year, month, day, heute ) );
 
   // Wochentag
   // zeile in der die Abkürzung des Wochentagen (z.B.: Mo,Di) steht
   var Wochentag = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+  var zeit = new Date( year, month, day, 0, 0, 0 );
   var weeksDay = createTd( Wochentag[ zeit.getDay() ] );
   feierTag( weeksDay, year, month, day, true );
   if ( heute ) {
@@ -119,6 +111,42 @@ function createDay( year, month, day, allGroups ) {
     createSingleGroup( year, month, day, heute, line, schichten );
   }
   return {row:line, schichten:schichten};
+}
+
+function createMonthDay( year, month, day, heute ) {
+  // Monatstag
+  // hier wird die erste Spalte erstellt in der steht welcher tag im monat dieser ist
+  var zeit = new Date( year, month, day, 0, 0, 0 );
+  var monthDay = createTd( zeit.getDate() );
+  feierTag( monthDay, year, month, day, true );
+  if ( heute ) {
+    setBorder( "left", monthDay );
+  }
+  if ( isSummertimeSwitch( year, month, day ) ) {
+    var text = "Zeitumstellung! Es wird um 1 Stunde ";
+    if ( month === 2 ) {
+      text += "vor (von 2 Uhr auf 3 Uhr)";
+    } else {
+      text += "zurück (von 3 Uhr auf 2 Uhr)";
+    }
+    text += " gestellt.";
+    monthDay.style.backgroundColor = "rgb(255, 255, 0)";
+    monthDay.style.border = "3px solid rgb(255, 0, 0)";
+    monthDay.style.cursor = "help";
+    monthDay.title = text;
+    monthDay.addEventListener("click", function () {
+      createAlert(text, 5000);
+    });
+  }
+  return monthDay;
+}
+
+function isSummertimeSwitch( year, month, day ) {
+  if ( month !== 2 && month !== 9 ) {
+    return false;
+  }
+  var date = new Date( year, month, day );
+  return date.getDate() > 24 && date.getDay() === 0;
 }
 
 function createAllGroups( year, month, day, heute, line, schichten ) {
