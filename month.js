@@ -10,14 +10,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 
 function createMonth( year, monat ) {
+  var allGroups = document.getElementById( "groups" ).selectedIndex === 0;
   var tabelle = document.createElement( "table" );
   tabelle.style.margin = "10px";
 
   tabelle.appendChild( createMonthName( monat ) ); // Zelle die den Monats-Namen beinhaltet
 
-  tabelle.appendChild( createTableHead() );
+  tabelle.appendChild( createTableHead( allGroups ) );
 
-  tabelle.appendChild( createTableBody( year, monat ) );
+  tabelle.appendChild( createTableBody( year, monat, allGroups ) );
 
   return tabelle;
 }
@@ -28,17 +29,24 @@ function createMonthName( monat ) {
   return createEle( "caption", textNode( Namen[ monat ] ) );
 }
 
-function createTableHead() {
+function createTableHead( allGroups ) {
   var reihe = createTr();
 
-  ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"].forEach(function(zellText) {
+  if ( allGroups ) {
+    var texts = ["Tag", " ", "Gr.1", "Gr.2", "Gr.3", "Gr.4", "Gr.5", "Gr.6"];
+  }
+  else {
+    var texts = ["Tag", " ", "Gr." + document.getElementById( "groups" ).selectedIndex]
+  }
+
+  texts.forEach(function(zellText) {
       reihe.appendChild( createEle( "td", textNode( zellText ) ) );
   });
 
   return createEle( "thead", reihe );
 }
 
-function createTableBody( year, monat ) {
+function createTableBody( year, monat, allGroups ) {
   var theBody = createEle( "tbody" ),
       anz, // anzahl der tage in diesen Monat
       arbeitstage = [0,0,0,0,0,0];
@@ -56,7 +64,7 @@ function createTableBody( year, monat ) {
   }
 
   for ( var i = 1; i <= anz; i++ ) { // startet bei 1 weil der erste tag im monat 1 ist
-    var tag = createDay( year, monat, i );
+    var tag = createDay( year, monat, i, allGroups );
     theBody.appendChild( tag.row );
     tag.schichten.forEach(function (is, gr) {
       if ( is ) { arbeitstage[gr]++; }
@@ -64,7 +72,7 @@ function createTableBody( year, monat ) {
     });
   }
 
-  theBody.appendChild( createArbeitsTagAnzeige( arbeitstage ) );
+  theBody.appendChild( createArbeitsTagAnzeige( arbeitstage, allGroups ) );
 
   return theBody;
 }
@@ -73,7 +81,7 @@ function isSchaltjahr( year ) {
   return ( year % 4 ) === 0;
 }
 
-function createDay( year, month, day ) {
+function createDay( year, month, day, allGroups ) {
   var line = createTr();
   line.id = "row_" + year + "_" + month + "_" + day;
   if ( isWoE( year, month, day ) ) {
@@ -81,22 +89,14 @@ function createDay( year, month, day ) {
   }
   var schichten = []; // in diesen Array wird gespeicher welche der Schichten arbeit (true/false)
 
-  var zeit = new Date( year, month, day, 0, 0, 0 );
   var heute = isToday( year, month, day );
 
-  // Monatstag
-  // hier wird die erste Spalte erstellt in der steht welcher tag im monat dieser ist
-  var monthDay = createTd( zeit.getDate() );
-  feierTag( monthDay, year, month, day, true );
-  if ( heute ) {
-    setBorder( "left", monthDay );
-  }
-
-  line.appendChild( monthDay );
+  line.appendChild( createMonthDay( year, month, day, heute ) );
 
   // Wochentag
   // zeile in der die Abkürzung des Wochentagen (z.B.: Mo,Di) steht
   var Wochentag = ["So","Mo","Di","Mi","Do","Fr","Sa"];
+  var zeit = new Date( year, month, day, 0, 0, 0 );
   var weeksDay = createTd( Wochentag[ zeit.getDay() ] );
   feierTag( weeksDay, year, month, day, true );
   if ( heute ) {
@@ -104,6 +104,52 @@ function createDay( year, month, day ) {
   }
   line.appendChild( weeksDay );
 
+  if ( allGroups ) {
+    createAllGroups( year, month, day, heute, line, schichten );
+  }
+  else {
+    createSingleGroup( year, month, day, heute, line, schichten );
+  }
+  return {row:line, schichten:schichten};
+}
+
+function createMonthDay( year, month, day, heute ) {
+  // Monatstag
+  // hier wird die erste Spalte erstellt in der steht welcher tag im monat dieser ist
+  var zeit = new Date( year, month, day, 0, 0, 0 );
+  var monthDay = createTd( zeit.getDate() );
+  feierTag( monthDay, year, month, day, true );
+  if ( heute ) {
+    setBorder( "left", monthDay );
+  }
+  if ( isSummertimeSwitch( year, month, day ) ) {
+    var text = "Zeitumstellung! Es wird um 1 Stunde ";
+    if ( month === 2 ) {
+      text += "vor (von 2 Uhr auf 3 Uhr)";
+    } else {
+      text += "zurück (von 3 Uhr auf 2 Uhr)";
+    }
+    text += " gestellt.";
+    monthDay.style.backgroundColor = "rgb(255, 255, 0)";
+    monthDay.style.border = "3px solid rgb(255, 0, 0)";
+    monthDay.style.cursor = "help";
+    monthDay.title = text;
+    monthDay.addEventListener("click", function () {
+      createAlert(text, 5000);
+    });
+  }
+  return monthDay;
+}
+
+function isSummertimeSwitch( year, month, day ) {
+  if ( month !== 2 && month !== 9 ) {
+    return false;
+  }
+  var date = new Date( year, month, day );
+  return date.getDate() > 24 && date.getDay() === 0;
+}
+
+function createAllGroups( year, month, day, heute, line, schichten ) {
   for ( var i = 0; i < 6; i++ ) { // die Schichtanzeige der 6 schichtgruppen wird erstellt
     var zelle = createBodyZell( year, month, day, i );
     if ( heute && i < 5 ) {
@@ -115,7 +161,16 @@ function createDay( year, month, day ) {
     line.appendChild( zelle.ele ); // die eigentliche Zelle wir übergeben
     schichten[i] = zelle.arbeit; // es wird übergeben ob eine Schicht gearbeitet har
   }
-  return {row:line, schichten:schichten};
+}
+
+function createSingleGroup( year, month, day, heute, line, schichten ) {
+  var group = document.getElementById( "groups" ).selectedIndex;
+  var zelle = createBodyZell( year, month, day, group - 1 );
+  if ( heute ) {
+    setBorder( "right", zelle.ele );
+  }
+  line.appendChild( zelle.ele );
+  schichten[0] = zelle.arbeit;
 }
 
 function setBorder( wo, obj ) {//macht den Ramen dicker für das Feld das den Heutigen tag darstellt
@@ -313,7 +368,7 @@ function color( obj, what ) { // färbt die Zellen in die Gruppen-, Wochenend- u
   obj.style.backgroundColor = newColor;
 }
 
-function createArbeitsTagAnzeige( arbeitstage ) {
+function createArbeitsTagAnzeige( arbeitstage, allGroups ) {
 // erstellt die Arbeitstage-Anzeige erwartet ein Array aus Zahlen [Gr1,Gr2,Gr3,Gr4,Gr5,Gr6]
   var anzeige = document.createElement( "tr" );
 
@@ -323,7 +378,7 @@ function createArbeitsTagAnzeige( arbeitstage ) {
   name.style.cursor = "help";
   anzeige.appendChild( name );
 
-  for ( var i = 0; i < 6; i++ ) {
+  for ( var i = 0, max = ( allGroups ) ? 6 : 1; i < max; i++ ) {
     var zelle = createTd( arbeitstage[i]  );
     anzeige.appendChild( zelle );
   }
