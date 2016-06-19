@@ -230,7 +230,57 @@ function feierTag( obj, year, month, day, isNameCell ) {
   }*/
 }
 
+function getOldSchicht( year, month, day, gr ) {
+  var inSchicht = (new Date( year, month, day, 0, 0, 0 )
+    .getTime() / 1000 / 60 / 60 / 24) % 24 // Tage in dem Zyklus
+    // (4 arbeitstage + 4 frei) * 3 schichten = 24
+
+  var grOffset = 0
+  switch ( gr ) {
+    case 0: // gruppe 1
+      grOffset = 14
+      break
+    case 1: // gruppe 2
+      grOffset = 10
+      break
+    case 2: // gruppe 3
+      grOffset = 6
+      break
+    case 3: // gruppe 4
+      grOffset = 2
+      break
+    case 4: // gruppe 5
+      grOffset = 22
+      break
+    case 5: // gruppe 6
+      grOffset = 18
+      break
+    default:
+      grOffset = 0
+      break;
+  }
+
+  var schichtTag = Math.floor( ( inSchicht + grOffset ) / 4)
+  if (schichtTag >= 6) {
+    schichtTag -= 6
+  }
+  switch ( schichtTag ) {
+    case 4:
+      return 'F' // Früh
+    case 2:
+      return 'S' // Spät
+    case 0:
+      return 'N' // Nacht
+    case 1: case 3: case 5: default:
+      return 'K' // keine/Frei
+  }
+}
+
 function getSchicht( year, month, day, gr ) {
+  if ( year < 2010 || ( year === 2010 &&
+    ( month < 3 || ( month === 3 && day < 4 ) ) ) ) {
+    return getOldSchicht( year, month, day, gr )
+  }
   var schicht; // "F" = früh, "S" = spät, "N" = nacht, "K" = keine/frei
   var zeit = new Date( year, month, day, 0, 0, 0 );
   // zuerst auf die anzahl von tagen von 1970.1.1, dann durch 12 da ein zyklus 12 tage sind
