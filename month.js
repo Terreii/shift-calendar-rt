@@ -281,34 +281,52 @@ function getSchicht( year, month, day, gr ) {
     ( month < 3 || ( month === 3 && day < 4 ) ) ) ) {
     return getOldSchicht( year, month, day, gr )
   }
-  var schicht; // "F" = früh, "S" = spät, "N" = nacht, "K" = keine/frei
   var zeit = new Date( year, month, day, 0, 0, 0 );
   // zuerst auf die anzahl von tagen von 1970.1.1, dann durch 12 da ein zyklus 12 tage sind
-  var inSchicht = ( zeit.getTime() / 1000 / 60 / 60 / 24 ) / 12;
+  var inSchicht = ( zeit.getTime() / 1000 / 60 / 60 / 24 ) % 12;
   var grOffset;
   switch ( gr ) {
-    case 0: grOffset = 5; break;  // gruppe 1
-    case 1: grOffset = 11; break; // gruppe 2
-    case 2: grOffset = 3; break;  // gruppe 3
-    case 3: grOffset = 9; break;  // gruppe 4
-    case 4: grOffset = 1; break;  // gruppe 5
-    case 5: grOffset = 7; break;  // gruppe 6
+    case 0:
+      grOffset = 6;
+      break;  // gruppe 1
+    case 1:
+      grOffset = 0;
+      break;  // gruppe 2
+    case 2:
+      grOffset = 4;
+      break;  // gruppe 3
+    case 3:
+      grOffset = 10;
+      break; // gruppe 4
+    case 4:
+      grOffset = 2;
+      break;  // gruppe 5
+    case 5:
+      grOffset = 8;
+      break;  // gruppe 6
+    default:
+      grOffset = 0;
+      break;
   }
 
-  var schichtTag = Math.floor( ( Math.round( afterDot( inSchicht ) * 12) + grOffset ) / 2);
+  var schichtTag = Math.floor( ( inSchicht + grOffset ) / 2);
   // es wird die dezimalzahl rausgefiltert. die anzeigt wie weit im block man ist
   // wird nur mal 6 genommen, da es nur 6 kombinationen gibt
   if (schichtTag >= 6) {
     schichtTag -= 6;
   }
 
+  // "F" = früh, "S" = spät, "N" = nacht, "K" = keine/frei
   switch ( schichtTag ) {
-    case 0: schicht = "F"; break; // Früh
-    case 1: schicht = "S"; break; // Spät
-    case 2: schicht = "N"; break; // Nacht
-    case 3: case 4: case 5: schicht = "K"; break; // keine/Frei
+    case 0:
+      return "F"; // Früh
+    case 1:
+      return "S"; // Spät
+    case 2:
+      return "N"; // Nacht
+    case 3: case 4: case 5: default:
+      return "K"; // keine/Frei
   }
-  return schicht;
 }
 
 function getUrlaub( year, month, day, isNameCell ) {
