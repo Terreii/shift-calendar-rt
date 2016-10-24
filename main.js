@@ -8,6 +8,18 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 */
 
+if (navigator.serviceWorker) {
+  navigator.serviceWorker.register('./service-worker.js').then(function (regi) {
+    if (regi.installing) {
+      var info = document.getElementById('appcacheInfo')
+      info.innerHTML = 'Dieser Kalender ist nun offline verfügbar!'
+      info.style.display = 'block'
+    }
+  }, function (err) {
+    console.error(err)
+  })
+}
+
 var dev = {
   setMobil: function( is ) {
     var mobil = ( is ) ? "inline" : "none";
