@@ -8,6 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 */
 
+var isOfflineAvailable = false
+
 if (navigator.serviceWorker) {
   navigator.serviceWorker.register('./service-worker.js').then(function (regi) {
     if (regi.installing) {
@@ -15,6 +17,7 @@ if (navigator.serviceWorker) {
       info.innerHTML = 'Dieser Kalender ist nun offline verfügbar!'
       info.style.display = 'block'
     }
+    isOfflineAvailable = true
   }, function (err) {
     console.error(err)
   })
@@ -104,8 +107,37 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
       e.stopPropagation();
       document.location.reload();
     } );
+    isOfflineAvailable = true
   } );
 }
+
+// if the page comes back to the forground, the calendar will be renewed.
+// Some have the calendar longer open than one day!
+// If the page was loaded more than 24 hours ago, it will be reloaded.
+;(function () {
+  var reloadAfter = Date.now() + (1000 * 60 * 60 * 24)
+
+  var hidden
+  var visibilityChange
+  if (typeof document.hidden !== 'undefined') {
+    hidden = 'hidden'
+    visibilityChange = 'visibilitychange'
+  } else if (typeof document.msHidden !== 'undefined') {
+    hidden = 'msHidden'
+    visibilityChange = 'msvisibilitychange'
+  } else if (typeof document.webkitHidden !== 'undefined') {
+    hidden = 'webkitHidden'
+    visibilityChange = 'webkitvisibilitychange'
+  }
+  document.addEventListener(visibilityChange, function (event) {
+    if (!document[hidden]) {
+      if (reloadAfter < Date.now() && isOfflineAvailable) {
+        window.location.reload()
+      }
+      display()
+    }
+  })
+})()
 
 
 
