@@ -111,7 +111,7 @@ if ( window.applicationCache && window.applicationCache.addEventListener ) {
   } );
 }
 
-// if the page comes back to the forground, the calendar will be renewed.
+// if the page comes back to the foreground, the calendar will be renewed.
 // Some have the calendar longer open than one day!
 // If the page was loaded more than 24 hours ago, it will be reloaded.
 ;(function () {
