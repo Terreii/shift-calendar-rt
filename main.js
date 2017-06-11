@@ -380,23 +380,42 @@ function createAlert( text, countdown ) { //erstellt ein Fenter in dem Nachricht
   return win = document.body.appendChild( win ); // win wird erst beschrieben & auch zurückgegeben
 }
 
+// Share the calendar
+var share = function () {}
 
-function share( date ) {
-  var link = document.getElementById( "shareButton" ),
-  href = "mailto:?subject=Meine Schicht&body=Sehe meine Schicht unter "
-  + location.host + location.pathname;
-  var dateAdded = false;
-  if ( date !== undefined ) {
-    href += "#y" + date.year + "_m" + date.month + "_d" + date.day;
-    dateAdded = true;
-  }
-  var index = document.getElementById( "groups" ).selectedIndex;
-  if ( index !== 0 ) {
-    href += ( ( dateAdded ) ? "&group" : "#group" ) + index;
-  }
-  link.href = encodeURI(href);
-}
+window.addEventListener('load', function () {
+  var shareButton = document.getElementById('shareButton')
+  var shareURL = new window.URL(window.location.href)
+  shareButton.addEventListener('click', function (event) {
+    // new WebShare API
+    if (navigator.share != null) {
+      event.preventDefault()
+      navigator.share({
+        title: 'Meine Schicht',
+        url: shareURL
+      }).then(function () {
+        console.log('shared site!')
+      }, function (error) {
+        console.error(error)
+      })
+    }
+  })
 
+  share = function share (date) {
+    shareURL.hash = ''
+    if (date != null) {
+      shareURL.hash += '#y' + date.year + '_m' + date.month + '_d' + date.day
+    }
+    var group = +document.getElementById('groups').selectedIndex
+    if (group > 0) {
+      shareURL.hash += (shareURL.hash.length === 0 ? '#group' : '&group') +
+        group
+    }
+    share.href = // Old way with mail
+      'mailto:?subject=Meine Schicht&body=Sehe meine Schicht unter ' +
+      shareURL.toString()
+  }
+})
 
 // Functionen für das Erstellen von DOM-Elemente
 
