@@ -18,7 +18,7 @@ const monthNames = [
   'Dezember'
 ]
 
-export default ({ year, month }) => {
+export default ({ year, month, data }) => {
   return <table class={style.Main}>
     <caption>{monthNames[month]}</caption>
     <thead>
@@ -28,6 +28,6 @@ export default ({ year, month }) => {
         {[1, 2, 3, 4, 5, 6].map(gr => <th key={gr}>Gr. {gr}</th>)}
       </tr>
     </thead>
-    <MonthBody year={year} month={month} />
+    <MonthBody year={year} month={month} data={data} />
   </table>
 }

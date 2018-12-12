@@ -8,35 +8,34 @@ const holiday = {
   6: 'general'
 }
 
-export default ({ year, month }) => {
-  const daysInMonth = getDaysInMonth(year, month)
+export default ({ year, month, data }) => {
+  const dayRows = data.days.map((day, index) => {
+    const aDay = new Date(year, month, index + 1).getDay()
 
-  const dayRows = []
-
-  for (let i = 0; i < daysInMonth; ++i) {
-    const aDay = new Date(year, month, i + 1).getDay()
-
-    dayRows.push(<tr
-      key={`${year}-${month}-${i}`}
+    return <tr
+      key={index}
       class={style.DayRow}
       data-day={aDay}
-      data-holiday={holiday[i]}
+      data-holiday={holiday[index]}
     >
-      <td>{i + 1}</td>
+      <td>{index + 1}</td>
       <td>{dayName[aDay]}</td>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td data-working>5</td>
-      <td>6</td>
-    </tr>)
-  }
+      {day.map((shift, gr) => (
+        <td
+          key={gr}
+          data-working={shift !== 'K'}
+        >
+          {shift === 'K' ? '' : shift}
+        </td>
+      ))}
+    </tr>
+  })
 
-  return <tbody>{dayRows}</tbody>
-}
-
-function getDaysInMonth (year, month) {
-  // first day in month is 1. 0 is the one before --> last day of month!
-  return new Date(year, month + 1, 0).getDate()
+  return <tbody>
+    {dayRows}
+    <tr class={style.WorkinDaysRow}>
+      <td colSpan='2'>Anzahl</td>
+      {data.workingCount.map((number, index) => <td key={index}>{number}</td>)}
+    </tr>
+  </tbody>
 }
