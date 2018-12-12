@@ -1,0 +1,48 @@
+.DayRow {
+
+  &[data-day='0'], &[data-day='6'] { // Weekend
+    background-color: #D3D3D3;
+  }
+
+  &[data-holiday='full'] { // closing holiday
+    background-color: rgb(0, 128, 0);
+    color: white;
+  }
+
+  &[data-holiday='general'] {
+    :nth-child(1), :nth-child(2) {
+      background-color: rgb(0, 128, 0);
+      color: white;
+    }
+  }
+
+  :nth-child(3)[data-working='true'] { // Gr 1
+    background-color: rgb(255, 105, 180);
+    color: black;
+  }
+
+  :nth-child(4)[data-working='true'] { // Gr 2
+    background-color: rgb(255, 255, 0);
+    color: black;
+  }
+
+  :nth-child(5)[data-working='true'] { // Gr 3
+    background-color: rgb(255, 0, 0);
+    color: black;
+  }
+
+  :nth-child(6)[data-working='true'] { // Gr 4
+    background-color: rgb(0, 255, 0);
+    color: black;
+  }
+
+  :nth-child(7)[data-working='true'] { // Gr 5
+    background-color: rgb(30, 144, 255);
+    color: black;
+  }
+
+  :nth-child(8)[data-working='true'] { // Gr 6
+    background-color: rgb(205, 133, 63);
+    color: black;
+  }
+}
