@@ -2,13 +2,16 @@ import { h } from 'preact'
 import style from './style.less'
 
 import Month from '../month'
+import selectMonthData from '../../lib/select-month-data'
 
-export default ({ year, month, data, today }) => {
+export default ({ year, month, is6_4Model, today }) => {
+	const data = selectMonthData(year, month, is6_4Model)
+
 	return (
 		<div class={style.home} onClick={processClick}>
 			<h1>Home</h1>
 			<p>This is the Home component.</p>
-			<Month year={year} month={month} data={data} today={today} />
+			<Month year={year} month={month} data={data} today={today} is6_4Model={is6_4Model} />
 		</div>
 	)
 }

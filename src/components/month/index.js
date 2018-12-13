@@ -18,14 +18,18 @@ const monthNames = [
   'Dezember'
 ]
 
-export default ({ year, month, data, today }) => {
+export default ({ year, month, data, today, is6_4Model }) => {
+  const grRow = is6_4Model
+    ? [1, 2, 3, 4, 5]
+    : [1, 2, 3, 4, 5, 6]
+
   return <table class={style.Main}>
     <caption>{monthNames[month]}</caption>
     <thead>
       <tr>
         <th>Tag</th>
         <th />
-        {[1, 2, 3, 4, 5, 6].map(gr => <th key={gr}>Gr. {gr}</th>)}
+        {grRow.map(gr => <th key={gr}>Gr. {gr}</th>)}
       </tr>
     </thead>
     <MonthBody year={year} month={month} data={data} today={today} />

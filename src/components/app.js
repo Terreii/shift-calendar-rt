@@ -5,14 +5,13 @@ import Header from './header'
 import Home from './home'
 import Profile from './profile'
 
-import getMonthData from '../lib/workdata'
-
 export default class App extends Component {
 	constructor (args) {
 		super(args)
 
 		const now = new Date()
 		this.state = {
+			is6_4Model: false,
 			today: [now.getFullYear(), now.getMonth(), now.getDate()],
 			year: now.getFullYear(),
 			month: now.getMonth()
@@ -57,7 +56,7 @@ export default class App extends Component {
 						path='/'
 						year={this.state.year}
 						month={this.state.month}
-						data={getMonthData(this.state.year, this.state.month)}
+						is6_4Model={this.state.is6_4Model}
 						today={this.state.today}
 					/>
 					<Profile path="/profile/" user="me" />
