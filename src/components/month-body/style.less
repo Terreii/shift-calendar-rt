@@ -4,15 +4,17 @@
     background-color: #D3D3D3;
   }
 
-  &[data-holiday='full'] { // closing holiday
+  &[data-holiday='closing'] { // closing holiday
     background-color: rgb(0, 128, 0);
     color: white;
   }
 
-  &[data-holiday='general'] {
-    :nth-child(1), :nth-child(2) {
-      background-color: rgb(0, 128, 0);
-      color: white;
+  &[data-holiday='dayLightSaving'] {
+    :nth-child(1) {
+      background-color: rgb(255, 255, 0);
+      border: 3px solid rgb(255, 0, 0);
+      color: black;
+      cursor: help;
     }
   }
 
@@ -50,4 +52,8 @@
 .WorkinDaysRow {
   font-size: 90%;
   font-weight: bold;
+}
+
+.WorkingDaysInfo {
+  cursor: help;
 }
