@@ -24,7 +24,7 @@ export default ({ year, month, data, today, is6_4Model }) => {
     : [1, 2, 3, 4, 5, 6]
 
   return <table class={style.Main}>
-    <caption>{monthNames[month]}</caption>
+    <caption>{monthNames[month]} {year}</caption>
     <thead>
       <tr>
         <th>Tag</th>

@@ -10,21 +10,31 @@ export default class App extends Component {
 		super(args)
 
 		const now = new Date()
+		const year = now.getFullYear()
+		const month = now.getMonth()
+
 		this.state = {
+			displayOption: 'one',
+			fullYear: false,
 			is6_4Model: false,
-			today: [now.getFullYear(), now.getMonth(), now.getDate()],
-			year: now.getFullYear(),
-			month: now.getMonth()
+			today: [year, month, now.getDate()],
+			year,
+			month
 		}
+
+		this._onResize({})
 	}
 
 	componentDidMount () {
 		this.focusListener = this._onFocus.bind(this)
+		this.resizeListener = this._onResize.bind(this)
 		window.addEventListener('focus', this.focusListener)
+		window.addEventListener('resize', this.resizeListener)
 	}
 
 	componentWillUnmount () {
 		window.removeEventListener('focus', this.focusListener)
+		window.removeEventListener('resize', this.resizeListener)
 	}
 
 	_onFocus (event) {
@@ -35,6 +45,18 @@ export default class App extends Component {
 		if (this.state.today[2] !== today) {
 			this.setState({
 				today: [now.getFullYear(), now.getMonth(), today]
+			})
+		}
+	}
+
+	_onResize (event) {
+		if (window.innerWidth < 1220) {
+			this.setState({
+				displayOption: 'one'
+			})
+		} else {
+			this.setState({
+				displayOption: '4'
 			})
 		}
 	}
@@ -54,6 +76,7 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Home
 						path='/'
+						displayOption={this.state.fullYear ? 'full' : this.state.displayOption}
 						year={this.state.year}
 						month={this.state.month}
 						is6_4Model={this.state.is6_4Model}

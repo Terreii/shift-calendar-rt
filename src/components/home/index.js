@@ -4,14 +4,61 @@ import style from './style.less'
 import Month from '../month'
 import selectMonthData from '../../lib/select-month-data'
 
-export default ({ year, month, is6_4Model, today }) => {
-	const data = selectMonthData(year, month, is6_4Model)
+export default ({ displayOption, year, month, is6_4Model, today }) => {
+	let monthsData = []
+
+	switch (displayOption) {
+		case 'full':
+			for (let i = 0; i < 12; ++i) {
+				monthsData.push({
+					year,
+					month: i,
+					data: selectMonthData(year, i, is6_4Model)
+				})
+			}
+			break
+
+		case '4':
+			for (let i = 0; i < 4; ++i) {
+				let monthNr = month + (i - 1)
+				let yearNr = year
+
+				if (monthNr > 11) {
+					monthNr -= 12
+					yearNr += 1
+				} else if (monthNr < 0) {
+					monthNr += 12
+					yearNr -= 1
+				}
+
+				monthsData.push({
+					year: yearNr,
+					month: monthNr,
+					data: selectMonthData(yearNr, monthNr, is6_4Model)
+				})
+			}
+			break
+	
+		case 'one':
+		default:
+			monthsData.push({
+				year,
+				month,
+				data: selectMonthData(year, month, is6_4Model)
+			})
+			break
+	}
 
 	return (
 		<div class={style.home} onClick={processClick}>
-			<h1>Home</h1>
-			<p>This is the Home component.</p>
-			<Month year={year} month={month} data={data} today={today} is6_4Model={is6_4Model} />
+			{monthsData.map(({year, month, data}) => <Month
+				key={`${year}-${month}-${is6_4Model}`}
+				year={year}
+				month={month}
+				data={data}
+				today={today}
+				is6_4Model={is6_4Model}
+			/>)}
 		</div>
 	)
 }
