@@ -13,8 +13,30 @@ export default class App extends Component {
 
 		const now = new Date()
 		this.state = {
+			today: [now.getFullYear(), now.getMonth(), now.getDate()],
 			year: now.getFullYear(),
 			month: now.getMonth()
+		}
+	}
+
+	componentDidMount () {
+		this.focusListener = this._onFocus.bind(this)
+		window.addEventListener('focus', this.focusListener)
+	}
+
+	componentWillUnmount () {
+		window.removeEventListener('focus', this.focusListener)
+	}
+
+	_onFocus (event) {
+		const now = new Date()
+		const today = now.getDate()
+
+		// update today marker on refocus
+		if (this.state.today[2] !== today) {
+			this.setState({
+				today: [now.getFullYear(), now.getMonth(), today]
+			})
 		}
 	}
 
@@ -36,6 +58,7 @@ export default class App extends Component {
 						year={this.state.year}
 						month={this.state.month}
 						data={getMonthData(this.state.year, this.state.month)}
+						today={this.state.today}
 					/>
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />

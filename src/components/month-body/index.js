@@ -10,7 +10,9 @@ const shiftTitle = {
   'K': null
 }
 
-export default ({ year, month, data }) => {
+export default ({ year, month, data, today }) => {
+  const todayInThisMonth = today[0] === year && today[1] === month
+
   const dayRows = data.days.map((day, index) => {
     const thatDay = index + 1
     const aDay = new Date(year, month, thatDay).getDay()
@@ -23,6 +25,7 @@ export default ({ year, month, data }) => {
       key={index}
       class={style.DayRow}
       data-day={aDay}
+      data-today={todayInThisMonth && thatDay === today[2]}
       data-holiday={holidayData != null ? holidayData.type : null}
       title={holidayData != null ? holidayData.name : null}
     >
