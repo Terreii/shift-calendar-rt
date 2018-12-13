@@ -12,8 +12,12 @@ const shiftTitle = {
 
 export default ({ year, month, data }) => {
   const dayRows = data.days.map((day, index) => {
-    const aDay = new Date(year, month, index + 1).getDay()
-    const holidayData = data.holidays[index + 1]
+    const thatDay = index + 1
+    const aDay = new Date(year, month, thatDay).getDay()
+    const holidayData = data.holidays[thatDay]
+
+    const isDayLightSaving = data.holidays.daylightSavingSwitch != null &&
+      data.holidays.daylightSavingSwitch.day === thatDay
 
     return <tr
       key={index}
@@ -22,7 +26,12 @@ export default ({ year, month, data }) => {
       data-holiday={holidayData != null ? holidayData.type : null}
       title={holidayData != null ? holidayData.name : null}
     >
-      <td>{index + 1}</td>
+      <td
+        data-dayLightSaving={isDayLightSaving}
+        title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
+      >
+        {thatDay}
+      </td>
       <td>{dayName[aDay]}</td>
       {day.map((shift, gr) => (
         <td

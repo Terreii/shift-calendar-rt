@@ -9,13 +9,11 @@
     color: white;
   }
 
-  &[data-holiday='dayLightSaving'] {
-    :nth-child(1) {
-      background-color: rgb(255, 255, 0);
-      border: 3px solid rgb(255, 0, 0);
-      color: black;
-      cursor: help;
-    }
+  td[data-dayLightSaving='true'] {
+    background-color: rgb(255, 255, 0);
+    border: 3px solid rgb(255, 0, 0);
+    color: black;
+    cursor: help;
   }
 
   :nth-child(3)[data-working='true'] { // Gr 1
