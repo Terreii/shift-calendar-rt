@@ -56,7 +56,7 @@ export default ({ displayOption, year, month, is6_4Model, today }) => {
 				year={year}
 				month={month}
 				data={data}
-				today={today}
+				today={today[0] === year && today[1] === month ? today : null}
 				is6_4Model={is6_4Model}
 			/>)}
 		</div>

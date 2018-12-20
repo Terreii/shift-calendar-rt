@@ -50,14 +50,10 @@ export default class App extends Component {
 	}
 
 	_onResize (event) {
-		if (window.innerWidth < 1220) {
-			this.setState({
-				displayOption: 'one'
-			})
-		} else {
-			this.setState({
-				displayOption: '4'
-			})
+		const displayOption = window.innerWidth < 1220 ? 'one' : '4'
+
+		if (displayOption !== this.state.displayOption) {
+			this.setState({ displayOption })
 		}
 	}
 

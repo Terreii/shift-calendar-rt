@@ -23,8 +23,12 @@ export default ({ year, month, data, today, is6_4Model }) => {
     ? [1, 2, 3, 4, 5]
     : [1, 2, 3, 4, 5, 6]
 
+  const isToday = today != null && today[0] === year && today[1] === month
+
   return <table class={style.Main}>
-    <caption>{monthNames[month]} {year}</caption>
+    <caption class={isToday ? style.ThisMonth : null}>
+      {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
+    </caption>
     <thead>
       <tr>
         <th>Tag</th>

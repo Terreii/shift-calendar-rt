@@ -11,7 +11,7 @@ const shiftTitle = {
 }
 
 export default ({ year, month, data, today }) => {
-  const todayInThisMonth = today[0] === year && today[1] === month
+  const todayInThisMonth = today != null && today[0] === year && today[1] === month
 
   const dayRows = data.days.map((day, index) => {
     const thatDay = index + 1
