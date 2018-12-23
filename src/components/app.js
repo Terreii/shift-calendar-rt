@@ -1,5 +1,6 @@
 import { h, Component } from 'preact'
 import { Router } from 'preact-router'
+import Hammer from 'hammerjs'
 
 import Header from './header'
 import Home from './home'
@@ -32,11 +33,17 @@ export default class App extends Component {
 		this.resizeListener = this._onResize.bind(this)
 		window.addEventListener('focus', this.focusListener)
 		window.addEventListener('resize', this.resizeListener)
+
+		this.hammertime = new Hammer(document.getElementById('app'))
+		this.swipeListener = this._onSwipe.bind(this)
+		this.hammertime.on('swipe', this.swipeListener)
 	}
 
 	componentWillUnmount () {
 		window.removeEventListener('focus', this.focusListener)
 		window.removeEventListener('resize', this.resizeListener)
+
+		this.hammertime.off('swipe', this.swipeListener)
 	}
 
 	_onFocus (event) {
@@ -78,6 +85,21 @@ export default class App extends Component {
 			})
 		} else {
 			this.setState({ year, month })
+		}
+	}
+
+	_onSwipe (event) {
+		switch (event.direction) {
+			case 2: // right to left
+				this._onChangeMonth({ relative: 1 })
+				break
+
+			case 4: // left to right
+				this._onChangeMonth({ relative: -1 })
+				break
+
+			default:
+				break
 		}
 	}
 
