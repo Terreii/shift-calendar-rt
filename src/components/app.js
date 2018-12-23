@@ -23,6 +23,8 @@ export default class App extends Component {
 		}
 
 		this._onResize({})
+
+		this._boundMonthChange = this._onChangeMonth.bind(this)
 	}
 
 	componentDidMount () {
@@ -57,6 +59,28 @@ export default class App extends Component {
 		}
 	}
 
+	_onChangeMonth ({ year = this.state.year, month = this.state.month, relative }) {
+		if (typeof relative === 'number') {
+			let nextMonth = this.state.month + relative
+			let nextYear = this.state.year
+
+			if (nextMonth < 0) {
+				nextYear -= 1
+				nextMonth += 12
+			} else if (nextMonth >= 12) {
+				nextYear += 1
+				nextMonth -= 12
+			}
+
+			this.setState({
+				year: nextYear,
+				month: nextMonth
+			})
+		} else {
+			this.setState({ year, month })
+		}
+	}
+
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
 	 *	@param {string} event.url	The newly routed URL
@@ -68,7 +92,11 @@ export default class App extends Component {
 	render() {
 		return (
 			<div id="app">
-				<Header />
+				<Header
+					year={this.state.year}
+					month={this.state.month}
+					onChange={this._boundMonthChange}
+				/>
 				<Router onChange={this.handleRoute}>
 					<Home
 						path='/'

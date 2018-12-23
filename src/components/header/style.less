@@ -42,4 +42,23 @@
 			}
 		}
 	}
+
+	button {
+		font-size: 100%;
+		display: inline-block;
+		border: 0px;
+		height: 56px;
+		padding: 0 15px;
+		background: rgba(0, 0, 0, 0);
+		color: #EEE;
+		will-change: background-color;
+
+		&:hover, &:active {
+			background: rgba(255, 255, 255, 0.3);
+		}
+
+		&:focus {
+			outline: 2px solid highlight;
+		}
+	}
 }
