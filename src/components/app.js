@@ -3,7 +3,7 @@ import { Router } from 'preact-router'
 import Hammer from 'hammerjs'
 
 import Header from './header'
-import Home from './home'
+import Main from './main'
 
 export default class App extends Component {
 	constructor (args) {
@@ -119,7 +119,7 @@ export default class App extends Component {
 					onChange={this._boundMonthChange}
 				/>
 				<Router onChange={this.handleRoute}>
-					<Home
+					<Main
 						path='/'
 						displayOption={this.state.fullYear ? 'full' : this.state.displayOption}
 						year={this.state.year}
