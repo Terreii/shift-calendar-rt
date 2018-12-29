@@ -4,7 +4,6 @@ import Hammer from 'hammerjs'
 
 import Header from './header'
 import Home from './home'
-import Profile from './profile'
 
 export default class App extends Component {
 	constructor (args) {
@@ -128,8 +127,6 @@ export default class App extends Component {
 						is6_4Model={this.state.is6_4Model}
 						today={this.state.today}
 					/>
-					<Profile path="/profile/" user="me" />
-					<Profile path="/profile/:user" />
 				</Router>
 			</div>
 		)
