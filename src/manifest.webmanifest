@@ -1,6 +1,7 @@
 {
   "name": "Inoffizieller Schichtkalender für Bosch Reutlingen",
   "short_name": "Schichtkalender",
+  "description": "Listet alle Kontischichten vom Bosch Reutlingen auf.",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
