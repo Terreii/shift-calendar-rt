@@ -4,6 +4,7 @@ import Hammer from 'hammerjs'
 
 import Header from './header'
 import Main from './main'
+import InstallPrompt from './install-prompt'
 
 export default class App extends Component {
 	constructor (args) {
@@ -128,6 +129,7 @@ export default class App extends Component {
 						today={this.state.today}
 					/>
 				</Router>
+				<InstallPrompt />
 			</div>
 		)
 	}
