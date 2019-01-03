@@ -1,7 +1,7 @@
 {
-  "name": "preact-boilerplate",
-  "version": "6.0.0",
-  "description": "Ready-to-go Preact starter project powered by webpack.",
+  "name": "schichtkalender-bosch-rt",
+  "version": "3.0.0",
+  "description": "Listet alle Kontischichten vom Bosch Reutlingen auf.",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "start": "serve build -s -c 1",
@@ -12,13 +12,9 @@
     "test:watch": "npm run -s test -- --watch",
     "lint": "eslint src test"
   },
-  "keywords": [
-    "preact",
-    "boilerplate",
-    "webpack"
-  ],
-  "license": "MIT",
-  "author": "Jason Miller <jason@developit.ca>",
+  "keywords": [],
+  "license": "MPL",
+  "author": "Christopher Astfalk",
   "jest": {
     "setupFiles": [
       "./test/setup.js"

@@ -26,7 +26,7 @@ export default class InstallButton extends Component {
     return nextState.show !== this.state.show
   }
 
-  async _onClick (event) {
+  _onClick (event) {
     this.setState({ show: false })
 
     if (this.deferredPrompt == null) return
@@ -34,15 +34,15 @@ export default class InstallButton extends Component {
     // Show the prompt
     this.deferredPrompt.prompt()
 
-    const choiceResult = await this.deferredPrompt.userChoice
+    const choiceResult = this.deferredPrompt.userChoice.then(choiceResult => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the A2HS prompt')
+      } else {
+        console.log('User dismissed the A2HS prompt')
+      }
 
-    if (choiceResult.outcome === 'accepted') {
-      console.log('User accepted the A2HS prompt')
-    } else {
-      console.log('User dismissed the A2HS prompt')
-    }
-
-    this.deferredPrompt = null
+      this.deferredPrompt = null
+    })
   }
 
   render () {

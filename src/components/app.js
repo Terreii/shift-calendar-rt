@@ -4,6 +4,7 @@ import Hammer from 'hammerjs'
 
 import Header from './header'
 import Main from './main'
+import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
 
 export default class App extends Component {
@@ -111,7 +112,7 @@ export default class App extends Component {
 		this.currentUrl = e.url
 	}
 
-	render() {
+	render () {
 		return (
 			<div id="app">
 				<Header
@@ -128,6 +129,7 @@ export default class App extends Component {
 						is6_4Model={this.state.is6_4Model}
 						today={this.state.today}
 					/>
+					<Impressum path='/impressum/' />
 				</Router>
 				<InstallPrompt />
 			</div>

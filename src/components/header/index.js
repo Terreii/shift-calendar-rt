@@ -6,7 +6,7 @@ export default class Header extends Component {
 	render () {
 		return (
 			<header class={style.header}>
-				<h1>Kalender</h1>
+				<h1><Link href='/' tabIndex='0'>Kalender</Link></h1>
 				<nav>
 					<button
 						title='vorigen Monat'

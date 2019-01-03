@@ -1,4 +1,5 @@
 import { h } from 'preact'
+import { Link } from 'preact-router/match'
 import style from './style.less'
 
 import Month from '../month'
@@ -50,15 +51,27 @@ export default ({ displayOption, year, month, is6_4Model, today }) => {
 	}
 
 	return (
-		<div class={style.home} onClick={processClick}>
-			{monthsData.map(({year, month, data}) => <Month
-				key={`${year}-${month}-${is6_4Model}`}
-				year={year}
-				month={month}
-				data={data}
-				today={today[0] === year && today[1] === month ? today : null}
-				is6_4Model={is6_4Model}
-			/>)}
+		<div class={style.MainContainer}>
+			<div class={style.home} onClick={processClick}>
+				{monthsData.map(({year, month, data}) => <Month
+					key={`${year}-${month}-${is6_4Model}`}
+					year={year}
+					month={month}
+					data={data}
+					today={today[0] === year && today[1] === month ? today : null}
+					is6_4Model={is6_4Model}
+				/>)}
+			</div>
+			<Link
+				class={style.ImpressumLink}
+				href='/impressum/'
+				tabIndex='0'
+				onClick={() => {
+					window.scrollTo(0, 0)
+				}}
+			>
+				Impressum
+			</Link>
 		</div>
 	)
 }
