@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de-DE">
 <head>
 	<% for (var chunk in htmlWebpackPlugin.files.css) { %>
 		<link rel="preload" href="<%= htmlWebpackPlugin.files.css[chunk] %>"  as="style">
@@ -24,5 +24,21 @@
 	<link rel="icon" type="image/png" href="/assets/icons/favicon-16x16.png" sizes="16x16">
 	<link rel="manifest" href="./manifest.webmanifest">
 </head>
-<body></body>
+<body>
+	<noscript>
+		<h3>Javascript muss aktiviert sein, damit sie diese Seite benutzen können!</h3>
+		<div id='icsDownload'>
+				Wollen sie ihre Schichten bei ihren anderen Termine haben?<br/>
+				Fügen sie ihre Schicht zu ihren Kalender auf ihren Gerät hinzu!<br/>
+				<a href="/assets/Schichtgruppe_1.ics" type="text/calendar">Gruppe 1</a> |
+				<a href="/assets/Schichtgruppe_2.ics" type="text/calendar">Gruppe 2</a> |
+				<a href="/assets/Schichtgruppe_3.ics" type="text/calendar">Gruppe 3</a> |
+				<a href="/assets/Schichtgruppe_4.ics" type="text/calendar">Gruppe 4</a> |
+				<a href="/assets/Schichtgruppe_5.ics" type="text/calendar">Gruppe 5</a> |
+				<a href="/assets/Schichtgruppe_6.ics" type="text/calendar">Gruppe 6</a>
+				<br/><br/>
+				Die Schichtgruppen wurden zuletzt am 21.10.2016 aktualisiert.
+		</div>
+	</noscript>
+</body>
 </html>
