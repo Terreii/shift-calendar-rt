@@ -85,10 +85,10 @@ export default class App extends Component {
 
   /**
    * Handles the month-change events from the header.
-   * @param {Object} arg0           Containing other data. Has relative or year and month.
-   * @param {number} arg0.year      Year of the next month to display.
-   * @param {number} arg0.month     Month number in the year, of the next month to display.
-   * @param {number} arg0.relative  Relative move to the active month.
+   * @param {Object} arg0             Containing other data. Has relative or year and month.
+   * @param {number} [arg0.year]      Year of the next month to display.
+   * @param {number} [arg0.month]     Month number in the year, of the next month to display.
+   * @param {number} [arg0.relative]  Relative move to the active month.
    */
   _onChangeMonth ({ year = this.state.year, month = this.state.month, relative }) {
     if (typeof relative === 'number') {

@@ -9,8 +9,8 @@ import { getDaysInMonth } from './utils'
 
 /**
  * Get easter and x-mas. Because those are the only closing days. And get daylight-saving switch.
- * @param {Number} year Year of the month.
- * @param {Number} month Month number.
+ * @param {number} year Year of the month.
+ * @param {number} month Month number.
  */
 export default function getHolidays (year, month) {
   switch (month) {
@@ -69,7 +69,7 @@ export default function getHolidays (year, month) {
 
 /**
  * Gauss's Easter algorithm  https://en.wikipedia.org/wiki/Computus#Gauss's_Easter_algorithm
- * @param {Number} year Year of that easter
+ * @param {number} year Year of that easter
  */
 function getEaster (year) {
   const k = Math.floor(year / 100)
@@ -85,7 +85,7 @@ function getEaster (year) {
 
 /**
  * Returns the post dot part of a number.
- * @param {Number} number Decimal number
+ * @param {number} number Decimal number
  */
 function afterDot (number) { // 1.1 - 1.0 = 0.1
   return number - Math.floor(number)
@@ -93,8 +93,8 @@ function afterDot (number) { // 1.1 - 1.0 = 0.1
 
 /**
  * Get the day of the daylight saving switch in a year and month.
- * @param {Number} year Full Year number
- * @param {Number} month Month number in the year
+ * @param {number} year Full Year number
+ * @param {number} month Month number in the year
  */
 function getDaylightSavingDay (year, month) {
   if (month !== 2 && month !== 9) return -1

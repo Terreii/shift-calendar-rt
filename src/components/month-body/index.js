@@ -19,11 +19,11 @@ const shiftTitle = {
 
 /**
  * Renders the body of a month.
- * @param {Object}     arg0       React/Preact arguments.
- * @param {Number}     arg0.year  Year of the month.
- * @param {Number}     arg0.month Month of this month.
- * @param {Object}     arg0.data  Data of this month.
- * @param {null|Array} arg0.today Array of numbers that contains todays date. [year, month, day].
+ * @param {Object}    arg0         React/Preact arguments.
+ * @param {number}    arg0.year    Year of the month.
+ * @param {number}    arg0.month   Month of this month.
+ * @param {Object}    arg0.data    Data of this month.
+ * @param {?number[]} arg0.today   Array of numbers that contains todays date. [year, month, day].
  */
 export default ({ year, month, data, today }) => {
   const todayInThisMonth = today != null && today[0] === year && today[1] === month

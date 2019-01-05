@@ -27,12 +27,12 @@ const monthNames = [
 
 /**
  * Render a month
- * @param {Object}  arg0            React/Preact arguments.
- * @param {Number}  arg0.year       Year of the month.
- * @param {Number}  arg0.month      Month number in the year of this month.
- * @param {Object}  arg0.data      Month-data that contains all workdays and holidays of that month.
- * @param {Array}   arg0.today      Array of numbers that contains todays date. [year, month, day].
- * @param {Boolean} arg0.is64Model  Show 6-4 Model or the old 6-6 Model.
+ * @param {Object}   arg0          React/Preact arguments.
+ * @param {number}   arg0.year     Year of the month.
+ * @param {number}   arg0.month    Month number in the year of this month.
+ * @param {Object}   arg0.data     Month-data that contains all workdays and holidays of that month.
+ * @param {number[]} arg0.today    Array of numbers that contains todays date. [year, month, day].
+ * @param {boolean} arg0.is64Model Show 6-4 Model or the old 6-6 Model.
  */
 export default ({ year, month, data, today, is64Model }) => {
   const grRow = is64Model

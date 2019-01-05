@@ -9,9 +9,9 @@ import { getDaysInMonth } from './utils'
 
 /**
  * Calculate when groups will work.
- * @param {Number} year Full Year of that month
- * @param {Number} month Month number
- * @param {Boolean} is64 Is it the new 6-4 model or the old 6-6 model
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
+ * @param {boolean=false} is64 Is it the new 6-4 model or the old 6-6 model
  */
 export default function getMonthData (year, month, is64 = false) {
   const data = is64
@@ -23,8 +23,8 @@ export default function getMonthData (year, month, is64 = false) {
 
 /**
  * Get the working data of the 6-6 Model or the old 4-4 model.
- * @param {Number} year Full Year of that month
- * @param {Number} month Month number
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
  */
 function get66Model (year, month) {
   const daysData = []
@@ -54,8 +54,8 @@ function get66Model (year, month) {
 
 /**
  * Get the working data of the new 6-4 Model.
- * @param {Number} year Full Year of that month
- * @param {Number} month Month number
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
  */
 function get64Model (year, month) {
   const daysData = []
@@ -81,9 +81,9 @@ function get64Model (year, month) {
 
 /**
  * Calculates the data of a day.
- * @param {Number} year Full Year
- * @param {Number} month Number of the month in the year
- * @param {Number} day Day in the month
+ * @param {number} year Full Year
+ * @param {number} month Number of the month in the year
+ * @param {number} day Day in the month
  */
 function get66ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
@@ -116,9 +116,9 @@ function get66ModelDay (year, month, day) {
 
 /**
  * Calculates the data of a day for the new 6-4 shift model.
- * @param {Number} year Full Year
- * @param {Number} month Number of the month in the year
- * @param {Number} day Day in the month
+ * @param {number} year Full Year
+ * @param {number} month Number of the month in the year
+ * @param {number} day Day in the month
  */
 function get64ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
@@ -166,9 +166,9 @@ function get64ModelDay (year, month, day) {
 /**
  * Calculates the data of a day for the old 4-4 shift model.
  * It is NNNN-KKKK-SSSS-KKKK-FFFF-KKKK.
- * @param {Number} year Full Year
- * @param {Number} month Number of the month in the year
- * @param {Number} day Day in the month
+ * @param {number} year Full Year
+ * @param {number} month Number of the month in the year
+ * @param {number} day Day in the month
  */
 function get44ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()

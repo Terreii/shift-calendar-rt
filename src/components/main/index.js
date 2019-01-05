@@ -15,12 +15,12 @@ import selectMonthData from '../../lib/select-month-data'
 /**
  * Renders the main content.
  * It will get the month-data from "selectMonthData" and renders the months.
- * @param {Object}  arg0                React/Preact arguments.
- * @param {String}  arg0.displayOption  How many months should be displayed?
- * @param {Number}  arg0.year           Year of the selected month.
- * @param {Number}  arg0.month          Month number of the selected month.
- * @param {Boolean} arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
- * @param {Array}   arg0.today        Array of numbers that contains todays date. [year, month, day]
+ * @param {Object}    arg0                React/Preact arguments.
+ * @param {string}    arg0.displayOption  How many months should be displayed?
+ * @param {number}    arg0.year           Year of the selected month.
+ * @param {number}    arg0.month          Month number of the selected month.
+ * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
+ * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  */
 export default ({ displayOption, year, month, is64Model, today }) => {
   let monthsData = []

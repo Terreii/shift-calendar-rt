@@ -7,8 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 /**
  * Gets the number of days in a month.
- * @param {Number} year Full Year
- * @param {Number} month Number of the month
+ * @param {number} year Full Year
+ * @param {number} month Number of the month
  */
 export function getDaysInMonth (year, month) {
   // first day in month is 1. 0 is the one before --> last day of month!
