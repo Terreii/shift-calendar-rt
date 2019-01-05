@@ -10,6 +10,9 @@ import createCachedSelector from 're-reselect'
 import getMonthData from './workdata'
 import getHolidayData from './holiday-data'
 
+/**
+ * CachedSelector that stores the month data.
+ */
 export default createCachedSelector(
   year => year,
   (year, month) => month,
@@ -22,6 +25,6 @@ export default createCachedSelector(
 
     return data
   }
-)(
+)( // Key selector. Data will be saved with this key.
   (year, month, is64Model) => `${year}-${month}-${is64Model}`
 )

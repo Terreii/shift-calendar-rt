@@ -12,11 +12,21 @@ import style from './style.less'
 import Month from '../month'
 import selectMonthData from '../../lib/select-month-data'
 
+/**
+ * Renders the main content.
+ * It will get the month-data from "selectMonthData" and renders the months.
+ * @param {Object}  arg0                React/Preact arguments.
+ * @param {String}  arg0.displayOption  How many months should be displayed?
+ * @param {Number}  arg0.year           Year of the selected month.
+ * @param {Number}  arg0.month          Month number of the selected month.
+ * @param {Boolean} arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
+ * @param {Array}   arg0.today        Array of numbers that contains todays date. [year, month, day]
+ */
 export default ({ displayOption, year, month, is64Model, today }) => {
   let monthsData = []
 
   switch (displayOption) {
-    case 'full':
+    case 'full': // Render all 12 months of the selected year
       for (let i = 0; i < 12; ++i) {
         monthsData.push({
           year,
@@ -26,7 +36,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
       }
       break
 
-    case '4':
+    case '4': // Render the selected month, one before and two after it.
       for (let i = 0; i < 4; ++i) {
         let monthNr = month + (i - 1)
         let yearNr = year
@@ -47,7 +57,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
       }
       break
 
-    case 'one':
+    case '1': // Renders the selected month
     default:
       monthsData.push({
         year,
@@ -83,6 +93,10 @@ export default ({ displayOption, year, month, is64Model, today }) => {
   )
 }
 
+/**
+ * Checkes if one td or tr element has an title and alert it.
+ * @param {Object} event Click-event from the browser on an element.
+ */
 function processClick (event) {
   let target = event.target
 

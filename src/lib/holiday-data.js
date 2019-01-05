@@ -7,8 +7,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { getDaysInMonth } from './utils'
 
-// Get easter and x-mas. Because those are the only closing days.
-// And get daylight-saving switch
+/**
+ * Get easter and x-mas. Because those are the only closing days. And get daylight-saving switch.
+ * @param {Number} year Year of the month.
+ * @param {Number} month Month number.
+ */
 export default function getHolidays (year, month) {
   switch (month) {
     case 2:
@@ -64,7 +67,10 @@ export default function getHolidays (year, month) {
   }
 }
 
-// Gauss's Easter algorithm  https://en.wikipedia.org/wiki/Computus#Gauss's_Easter_algorithm
+/**
+ * Gauss's Easter algorithm  https://en.wikipedia.org/wiki/Computus#Gauss's_Easter_algorithm
+ * @param {Number} year Year of that easter
+ */
 function getEaster (year) {
   const k = Math.floor(year / 100)
   const M = 15 + k - Math.floor(k / 3) - Math.floor(k / 4)
@@ -77,10 +83,19 @@ function getEaster (year) {
   return 22 + d + e
 }
 
+/**
+ * Returns the post dot part of a number.
+ * @param {Number} number Decimal number
+ */
 function afterDot (number) { // 1.1 - 1.0 = 0.1
   return number - Math.floor(number)
 }
 
+/**
+ * Get the day of the daylight saving switch in a year and month.
+ * @param {Number} year Full Year number
+ * @param {Number} month Month number in the year
+ */
 function getDaylightSavingDay (year, month) {
   if (month !== 2 && month !== 9) return -1
 

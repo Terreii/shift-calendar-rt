@@ -5,6 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+/**
+ * Gets the number of days in a month.
+ * @param {Number} year Full Year
+ * @param {Number} month Number of the month
+ */
 export function getDaysInMonth (year, month) {
   // first day in month is 1. 0 is the one before --> last day of month!
   return new Date(year, month + 1, 0).getDate()

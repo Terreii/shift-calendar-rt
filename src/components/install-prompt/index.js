@@ -8,6 +8,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h, Component } from 'preact'
 import style from './style.less'
 
+/**
+ * Renders an install button for add-to-home-screen of PWA.
+ */
 export default class InstallButton extends Component {
   constructor (args) {
     super(args)
@@ -19,6 +22,9 @@ export default class InstallButton extends Component {
     this.deferredPrompt = null
     this.boundOnClick = this._onClick.bind(this)
 
+    /**
+     * Event from the browser, that the Web-App can be installed.
+     */
     window.addEventListener('beforeinstallprompt', event => {
       // for Chrome 67 and earlier
       event.preventDefault()
@@ -34,6 +40,10 @@ export default class InstallButton extends Component {
     return nextState.show !== this.state.show
   }
 
+  /**
+   * Event handler for when the user did click the button.
+   * @param {Object} event Click event.
+   */
   _onClick (event) {
     this.setState({ show: false })
 
@@ -42,6 +52,7 @@ export default class InstallButton extends Component {
     // Show the prompt
     this.deferredPrompt.prompt()
 
+    // Install
     this.deferredPrompt.userChoice.then(choiceResult => {
       if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the A2HS prompt')

@@ -8,6 +8,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
+/**
+ * Renders the Impressum.
+ * This is required by the German Low.
+ */
 export default () => {
   return <div class={style.Impressum}>
     <h2>Datenschutzerklärung</h2>

@@ -17,14 +17,24 @@ const shiftTitle = {
   'K': null
 }
 
+/**
+ * Renders the body of a month.
+ * @param {Object}     arg0       React/Preact arguments.
+ * @param {Number}     arg0.year  Year of the month.
+ * @param {Number}     arg0.month Month of this month.
+ * @param {Object}     arg0.data  Data of this month.
+ * @param {null|Array} arg0.today Array of numbers that contains todays date. [year, month, day].
+ */
 export default ({ year, month, data, today }) => {
   const todayInThisMonth = today != null && today[0] === year && today[1] === month
 
+  // Render every row/day.
   const dayRows = data.days.map((day, index) => {
     const thatDay = index + 1
     const aDay = new Date(year, month, thatDay).getDay()
     const holidayData = data.holidays[thatDay]
 
+    // is on this day the switch from or to day-light-saving.
     const isDayLightSaving = data.holidays.daylightSavingSwitch != null &&
       data.holidays.daylightSavingSwitch.day === thatDay
 

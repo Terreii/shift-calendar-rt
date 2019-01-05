@@ -23,12 +23,12 @@ export default class App extends Component {
     const month = now.getMonth()
 
     this.state = {
-      displayOption: 'one',
-      fullYear: false,
-      is6_4Model: false,
-      today: [year, month, now.getDate()],
-      year,
-      month
+      displayOption: '1', // display mode for months: '1'|'4'
+      fullYear: false, // should the full year be displayed
+      is64Model: false, // is it the 6-4 model or the 6-6 model?
+      today: [year, month, now.getDate()], // Today
+      year, // Selected year
+      month // Selected month
     }
 
     this._onResize({})
@@ -42,6 +42,7 @@ export default class App extends Component {
     window.addEventListener('focus', this.focusListener)
     window.addEventListener('resize', this.resizeListener)
 
+    // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
     this.swipeListener = this._onSwipe.bind(this)
     this.hammertime.on('swipe', this.swipeListener)
@@ -54,6 +55,10 @@ export default class App extends Component {
     this.hammertime.off('swipe', this.swipeListener)
   }
 
+  /**
+   * If the tab gets focus again.
+   * @param {Object} event  Focus-event from the browser.
+   */
   _onFocus (event) {
     const now = new Date()
     const today = now.getDate()
@@ -66,14 +71,25 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * If the Browser-window gets resized.
+   * @param {Object} event  resize-event from the browser.
+   */
   _onResize (event) {
-    const displayOption = window.innerWidth < 1220 ? 'one' : '4'
+    const displayOption = window.innerWidth < 1220 ? '1' : '4'
 
     if (displayOption !== this.state.displayOption) {
       this.setState({ displayOption })
     }
   }
 
+  /**
+   * Handles the month-change events from the header.
+   * @param {Object} arg0           Containing other data. Has relative or year and month.
+   * @param {number} arg0.year      Year of the next month to display.
+   * @param {number} arg0.month     Month number in the year, of the next month to display.
+   * @param {number} arg0.relative  Relative move to the active month.
+   */
   _onChangeMonth ({ year = this.state.year, month = this.state.month, relative }) {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
@@ -96,6 +112,11 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * Handle swipe events.
+   * @param {Object} event            "change" event from hammerjs.
+   * @param {number} event.direction  direction of the swipe
+   */
   _onSwipe (event) {
     switch (event.direction) {
       case 2: // right to left
@@ -111,10 +132,11 @@ export default class App extends Component {
     }
   }
 
-  /** Gets fired when the route changes.
-  * @param {Object} event     "change" event from [preact-router](http://git.io/preact-router)
-  * @param {string} event.url The newly routed URL
-  */
+  /**
+   * Gets fired when the route changes.
+   * @param {Object} event     "change" event from [preact-router](http://git.io/preact-router)
+   * @param {string} event.url The newly routed URL
+   */
   handleRoute = e => {
     this.currentUrl = e.url
   }
@@ -133,7 +155,7 @@ export default class App extends Component {
             displayOption={this.state.fullYear ? 'full' : this.state.displayOption}
             year={this.state.year}
             month={this.state.month}
-            is64Model={this.state.is6_4Model}
+            is64Model={this.state.is64Model}
             today={this.state.today}
           />
           <Impressum path='/impressum/' />

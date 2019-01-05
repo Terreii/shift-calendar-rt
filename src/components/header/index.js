@@ -9,6 +9,9 @@ import { h, Component } from 'preact'
 import { Link } from 'preact-router'
 import style from './style.less'
 
+/**
+ * Renders the Header.
+ */
 export default class Header extends Component {
   render () {
     return (
