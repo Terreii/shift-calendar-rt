@@ -14,6 +14,6 @@ describe('components/Month', () => {
       is64Model={false}
     />
 
-    expect(month).to.contain(<caption class="ThisMonth">Januar 2019 (Jetzt)</caption>)
+    expect(month).to.contain(<caption class='ThisMonth'>Januar 2019 (Jetzt)</caption>)
   })
 })

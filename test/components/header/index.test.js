@@ -13,6 +13,6 @@ describe('components/Header', () => {
     </button>)
     expect(header).to.contain(<button title='nächster Monat' aria-label='nächster Monat'>
       {'>'}
-  </button>)
+    </button>)
   })
 })
