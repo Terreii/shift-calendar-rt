@@ -1,6 +1,8 @@
 shift-cal-bosch-rt
 ==================
 
+[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
 6 Tage Kontischichtkalender Bosch Reutlingen! (inoffiziell)
 
 Robert Bosch GmbH (TM) does NOT support this calendar or is in any legal contact/connection with it!

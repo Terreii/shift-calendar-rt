@@ -17,6 +17,7 @@ export default class InstallButton extends Component {
     }
 
     this.deferredPrompt = null
+    this.boundOnClick = this._onClick.bind(this)
 
     window.addEventListener('beforeinstallprompt', event => {
       // for Chrome 67 and earlier
@@ -41,7 +42,7 @@ export default class InstallButton extends Component {
     // Show the prompt
     this.deferredPrompt.prompt()
 
-    const choiceResult = this.deferredPrompt.userChoice.then(choiceResult => {
+    this.deferredPrompt.userChoice.then(choiceResult => {
       if (choiceResult.outcome === 'accepted') {
         console.log('User accepted the A2HS prompt')
       } else {
@@ -56,7 +57,7 @@ export default class InstallButton extends Component {
     if (!this.state.show) return null
 
     return <div class={style.Container}>
-      <button class={style.Button} onClick={this._onClick.bind(this)}>
+      <button class={style.Button} onClick={this.boundOnClick}>
         + zum Home Screen hinzufügen
       </button>
     </div>

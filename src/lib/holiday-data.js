@@ -14,7 +14,7 @@ export default function getHolidays (year, month) {
     case 2:
     case 3:
       const easter = getEaster(year) // Is the easter sunday
-                                     // and the number is day since beginning of March
+      // and the number is day since beginning of March
       const dayOfEaster = month === 3 ? easter - 31 : easter // transform it into a day in month
 
       const easterData = {
@@ -77,7 +77,7 @@ function getEaster (year) {
   return 22 + d + e
 }
 
-function afterDot(number) { // 1.1 - 1.0 = 0.1
+function afterDot (number) { // 1.1 - 1.0 = 0.1
   return number - Math.floor(number)
 }
 

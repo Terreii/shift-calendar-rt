@@ -8,15 +8,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { getDaysInMonth } from './utils'
 
 // Calculate when groups will work
-export default function getMonthData (year, month, is6_4 = false) {
-  const data = is6_4
-    ? get6_4Model(year, month)
-    : get6_6Model(year, month)
+export default function getMonthData (year, month, is64 = false) {
+  const data = is64
+    ? get64Model(year, month)
+    : get66Model(year, month)
 
   return data
 }
 
-function get6_6Model (year, month) {
+function get66Model (year, month) {
   const daysData = []
   const groupsWorkingDays = [0, 0, 0, 0, 0, 0]
   const isOldModel = year < 2010 || (year === 2010 && month < 3)
@@ -24,13 +24,13 @@ function get6_6Model (year, month) {
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
     const aDay = isOldModel || (isOnSwitch && i < 3)
-      ? get4_4ModelDay(year, month, i + 1)
-      : get6_6ModelDay(year, month, i + 1)
+      ? get44ModelDay(year, month, i + 1)
+      : get66ModelDay(year, month, i + 1)
 
     daysData.push(aDay)
 
     aDay.forEach((isWorking, gr) => {
-      if (isWorking != 'K') {
+      if (isWorking !== 'K') {
         groupsWorkingDays[gr] += 1
       }
     })
@@ -42,17 +42,17 @@ function get6_6Model (year, month) {
   }
 }
 
-function get6_4Model (year, month) {
+function get64Model (year, month) {
   const daysData = []
   const groupsWorkingDays = [0, 0, 0, 0, 0]
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = get6_4ModelDay(year, month, i + 1)
+    const aDay = get64ModelDay(year, month, i + 1)
 
     daysData.push(aDay)
 
     aDay.forEach((isWorking, gr) => {
-      if (isWorking != 'K') {
+      if (isWorking !== 'K') {
         groupsWorkingDays[gr] += 1
       }
     })
@@ -64,7 +64,7 @@ function get6_4Model (year, month) {
   }
 }
 
-function get6_6ModelDay (year, month, day) {
+function get66ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
@@ -94,7 +94,7 @@ function get6_6ModelDay (year, month, day) {
 }
 
 // The new 6-4 shift model
-function get6_4ModelDay (year, month, day) {
+function get64ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
@@ -137,7 +137,7 @@ function get6_4ModelDay (year, month, day) {
   })
 }
 
-function get4_4ModelDay (year, month, day) {
+function get44ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
 
   // get days count since 1.1.1970

@@ -11,17 +11,17 @@ import getMonthData from './workdata'
 import getHolidayData from './holiday-data'
 
 export default createCachedSelector(
-	year => year,
-	(year, month) => month,
-	(year, month, is6_4Model) => is6_4Model,
+  year => year,
+  (year, month) => month,
+  (year, month, is64Model) => is64Model,
 
-	(year, month, is6_4Model) => {
-		const data = getMonthData(year, month, is6_4Model)
+  (year, month, is64Model) => {
+    const data = getMonthData(year, month, is64Model)
 
-		data.holidays = getHolidayData(year, month)
+    data.holidays = getHolidayData(year, month)
 
-		return data
-	}
+    return data
+  }
 )(
-	(year, month, is6_4Model) => `${year}-${month}-${is6_4Model}`
+  (year, month, is64Model) => `${year}-${month}-${is64Model}`
 )

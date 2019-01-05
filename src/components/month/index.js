@@ -25,8 +25,8 @@ const monthNames = [
   'Dezember'
 ]
 
-export default ({ year, month, data, today, is6_4Model }) => {
-  const grRow = is6_4Model
+export default ({ year, month, data, today, is64Model }) => {
+  const grRow = is64Model
     ? [1, 2, 3, 4, 5]
     : [1, 2, 3, 4, 5, 6]
 
