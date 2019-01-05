@@ -86,6 +86,7 @@ function getEaster (year) {
 /**
  * Returns the post dot part of a number.
  * @param {number} number Decimal number
+ * @returns {number}
  */
 function afterDot (number) { // 1.1 - 1.0 = 0.1
   return number - Math.floor(number)
@@ -95,6 +96,7 @@ function afterDot (number) { // 1.1 - 1.0 = 0.1
  * Get the day of the daylight saving switch in a year and month.
  * @param {number} year Full Year number
  * @param {number} month Month number in the year
+ * @returns {number} Day in month of the switch, or -1
  */
 function getDaylightSavingDay (year, month) {
   if (month !== 2 && month !== 9) return -1

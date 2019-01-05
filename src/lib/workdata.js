@@ -8,10 +8,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { getDaysInMonth } from './utils'
 
 /**
+ * @typedef {Object} MonthWorkData
+ * @property {("F"|"S"|"N"|"K")[][]} days         List of working days of every group
+ * @property {number[]}              workingCount Count of working days of a group
+ */
+
+/**
  * Calculate when groups will work.
  * @param {number} year Full Year of that month
  * @param {number} month Month number
  * @param {boolean=false} is64 Is it the new 6-4 model or the old 6-6 model
+ * @returns {MonthWorkData} Working data of a group.
  */
 export default function getMonthData (year, month, is64 = false) {
   const data = is64
@@ -25,6 +32,7 @@ export default function getMonthData (year, month, is64 = false) {
  * Get the working data of the 6-6 Model or the old 4-4 model.
  * @param {number} year Full Year of that month
  * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of groups in the 6-6 and old 4-4 models
  */
 function get66Model (year, month) {
   const daysData = []
@@ -56,6 +64,7 @@ function get66Model (year, month) {
  * Get the working data of the new 6-4 Model.
  * @param {number} year Full Year of that month
  * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of the groups of the new 6-4 model
  */
 function get64Model (year, month) {
   const daysData = []
@@ -84,6 +93,7 @@ function get64Model (year, month) {
  * @param {number} year Full Year
  * @param {number} month Number of the month in the year
  * @param {number} day Day in the month
+ * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
 function get66ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
@@ -119,6 +129,7 @@ function get66ModelDay (year, month, day) {
  * @param {number} year Full Year
  * @param {number} month Number of the month in the year
  * @param {number} day Day in the month
+ * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
 function get64ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
@@ -169,6 +180,7 @@ function get64ModelDay (year, month, day) {
  * @param {number} year Full Year
  * @param {number} month Number of the month in the year
  * @param {number} day Day in the month
+ * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
 function get44ModelDay (year, month, day) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()

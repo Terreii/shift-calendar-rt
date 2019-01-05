@@ -21,6 +21,7 @@ import selectMonthData from '../../lib/select-month-data'
  * @param {number}    arg0.month          Month number of the selected month.
  * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
+ * @returns {JSX.Element}
  */
 export default ({ displayOption, year, month, is64Model, today }) => {
   let monthsData = []

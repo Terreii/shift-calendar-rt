@@ -11,6 +11,7 @@ import style from './style.less'
 /**
  * Renders the Impressum.
  * This is required by the German Low.
+ * @returns {JSX.Element}
  */
 export default () => {
   return <div class={style.Impressum}>

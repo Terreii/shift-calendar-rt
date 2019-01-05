@@ -64,6 +64,10 @@ export default class InstallButton extends Component {
     })
   }
 
+  /**
+   * Render the Prompt
+   * @returns {?JSX.Element}
+   */
   render () {
     if (!this.state.show) return null
 

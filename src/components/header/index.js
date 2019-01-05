@@ -13,6 +13,10 @@ import style from './style.less'
  * Renders the Header.
  */
 export default class Header extends Component {
+  /**
+   * Renders the Header
+   * @returns {JSX.Element}
+   */
   render () {
     return (
       <header class={style.header}>

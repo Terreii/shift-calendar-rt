@@ -141,6 +141,10 @@ export default class App extends Component {
     this.currentUrl = e.url
   }
 
+  /**
+   * Renders the App with its routs
+   * @returns {JSX.Element}
+   */
   render () {
     return (
       <div id='app'>

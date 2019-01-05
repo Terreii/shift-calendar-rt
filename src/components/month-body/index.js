@@ -24,6 +24,7 @@ const shiftTitle = {
  * @param {number}    arg0.month   Month of this month.
  * @param {Object}    arg0.data    Data of this month.
  * @param {?number[]} arg0.today   Array of numbers that contains todays date. [year, month, day].
+ * @returns {JSX.Element}
  */
 export default ({ year, month, data, today }) => {
   const todayInThisMonth = today != null && today[0] === year && today[1] === month
