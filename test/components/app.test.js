@@ -27,25 +27,16 @@ describe('App', () => {
     it('should render the homepage', () => {
       render(<App />, scratch)
 
-      expect(scratch.innerHTML).to.contain('Home')
+      expect(scratch.innerHTML).to.contain('Kalender')
     })
 
-    it('should render /profile', async () => {
+    it('should render /impressum/', async () => {
       render(<App />, scratch)
-      route('/profile')
+      route('/impressum')
 
       await sleep(1)
 
-      expect(scratch.innerHTML).to.contain('Profile: me')
-    })
-
-    it('should render /profile/:user', async () => {
-      render(<App />, scratch)
-      route('/profile/john')
-
-      await sleep(1)
-
-      expect(scratch.innerHTML).to.contain('Profile: john')
+      expect(scratch.innerHTML).to.contain('Datenschutzerklärung')
     })
   })
 })

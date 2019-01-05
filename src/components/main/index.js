@@ -66,7 +66,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
           month={month}
           data={data}
           today={today[0] === year && today[1] === month ? today : null}
-          is6_4Model={is64Model}
+          is64Model={is64Model}
         />)}
       </div>
       <Link
