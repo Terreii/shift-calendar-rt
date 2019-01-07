@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "^/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "^/favicon.ico",
+      "dest": "/favicon.ico"
+    },
+    {
+      "src": "^/manifest.webmanifest",
+      "dest": "/manifest.webmanifest"
+    },
+    {
+      "src": "^/sw.js",
+      "headers": {
+        "cache-control": "s-maxage=0"
+      },
+      "dest": "/sw.js"
+    },
+    {
+      "src": "^/style.css",
+      "dest": "/style.css"
+    },
+    {
+      "src": "^/style.css.map",
+      "dest": "/style.css.map"
+    },
+    {
+      "src": "^/bundle.js",
+      "dest": "/bundle.js"
+    },
+    {
+      "src": "^/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
