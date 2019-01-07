@@ -11,13 +11,18 @@ import style from './style.less'
 
 export default () => {
   return <p class={style.Footer}>
-    Der inoffizielle Schichtkalender für Bosch Reutlingen.
+    <b>Der inoffizielle Schichtkalender für Bosch Reutlingen.</b>
     <br />
     Made by Christopher Astfalk.
     <br />
+    Dieser Kalender wird <b><i>nicht</i></b> von der Robert Bosch GmbH™️ bereitgestellt.
+    Robert Bosch GmbH™️ haftet nicht für den Inhalt dieser Seite.
+    <br />
+    Alle Angaben sind ohne Gewähr.
+    <br />
     {'Lizenz: '}
     <a href='https://www.mozilla.org/en-US/MPL/2.0/' target='_blank' rel='noopener'>
-      Mozilla Public License 2.0.
+      Mozilla Public License 2.0
     </a>
     <br />
     <Link
