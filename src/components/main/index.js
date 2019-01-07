@@ -10,6 +10,7 @@ import { Link } from 'preact-router/match'
 import style from './style.less'
 
 import Month from '../month'
+import Footer from '../footer'
 import selectMonthData from '../../lib/select-month-data'
 
 /**
@@ -80,16 +81,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
           is64Model={is64Model}
         />)}
       </div>
-      <Link
-        class={style.ImpressumLink}
-        href='/impressum/'
-        tabIndex='0'
-        onClick={() => {
-          window.scrollTo(0, 0)
-        }}
-      >
-        Impressum
-      </Link>
+      <Footer />
     </div>
   )
 }
