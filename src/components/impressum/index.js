@@ -26,10 +26,10 @@ export default () => {
     <p>
       <span class='tsmcontroller'>
         Christopher Astfalk<br />
-        Memelstr. 7<br />
+        <i>Adresse auf Nachfrage</i><br />
         72760 Reutlingen<br />
         BW Germany<br />
-        work email: christopher.astfalk@de.bosch.com
+        {'work email: christopher.astfalk {dieses at Zeichen} de.bosch.com'}
       </span>
     </p>
     <h3 id='dsg-general-datatype'>Arten der verarbeiteten Daten</h3>
