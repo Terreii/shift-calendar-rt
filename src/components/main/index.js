@@ -6,7 +6,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
-import { Link } from 'preact-router/match'
 import style from './style.less'
 
 import Month from '../month'
