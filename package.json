@@ -2,6 +2,7 @@
   "name": "schichtkalender-bosch-rt",
   "version": "3.0.0",
   "description": "Listet alle Kontischichten vom Bosch Reutlingen auf.",
+  "homepage": "https://schichtkalender-rt.now.sh/",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
