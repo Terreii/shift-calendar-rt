@@ -1,5 +1,9 @@
 {
   "version": 2,
+  "name": "schichtkalender-rt",
+  "alias": [
+    "schichtkalender-rt.now.sh"
+  ],
   "builds": [
     {
       "src": "package.json",
