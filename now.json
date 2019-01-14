@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "schichtkalender-rt",
   "builds": [
     {
       "src": "package.json",
