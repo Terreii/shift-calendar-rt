@@ -53,6 +53,20 @@ export default ({ year, month, data, today, is64Model }) => {
         {grRow.map(gr => <th key={gr}>Gr. {gr}</th>)}
       </tr>
     </thead>
+
     <MonthBody year={year} month={month} data={data} today={today} />
+
+    <tfoot>
+      <tr>
+        <td
+          class={style.WorkingDaysInfo}
+          colSpan='2'
+          title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
+        >
+          Anzahl
+        </td>
+        {data.workingCount.map((number, index) => <td key={index}>{number}</td>)}
+      </tr>
+    </tfoot>
   </table>
 }
