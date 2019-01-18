@@ -44,6 +44,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 	nav {
 		float: right;
+		display: flex;
+		flex-direction: row;
 		font-size: 100%;
 
 		a {
@@ -80,6 +82,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 		&:focus {
 			outline: 2px solid highlight;
+		}
+
+		&.Hamburger {
+			width: 60px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+			& > img {
+				filter: invert(100%);
+			}
 		}
 	}
 }

@@ -31,6 +31,7 @@ export default class Header extends Component {
           >
             {'<'}
           </button>
+
           <button
             title='zeige aktuellen Monat'
             onClick={() => {
@@ -40,6 +41,7 @@ export default class Header extends Component {
           >
             Heute
           </button>
+
           <button
             title='nächster Monat'
             aria-label='nächster Monat'
@@ -48,6 +50,10 @@ export default class Header extends Component {
             }}
           >
             {'>'}
+          </button>
+
+          <button class={style.Hamburger}>
+            <img src='/assets/icons/hamburger_icon.svg' height='45' width='45' alt='Menu' />
           </button>
         </nav>
       </header>
