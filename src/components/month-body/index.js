@@ -66,17 +66,5 @@ export default ({ year, month, data, today }) => {
     </tr>
   })
 
-  return <tbody>
-    {dayRows}
-    <tr class={style.WorkinDaysRow}>
-      <td
-        class={style.WorkingDaysInfo}
-        colSpan='2'
-        title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
-      >
-        Anzahl
-      </td>
-      {data.workingCount.map((number, index) => <td key={index}>{number}</td>)}
-    </tr>
-  </tbody>
+  return <tbody>{dayRows}</tbody>
 }
