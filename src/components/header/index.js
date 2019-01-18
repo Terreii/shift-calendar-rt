@@ -9,10 +9,52 @@ import { h, Component } from 'preact'
 import { Link } from 'preact-router'
 import style from './style.less'
 
+import Menu from '../menu'
+
 /**
  * Renders the Header.
  */
 export default class Header extends Component {
+  constructor (args) {
+    super(args)
+
+    this.state = {
+      showMenu: false
+    }
+
+    this.boundToggleShowMenu = this._toggleShowMenu.bind(this)
+    this.hideMenu = () => {
+      this.setState({
+        showMenu: false
+      })
+      this._removeListener()
+    }
+  }
+
+  componentWillUnmount () {
+    this._removeListener()
+  }
+
+  _toggleShowMenu (event) {
+    const shouldShow = !this.state.showMenu
+
+    this.setState({
+      showMenu: shouldShow
+    })
+
+    setTimeout(() => {
+      if (shouldShow) {
+        window.addEventListener('click', this.hideMenu)
+      } else {
+        this._removeListener()
+      }
+    }, 0)
+  }
+
+  _removeListener () {
+    window.removeEventListener('click', this.hideMenu)
+  }
+
   /**
    * Renders the Header
    * @returns {JSX.Element}
@@ -52,10 +94,12 @@ export default class Header extends Component {
             {'>'}
           </button>
 
-          <button class={style.Hamburger}>
+          <button class={style.Hamburger} onClick={this.boundToggleShowMenu}>
             <img src='/assets/icons/hamburger_icon.svg' height='45' width='45' alt='Menu' />
           </button>
         </nav>
+
+        <Menu show={this.state.showMenu} />
       </header>
     )
   }

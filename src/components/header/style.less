@@ -12,17 +12,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 	left: 0;
 	top: 0;
 	width: 100%;
-	height: 56px;
+	height: @header-height;
 	padding: 0;
-	background: #006249;
-	box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+	background: @header-background;
+	box-shadow: @header-shadow;
 	z-index: 50;
 
 	h1, a {
 		float: left;
 		margin: 0;
 		font-size: 24px;
-		line-height: 56px;
+		line-height: @header-height;
 		font-weight: 400;
 		color: #FFF;
 		text-decoration: none;
@@ -50,8 +50,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 		a {
 			display: inline-block;
-			height: 56px;
-			line-height: 56px;
+			height: @header-height;
+			line-height: @header-height;
 			padding: 0 15px;
 			min-width: 50px;
 			text-align: center;
@@ -70,7 +70,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 		font-size: 100%;
 		display: inline-block;
 		border: 0px;
-		height: 56px;
+		height: @header-height;
 		padding: 0 15px;
 		background: rgba(0, 0, 0, 0);
 		color: #EEE;
