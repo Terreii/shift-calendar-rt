@@ -11,7 +11,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   display: none;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   position: absolute;
   top: @header-height;
   right: 0px;
@@ -21,10 +21,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   background: @header-background;
   box-shadow: @header-shadow;
 
-  button {
+  & > * + * {
+    margin-top: 1.3rem;
+  }
+
+  button, select {
     color: black;
     border-radius: 5px;
-    background-color: #008ECF;
+    background: #efefef;
     box-shadow: @header-shadow;
     margin-left: 0.7em;
     margin-right: 0.7em;
@@ -32,8 +36,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     min-height: 2.5rem;
 
     &:active, &:hover {
-      background-color: #00A8B0;
+      background: #b0b0b0;
     }
+  }
+
+  select {
+    text-align: center;
   }
 }
 

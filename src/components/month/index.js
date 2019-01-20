@@ -9,21 +9,7 @@ import { h } from 'preact'
 import style from './style.less'
 
 import MonthBody from '../month-body'
-
-const monthNames = [
-  'Januar',
-  'Februar',
-  'März',
-  'April',
-  'Mai',
-  'Juni',
-  'Juli',
-  'August',
-  'September',
-  'Oktober',
-  'November',
-  'Dezember'
-]
+import { monthNames } from '../../lib/constants'
 
 /**
  * Render a month

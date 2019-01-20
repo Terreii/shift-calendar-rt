@@ -8,8 +8,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-export default ({ show, isFullYear, toggleFullYear }) => {
+import { monthNames } from '../../lib/constants'
+
+export default ({ show, isFullYear, toggleFullYear, gotoMonth }) => {
   return <div class={show ? style.Show : style.Menu}>
+    <select
+      title='Gehe zum Monat'
+      onChange={event => { gotoMonth(+event.target.value) }}
+    >
+      {monthNames.map((name, index) => <option key={name} value={index}>{name}</option>)}
+    </select>
+
     <button onClick={toggleFullYear}>
       Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
     </button>

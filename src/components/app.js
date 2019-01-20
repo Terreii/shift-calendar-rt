@@ -111,6 +111,10 @@ export default class App extends Component {
     } else {
       this.setState({ year, month })
     }
+
+    if (this.state.fullYear) {
+      this.setState({ fullYear: false })
+    }
   }
 
   /**
@@ -119,6 +123,8 @@ export default class App extends Component {
    * @param {number} event.direction  direction of the swipe
    */
   _onSwipe (event) {
+    if (this.state.fullYear) return
+
     switch (event.direction) {
       case 2: // right to left
         this._onChangeMonth({ relative: 1 })

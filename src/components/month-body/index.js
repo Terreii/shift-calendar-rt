@@ -8,14 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-const dayName = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa']
-
-const shiftTitle = {
-  'F': 'Frühschicht\r\n6 - 14:30 Uhr',
-  'S': 'Spätschicht\r\n14 - 22:30 Uhr',
-  'N': 'Nachtschicht\r\n22 - 6:30 Uhr (in den nächsten Tag)',
-  'K': null
-}
+import { dayName, shiftTitle } from '../../lib/constants'
 
 /**
  * Renders the body of a month.

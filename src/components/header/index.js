@@ -44,7 +44,10 @@ export default class Header extends Component {
 
     setTimeout(() => {
       if (shouldShow) {
-        window.addEventListener('click', this.hideMenu)
+        const element = document.getElementsByTagName('main')[0]
+        if (element != null) {
+          element.addEventListener('click', this.hideMenu)
+        }
       } else {
         this._removeListener()
       }
@@ -52,7 +55,10 @@ export default class Header extends Component {
   }
 
   _removeListener () {
-    window.removeEventListener('click', this.hideMenu)
+    const element = document.getElementsByTagName('main')[0]
+    if (element != null) {
+      element.removeEventListener('click', this.hideMenu)
+    }
   }
 
   /**
@@ -69,6 +75,7 @@ export default class Header extends Component {
             aria-label='vorigen Monat'
             onClick={() => {
               this.props.onChange({ relative: -1 })
+              this.hideMenu()
             }}
           >
             {'<'}
@@ -79,6 +86,7 @@ export default class Header extends Component {
             onClick={() => {
               const now = new Date()
               this.props.onChange({ year: now.getFullYear(), month: now.getMonth() })
+              this.hideMenu()
             }}
           >
             Heute
@@ -89,6 +97,7 @@ export default class Header extends Component {
             aria-label='nächster Monat'
             onClick={() => {
               this.props.onChange({ relative: 1 })
+              this.hideMenu()
             }}
           >
             {'>'}
@@ -102,7 +111,14 @@ export default class Header extends Component {
         <Menu
           show={this.state.showMenu}
           isFullYear={this.props.isFullYear}
-          toggleFullYear={this.props.toggleFullYear}
+          gotoMonth={month => {
+            this.props.onChange({ month })
+            this.hideMenu()
+          }}
+          toggleFullYear={() => {
+            this.props.toggleFullYear()
+            this.hideMenu()
+          }}
         />
       </header>
     )
