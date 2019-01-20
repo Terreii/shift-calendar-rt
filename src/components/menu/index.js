@@ -10,14 +10,33 @@ import style from './style.less'
 
 import { monthNames } from '../../lib/constants'
 
-export default ({ show, isFullYear, toggleFullYear, gotoMonth }) => {
+export default ({ show, month, year, isFullYear, toggleFullYear, gotoMonth }) => {
   return <div class={show ? style.Show : style.Menu}>
     <select
       title='Gehe zum Monat'
-      onChange={event => { gotoMonth(+event.target.value) }}
+      value={month}
+      onChange={event => {
+        gotoMonth({ month: +event.target.value }, true)
+      }}
     >
       {monthNames.map((name, index) => <option key={name} value={index}>{name}</option>)}
     </select>
+
+    <label>
+      Jahr
+      <input
+        type='number'
+        min='2000'
+        value={year}
+        onChange={event => {
+          const year = +event.target.value
+
+          if (Number.isNaN(year)) return
+
+          gotoMonth({ year }, false)
+        }}
+      />
+    </label>
 
     <button onClick={toggleFullYear}>
       Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}

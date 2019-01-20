@@ -23,6 +23,7 @@ export default class Header extends Component {
     }
 
     this.boundToggleShowMenu = this._toggleShowMenu.bind(this)
+    this.boundHandleGotoEvent = this._handleGotoEvent.bind(this)
     this.hideMenu = () => {
       this.setState({
         showMenu: false
@@ -58,6 +59,14 @@ export default class Header extends Component {
     const element = document.getElementsByTagName('main')[0]
     if (element != null) {
       element.removeEventListener('click', this.hideMenu)
+    }
+  }
+
+  _handleGotoEvent (event, hide) {
+    this.props.onChange(event)
+
+    if (hide) {
+      this.hideMenu()
     }
   }
 
@@ -111,10 +120,9 @@ export default class Header extends Component {
         <Menu
           show={this.state.showMenu}
           isFullYear={this.props.isFullYear}
-          gotoMonth={month => {
-            this.props.onChange({ month })
-            this.hideMenu()
-          }}
+          month={this.props.month}
+          year={this.props.year}
+          gotoMonth={this.boundHandleGotoEvent}
           toggleFullYear={() => {
             this.props.toggleFullYear()
             this.hideMenu()
