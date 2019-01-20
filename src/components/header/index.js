@@ -99,7 +99,11 @@ export default class Header extends Component {
           </button>
         </nav>
 
-        <Menu show={this.state.showMenu} />
+        <Menu
+          show={this.state.showMenu}
+          isFullYear={this.props.isFullYear}
+          toggleFullYear={this.props.toggleFullYear}
+        />
       </header>
     )
   }

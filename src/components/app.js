@@ -34,6 +34,7 @@ export default class App extends Component {
     this._onResize({})
 
     this._boundMonthChange = this._onChangeMonth.bind(this)
+    this._boundToggleFullYear = this._toggleFullYear.bind(this)
   }
 
   componentDidMount () {
@@ -133,6 +134,15 @@ export default class App extends Component {
   }
 
   /**
+   * Toogle between showing the full year or the selected display option.
+   */
+  _toggleFullYear () {
+    this.setState({
+      fullYear: !this.state.fullYear
+    })
+  }
+
+  /**
    * Gets fired when the route changes.
    * @param {Object} event     "change" event from [preact-router](http://git.io/preact-router)
    * @param {string} event.url The newly routed URL
@@ -151,7 +161,9 @@ export default class App extends Component {
         <Header
           year={this.state.year}
           month={this.state.month}
+          isFullYear={this.state.fullYear}
           onChange={this._boundMonthChange}
+          toggleFullYear={this._boundToggleFullYear}
         />
         <Router onChange={this.handleRoute}>
           <Main

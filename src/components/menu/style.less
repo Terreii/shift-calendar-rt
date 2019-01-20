@@ -9,15 +9,36 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 .Menu {
   display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   position: absolute;
   top: @header-height;
   right: 0px;
   padding-top: 0.7em;
+  padding-bottom: 0.7em;
   min-width: 14em;
   background: @header-background;
   box-shadow: @header-shadow;
 
-  &.Show {
-    display: block;
+  button {
+    color: black;
+    border-radius: 5px;
+    background-color: #008ECF;
+    box-shadow: @header-shadow;
+    margin-left: 0.7em;
+    margin-right: 0.7em;
+    height: auto;
+    min-height: 2.5rem;
+
+    &:active, &:hover {
+      background-color: #00A8B0;
+    }
   }
+}
+
+.Show {
+  .Menu;
+  display: block;
+  display: flex;
 }

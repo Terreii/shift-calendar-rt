@@ -8,8 +8,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-export default ({ show }) => {
-  return <div class={show ? `${style.Menu} ${style.Show}` : style.Menu}>
-    <button>Test</button>
+export default ({ show, isFullYear, toggleFullYear }) => {
+  return <div class={show ? style.Show : style.Menu}>
+    <button onClick={toggleFullYear}>
+      Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
+    </button>
   </div>
 }
