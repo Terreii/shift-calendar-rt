@@ -34,6 +34,7 @@ export default class App extends Component {
     this._onResize({})
 
     this._boundMonthChange = this._onChangeMonth.bind(this)
+    this._boundToggleFullYear = this._toggleFullYear.bind(this)
   }
 
   componentDidMount () {
@@ -110,6 +111,10 @@ export default class App extends Component {
     } else {
       this.setState({ year, month })
     }
+
+    if (this.state.fullYear) {
+      this.setState({ fullYear: false })
+    }
   }
 
   /**
@@ -118,6 +123,8 @@ export default class App extends Component {
    * @param {number} event.direction  direction of the swipe
    */
   _onSwipe (event) {
+    if (this.state.fullYear) return
+
     switch (event.direction) {
       case 2: // right to left
         this._onChangeMonth({ relative: 1 })
@@ -130,6 +137,15 @@ export default class App extends Component {
       default:
         break
     }
+  }
+
+  /**
+   * Toogle between showing the full year or the selected display option.
+   */
+  _toggleFullYear () {
+    this.setState({
+      fullYear: !this.state.fullYear
+    })
   }
 
   /**
@@ -151,7 +167,9 @@ export default class App extends Component {
         <Header
           year={this.state.year}
           month={this.state.month}
+          isFullYear={this.state.fullYear}
           onChange={this._boundMonthChange}
+          toggleFullYear={this._boundToggleFullYear}
         />
         <Router onChange={this.handleRoute}>
           <Main

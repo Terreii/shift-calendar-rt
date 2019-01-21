@@ -69,7 +69,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
   }
 
   return (
-    <div class={style.MainContainer}>
+    <main class={style.MainContainer}>
       <div class={style.home} onClick={processClick}>
         {monthsData.map(({ year, month, data }) => <Month
           key={`${year}-${month}-${is64Model}`}
@@ -81,7 +81,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
         />)}
       </div>
       <Footer />
-    </div>
+    </main>
   )
 }
 
