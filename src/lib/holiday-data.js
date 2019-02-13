@@ -15,6 +15,14 @@ import { ferien } from './ferien.json'
  */
 export default function getHolidays (year, month) {
   switch (month) {
+    case 0:
+      return addSchoolHolidays(year, month, {
+        1: {
+          name: 'Neujahr',
+          type: 'holiday'
+        }
+      })
+
     case 2:
     case 3:
       const easter = getEaster(year) // Is the easter sunday
@@ -44,11 +52,63 @@ export default function getHolidays (year, month) {
 
       return addSchoolHolidays(year, month, data)
 
+    case 4:
+    case 5:
+      const easterDay = getEaster(year) - (31 * (month - 2))
+
+      const dataOfMayJun = [
+        {
+          date: easterDay + 40,
+          name: 'Himmelfahrt'
+        },
+        {
+          date: easterDay + 50,
+          name: 'Pfingsten'
+        },
+        {
+          date: easterDay + 51,
+          name: 'Pfingsten'
+        },
+        {
+          date: easterDay + 61,
+          name: 'Fronleichnam'
+        }
+      ].reduce((monthData, holiday) => {
+        if (holiday.date > 0 && holiday.date <= 31) {
+          monthData[holiday.date] = {
+            name: holiday.name,
+            type: 'holiday'
+          }
+        }
+        return monthData
+      }, {})
+
+      if (month === 4) {
+        dataOfMayJun[1] = {
+          name: 'Tag der Arbeit',
+          type: 'holiday'
+        }
+      }
+
+      return addSchoolHolidays(year, month, dataOfMayJun)
+
     case 9:
       return addSchoolHolidays(year, month, {
+        3: {
+          name: 'Tag der deutschen Einheit',
+          type: 'holiday'
+        },
         daylightSavingSwitch: {
           name: 'Zeitumstellung!\r\nEs wird um 1 Stunde zurück (von 3 Uhr auf 2 Uhr) gestellt.',
           day: getDaylightSavingDay(year, month)
+        }
+      })
+
+    case 10:
+      return addSchoolHolidays(year, month, {
+        1: {
+          name: 'Allerheiligen',
+          type: 'holiday'
         }
       })
 
@@ -60,7 +120,11 @@ export default function getHolidays (year, month) {
       return addSchoolHolidays(year, month, {
         24: xmasData,
         25: xmasData,
-        26: xmasData
+        26: xmasData,
+        31: {
+          name: 'Silvester',
+          type: 'holiday'
+        }
       })
 
     default:
