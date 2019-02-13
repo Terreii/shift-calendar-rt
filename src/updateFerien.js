@@ -23,6 +23,10 @@ fetch('https://ferien-api.de/api/v1/holidays/BW')
       return 0
     })
 
+    ferien.forEach(holiday => {
+      holiday.name = holiday.name.charAt(0).toUpperCase() + holiday.name.slice(1)
+    })
+
     const ferienJSON = JSON.stringify({ lastUpdate: new Date(), ferien }, null, 2) + '\n'
     const outPath = path.resolve('src', 'lib', 'ferien.json')
     return writeFile(outPath, ferienJSON)

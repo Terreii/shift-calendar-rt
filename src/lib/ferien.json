@@ -1,12 +1,12 @@
 {
-  "lastUpdate": "2019-02-13T17:53:55.637Z",
+  "lastUpdate": "2019-02-13T19:45:46.020Z",
   "ferien": [
     {
       "start": "2017-04-10T00:00",
       "end": "2017-04-22T00:00",
       "year": 2017,
       "stateCode": "BW",
-      "name": "osterferien",
+      "name": "Osterferien",
       "slug": "osterferien-2017-BW"
     },
     {
@@ -14,7 +14,7 @@
       "end": "2017-06-17T00:00",
       "year": 2017,
       "stateCode": "BW",
-      "name": "pfingstferien",
+      "name": "Pfingstferien",
       "slug": "pfingstferien-2017-BW"
     },
     {
@@ -22,7 +22,7 @@
       "end": "2017-09-10T00:00",
       "year": 2017,
       "stateCode": "BW",
-      "name": "sommerferien",
+      "name": "Sommerferien",
       "slug": "sommerferien-2017-BW"
     },
     {
@@ -30,7 +30,7 @@
       "end": "2017-11-04T00:00",
       "year": 2017,
       "stateCode": "BW",
-      "name": "herbstferien",
+      "name": "Herbstferien",
       "slug": "herbstferien-2017-BW"
     },
     {
@@ -38,7 +38,7 @@
       "end": "2018-01-06T00:00",
       "year": 2017,
       "stateCode": "BW",
-      "name": "weihnachtsferien",
+      "name": "Weihnachtsferien",
       "slug": "weihnachtsferien-2017-BW"
     },
     {
@@ -46,7 +46,7 @@
       "end": "2018-04-07T00:00",
       "year": 2018,
       "stateCode": "BW",
-      "name": "osterferien",
+      "name": "Osterferien",
       "slug": "osterferien-2018-BW"
     },
     {
@@ -54,7 +54,7 @@
       "end": "2018-06-03T00:00",
       "year": 2018,
       "stateCode": "BW",
-      "name": "pfingstferien",
+      "name": "Pfingstferien",
       "slug": "pfingstferien-2018-BW"
     },
     {
@@ -62,7 +62,7 @@
       "end": "2018-09-09T00:00",
       "year": 2018,
       "stateCode": "BW",
-      "name": "sommerferien",
+      "name": "Sommerferien",
       "slug": "sommerferien-2018-BW"
     },
     {
@@ -70,7 +70,7 @@
       "end": "2018-11-03T00:00",
       "year": 2018,
       "stateCode": "BW",
-      "name": "herbstferien",
+      "name": "Herbstferien",
       "slug": "herbstferien-2018-BW"
     },
     {
@@ -78,7 +78,7 @@
       "end": "2019-01-06T00:00",
       "year": 2018,
       "stateCode": "BW",
-      "name": "weihnachtsferien",
+      "name": "Weihnachtsferien",
       "slug": "weihnachtsferien-2018-BW"
     },
     {
@@ -86,7 +86,7 @@
       "end": "2019-04-28T00:00",
       "year": 2019,
       "stateCode": "BW",
-      "name": "osterferien",
+      "name": "Osterferien",
       "slug": "osterferien-2019-BW"
     },
     {
@@ -94,7 +94,7 @@
       "end": "2019-06-22T00:00",
       "year": 2019,
       "stateCode": "BW",
-      "name": "pfingstferien",
+      "name": "Pfingstferien",
       "slug": "pfingstferien-2019-BW"
     },
     {
@@ -102,7 +102,7 @@
       "end": "2019-09-11T00:00",
       "year": 2019,
       "stateCode": "BW",
-      "name": "sommerferien",
+      "name": "Sommerferien",
       "slug": "sommerferien-2019-BW"
     },
     {
@@ -110,7 +110,7 @@
       "end": "2019-10-31T00:00",
       "year": 2019,
       "stateCode": "BW",
-      "name": "herbstferien",
+      "name": "Herbstferien",
       "slug": "herbstferien-2019-BW"
     },
     {
@@ -118,7 +118,7 @@
       "end": "2020-01-05T00:00",
       "year": 2019,
       "stateCode": "BW",
-      "name": "weihnachtsferien",
+      "name": "Weihnachtsferien",
       "slug": "weihnachtsferien-2019-BW"
     },
     {
@@ -126,7 +126,7 @@
       "end": "2020-04-19T00:00",
       "year": 2020,
       "stateCode": "BW",
-      "name": "osterferien",
+      "name": "Osterferien",
       "slug": "osterferien-2020-BW"
     },
     {
@@ -134,7 +134,7 @@
       "end": "2020-06-14T00:00",
       "year": 2020,
       "stateCode": "BW",
-      "name": "pfingstferien",
+      "name": "Pfingstferien",
       "slug": "pfingstferien-2020-BW"
     },
     {
@@ -142,7 +142,7 @@
       "end": "2020-09-13T00:00",
       "year": 2020,
       "stateCode": "BW",
-      "name": "sommerferien",
+      "name": "Sommerferien",
       "slug": "sommerferien-2020-BW"
     }
   ]
