@@ -83,8 +83,14 @@ function addSchoolHolidays (year, month, monthData) {
       const start = new Date(holiday.start)
       const end = new Date(holiday.end)
 
-      return (start.getFullYear() === year && start.getMonth() === month) ||
-        (end.getFullYear() === year && end.getMonth() === month)
+      const startYear = start.getFullYear()
+      const startMonth = start.getMonth()
+      const endYear = end.getFullYear()
+      const endMonth = end.getMonth()
+
+      return (startYear === year && startMonth === month) || // if it starts in this month
+        (endYear === year && endMonth === month) || // if it ends in this month
+        (startYear === endYear && startMonth < month && endMonth > month) // summer holidays
     })
     .map(holiday => {
       const start = new Date(holiday.start)
