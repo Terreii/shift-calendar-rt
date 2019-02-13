@@ -13,7 +13,8 @@
     "now-build": "npm run build && mv build dist",
     "test": "npm run -s lint && jest --coverage",
     "test:watch": "npm run -s test -- --watch",
-    "lint": "eslint src test"
+    "lint": "eslint src test",
+    "updateFerien": "node src/updateFerien.js"
   },
   "keywords": [],
   "license": "MPL",
@@ -78,6 +79,7 @@
     "less-loader": "^4.0.3",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
+    "node-fetch": "^2.3.0",
     "offline-plugin": "^5.0.0",
     "postcss-loader": "^2.0.3",
     "preact-jsx-chai": "^2.2.1",
