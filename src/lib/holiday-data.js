@@ -6,6 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { getDaysInMonth } from './utils'
+import { ferien } from './ferien.json'
 
 /**
  * Get easter and x-mas. Because those are the only closing days. And get daylight-saving switch.
@@ -41,30 +42,84 @@ export default function getHolidays (year, month) {
         }
       }
 
-      return data
+      return addSchoolHolidays(year, month, data)
 
     case 9:
-      return {
+      return addSchoolHolidays(year, month, {
         daylightSavingSwitch: {
           name: 'Zeitumstellung!\r\nEs wird um 1 Stunde zurück (von 3 Uhr auf 2 Uhr) gestellt.',
           day: getDaylightSavingDay(year, month)
         }
-      }
+      })
 
     case 11:
       const xmasData = {
         name: 'Weihnachten',
         type: 'closing'
       }
-      return {
+      return addSchoolHolidays(year, month, {
         24: xmasData,
         25: xmasData,
         26: xmasData
-      }
+      })
 
     default:
-      return {}
+      return addSchoolHolidays(year, month)
   }
+}
+
+/**
+ * Combines closing days with school holidays data for Baden-Württemberg
+ * @param {Number} year Year of that month
+ * @param {Number} month Month in year
+ * @param {Object} monthData Closing days of this month
+ */
+function addSchoolHolidays (year, month, monthData) {
+  const holidaysInThisMonth = ferien
+    .filter(holiday => {
+      // Filter out all school holidays
+      if (holiday.year !== year && !holiday.end.startsWith(String(year))) return false
+
+      const start = new Date(holiday.start)
+      const end = new Date(holiday.end)
+
+      return (start.getFullYear() === year && start.getMonth() === month) ||
+        (end.getFullYear() === year && end.getMonth() === month)
+    })
+    .map(holiday => {
+      const start = new Date(holiday.start)
+      const end = new Date(holiday.end)
+
+      return {
+        name: holiday.name,
+        start: {
+          month: start.getMonth(),
+          date: start.getDate()
+        },
+        end: {
+          month: end.getMonth(),
+          date: end.getDate()
+        }
+      }
+    })
+    .reduce((monthData, holiday) => {
+      // select the start and end of the for loop
+      const start = holiday.start.month === month ? holiday.start.date : 1
+      const end = holiday.end.month === month ? holiday.end.date : getDaysInMonth(year, month)
+      const data = {
+        name: holiday.name,
+        type: 'school'
+      }
+
+      // apply holiday data to the month data
+      for (let i = start; i <= end; ++i) {
+        monthData[i] = data
+      }
+
+      return monthData
+    }, {})
+
+  return Object.assign(holidaysInThisMonth, monthData)
 }
 
 /**
