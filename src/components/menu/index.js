@@ -20,22 +20,21 @@ const supportsMonthInput = (() => {
 
 export default ({ show, month, year, isFullYear, toggleFullYear, gotoMonth }) => {
   return <div class={show ? style.Show : style.Menu}>
-    {supportsMonthInput
+    {supportsMonthInput || isFullYear
       ? null
       : <select
         title='Gehe zum Monat'
         value={month}
         onChange={event => {
-          gotoMonth({ month: +event.target.value }, true)
+          gotoMonth({ month: +event.target.value, toggleFullYear: true }, true)
         }}
       >
         {monthNames.map((name, index) => <option key={name} value={index}>{name}</option>)}
       </select>
     }
 
-    {supportsMonthInput
-      ? null
-      : <label>
+    {!supportsMonthInput || isFullYear
+      ? <label>
         Jahr
         <input
           type='number'
@@ -46,13 +45,14 @@ export default ({ show, month, year, isFullYear, toggleFullYear, gotoMonth }) =>
 
             if (Number.isNaN(year)) return
 
-            gotoMonth({ year }, false)
+            gotoMonth({ year, toggleFullYear: !isFullYear }, false)
           }}
         />
       </label>
+      : null
     }
 
-    {supportsMonthInput
+    {supportsMonthInput && !isFullYear
       ? <label>
         Gehe zum Monat
         <input
@@ -61,7 +61,7 @@ export default ({ show, month, year, isFullYear, toggleFullYear, gotoMonth }) =>
           value={`${year}-${String(month + 1).padStart(2, '0')}`}
           onChange={event => {
             const [year, month] = event.target.value.split('-').map(s => parseInt(s, 10))
-            gotoMonth({ year, month: month - 1 }, false)
+            gotoMonth({ year, month: month - 1, toggleFullYear: true }, false)
           }}
         />
       </label>

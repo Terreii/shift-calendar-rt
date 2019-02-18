@@ -91,7 +91,7 @@ export default class App extends Component {
    * @param {number} [arg0.month]     Month number in the year, of the next month to display.
    * @param {number} [arg0.relative]  Relative move to the active month.
    */
-  _onChangeMonth ({ year = this.state.year, month = this.state.month, relative }) {
+  _onChangeMonth ({ year = this.state.year, month = this.state.month, relative, toggleFullYear }) {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
       let nextYear = this.state.year
@@ -112,7 +112,7 @@ export default class App extends Component {
       this.setState({ year, month })
     }
 
-    if (this.state.fullYear) {
+    if (this.state.fullYear && toggleFullYear) {
       this.setState({ fullYear: false })
     }
   }

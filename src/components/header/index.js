@@ -83,7 +83,7 @@ export default class Header extends Component {
             title='vorigen Monat'
             aria-label='vorigen Monat'
             onClick={() => {
-              this.props.onChange({ relative: -1 })
+              this.props.onChange({ relative: -1, toggleFullYear: true })
               this.hideMenu()
             }}
           >
@@ -94,7 +94,11 @@ export default class Header extends Component {
             title='zeige aktuellen Monat'
             onClick={() => {
               const now = new Date()
-              this.props.onChange({ year: now.getFullYear(), month: now.getMonth() })
+              this.props.onChange({
+                year: now.getFullYear(),
+                month: now.getMonth(),
+                toggleFullYear: true
+              })
               this.hideMenu()
             }}
           >
@@ -105,7 +109,7 @@ export default class Header extends Component {
             title='nächster Monat'
             aria-label='nächster Monat'
             onClick={() => {
-              this.props.onChange({ relative: 1 })
+              this.props.onChange({ relative: 1, toggleFullYear: true })
               this.hideMenu()
             }}
           >
