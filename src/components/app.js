@@ -27,6 +27,7 @@ export default class App extends Component {
       fullYear: false, // should the full year be displayed
       is64Model: false, // is it the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate()], // Today
+      search: null,
       year, // Selected year
       month // Selected month
     }
@@ -35,6 +36,7 @@ export default class App extends Component {
 
     this._boundMonthChange = this._onChangeMonth.bind(this)
     this._boundToggleFullYear = this._toggleFullYear.bind(this)
+    this._boundSearch = this._search.bind(this)
   }
 
   componentDidMount () {
@@ -90,6 +92,7 @@ export default class App extends Component {
    * @param {number} [arg0.year]      Year of the next month to display.
    * @param {number} [arg0.month]     Month number in the year, of the next month to display.
    * @param {number} [arg0.relative]  Relative move to the active month.
+   * @param {boolean} [arg0.toggleFullYear] Deactivate full year mode, if it is set.
    */
   _onChangeMonth ({ year = this.state.year, month = this.state.month, relative, toggleFullYear }) {
     if (typeof relative === 'number') {
@@ -114,6 +117,26 @@ export default class App extends Component {
 
     if (this.state.fullYear && toggleFullYear) {
       this.setState({ fullYear: false })
+    }
+  }
+
+  /**
+   * Search a day
+   * @param {boolean} doSearch Switch into search mode.
+   * @param {number} year Year of the searched day.
+   * @param {number} month Month of the searched day.
+   * @param {number} day Date in the month of the searched day.
+   */
+  _search (doSearch, year, month, day) {
+    if (doSearch) {
+      this._onChangeMonth({ year, month, toggleFullYear: true })
+      this.setState({
+        search: [year, month, day]
+      })
+    } else {
+      this.setState({
+        search: null
+      })
     }
   }
 
@@ -170,6 +193,8 @@ export default class App extends Component {
           isFullYear={this.state.fullYear}
           onChange={this._boundMonthChange}
           toggleFullYear={this._boundToggleFullYear}
+          search={this._boundSearch}
+          searchResult={this.state.search}
         />
         <Router onChange={this.handleRoute}>
           <Main

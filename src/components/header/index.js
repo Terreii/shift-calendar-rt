@@ -126,7 +126,9 @@ export default class Header extends Component {
           isFullYear={this.props.isFullYear}
           month={this.props.month}
           year={this.props.year}
+          search={this.props.searchResult}
           gotoMonth={this.boundHandleGotoEvent}
+          onSearch={this.props.search}
           toggleFullYear={() => {
             this.props.toggleFullYear()
             this.hideMenu()
