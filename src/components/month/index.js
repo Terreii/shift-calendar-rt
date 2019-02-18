@@ -28,7 +28,7 @@ export default ({ year, month, data, today, is64Model }) => {
 
   const isToday = today != null && today[0] === year && today[1] === month
 
-  return <table class={style.Main}>
+  return <table id={`month_${year}-${month + 1}`} class={style.Main}>
     <caption class={isToday ? style.ThisMonth : null}>
       {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
     </caption>

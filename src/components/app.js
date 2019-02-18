@@ -133,6 +133,21 @@ export default class App extends Component {
       this.setState({
         search: [year, month, day]
       })
+
+      if (this.clearSearchScroll != null) {
+        clearTimeout(this.clearSearchScroll)
+      }
+
+      this.clearSearchScroll = setTimeout(() => {
+        const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
+
+        if (row != null && row.scrollIntoView != null) {
+          row.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+          })
+        }
+      }, 16 * 4)
     } else {
       this.setState({
         search: null
