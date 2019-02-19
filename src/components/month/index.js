@@ -21,14 +21,14 @@ import { monthNames } from '../../lib/constants'
  * @param {boolean} arg0.is64Model Show 6-4 Model or the old 6-6 Model.
  * @returns {JSX.Element}
  */
-export default ({ year, month, data, today, is64Model }) => {
+export default ({ year, month, data, today, is64Model, search }) => {
   const grRow = is64Model
     ? [1, 2, 3, 4, 5]
     : [1, 2, 3, 4, 5, 6]
 
   const isToday = today != null && today[0] === year && today[1] === month
 
-  return <table class={style.Main}>
+  return <table id={`month_${year}-${month + 1}`} class={style.Main}>
     <caption class={isToday ? style.ThisMonth : null}>
       {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
     </caption>
@@ -40,7 +40,7 @@ export default ({ year, month, data, today, is64Model }) => {
       </tr>
     </thead>
 
-    <MonthBody year={year} month={month} data={data} today={today} />
+    <MonthBody year={year} month={month} data={data} today={today} search={search} />
 
     <tfoot>
       <tr>

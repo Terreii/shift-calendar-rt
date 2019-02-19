@@ -19,7 +19,7 @@ import { dayName, shiftTitle } from '../../lib/constants'
  * @param {?number[]} arg0.today   Array of numbers that contains todays date. [year, month, day].
  * @returns {JSX.Element}
  */
-export default ({ year, month, data, today }) => {
+export default ({ year, month, data, today, search }) => {
   const todayInThisMonth = today != null && today[0] === year && today[1] === month
 
   // Render every row/day.
@@ -38,6 +38,7 @@ export default ({ year, month, data, today }) => {
       data-day={aDay}
       data-today={todayInThisMonth && thatDay === today[2]}
       data-holiday={holidayData != null ? holidayData.type : null}
+      data-search={search === thatDay}
       title={holidayData != null ? holidayData.name : null}
     >
       <td
