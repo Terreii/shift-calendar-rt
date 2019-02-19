@@ -23,7 +23,7 @@ import selectMonthData from '../../lib/select-month-data'
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  * @returns {JSX.Element}
  */
-export default ({ displayOption, year, month, is64Model, today }) => {
+export default ({ displayOption, year, month, is64Model, today, search }) => {
   let monthsData = []
 
   switch (displayOption) {
@@ -78,6 +78,7 @@ export default ({ displayOption, year, month, is64Model, today }) => {
           data={data}
           today={today[0] === year && today[1] === month ? today : null}
           is64Model={is64Model}
+          search={search != null && search[0] === year && search[1] === month ? search[2] : null}
         />)}
       </div>
       <Footer />

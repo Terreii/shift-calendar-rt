@@ -219,6 +219,7 @@ export default class App extends Component {
             month={this.state.month}
             is64Model={this.state.is64Model}
             today={this.state.today}
+            search={this.state.search}
           />
           <Impressum path='/impressum/' />
         </Router>
