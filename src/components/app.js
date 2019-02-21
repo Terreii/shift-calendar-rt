@@ -34,6 +34,7 @@ export default class App extends Component {
     }
 
     this._onResize({})
+    this._onSettingsChange({})
   }
 
   componentDidMount () {
@@ -41,6 +42,7 @@ export default class App extends Component {
     this.resizeListener = this._onResize.bind(this)
     window.addEventListener('focus', this.focusListener)
     window.addEventListener('resize', this.resizeListener)
+    window.addEventListener('storage', this._onSettingsChange)
 
     // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
@@ -50,8 +52,17 @@ export default class App extends Component {
   componentWillUnmount () {
     window.removeEventListener('focus', this.focusListener)
     window.removeEventListener('resize', this.resizeListener)
+    window.removeEventListener('storage', this._onSettingsChange)
 
     this.hammertime.off('swipe', this._onSwipe)
+  }
+
+  _onSettingsChange = event => {
+    const { group = 0 } = JSON.parse(localStorage.getItem('settings') || '{}')
+
+    this.setState({
+      group
+    })
   }
 
   /**
@@ -191,9 +202,12 @@ export default class App extends Component {
    * @param {number} group number of group to display; 0 = all, 1 - 6 group number.
    */
   _changeGroup = group => {
-    if (group < 0 || group > 6) return
+    group = +group
+    if (Number.isNaN(group) || group < 0 || group > 6) return
 
     this.setState({ group })
+
+    this.saveSettings()
   }
 
   /**
@@ -203,6 +217,16 @@ export default class App extends Component {
    */
   handleRoute = e => {
     this.currentUrl = e.url
+  }
+
+  saveSettings () {
+    setTimeout(() => {
+      const data = {
+        group: this.state.group
+      }
+
+      localStorage.setItem('settings', JSON.stringify(data))
+    }, 32)
   }
 
   /**
