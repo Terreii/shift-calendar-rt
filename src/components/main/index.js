@@ -26,7 +26,11 @@ import selectMonthData from '../../lib/select-month-data'
  * @returns {JSX.Element}
  */
 export default ({ numberOfMonths, year, month, is64Model, today, search, group }) => {
-  let monthsData = []
+  const monthsData = []
+
+  if (group > 0 && numberOfMonths < 12) {
+    numberOfMonths *= 2
+  }
 
   switch (numberOfMonths) {
     case 12: // Render all 12 months of the selected year
@@ -44,6 +48,27 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
         year,
         month,
         data: selectMonthData(year, month, is64Model)
+      })
+      break
+
+    case 2: // if there are only 2 months: show this and the next one
+      monthsData.push({
+        year,
+        month,
+        data: selectMonthData(year, month, is64Model)
+      })
+      let nextMonth = month + 1
+      let nextYear = year
+
+      if (nextMonth > 11) {
+        nextMonth -= 12
+        nextYear += 1
+      }
+
+      monthsData.push({
+        year: nextYear,
+        month: nextMonth,
+        data: selectMonthData(nextYear, nextMonth, is64Model)
       })
       break
 
