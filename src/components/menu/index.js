@@ -18,12 +18,28 @@ const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   return parent.firstChild.type === type
 })
 
-export default ({ show, month, year, isFullYear, search, toggleFullYear, gotoMonth, onSearch }) => {
+export default ({
+  show,
+  month,
+  year,
+  isFullYear,
+  search,
+  group,
+  toggleFullYear,
+  gotoMonth,
+  onSearch,
+  onGroupChange
+}) => {
   let searchValue = ''
   if (search != null) {
     const searchMonth = String(search[1] + 1).padStart(2, '0')
     const searchDay = String(search[2]).padStart(2, '0')
     searchValue = `${search[0]}-${searchMonth}-${searchDay}`
+  }
+
+  let groupOptions = []
+  for (let gr = 1; gr <= 6; gr += 1) {
+    groupOptions.push(<option key={'group_' + gr} value={gr}>Nur Gruppe {gr}</option>)
   }
 
   return <div class={show ? style.Show : style.Menu}>
@@ -115,5 +131,16 @@ export default ({ show, month, year, isFullYear, search, toggleFullYear, gotoMon
     <button onClick={toggleFullYear}>
       Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
     </button>
+
+    <select
+      value={group}
+      onChange={event => {
+        const group = +event.target.value
+        onGroupChange(group)
+      }}
+    >
+      <option value='0'>Alle Gruppen</option>
+      {groupOptions}
+    </select>
   </div>
 }

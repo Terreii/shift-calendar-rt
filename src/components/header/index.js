@@ -127,12 +127,14 @@ export default class Header extends Component {
           month={this.props.month}
           year={this.props.year}
           search={this.props.searchResult}
+          group={this.props.group}
           gotoMonth={this.boundHandleGotoEvent}
           onSearch={this.props.search}
           toggleFullYear={() => {
             this.props.toggleFullYear()
             this.hideMenu()
           }}
+          onGroupChange={this.props.onGroupChange}
         />
       </header>
     )

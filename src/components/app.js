@@ -29,14 +29,11 @@ export default class App extends Component {
       today: [year, month, now.getDate()], // Today
       search: null,
       year, // Selected year
-      month // Selected month
+      month, // Selected month
+      group: 0 // group to display; 0 = all, 1 - 6 is group number
     }
 
     this._onResize({})
-
-    this._boundMonthChange = this._onChangeMonth.bind(this)
-    this._boundToggleFullYear = this._toggleFullYear.bind(this)
-    this._boundSearch = this._search.bind(this)
   }
 
   componentDidMount () {
@@ -47,15 +44,14 @@ export default class App extends Component {
 
     // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
-    this.swipeListener = this._onSwipe.bind(this)
-    this.hammertime.on('swipe', this.swipeListener)
+    this.hammertime.on('swipe', this._onSwipe)
   }
 
   componentWillUnmount () {
     window.removeEventListener('focus', this.focusListener)
     window.removeEventListener('resize', this.resizeListener)
 
-    this.hammertime.off('swipe', this.swipeListener)
+    this.hammertime.off('swipe', this._onSwipe)
   }
 
   /**
@@ -94,7 +90,11 @@ export default class App extends Component {
    * @param {number} [arg0.relative]  Relative move to the active month.
    * @param {boolean} [arg0.toggleFullYear] Deactivate full year mode, if it is set.
    */
-  _onChangeMonth ({ year = this.state.year, month = this.state.month, relative, toggleFullYear }) {
+  _onChangeMonth = ({
+    year = this.state.year,
+    month = this.state.month,
+    relative, toggleFullYear
+  }) => {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
       let nextYear = this.state.year
@@ -127,7 +127,7 @@ export default class App extends Component {
    * @param {number} month Month of the searched day.
    * @param {number} day Date in the month of the searched day.
    */
-  _search (doSearch, year, month, day) {
+  _search = (doSearch, year, month, day) => {
     if (doSearch) {
       this._onChangeMonth({ year, month, toggleFullYear: true })
       this.setState({
@@ -160,7 +160,7 @@ export default class App extends Component {
    * @param {Object} event            "change" event from hammerjs.
    * @param {number} event.direction  direction of the swipe
    */
-  _onSwipe (event) {
+  _onSwipe = event => {
     if (this.state.fullYear) return
 
     switch (event.direction) {
@@ -178,12 +178,22 @@ export default class App extends Component {
   }
 
   /**
-   * Toogle between showing the full year or the selected display option.
+   * Toggle between showing the full year or the selected display option.
    */
-  _toggleFullYear () {
+  _toggleFullYear = () => {
     this.setState({
       fullYear: !this.state.fullYear
     })
+  }
+
+  /**
+   * Change to display group.
+   * @param {number} group number of group to display; 0 = all, 1 - 6 group number.
+   */
+  _changeGroup = group => {
+    if (group < 0 || group > 6) return
+
+    this.setState({ group })
   }
 
   /**
@@ -206,10 +216,12 @@ export default class App extends Component {
           year={this.state.year}
           month={this.state.month}
           isFullYear={this.state.fullYear}
-          onChange={this._boundMonthChange}
-          toggleFullYear={this._boundToggleFullYear}
-          search={this._boundSearch}
+          onChange={this._onChangeMonth}
+          toggleFullYear={this._toggleFullYear}
+          search={this._search}
           searchResult={this.state.search}
+          group={this.state.group}
+          onGroupChange={this._changeGroup}
         />
         <Router onChange={this.handleRoute}>
           <Main
