@@ -23,7 +23,7 @@ export default class App extends Component {
     const month = now.getMonth()
 
     this.state = {
-      displayOption: '1', // display mode for months: '1'|'4'
+      numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
       is64Model: false, // is it the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate()], // Today
@@ -79,10 +79,10 @@ export default class App extends Component {
    * @param {Object} event  resize-event from the browser.
    */
   _onResize (event) {
-    const displayOption = window.innerWidth < 1220 ? '1' : '4'
+    const numberOfMonths = window.innerWidth < 1220 ? 1 : 4
 
-    if (displayOption !== this.state.displayOption) {
-      this.setState({ displayOption })
+    if (numberOfMonths !== this.state.numberOfMonths) {
+      this.setState({ numberOfMonths })
     }
   }
 
@@ -214,7 +214,7 @@ export default class App extends Component {
         <Router onChange={this.handleRoute}>
           <Main
             path='/'
-            displayOption={this.state.fullYear ? 'full' : this.state.displayOption}
+            numberOfMonths={this.state.fullYear ? 12 : this.state.numberOfMonths}
             year={this.state.year}
             month={this.state.month}
             is64Model={this.state.is64Model}

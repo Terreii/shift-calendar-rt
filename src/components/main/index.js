@@ -16,18 +16,18 @@ import selectMonthData from '../../lib/select-month-data'
  * Renders the main content.
  * It will get the month-data from "selectMonthData" and renders the months.
  * @param {Object}    arg0                React/Preact arguments.
- * @param {string}    arg0.displayOption  How many months should be displayed?
+ * @param {number}    arg0.numberOfMonths How many months should be displayed? 12 is this full year.
  * @param {number}    arg0.year           Year of the selected month.
  * @param {number}    arg0.month          Month number of the selected month.
  * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  * @returns {JSX.Element}
  */
-export default ({ displayOption, year, month, is64Model, today, search }) => {
+export default ({ numberOfMonths, year, month, is64Model, today, search }) => {
   let monthsData = []
 
-  switch (displayOption) {
-    case 'full': // Render all 12 months of the selected year
+  switch (numberOfMonths) {
+    case 12: // Render all 12 months of the selected year
       for (let i = 0; i < 12; ++i) {
         monthsData.push({
           year,
@@ -37,8 +37,17 @@ export default ({ displayOption, year, month, is64Model, today, search }) => {
       }
       break
 
-    case '4': // Render the selected month, one before and two after it.
-      for (let i = 0; i < 4; ++i) {
+    case 1: // Renders the selected month
+      monthsData.push({
+        year,
+        month,
+        data: selectMonthData(year, month, is64Model)
+      })
+      break
+
+    case 4: // Render the selected month, one before and the rest after it.
+    default:
+      for (let i = 0; i < numberOfMonths; ++i) {
         let monthNr = month + (i - 1)
         let yearNr = year
 
@@ -56,15 +65,6 @@ export default ({ displayOption, year, month, is64Model, today, search }) => {
           data: selectMonthData(yearNr, monthNr, is64Model)
         })
       }
-      break
-
-    case '1': // Renders the selected month
-    default:
-      monthsData.push({
-        year,
-        month,
-        data: selectMonthData(year, month, is64Model)
-      })
       break
   }
 
