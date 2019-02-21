@@ -50,7 +50,10 @@ export default ({ show, month, year, isFullYear, search, toggleFullYear, gotoMon
           onChange={event => {
             const year = +event.target.value
 
-            if (Number.isNaN(year)) return
+            if (Number.isNaN(year)) {
+              event.target.value = String(event.target.value).replace(/\D/g, '')
+              return
+            }
 
             gotoMonth({ year, toggleFullYear: !isFullYear }, false)
           }}
