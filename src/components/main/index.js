@@ -21,9 +21,11 @@ import selectMonthData from '../../lib/select-month-data'
  * @param {number}    arg0.month          Month number of the selected month.
  * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
+ * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
+ * @param {number}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
  * @returns {JSX.Element}
  */
-export default ({ numberOfMonths, year, month, is64Model, today, search }) => {
+export default ({ numberOfMonths, year, month, is64Model, today, search, group }) => {
   let monthsData = []
 
   switch (numberOfMonths) {
@@ -79,6 +81,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search }) => {
           today={today[0] === year && today[1] === month ? today : null}
           is64Model={is64Model}
           search={search != null && search[0] === year && search[1] === month ? search[2] : null}
+          group={group}
         />)}
       </div>
       <Footer />

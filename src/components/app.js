@@ -232,6 +232,7 @@ export default class App extends Component {
             is64Model={this.state.is64Model}
             today={this.state.today}
             search={this.state.search}
+            group={this.state.group}
           />
           <Impressum path='/impressum/' />
         </Router>
