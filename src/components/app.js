@@ -23,20 +23,18 @@ export default class App extends Component {
     const month = now.getMonth()
 
     this.state = {
-      displayOption: '1', // display mode for months: '1'|'4'
+      numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
       is64Model: false, // is it the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate()], // Today
       search: null,
       year, // Selected year
-      month // Selected month
+      month, // Selected month
+      group: 0 // group to display; 0 = all, 1 - 6 is group number
     }
 
     this._onResize({})
-
-    this._boundMonthChange = this._onChangeMonth.bind(this)
-    this._boundToggleFullYear = this._toggleFullYear.bind(this)
-    this._boundSearch = this._search.bind(this)
+    this._onSettingsChange({})
   }
 
   componentDidMount () {
@@ -44,18 +42,27 @@ export default class App extends Component {
     this.resizeListener = this._onResize.bind(this)
     window.addEventListener('focus', this.focusListener)
     window.addEventListener('resize', this.resizeListener)
+    window.addEventListener('storage', this._onSettingsChange)
 
     // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
-    this.swipeListener = this._onSwipe.bind(this)
-    this.hammertime.on('swipe', this.swipeListener)
+    this.hammertime.on('swipe', this._onSwipe)
   }
 
   componentWillUnmount () {
     window.removeEventListener('focus', this.focusListener)
     window.removeEventListener('resize', this.resizeListener)
+    window.removeEventListener('storage', this._onSettingsChange)
 
-    this.hammertime.off('swipe', this.swipeListener)
+    this.hammertime.off('swipe', this._onSwipe)
+  }
+
+  _onSettingsChange = event => {
+    const { group = 0 } = JSON.parse(window.localStorage.getItem('settings') || '{}')
+
+    this.setState({
+      group
+    })
   }
 
   /**
@@ -79,10 +86,10 @@ export default class App extends Component {
    * @param {Object} event  resize-event from the browser.
    */
   _onResize (event) {
-    const displayOption = window.innerWidth < 1220 ? '1' : '4'
+    const numberOfMonths = window.innerWidth < 1220 ? 1 : 4
 
-    if (displayOption !== this.state.displayOption) {
-      this.setState({ displayOption })
+    if (numberOfMonths !== this.state.numberOfMonths) {
+      this.setState({ numberOfMonths })
     }
   }
 
@@ -94,7 +101,11 @@ export default class App extends Component {
    * @param {number} [arg0.relative]  Relative move to the active month.
    * @param {boolean} [arg0.toggleFullYear] Deactivate full year mode, if it is set.
    */
-  _onChangeMonth ({ year = this.state.year, month = this.state.month, relative, toggleFullYear }) {
+  _onChangeMonth = ({
+    year = this.state.year,
+    month = this.state.month,
+    relative, toggleFullYear
+  }) => {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
       let nextYear = this.state.year
@@ -127,7 +138,7 @@ export default class App extends Component {
    * @param {number} month Month of the searched day.
    * @param {number} day Date in the month of the searched day.
    */
-  _search (doSearch, year, month, day) {
+  _search = (doSearch, year, month, day) => {
     if (doSearch) {
       this._onChangeMonth({ year, month, toggleFullYear: true })
       this.setState({
@@ -160,7 +171,7 @@ export default class App extends Component {
    * @param {Object} event            "change" event from hammerjs.
    * @param {number} event.direction  direction of the swipe
    */
-  _onSwipe (event) {
+  _onSwipe = event => {
     if (this.state.fullYear) return
 
     switch (event.direction) {
@@ -178,12 +189,25 @@ export default class App extends Component {
   }
 
   /**
-   * Toogle between showing the full year or the selected display option.
+   * Toggle between showing the full year or the selected display option.
    */
-  _toggleFullYear () {
+  _toggleFullYear = () => {
     this.setState({
       fullYear: !this.state.fullYear
     })
+  }
+
+  /**
+   * Change to display group.
+   * @param {number} group number of group to display; 0 = all, 1 - 6 group number.
+   */
+  _changeGroup = group => {
+    group = +group
+    if (Number.isNaN(group) || group < 0 || group > 6) return
+
+    this.setState({ group })
+
+    this.saveSettings()
   }
 
   /**
@@ -193,6 +217,16 @@ export default class App extends Component {
    */
   handleRoute = e => {
     this.currentUrl = e.url
+  }
+
+  saveSettings () {
+    setTimeout(() => {
+      const data = {
+        group: this.state.group
+      }
+
+      window.localStorage.setItem('settings', JSON.stringify(data))
+    }, 32)
   }
 
   /**
@@ -206,20 +240,23 @@ export default class App extends Component {
           year={this.state.year}
           month={this.state.month}
           isFullYear={this.state.fullYear}
-          onChange={this._boundMonthChange}
-          toggleFullYear={this._boundToggleFullYear}
-          search={this._boundSearch}
+          onChange={this._onChangeMonth}
+          toggleFullYear={this._toggleFullYear}
+          search={this._search}
           searchResult={this.state.search}
+          group={this.state.group}
+          onGroupChange={this._changeGroup}
         />
         <Router onChange={this.handleRoute}>
           <Main
             path='/'
-            displayOption={this.state.fullYear ? 'full' : this.state.displayOption}
+            numberOfMonths={this.state.fullYear ? 12 : this.state.numberOfMonths}
             year={this.state.year}
             month={this.state.month}
             is64Model={this.state.is64Model}
             today={this.state.today}
             search={this.state.search}
+            group={this.state.group}
           />
           <Impressum path='/impressum/' />
         </Router>

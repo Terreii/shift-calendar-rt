@@ -16,18 +16,24 @@ import selectMonthData from '../../lib/select-month-data'
  * Renders the main content.
  * It will get the month-data from "selectMonthData" and renders the months.
  * @param {Object}    arg0                React/Preact arguments.
- * @param {string}    arg0.displayOption  How many months should be displayed?
+ * @param {number}    arg0.numberOfMonths How many months should be displayed? 12 is this full year.
  * @param {number}    arg0.year           Year of the selected month.
  * @param {number}    arg0.month          Month number of the selected month.
  * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
+ * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
+ * @param {number}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
  * @returns {JSX.Element}
  */
-export default ({ displayOption, year, month, is64Model, today, search }) => {
-  let monthsData = []
+export default ({ numberOfMonths, year, month, is64Model, today, search, group }) => {
+  const monthsData = []
 
-  switch (displayOption) {
-    case 'full': // Render all 12 months of the selected year
+  if (group > 0 && numberOfMonths < 12) {
+    numberOfMonths *= 2
+  }
+
+  switch (numberOfMonths) {
+    case 12: // Render all 12 months of the selected year
       for (let i = 0; i < 12; ++i) {
         monthsData.push({
           year,
@@ -37,8 +43,38 @@ export default ({ displayOption, year, month, is64Model, today, search }) => {
       }
       break
 
-    case '4': // Render the selected month, one before and two after it.
-      for (let i = 0; i < 4; ++i) {
+    case 1: // Renders the selected month
+      monthsData.push({
+        year,
+        month,
+        data: selectMonthData(year, month, is64Model)
+      })
+      break
+
+    case 2: // if there are only 2 months: show this and the next one
+      monthsData.push({
+        year,
+        month,
+        data: selectMonthData(year, month, is64Model)
+      })
+      let nextMonth = month + 1
+      let nextYear = year
+
+      if (nextMonth > 11) {
+        nextMonth -= 12
+        nextYear += 1
+      }
+
+      monthsData.push({
+        year: nextYear,
+        month: nextMonth,
+        data: selectMonthData(nextYear, nextMonth, is64Model)
+      })
+      break
+
+    case 4: // Render the selected month, one before and the rest after it.
+    default:
+      for (let i = 0; i < numberOfMonths; ++i) {
         let monthNr = month + (i - 1)
         let yearNr = year
 
@@ -57,15 +93,6 @@ export default ({ displayOption, year, month, is64Model, today, search }) => {
         })
       }
       break
-
-    case '1': // Renders the selected month
-    default:
-      monthsData.push({
-        year,
-        month,
-        data: selectMonthData(year, month, is64Model)
-      })
-      break
   }
 
   return (
@@ -79,6 +106,7 @@ export default ({ displayOption, year, month, is64Model, today, search }) => {
           today={today[0] === year && today[1] === month ? today : null}
           is64Model={is64Model}
           search={search != null && search[0] === year && search[1] === month ? search[2] : null}
+          group={group}
         />)}
       </div>
       <Footer />

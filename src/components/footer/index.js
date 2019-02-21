@@ -20,6 +20,8 @@ export default () => {
     <br />
     Alle Angaben sind ohne Gewähr.
     <br />
+    Alle Daten werden nur lokal gespeichert! Deswegen gibt es keine Cookie Meldung.
+    <br />
     {'Lizenz: '}
     <a href='https://www.mozilla.org/en-US/MPL/2.0/' target='_blank' rel='noopener'>
       Mozilla Public License 2.0
