@@ -58,7 +58,7 @@ export default class App extends Component {
   }
 
   _onSettingsChange = event => {
-    const { group = 0 } = JSON.parse(localStorage.getItem('settings') || '{}')
+    const { group = 0 } = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
     this.setState({
       group
@@ -225,7 +225,7 @@ export default class App extends Component {
         group: this.state.group
       }
 
-      localStorage.setItem('settings', JSON.stringify(data))
+      window.localStorage.setItem('settings', JSON.stringify(data))
     }, 32)
   }
 
