@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h, Component } from 'preact'
 import { Router } from 'preact-router'
 import Hammer from 'hammerjs'
+import qs from 'querystringify'
 
 import Header from './header'
 import Main from './main'
@@ -47,6 +48,31 @@ export default class App extends Component {
     // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
     this.hammertime.on('swipe', this._onSwipe)
+
+    // Settings from hash
+    if (window.location.hash.length > 1) {
+      const hashSettings = qs.parse(window.location.hash.slice(1))
+
+      const toChangeState = {}
+      let shouldSave = false
+
+      const group = +hashSettings.group
+      if (!Number.isNaN(group) && group > 0 && group <= 6) {
+        toChangeState.group = group
+        shouldSave = true
+      }
+
+      if (hashSettings.search != null && hashSettings.search.length >= 8) {
+        const date = new Date(hashSettings.search)
+        toChangeState.search = [date.getFullYear(), date.getMonth(), date.getDate()]
+      }
+
+      this.setState(toChangeState)
+      if (shouldSave) {
+        this.saveSettings()
+      }
+      window.location.hash = ''
+    }
   }
 
   componentWillUnmount () {
