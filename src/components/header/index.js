@@ -10,6 +10,7 @@ import { Link } from 'preact-router'
 import style from './style.less'
 
 import Menu from '../menu'
+import ShareMenu from '../shareMenu'
 
 /**
  * Renders the Header.
@@ -19,16 +20,8 @@ export default class Header extends Component {
     super(args)
 
     this.state = {
-      showMenu: false
-    }
-
-    this.boundToggleShowMenu = this._toggleShowMenu.bind(this)
-    this.boundHandleGotoEvent = this._handleGotoEvent.bind(this)
-    this.hideMenu = () => {
-      this.setState({
-        showMenu: false
-      })
-      this._removeListener()
+      showMenu: false,
+      showShareMenu: false
     }
   }
 
@@ -36,12 +29,14 @@ export default class Header extends Component {
     this._removeListener()
   }
 
-  _toggleShowMenu (event) {
+  _toggleShowMenu = event => {
     const shouldShow = !this.state.showMenu
 
     this.setState({
       showMenu: shouldShow
     })
+
+    this.hideShare()
 
     setTimeout(() => {
       if (shouldShow) {
@@ -55,6 +50,13 @@ export default class Header extends Component {
     }, 0)
   }
 
+  hideMenu = () => {
+    this.setState({
+      showMenu: false
+    })
+    this._removeListener()
+  }
+
   _removeListener () {
     const element = document.getElementsByTagName('main')[0]
     if (element != null) {
@@ -62,12 +64,31 @@ export default class Header extends Component {
     }
   }
 
-  _handleGotoEvent (event, hide) {
+  _handleGotoEvent = (event, hide) => {
     this.props.onChange(event)
 
     if (hide) {
       this.hideMenu()
     }
+  }
+
+  onShare = event => {
+    this.setState({
+      showShareMenu: true
+    })
+    this.hideMenu()
+
+    const element = document.getElementsByTagName('main')[0]
+    element.addEventListener('click', this.hideShare)
+  }
+
+  hideShare = () => {
+    const element = document.getElementsByTagName('main')[0]
+    element.removeEventListener('click', this.hideShare)
+
+    this.setState({
+      showShareMenu: false
+    })
   }
 
   /**
@@ -116,7 +137,7 @@ export default class Header extends Component {
             {'>'}
           </button>
 
-          <button class={style.Hamburger} onClick={this.boundToggleShowMenu}>
+          <button class={style.Hamburger} onClick={this._toggleShowMenu}>
             <img src='/assets/icons/hamburger_icon.svg' height='45' width='45' alt='Menu' />
           </button>
         </nav>
@@ -128,14 +149,24 @@ export default class Header extends Component {
           year={this.props.year}
           search={this.props.searchResult}
           group={this.props.group}
-          gotoMonth={this.boundHandleGotoEvent}
+          gotoMonth={this._handleGotoEvent}
           onSearch={this.props.search}
           toggleFullYear={() => {
             this.props.toggleFullYear()
             this.hideMenu()
           }}
           onGroupChange={this.props.onGroupChange}
+          onShare={this.onShare}
         />
+
+        {this.state.showShareMenu
+          ? <ShareMenu
+            group={this.props.group}
+            search={this.props.searchResult}
+            hide={this.hideShare}
+          />
+          : null
+        }
       </header>
     )
   }

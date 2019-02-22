@@ -28,7 +28,8 @@ export default ({
   toggleFullYear,
   gotoMonth,
   onSearch,
-  onGroupChange
+  onGroupChange,
+  onShare
 }) => {
   let searchValue = ''
   if (search != null) {
@@ -142,5 +143,14 @@ export default ({
       <option value='0'>Alle Gruppen</option>
       {groupOptions}
     </select>
+
+    <button class={style.share} onClick={onShare}>
+      <img
+        src='/assets/icons/share21.svg'
+        height='32'
+        width='32'
+        alt='teilen'
+      />
+    </button>
   </div>
 }
