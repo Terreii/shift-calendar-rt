@@ -77,7 +77,14 @@ export default class ShareMenu extends Component {
 
   render () {
     return <div class={style.Main}>
-      <input type='url' disabled value={this.getURL()} />
+      <input
+        type='url'
+        readonly
+        value={this.getURL()}
+        onFocus={event => {
+          event.target.select()
+        }}
+      />
 
       <h6>Füge hinzu:</h6>
 
@@ -89,7 +96,10 @@ export default class ShareMenu extends Component {
           onChange={this.doAddGroup}
         />
         Gruppe
-        {this.props.group === 0 ? ' (momentan sind alle Gruppen ausgewählt)' : ''}
+        {this.props.group === 0
+          ? <small><br />Momentan sind alle Gruppen ausgewählt.</small>
+          : null
+        }
       </label>
 
       <label class={style.checkbox}>
@@ -100,15 +110,20 @@ export default class ShareMenu extends Component {
           onChange={this.doAddSearch}
         />
         Der gesuchte Tag
-        {this.props.search == null ? ' (momentan kein Suchergebniss)' : ''}
+        {this.props.search == null
+          ? <small><br />Momentan kein Suchergebniss.</small>
+          : null
+        }
       </label>
 
-      <button class={style.share} onClick={this.onShare}>
-        Teilen
-      </button>
-      <button class={style.cancle} onClick={this.props.hide}>
-        Abbrechen
-      </button>
+      <div class={style.ButtonRow}>
+        <button class={style.cancle} onClick={this.props.hide}>
+          Abbrechen
+        </button>
+        <button class={style.share} onClick={this.onShare}>
+          Teilen
+        </button>
+      </div>
     </div>
   }
 }
