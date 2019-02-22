@@ -83,6 +83,7 @@
     "offline-plugin": "^5.0.0",
     "postcss-loader": "^2.0.3",
     "preact-jsx-chai": "^2.2.1",
+    "querystringify": "^2.1.0",
     "raw-loader": "^0.5.1",
     "re-reselect": "^2.3.0",
     "regenerator-runtime": "^0.10.3",
