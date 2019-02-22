@@ -7,25 +7,45 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 @import '~style/helpers';
 
-.Menu {
-  display: none;
+.Main {
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
   position: absolute;
   top: @header-height;
-  right: 0px;
+  left: 0px;
   padding-top: 0.7em;
   padding-bottom: 0.7em;
-  min-width: 14em;
+  width: 50vw;
+  min-width: 18em;
+  max-width: 28em;
   background: @header-background;
   box-shadow: @header-shadow;
+  color: #efefef;
 
   & > * + * {
     margin-top: 1.3rem;
   }
 
-  button, select, input {
+  h6 {
+    font-size: 100%;
+    padding: 0;
+    margin: 0;
+    margin-top: 0.6em;
+    margin-left: 0.9em;
+  }
+
+  label.checkbox {
+    margin-left: .6em;
+
+    & > input {
+      height: 1em;
+      width: 1em;
+    }
+  }
+
+  button {
     color: black;
     text-align: center;
     border-radius: 5px;
@@ -41,32 +61,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     }
 
     &.share {
-      margin-left: auto;
-      margin-right: auto;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
+      background: #3131ca;
+      color: white;
+
+      &:active, &:hover {
+        background: #26269c;
+      }
     }
   }
-
-  select {
-    text-align: center;
-  }
-
-  label {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    & > select, & > input {
-      margin-top: 0.3em;
-      flex: auto;
-    }
-  }
-}
-
-.Show {
-  .Menu;
-  display: block;
-  display: flex;
 }
