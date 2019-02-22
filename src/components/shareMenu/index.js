@@ -60,7 +60,7 @@ export default class ShareMenu extends Component {
       window.navigator.share({
         url,
         title: 'Schichtkalender',
-        text: 'Meine Schichten beim Bosch Reutlingen.'
+        text: 'Meine Schichten beim Bosch Reutlingen: ' + url
       })
         .then(() => {
           this.props.hide()
