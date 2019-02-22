@@ -111,7 +111,7 @@ export default class ShareMenu extends Component {
         />
         Der gesuchte Tag
         {this.props.search == null
-          ? <small><br />Momentan kein Suchergebniss.</small>
+          ? <small><br />Momentan gibt es kein Suchergebnis.</small>
           : null
         }
       </label>
