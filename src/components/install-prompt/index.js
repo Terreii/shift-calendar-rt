@@ -16,11 +16,16 @@ export default class InstallButton extends Component {
     super(args)
 
     this.state = {
-      show: false
+      show: 'none'
     }
 
     this.deferredPrompt = null
-    this.boundOnClick = this._onClick.bind(this)
+
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent)
+    const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone
+    if (isIos && !isInStandaloneMode) {
+      this.state.show = 'ios'
+    }
 
     /**
      * Event from the browser, that the Web-App can be installed.
@@ -32,7 +37,7 @@ export default class InstallButton extends Component {
       // Stash the event so it can be triggered later.
       this.deferredPrompt = event
 
-      this.setState({ show: true })
+      this.setState({ show: 'button' })
     })
   }
 
@@ -44,7 +49,7 @@ export default class InstallButton extends Component {
    * Event handler for when the user did click the button.
    * @param {Object} event Click event.
    */
-  _onClick (event) {
+  _onClickInstallButton = (event) => {
     this.setState({ show: false })
 
     if (this.deferredPrompt == null) return
@@ -69,12 +74,22 @@ export default class InstallButton extends Component {
    * @returns {?JSX.Element}
    */
   render () {
-    if (!this.state.show) return null
+    switch (this.state.show) {
+      case 'button':
+        return <div class={style.Container}>
+          <button class={style.Button} onClick={this._onClickInstallButton}>
+            + zum Home Screen hinzufügen
+          </button>
+        </div>
 
-    return <div class={style.Container}>
-      <button class={style.Button} onClick={this.boundOnClick}>
-        + zum Home Screen hinzufügen
-      </button>
-    </div>
+      case 'ios':
+        return <div class={style.Container}>
+          iOS
+        </div>
+
+      case 'none':
+      default:
+        return null
+    }
   }
 }
