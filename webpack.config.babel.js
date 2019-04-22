@@ -109,6 +109,17 @@ module.exports = {
         use: 'raw-loader'
       },
       {
+        test: /(manifest\.webmanifest|browserconfig\.xml)$/,
+        use: [
+          {
+            loader: "file-loader"
+          },
+          {
+            loader: "app-manifest-loader"
+          }
+        ]
+      },
+      {
         test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif|ics)(\?.*)?$/i,
         use: ENV === 'production' ? 'file-loader' : 'url-loader'
       }
@@ -126,10 +137,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './index.ejs',
-      minify: { collapseWhitespace: true }
+      minify: { collapseWhitespace: ENV === 'production' }
     }),
     new CopyWebpackPlugin([
-      { from: './manifest.webmanifest', to: './' },
       { from: './favicon.ico', to: './' }
     ])
   ]).concat(ENV === 'production' ? [
