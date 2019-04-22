@@ -27,7 +27,7 @@ export default class App extends Component {
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
       is64Model: false, // is it the 6-4 model or the 6-6 model?
-      today: [year, month, now.getDate()], // Today
+      today: [year, month, now.getDate(), now.getHours()], // Today
       search: null,
       year, // Selected year
       month, // Selected month
@@ -49,6 +49,20 @@ export default class App extends Component {
     this.hammertime = new Hammer(document.getElementById('app'))
     this.hammertime.on('swipe', this._onSwipe)
 
+    this.hourChangeInterval = setInterval(() => {
+      if (document.hidden) return
+
+      this._updateToday()
+    }, 30000)
+
+    const scrollTimeout = setTimeout(
+      this._scrollToADay,
+      16 * 4,
+      this.state.today[0],
+      this.state.today[1],
+      this.state.today[2]
+    )
+
     // Settings from hash
     if (window.location.hash.length > 1) {
       const hashSettings = qs.parse(window.location.hash.slice(1))
@@ -65,6 +79,7 @@ export default class App extends Component {
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
         const date = new Date(hashSettings.search)
         toChangeState.search = [date.getFullYear(), date.getMonth(), date.getDate()]
+        clearTimeout(scrollTimeout)
       }
 
       this.setState(toChangeState)
@@ -81,6 +96,8 @@ export default class App extends Component {
     window.removeEventListener('storage', this._onSettingsChange)
 
     this.hammertime.off('swipe', this._onSwipe)
+
+    clearInterval(this.hourChangeInterval)
   }
 
   _onSettingsChange = event => {
@@ -96,13 +113,21 @@ export default class App extends Component {
    * @param {Object} event  Focus-event from the browser.
    */
   _onFocus (event) {
+    this._updateToday()
+  }
+
+  /**
+   * Updates today if it did change.
+   */
+  _updateToday () {
     const now = new Date()
     const today = now.getDate()
+    const hour = now.getHours()
 
     // update today marker on refocus
-    if (this.state.today[2] !== today) {
+    if (this.state.today[2] !== today || this.state.today[3] !== hour) {
       this.setState({
-        today: [now.getFullYear(), now.getMonth(), today]
+        today: [now.getFullYear(), now.getMonth(), today, hour]
       })
     }
   }
@@ -175,19 +200,27 @@ export default class App extends Component {
         clearTimeout(this.clearSearchScroll)
       }
 
-      this.clearSearchScroll = setTimeout(() => {
-        const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
-
-        if (row != null && row.scrollIntoView != null) {
-          row.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          })
-        }
-      }, 16 * 4)
+      this.clearSearchScroll = setTimeout(this._scrollToADay, 16 * 4, year, month, day)
     } else {
       this.setState({
         search: null
+      })
+    }
+  }
+
+  /**
+   * Scroll to a day.
+   * @param {number} year Year of the day the view should scroll to
+   * @param {number} month Month of the day the view should scroll to
+   * @param {number} day Day in the month the view should scroll to
+   */
+  _scrollToADay (year, month, day) {
+    const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
+
+    if (row != null && row.scrollIntoView != null) {
+      row.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       })
     }
   }

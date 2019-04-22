@@ -12,13 +12,13 @@ import { dayName, shiftTitle } from '../../lib/constants'
 
 /**
  * Renders the body of a month.
- * @param {Object}    arg0         React/Preact arguments.
- * @param {number}    arg0.year    Year of the month.
- * @param {number}    arg0.month   Month of this month.
- * @param {Object}    arg0.data    Data of this month.
- * @param {?number[]} arg0.today   Array of numbers that contains todays date. [year, month, day].
- * @param {?number}   arg0.search  Date of the search result. Or null.
- * @param {number}    arg0.group   Group to display. 0 = All, 1 - 6 is group number
+ * @param {Object}    arg0          React/Preact arguments.
+ * @param {number}    arg0.year     Year of the month.
+ * @param {number}    arg0.month    Month of this month.
+ * @param {Object}    arg0.data     Data of this month.
+ * @param {number[]}  [arg0.today]  Array of numbers that contains todays date. [year, month, day].
+ * @param {number}    [arg0.search] Date of the search result. Or null.
+ * @param {number}    arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
 export default ({ year, month, data, today, search, group }) => {
@@ -44,7 +44,9 @@ export default ({ year, month, data, today, search, group }) => {
       key={index}
       class={style.DayRow}
       data-day={aDay}
-      data-today={todayInThisMonth && thatDay === today[2]}
+      data-today={todayInThisMonth && (
+        thatDay === today[2] || (today[3] < 6 && (thatDay + 1 === today[2]))
+      )}
       data-holiday={holidayData != null ? holidayData.type : null}
       data-search={search === thatDay}
       title={holidayData != null ? holidayData.name : null}

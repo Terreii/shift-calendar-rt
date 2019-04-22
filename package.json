@@ -42,7 +42,7 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^9.4.7",
+    "autoprefixer": "^9.5.1",
     "babel": "^6.5.2",
     "babel-core": "^6.24.0",
     "babel-eslint": "^10.0.1",
@@ -56,16 +56,16 @@
     "babel-runtime": "^6.11.6",
     "chai": "^4.0.2",
     "copy-webpack-plugin": "^4.0.1",
-    "core-js": "^2.6.3",
+    "core-js": "^2.6.5",
     "cross-env": "^5.0.1",
     "css-loader": "^0.28.0",
-    "eslint": "^5.12.1",
+    "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-config-standard-preact": "^1.1.6",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-jest": "^22.2.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-jest": "^22.4.1",
     "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-standard": "^4.0.0",
     "extract-text-webpack-plugin": "^3.0.0",
@@ -83,7 +83,7 @@
     "offline-plugin": "^5.0.0",
     "postcss-loader": "^2.0.3",
     "preact-jsx-chai": "^2.2.1",
-    "querystringify": "^2.1.0",
+    "querystringify": "^2.1.1",
     "raw-loader": "^0.5.1",
     "re-reselect": "^2.3.0",
     "regenerator-runtime": "^0.10.3",
@@ -96,14 +96,14 @@
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.0",
     "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.4.4"
+    "webpack-dev-server": "^2.11.5"
   },
   "dependencies": {
     "preact": "^8.1.0",
-    "preact-compat": "^3.15.0",
+    "preact-compat": "^3.18.5",
     "preact-render-to-string": "^4.1.0",
     "preact-router": "^2.5.1",
     "proptypes": "^1.0.0",
-    "serve": "^10.1.1"
+    "serve": "^10.1.2"
   }
 }

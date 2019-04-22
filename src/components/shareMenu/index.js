@@ -117,7 +117,7 @@ export default class ShareMenu extends Component {
       </label>
 
       <div class={style.ButtonRow}>
-        <button class={style.cancle} onClick={this.props.hide}>
+        <button class={style.cancel} onClick={this.props.hide}>
           Abbrechen
         </button>
         <button class={style.share} onClick={this.onShare}>
