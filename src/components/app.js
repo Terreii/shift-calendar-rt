@@ -27,7 +27,7 @@ export default class App extends Component {
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
       is64Model: false, // is it the 6-4 model or the 6-6 model?
-      today: [year, month, now.getDate()], // Today
+      today: [year, month, now.getDate(), now.getHours()], // Today
       search: null,
       year, // Selected year
       month, // Selected month
@@ -48,6 +48,12 @@ export default class App extends Component {
     // Setup Hammer.js - The touch event handler.
     this.hammertime = new Hammer(document.getElementById('app'))
     this.hammertime.on('swipe', this._onSwipe)
+
+    this.hourChangeInterval = setInterval(() => {
+      if (document.hidden) return
+
+      this._updateToday()
+    }, 30000)
 
     // Settings from hash
     if (window.location.hash.length > 1) {
@@ -81,6 +87,8 @@ export default class App extends Component {
     window.removeEventListener('storage', this._onSettingsChange)
 
     this.hammertime.off('swipe', this._onSwipe)
+
+    clearInterval(this.hourChangeInterval)
   }
 
   _onSettingsChange = event => {
@@ -96,13 +104,21 @@ export default class App extends Component {
    * @param {Object} event  Focus-event from the browser.
    */
   _onFocus (event) {
+    this._updateToday()
+  }
+
+  /**
+   * Updates today if it did change.
+   */
+  _updateToday () {
     const now = new Date()
     const today = now.getDate()
+    const hour = now.getHours()
 
     // update today marker on refocus
-    if (this.state.today[2] !== today) {
+    if (this.state.today[2] !== today || this.state.today[3] !== hour) {
       this.setState({
-        today: [now.getFullYear(), now.getMonth(), today]
+        today: [now.getFullYear(), now.getMonth(), today, hour]
       })
     }
   }
