@@ -55,6 +55,14 @@ export default class App extends Component {
       this._updateToday()
     }, 30000)
 
+    const scrollTimeout = setTimeout(
+      this._scrollToADay,
+      16 * 4,
+      this.state.today[0],
+      this.state.today[1],
+      this.state.today[2]
+    )
+
     // Settings from hash
     if (window.location.hash.length > 1) {
       const hashSettings = qs.parse(window.location.hash.slice(1))
@@ -71,6 +79,7 @@ export default class App extends Component {
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
         const date = new Date(hashSettings.search)
         toChangeState.search = [date.getFullYear(), date.getMonth(), date.getDate()]
+        clearTimeout(scrollTimeout)
       }
 
       this.setState(toChangeState)
@@ -191,19 +200,27 @@ export default class App extends Component {
         clearTimeout(this.clearSearchScroll)
       }
 
-      this.clearSearchScroll = setTimeout(() => {
-        const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
-
-        if (row != null && row.scrollIntoView != null) {
-          row.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-          })
-        }
-      }, 16 * 4)
+      this.clearSearchScroll = setTimeout(this._scrollToADay, 16 * 4, year, month, day)
     } else {
       this.setState({
         search: null
+      })
+    }
+  }
+
+  /**
+   * Scroll to a day.
+   * @param {number} year Year of the day the view should scroll to
+   * @param {number} month Month of the day the view should scroll to
+   * @param {number} day Day in the month the view should scroll to
+   */
+  _scrollToADay (year, month, day) {
+    const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
+
+    if (row != null && row.scrollIntoView != null) {
+      row.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
       })
     }
   }
