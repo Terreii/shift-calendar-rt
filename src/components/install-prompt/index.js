@@ -16,11 +16,18 @@ export default class InstallButton extends Component {
     super(args)
 
     this.state = {
-      show: false
+      show: 'none'
     }
 
     this.deferredPrompt = null
-    this.boundOnClick = this._onClick.bind(this)
+
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
+    const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone
+    const dismissedTime = new Date(window.localStorage.getItem('dismissedInstallMessage')).getTime()
+
+    if (isIos && !isInStandaloneMode && dismissedTime < (Date.now() - 12 * 24 * 60 * 60 * 1000)) {
+      this.state.show = 'ios'
+    }
 
     /**
      * Event from the browser, that the Web-App can be installed.
@@ -32,7 +39,7 @@ export default class InstallButton extends Component {
       // Stash the event so it can be triggered later.
       this.deferredPrompt = event
 
-      this.setState({ show: true })
+      this.setState({ show: 'button' })
     })
   }
 
@@ -44,7 +51,7 @@ export default class InstallButton extends Component {
    * Event handler for when the user did click the button.
    * @param {Object} event Click event.
    */
-  _onClick (event) {
+  _onClickInstallButton = event => {
     this.setState({ show: false })
 
     if (this.deferredPrompt == null) return
@@ -61,7 +68,17 @@ export default class InstallButton extends Component {
       }
 
       this.deferredPrompt = null
+      this.setState({ show: 'none' })
     })
+  }
+
+  /**
+   * Dismiss the install message. It will not be shown again!
+   * @param {Object} event Click event from the button
+   */
+  _dismiss = event => {
+    window.localStorage.setItem('dismissedInstallMessage', new Date().toJSON())
+    this.setState({ show: 'none' })
   }
 
   /**
@@ -69,12 +86,40 @@ export default class InstallButton extends Component {
    * @returns {?JSX.Element}
    */
   render () {
-    if (!this.state.show) return null
+    switch (this.state.show) {
+      case 'button':
+        return <div class={style.Container}>
+          <button class={style.Button} onClick={this._onClickInstallButton}>
+            + zum Home Screen hinzufügen
+          </button>
+        </div>
 
-    return <div class={style.Container}>
-      <button class={style.Button} onClick={this.boundOnClick}>
-        + zum Home Screen hinzufügen
-      </button>
-    </div>
+      case 'ios':
+        return <div class={style.IosContainer}>
+          <div class={style.IosInstallInfo}>
+            Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
+            <div class={style.IconsRow}>
+              <img
+                src='/assets/icons/ios-share.png'
+                height='55'
+                alt='klicke Teilen'
+              />
+              ➡︎
+              <img
+                src='/assets/icons/ios-add-to-home-screen.png'
+                height='65'
+                alt='klicke Zum Home-Bildschirm'
+              />
+            </div>
+            <button class={style.Dismiss} onClick={this._dismiss} aria-label='schließe Meldung'>
+              <img src='/assets/icons/close.svg' height='40' width='40' alt='' />
+            </button>
+          </div>
+        </div>
+
+      case 'none':
+      default:
+        return null
+    }
   }
 }
