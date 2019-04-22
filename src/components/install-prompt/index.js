@@ -112,7 +112,7 @@ export default class InstallButton extends Component {
               />
             </div>
             <button class={style.Dismiss} onClick={this._dismiss} aria-label='schließe Meldung'>
-              <img src='/assets/icons/close-40.png' height='40' width='40' alt='' />
+              <img src='/assets/icons/close.svg' height='40' width='40' alt='' />
             </button>
           </div>
         </div>
