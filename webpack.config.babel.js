@@ -14,7 +14,7 @@ module.exports = {
   entry: './index.js',
 
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -112,7 +112,10 @@ module.exports = {
         test: /(manifest\.webmanifest|browserconfig\.xml)$/,
         use: [
           {
-            loader: "file-loader"
+            loader: "file-loader",
+            options: {
+              name: '[name].[ext]'
+            }
           },
           {
             loader: "app-manifest-loader"
@@ -120,8 +123,23 @@ module.exports = {
         ]
       },
       {
-        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif|ics)(\?.*)?$/i,
-        use: ENV === 'production' ? 'file-loader' : 'url-loader'
+        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+        use: ENV !== 'production' ? 'url-loader' : {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'assets'
+          }
+        }
+      },
+      {
+        test: /\.(ics)(\?.*)?$/i,
+        use: ENV !== 'production' ? 'url-loader' : {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'assets'
+          }
+        }
       }
     ]
   },
