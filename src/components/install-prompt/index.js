@@ -21,9 +21,9 @@ export default class InstallButton extends Component {
 
     this.deferredPrompt = null
 
-    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent)
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
     const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone
-    if (isIos && !isInStandaloneMode) {
+    if (isIos && !isInStandaloneMode && !window.localStorage.getItem('dismissedInstallMessage')) {
       this.state.show = 'ios'
     }
 
@@ -49,7 +49,7 @@ export default class InstallButton extends Component {
    * Event handler for when the user did click the button.
    * @param {Object} event Click event.
    */
-  _onClickInstallButton = (event) => {
+  _onClickInstallButton = event => {
     this.setState({ show: false })
 
     if (this.deferredPrompt == null) return
@@ -68,6 +68,15 @@ export default class InstallButton extends Component {
       this.deferredPrompt = null
       this.setState({ show: 'none' })
     })
+  }
+
+  /**
+   * Dismiss the install message. It will not be shown again!
+   * @param {Object} event Click event from the button
+   */
+  _dismiss = event => {
+    window.localStorage.setItem('dismissedInstallMessage', true)
+    this.setState({ show: 'none' })
   }
 
   /**
@@ -100,6 +109,9 @@ export default class InstallButton extends Component {
                 alt='klicke Zum Home-Bildschirm'
               />
             </div>
+            <button class={style.Dismiss} onClick={this._dismiss} aria-label='schließe Meldung'>
+              <img src='/assets/icons/close-512.png' height='40' width='40' alt='' />
+            </button>
           </div>
         </div>
 
