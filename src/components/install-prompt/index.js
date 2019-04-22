@@ -23,7 +23,9 @@ export default class InstallButton extends Component {
 
     const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
     const isInStandaloneMode = 'standalone' in window.navigator && window.navigator.standalone
-    if (isIos && !isInStandaloneMode && !window.localStorage.getItem('dismissedInstallMessage')) {
+    const dismissedTime = new Date(window.localStorage.getItem('dismissedInstallMessage')).getTime()
+
+    if (isIos && !isInStandaloneMode && dismissedTime < (Date.now() - 12 * 24 * 60 * 60 * 1000)) {
       this.state.show = 'ios'
     }
 
@@ -75,7 +77,7 @@ export default class InstallButton extends Component {
    * @param {Object} event Click event from the button
    */
   _dismiss = event => {
-    window.localStorage.setItem('dismissedInstallMessage', true)
+    window.localStorage.setItem('dismissedInstallMessage', new Date().toJSON())
     this.setState({ show: 'none' })
   }
 
