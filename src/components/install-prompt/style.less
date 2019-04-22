@@ -27,3 +27,32 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     background-color: rgb(77, 146, 128);
   }
 }
+
+.IosContainer {
+  height: 7em;
+  height: calc(3em + 65px);
+}
+
+.IosInstallInfo {
+  position: fixed;
+  bottom: 0px;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #006249;
+  color: #EEE;
+  font-size: 100%;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.IconsRow {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > img:first-child {
+    margin-right: 0.2em;
+  }
+}

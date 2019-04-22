@@ -66,6 +66,7 @@ export default class InstallButton extends Component {
       }
 
       this.deferredPrompt = null
+      this.setState({ show: 'none' })
     })
   }
 
@@ -83,8 +84,23 @@ export default class InstallButton extends Component {
         </div>
 
       case 'ios':
-        return <div class={style.Container}>
-          iOS
+        return <div class={style.IosContainer}>
+          <div class={style.IosInstallInfo}>
+            Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
+            <div class={style.IconsRow}>
+              <img
+                src='/assets/icons/ios-share.png'
+                height='55'
+                alt='klicke Teilen'
+              />
+              ➡︎
+              <img
+                src='/assets/icons/ios-add-to-home-screen.png'
+                height='65'
+                alt='klicke Zum Home-Bildschirm'
+              />
+            </div>
+          </div>
         </div>
 
       case 'none':
