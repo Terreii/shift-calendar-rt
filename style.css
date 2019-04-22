@@ -18,6 +18,10 @@ a {
   padding-top: 20px;
 }
 
+.moveAlert {
+  font-size: 200%;
+}
+
 body {
   display: -ms-flexbox;
   display: -webkit-flex;
