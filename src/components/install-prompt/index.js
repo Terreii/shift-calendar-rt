@@ -8,6 +8,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h, Component } from 'preact'
 import style from './style.less'
 
+import iosShare from '../../assets/icons/ios-share.png'
+import iosAddToHome from '../../assets/icons/ios-add-to-home-screen.png'
+import closeIcon from '../../assets/icons/close.svg'
+
 /**
  * Renders an install button for add-to-home-screen of PWA.
  */
@@ -99,20 +103,12 @@ export default class InstallButton extends Component {
           <div class={style.IosInstallInfo}>
             Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
             <div class={style.IconsRow}>
-              <img
-                src='/assets/icons/ios-share.png'
-                height='55'
-                alt='klicke Teilen'
-              />
+              <img src={iosShare} height='55' alt='klicke Teilen' />
               ➡︎
-              <img
-                src='/assets/icons/ios-add-to-home-screen.png'
-                height='65'
-                alt='klicke Zum Home-Bildschirm'
-              />
+              <img src={iosAddToHome} height='65' alt='klicke Zum Home-Bildschirm' />
             </div>
             <button class={style.Dismiss} onClick={this._dismiss} aria-label='schließe Meldung'>
-              <img src='/assets/icons/close.svg' height='40' width='40' alt='' />
+              <img src={closeIcon} height='40' width='40' alt='' />
             </button>
           </div>
         </div>
