@@ -91,7 +91,7 @@ export default class ShareMenu extends Component {
       <label class={style.checkbox}>
         <input
           type='checkbox'
-          value={this.state.group}
+          checked={this.state.group}
           disabled={this.props.group === 0}
           onChange={this.doAddGroup}
         />
@@ -105,7 +105,7 @@ export default class ShareMenu extends Component {
       <label class={style.checkbox}>
         <input
           type='checkbox'
-          value={this.state.search}
+          checked={this.state.search}
           disabled={this.props.search == null}
           onChange={this.doAddSearch}
         />
