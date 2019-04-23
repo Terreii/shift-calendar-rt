@@ -11,18 +11,18 @@
 	<title>Schichtkalender für Bosch Reutlingen</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui, viewport-fit=cover">
 	<meta name="description" content="Listet alle Kontischichten von Bosch Reutlingen auf.">
-	<meta name="msapplication-TileColor" content="#006249">
-	<meta name="msapplication-TileImage" content="./assets/icons/mstile-150x150.png">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="default">
 	<meta name="apple-mobile-web-app-title" content="Schichtkalender">
 	<meta name="application-name" content="Inoffizieller Schichtkalender für Bosch Reutlingen">
 	<meta name="format-detection" content="telephone=no">
 	<meta name="theme-color" content="#006249">
-	<link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-touch-icon.png">
-	<link rel="icon" type="image/png" href="/assets/icons/favicon-32x32.png" sizes="32x32">
-	<link rel="icon" type="image/png" href="/assets/icons/favicon-16x16.png" sizes="16x16">
-	<link rel="manifest" href="./manifest.webmanifest">
+	<meta name="msapplication-TileColor" content="#006249">
+	<meta name="msapplication-TileImage" content="<%= require('./assets/icons/mstile-150x150.png') %>">
+	<link rel="apple-touch-icon" sizes="180x180" href="<%= require('./assets/icons/apple-touch-icon.png') %>">
+	<link rel="icon" type="image/png" href="<%= require('./assets/icons/favicon-32x32.png') %>" sizes="32x32">
+	<link rel="icon" type="image/png" href="<%= require('./assets/icons/favicon-16x16.png') %>" sizes="16x16">
+	<link rel="manifest" href="<%= require('./manifest.webmanifest') %>">
 </head>
 <body>
 	<noscript>
@@ -30,13 +30,14 @@
 		<div id='icsDownload'>
 				Wollen sie ihre Schichten bei ihren anderen Termine haben?<br/>
 				Fügen sie ihre Schicht zu ihren Kalender auf ihren Gerät hinzu!<br/>
-				<a href="/assets/Schichtgruppe_1.ics" type="text/calendar">Gruppe 1</a> |
-				<a href="/assets/Schichtgruppe_2.ics" type="text/calendar">Gruppe 2</a> |
-				<a href="/assets/Schichtgruppe_3.ics" type="text/calendar">Gruppe 3</a> |
-				<a href="/assets/Schichtgruppe_4.ics" type="text/calendar">Gruppe 4</a> |
-				<a href="/assets/Schichtgruppe_5.ics" type="text/calendar">Gruppe 5</a> |
-				<a href="/assets/Schichtgruppe_6.ics" type="text/calendar">Gruppe 6</a>
-				<br/><br/>
+				<a href="<%= require('./assets/Schichtgruppe_1.ics') %>" type="text/calendar">Gruppe 1</a> |
+				<a href="<%= require('./assets/Schichtgruppe_2.ics') %>" type="text/calendar">Gruppe 2</a> |
+				<a href="<%= require('./assets/Schichtgruppe_3.ics') %>" type="text/calendar">Gruppe 3</a> |
+				<a href="<%= require('./assets/Schichtgruppe_4.ics') %>" type="text/calendar">Gruppe 4</a> |
+				<a href="<%= require('./assets/Schichtgruppe_5.ics') %>" type="text/calendar">Gruppe 5</a> |
+				<a href="<%= require('./assets/Schichtgruppe_6.ics') %>" type="text/calendar">Gruppe 6</a>
+				<br/>
+				<br/>
 				Die Schichtgruppen wurden zuletzt am 21.10.2016 aktualisiert.
 		</div>
 	</noscript>

@@ -10,6 +10,8 @@ import style from './style.less'
 
 import { monthNames } from '../../lib/constants'
 
+import shareIcon from '../../assets/icons/share21.svg'
+
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   const parent = document.createElement('div')
   const input = document.createElement('input')
@@ -145,12 +147,7 @@ export default ({
     </select>
 
     <button class={style.share} onClick={onShare}>
-      <img
-        src='/assets/icons/share21.svg'
-        height='32'
-        width='32'
-        alt='teilen'
-      />
+      <img src={shareIcon} height='32' width='32' alt='teilen' />
     </button>
   </div>
 }

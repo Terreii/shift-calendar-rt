@@ -12,6 +12,8 @@ import style from './style.less'
 import Menu from '../menu'
 import ShareMenu from '../shareMenu'
 
+import hamburgerIcon from '../../assets/icons/hamburger_icon.svg'
+
 /**
  * Renders the Header.
  */
@@ -138,7 +140,7 @@ export default class Header extends Component {
           </button>
 
           <button class={style.Hamburger} onClick={this._toggleShowMenu}>
-            <img src='/assets/icons/hamburger_icon.svg' height='45' width='45' alt='Menu' />
+            <img src={hamburgerIcon} height='45' width='45' alt='Menu' />
           </button>
         </nav>
 

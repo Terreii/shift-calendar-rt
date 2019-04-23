@@ -14,7 +14,7 @@ module.exports = {
   entry: './index.js',
 
   output: {
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'bundle.js'
   },
@@ -109,8 +109,37 @@ module.exports = {
         use: 'raw-loader'
       },
       {
+        test: /(manifest\.webmanifest|browserconfig\.xml)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: '[name].[ext]'
+            }
+          },
+          {
+            loader: "app-manifest-loader"
+          }
+        ]
+      },
+      {
         test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
-        use: ENV === 'production' ? 'file-loader' : 'url-loader'
+        use: ENV !== 'production' ? 'url-loader' : {
+          loader: 'file-loader',
+          options: {
+            outputPath: 'assets'
+          }
+        }
+      },
+      {
+        test: /\.(ics)(\?.*)?$/i,
+        use: ENV !== 'production' ? 'url-loader' : {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'assets'
+          }
+        }
       }
     ]
   },
@@ -126,10 +155,9 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './index.ejs',
-      minify: { collapseWhitespace: true }
+      minify: { collapseWhitespace: ENV === 'production' }
     }),
     new CopyWebpackPlugin([
-      { from: './manifest.webmanifest', to: './' },
       { from: './favicon.ico', to: './' }
     ])
   ]).concat(ENV === 'production' ? [
@@ -166,6 +194,7 @@ module.exports = {
     new OfflinePlugin({
       relativePaths: false,
       AppCache: false,
+      autoUpdate: 1000 * 60 * 60 * 24, // 24h
       excludes: ['_redirects'],
       ServiceWorker: {
         events: true
