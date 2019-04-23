@@ -194,6 +194,7 @@ module.exports = {
     new OfflinePlugin({
       relativePaths: false,
       AppCache: false,
+      autoUpdate: 1000 * 60 * 60 * 24, // 24h
       excludes: ['_redirects'],
       ServiceWorker: {
         events: true
