@@ -8,6 +8,7 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "start": "serve dist -s -c 1",
     "prestart": "npm run build",
+    "prebuild": "mkdirp dist && mkdirp dist/assets && ncp src/assets/icons dist/assets/icons",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "now-build": "npm run build",
     "test": "npm run -s lint && jest --coverage",
@@ -98,6 +99,7 @@
     "webpack-dev-server": "^2.11.5"
   },
   "dependencies": {
+    "ncp": "^2.0.0",
     "preact": "^8.1.0",
     "preact-compat": "^3.18.5",
     "preact-render-to-string": "^4.1.0",
