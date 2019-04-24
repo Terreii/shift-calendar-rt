@@ -120,7 +120,8 @@ export default class Header extends Component {
               this.props.onChange({
                 year: now.getFullYear(),
                 month: now.getMonth(),
-                toggleFullYear: true
+                toggleFullYear: true,
+                scrollToToday: true
               })
               this.hideMenu()
             }}

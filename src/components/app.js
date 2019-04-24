@@ -55,13 +55,7 @@ export default class App extends Component {
       this._updateToday()
     }, 30000)
 
-    const scrollTimeout = setTimeout(
-      this._scrollToADay,
-      16 * 4,
-      this.state.today[0],
-      this.state.today[1],
-      this.state.today[2]
-    )
+    const scrollTimeout = this._scrollToToday()
 
     // Settings from hash
     if (window.location.hash.length > 1) {
@@ -78,7 +72,13 @@ export default class App extends Component {
 
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
         const date = new Date(hashSettings.search)
-        toChangeState.search = [date.getFullYear(), date.getMonth(), date.getDate()]
+        const searchYear = date.getFullYear()
+        const searchMonth = date.getMonth()
+        const searchDay = date.getDate()
+
+        toChangeState.search = [searchYear, searchMonth, searchDay]
+
+        setTimeout(this._scrollToADay, 16 * 4, searchYear, searchMonth, searchDay)
         clearTimeout(scrollTimeout)
       }
 
@@ -151,11 +151,14 @@ export default class App extends Component {
    * @param {number} [arg0.month]     Month number in the year, of the next month to display.
    * @param {number} [arg0.relative]  Relative move to the active month.
    * @param {boolean} [arg0.toggleFullYear] Deactivate full year mode, if it is set.
+   * @param {boolean} [arg0.scrollToToday] Should scroll to today, if it is in this month.
    */
   _onChangeMonth = ({
     year = this.state.year,
     month = this.state.month,
-    relative, toggleFullYear
+    relative,
+    toggleFullYear,
+    scrollToToday
   }) => {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
@@ -179,6 +182,10 @@ export default class App extends Component {
 
     if (this.state.fullYear && toggleFullYear) {
       this.setState({ fullYear: false })
+    }
+
+    if (scrollToToday) {
+      this._scrollToToday()
     }
   }
 
@@ -223,6 +230,21 @@ export default class App extends Component {
         block: 'center'
       })
     }
+  }
+
+  /**
+   * Scroll to today. But only if today is the active month!
+   * It does it after an timeout.
+   * @returns {number} Clear timeout ID/number.
+   */
+  _scrollToToday () {
+    return setTimeout(() => {
+      const [year, month, day] = this.state.today
+
+      if (this.state.year === year && this.state.month === month) {
+        this._scrollToADay(year, month, day)
+      }
+    }, 16 * 4)
   }
 
   /**
