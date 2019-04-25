@@ -39,18 +39,22 @@ export const shiftTitle = {
 
 export const shift66Name = '6-6'
 export const shift64Name = '6-4'
+export const shiftWfW = 'wfw'
 
 export const shiftModelNames = [
   shift66Name,
-  shift64Name
+  shift64Name,
+  shiftWfW
 ]
 
 export const shiftModelText = {
   [shift66Name]: '6 - 6',
-  [shift64Name]: '6 - 4'
+  [shift64Name]: '6 - 4',
+  [shiftWfW]: 'Werksfeuerwehr'
 }
 
 export const shiftModelNumberOfGroups = {
   [shift66Name]: 6,
-  [shift64Name]: 5
+  [shift64Name]: 5,
+  [shiftWfW]: 6
 }

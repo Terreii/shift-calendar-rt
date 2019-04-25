@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { shift66Name, shift64Name } from './constants'
+import { shift66Name, shift64Name, shiftWfW } from './constants'
 import { getDaysInMonth } from './utils'
 
 /**
@@ -23,6 +23,9 @@ import { getDaysInMonth } from './utils'
  */
 export default function getMonthData (year, month, shiftModel) {
   switch (shiftModel) {
+    case shiftWfW:
+      return getWfWModel(year, month)
+
     case shift64Name:
       return get64Model(year, month)
 
@@ -47,7 +50,7 @@ function get66Model (year, month) {
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
     const aDay = isOldModel || (isOnSwitch && i < 3) // if it is before the 2010-04-03
       ? get44ModelDay(year, month, i + 1) // get the old model
-      : get66ModelDay(year, month, i + 1) // else get the 6-6 model
+      : get12DayCycleModelDay(year, month, i + 1, [3, 0, 2, 5, 1, 4]) // else get the 6-6 model
 
     daysData.push(aDay)
 
@@ -93,20 +96,49 @@ function get64Model (year, month) {
 }
 
 /**
+ * Get the working data of the WfW (factory fire department) Model.
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of the groups of the WfW model
+ */
+function getWfWModel (year, month) {
+  const daysData = []
+  const groupsWorkingDays = [0, 0, 0, 0, 0, 0]
+
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
+    const aDay = get12DayCycleModelDay(year, month, i + 1, [3, 2, 1, 0, 5, 4])
+
+    daysData.push(aDay)
+
+    aDay.forEach((isWorking, gr) => {
+      if (isWorking !== 'K') {
+        groupsWorkingDays[gr] += 1
+      }
+    })
+  }
+
+  return {
+    days: daysData,
+    workingCount: groupsWorkingDays
+  }
+}
+
+/**
  * Calculates the data of a day.
  * @param {number} year Full Year
  * @param {number} month Number of the month in the year
  * @param {number} day Day in the month
+ * @param {number[]} groupOffsets Offsets for every group
  * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
-function get66ModelDay (year, month, day) {
+function get12DayCycleModelDay (year, month, day, groupOffsets) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
   const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 6
 
   // Offset is for every group. When does the shift-cycle start?
-  const groups = [3, 0, 2, 5, 1, 4].map(offset => {
+  const groups = groupOffsets.map(offset => {
     let shiftDay = daysInCycle + offset
 
     if (shiftDay > 5) {
