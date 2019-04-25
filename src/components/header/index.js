@@ -152,8 +152,10 @@ export default class Header extends Component {
           year={this.props.year}
           search={this.props.searchResult}
           group={this.props.group}
+          shiftModel={this.props.shiftModel}
           gotoMonth={this._handleGotoEvent}
           onSearch={this.props.search}
+          onChangeModel={this.props.onChangeModel}
           toggleFullYear={() => {
             this.props.toggleFullYear()
             this.hideMenu()

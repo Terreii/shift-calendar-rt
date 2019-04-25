@@ -192,6 +192,17 @@ export default class App extends Component {
   }
 
   /**
+   * Change the displayed shift-model.
+   * @param {string} nextModel Name of the shift-model that should be displayed.
+   */
+  _changeModel = nextModel => {
+    if (shiftModelNames.every(model => model !== nextModel)) {
+      throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
+    }
+    this.setState({ shiftModel: nextModel })
+  }
+
+  /**
    * Search a day
    * @param {boolean} doSearch Switch into search mode.
    * @param {number} year Year of the searched day.
@@ -323,12 +334,14 @@ export default class App extends Component {
           year={this.state.year}
           month={this.state.month}
           isFullYear={this.state.fullYear}
+          shiftModel={this.state.shiftModel}
           onChange={this._onChangeMonth}
           toggleFullYear={this._toggleFullYear}
           search={this._search}
           searchResult={this.state.search}
           group={this.state.group}
           onGroupChange={this._changeGroup}
+          onChangeModel={this._changeModel}
         />
         <Router onChange={this.handleRoute}>
           <Main

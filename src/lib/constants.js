@@ -44,3 +44,8 @@ export const shiftModelNames = [
   shift6_6Name,
   shift6_4Name
 ]
+
+export const shiftModelText = {
+  [shift6_6Name]: '6 - 6',
+  [shift6_4Name]: '6 - 4'
+}
