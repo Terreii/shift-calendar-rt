@@ -37,20 +37,20 @@ export const shiftTitle = {
   'K': null
 }
 
-export const shift6_6Name = '6-6'
-export const shift6_4Name = '6-4'
+export const shift66Name = '6-6'
+export const shift64Name = '6-4'
 
 export const shiftModelNames = [
-  shift6_6Name,
-  shift6_4Name
+  shift66Name,
+  shift64Name
 ]
 
 export const shiftModelText = {
-  [shift6_6Name]: '6 - 6',
-  [shift6_4Name]: '6 - 4'
+  [shift66Name]: '6 - 6',
+  [shift64Name]: '6 - 4'
 }
 
 export const shiftModelNumberOfGroups = {
-  [shift6_6Name]: 6,
-  [shift6_4Name]: 5
+  [shift66Name]: 6,
+  [shift64Name]: 5
 }

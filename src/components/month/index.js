@@ -25,7 +25,7 @@ import { monthNames } from '../../lib/constants'
 export default ({ year, month, data, today, search, group }) => {
   const grRow = []
 
-  if (group === 0) {// if 0 display all groups
+  if (group === 0) { // if 0 display all groups
     for (let i = 0, max = data.workingCount.length; i < max; ++i) {
       grRow.push(i + 1)
     }

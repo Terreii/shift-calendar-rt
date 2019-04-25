@@ -11,7 +11,7 @@ describe('components/Month', () => {
       month={0}
       data={selectMonthData(2019, 0, false)}
       today={[2019, 0, 13]}
-      is64Model={false}
+      group={0}
     />
 
     expect(month).to.contain(<caption class='ThisMonth'>Januar 2019 (Jetzt)</caption>)

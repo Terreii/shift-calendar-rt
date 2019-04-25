@@ -17,7 +17,7 @@ import InstallPrompt from './install-prompt'
 
 import {
   shiftModelNames,
-  shift6_6Name,
+  shift66Name,
   shiftModelNumberOfGroups
 } from '../lib/constants'
 
@@ -32,7 +32,7 @@ export default class App extends Component {
     this.state = {
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
-      shiftModel: shift6_6Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
+      shiftModel: shift66Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate(), now.getHours()], // Today
       search: null,
       year, // Selected year
@@ -119,7 +119,7 @@ export default class App extends Component {
   _onSettingsChange = event => {
     const {
       group = 0,
-      shiftModel = shift6_6Name
+      shiftModel = shift66Name
     } = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
     this.setState({

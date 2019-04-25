@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { shift6_6Name, shift6_4Name } from './constants'
+import { shift66Name, shift64Name } from './constants'
 import { getDaysInMonth } from './utils'
 
 /**
@@ -23,10 +23,10 @@ import { getDaysInMonth } from './utils'
  */
 export default function getMonthData (year, month, shiftModel) {
   switch (shiftModel) {
-    case shift6_4Name:
+    case shift64Name:
       return get64Model(year, month)
 
-    case shift6_6Name:
+    case shift66Name:
     default:
       return get66Model(year, month)
   }
