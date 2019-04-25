@@ -14,6 +14,7 @@ export default class ShareMenu extends Component {
     origin: window.location.origin,
     group: false,
     search: false,
+    shiftModel: false,
     hash: ''
   }
 
@@ -33,7 +34,17 @@ export default class ShareMenu extends Component {
     this.updateHash({ search: event.target.checked })
   }
 
-  updateHash ({ group = this.state.group, search = this.state.search } = {}) {
+  doAddShiftModel = event => {
+    if (this.props.shiftModel == null) return
+
+    this.updateHash({ shiftModel: event.target.checked })
+  }
+
+  updateHash ({
+    group = this.state.group,
+    search = this.state.search,
+    shiftModel = this.state.shiftModel
+  } = {}) {
     const props = {}
 
     if (group && this.props.group !== 0) {
@@ -45,10 +56,18 @@ export default class ShareMenu extends Component {
       props.search = `${year}-${month + 1}-${date}`
     }
 
-    const hash = group || search ? qs.stringify(props, '#') : ''
+    if (shiftModel && this.props.shiftModel != null) {
+      props.schichtmodell = this.props.shiftModel
+    }
+
+    const hash = group || search || shiftModel
+      ? qs.stringify(props, '#')
+      : ''
+
     this.setState({
       group,
       search,
+      shiftModel,
       hash
     })
   }
@@ -87,6 +106,15 @@ export default class ShareMenu extends Component {
       />
 
       <h6>Füge hinzu:</h6>
+
+      <label class={style.checkbox}>
+        <input
+          type='checkbox'
+          checked={this.state.shiftModel}
+          onChange={this.doAddShiftModel}
+        />
+        Schichtmodell
+      </label>
 
       <label class={style.checkbox}>
         <input

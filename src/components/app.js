@@ -72,6 +72,12 @@ export default class App extends Component {
         shouldSave = true
       }
 
+      const schichtmodell = hashSettings.schichtmodell
+      if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
+        this._changeModel(schichtmodell)
+        shouldSave = true
+      }
+
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
         const date = new Date(hashSettings.search)
         const searchYear = date.getFullYear()
@@ -103,11 +109,26 @@ export default class App extends Component {
   }
 
   _onSettingsChange = event => {
-    const { group = 0 } = JSON.parse(window.localStorage.getItem('settings') || '{}')
+    const {
+      group = 0,
+      shiftModel = shift6_6Name
+    } = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
     this.setState({
-      group
+      group,
+      shiftModel
     })
+  }
+
+  saveSettings () {
+    setTimeout(() => {
+      const data = {
+        group: this.state.group,
+        shiftModel: this.state.shiftModel
+      }
+
+      window.localStorage.setItem('settings', JSON.stringify(data))
+    }, 32)
   }
 
   /**
@@ -200,6 +221,8 @@ export default class App extends Component {
       throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
     }
     this.setState({ shiftModel: nextModel })
+
+    this.saveSettings()
   }
 
   /**
@@ -311,16 +334,6 @@ export default class App extends Component {
    */
   handleRoute = e => {
     this.currentUrl = e.url
-  }
-
-  saveSettings () {
-    setTimeout(() => {
-      const data = {
-        group: this.state.group
-      }
-
-      window.localStorage.setItem('settings', JSON.stringify(data))
-    }, 32)
   }
 
   /**

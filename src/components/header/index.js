@@ -168,6 +168,7 @@ export default class Header extends Component {
           ? <ShareMenu
             group={this.props.group}
             search={this.props.searchResult}
+            shiftModel={this.props.shiftModel}
             hide={this.hideShare}
           />
           : null
