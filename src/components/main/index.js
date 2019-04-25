@@ -97,6 +97,7 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
 
   return (
     <main class={style.MainContainer}>
+      <h3 class={style.ShiftModelsInfo}>Jetzt mit allen Schichtmodellen im Menü!</h3>
       <div class={style.home} onClick={processClick}>
         {monthsData.map(({ year, month, data }) => <Month
           key={`${year}-${month}-${shiftModel}`}
