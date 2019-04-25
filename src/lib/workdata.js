@@ -141,16 +141,16 @@ function get64ModelDay (year, month, day) {
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
   const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 5
 
-  // Offset is for every group. When does the shift-cycle start?
-  // TODO: change offsets as soon as the new shift-model calendars are released!
-  return [2, 1, 0, 4, 3].map((offset, group) => {
+  // Offset is for every group.
+  return [2, 3, 4, 0, 1].map((offset, group) => {
     let shiftDay = daysInCycle + offset
 
     if (shiftDay > 4) {
       shiftDay -= 5
     }
 
-    if (group < 3) {
+    // Groups 3 - 5 (index 2 - 4) are working FFSSNN
+    if (group >= 2) {
       switch (shiftDay) {
         case 0:
           return 'F' // Früh/Early   6 - 14:30
@@ -163,15 +163,15 @@ function get64ModelDay (year, month, day) {
       }
     }
 
-    // Group 4 (index 3) works FFFFSS
-    // Group 5 (index 4) works SSNNNN
+    // Group 1 (index 0) works SSNNNN
+    // Group 2 (index 1) works FFFFSS
     switch (shiftDay) {
       case 0:
-        return group === 3 ? 'F' : 'S'
+        return group === 1 ? 'F' : 'S'
       case 1:
-        return group === 3 ? 'F' : 'N'
+        return group === 1 ? 'F' : 'N'
       case 2:
-        return group === 3 ? 'S' : 'N'
+        return group === 1 ? 'S' : 'N'
       default:
         return 'K' // No shift/free
     }
