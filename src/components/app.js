@@ -15,7 +15,11 @@ import Main from './main'
 import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
 
-import { shiftModelNames, shift6_6Name } from '../lib/constants'
+import {
+  shiftModelNames,
+  shift6_6Name,
+  shiftModelNumberOfGroups
+} from '../lib/constants'
 
 export default class App extends Component {
   constructor (args) {
@@ -76,6 +80,10 @@ export default class App extends Component {
       if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
         this._changeModel(schichtmodell)
         shouldSave = true
+
+        if (toChangeState.group && toChangeState.group > shiftModelNumberOfGroups[schichtmodell]) {
+          toChangeState.group = 0
+        }
       }
 
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
@@ -221,6 +229,10 @@ export default class App extends Component {
       throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
     }
     this.setState({ shiftModel: nextModel })
+
+    if (this.state.group > shiftModelNumberOfGroups[nextModel]) {
+      this.setState({ group: 0 })
+    }
 
     this.saveSettings()
   }

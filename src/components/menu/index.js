@@ -8,7 +8,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-import { monthNames, shiftModelNames, shiftModelText } from '../../lib/constants'
+import {
+  monthNames,
+  shiftModelNames,
+  shiftModelText,
+  shiftModelNumberOfGroups
+} from '../../lib/constants'
 
 import shareIcon from '../../assets/icons/share21.svg'
 
@@ -43,7 +48,7 @@ export default ({
   }
 
   let groupOptions = []
-  for (let gr = 1; gr <= 6; gr += 1) {
+  for (let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1; gr <= max; gr += 1) {
     groupOptions.push(<option key={'group_' + gr} value={gr}>Nur Gruppe {gr}</option>)
   }
 
