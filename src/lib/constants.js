@@ -36,3 +36,29 @@ export const shiftTitle = {
   'N': 'Nachtschicht\r\n22 - 6:30 Uhr (in den nächsten Tag)',
   'K': null
 }
+
+export const shift66Name = '6-6'
+export const shift64Name = '6-4'
+export const shiftWfW = 'wfw'
+export const shiftAddedNight = 'added-night'
+
+export const shiftModelNames = [
+  shift66Name,
+  shift64Name,
+  shiftWfW,
+  shiftAddedNight
+]
+
+export const shiftModelText = {
+  [shift66Name]: '6 - 6',
+  [shift64Name]: '6 - 4',
+  [shiftWfW]: 'Werksfeuerwehr',
+  [shiftAddedNight]: 'aufgesetzte Nachtarbeit'
+}
+
+export const shiftModelNumberOfGroups = {
+  [shift66Name]: 6,
+  [shift64Name]: 5,
+  [shiftWfW]: 6,
+  [shiftAddedNight]: 3
+}

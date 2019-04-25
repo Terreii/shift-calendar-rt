@@ -19,13 +19,13 @@ import selectMonthData from '../../lib/select-month-data'
  * @param {number}    arg0.numberOfMonths How many months should be displayed? 12 is this full year.
  * @param {number}    arg0.year           Year of the selected month.
  * @param {number}    arg0.month          Month number of the selected month.
- * @param {boolean}   arg0.is64Model      Show 6-4 Model or the old 6-6 Model.
+ * @param {string}    arg0.shiftModel     Which shift-model should be used.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
  * @param {number}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
  * @returns {JSX.Element}
  */
-export default ({ numberOfMonths, year, month, is64Model, today, search, group }) => {
+export default ({ numberOfMonths, year, month, shiftModel, today, search, group }) => {
   const monthsData = []
 
   if (group > 0 && numberOfMonths < 12) {
@@ -38,7 +38,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
         monthsData.push({
           year,
           month: i,
-          data: selectMonthData(year, i, is64Model)
+          data: selectMonthData(year, i, shiftModel)
         })
       }
       break
@@ -47,7 +47,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
       monthsData.push({
         year,
         month,
-        data: selectMonthData(year, month, is64Model)
+        data: selectMonthData(year, month, shiftModel)
       })
       break
 
@@ -55,7 +55,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
       monthsData.push({
         year,
         month,
-        data: selectMonthData(year, month, is64Model)
+        data: selectMonthData(year, month, shiftModel)
       })
       let nextMonth = month + 1
       let nextYear = year
@@ -68,7 +68,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
       monthsData.push({
         year: nextYear,
         month: nextMonth,
-        data: selectMonthData(nextYear, nextMonth, is64Model)
+        data: selectMonthData(nextYear, nextMonth, shiftModel)
       })
       break
 
@@ -89,7 +89,7 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
         monthsData.push({
           year: yearNr,
           month: monthNr,
-          data: selectMonthData(yearNr, monthNr, is64Model)
+          data: selectMonthData(yearNr, monthNr, shiftModel)
         })
       }
       break
@@ -97,14 +97,14 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
 
   return (
     <main class={style.MainContainer}>
+      <h3 class={style.ShiftModelsInfo}>Jetzt mit allen Schichtmodellen im Menü!</h3>
       <div class={style.home} onClick={processClick}>
         {monthsData.map(({ year, month, data }) => <Month
-          key={`${year}-${month}-${is64Model}`}
+          key={`${year}-${month}-${shiftModel}`}
           year={year}
           month={month}
           data={data}
           today={today[0] === year && today[1] === month ? today : null}
-          is64Model={is64Model}
           search={search != null && search[0] === year && search[1] === month ? search[2] : null}
           group={group}
         />)}

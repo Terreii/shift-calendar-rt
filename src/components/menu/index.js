@@ -8,7 +8,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-import { monthNames } from '../../lib/constants'
+import {
+  monthNames,
+  shiftModelNames,
+  shiftModelText,
+  shiftModelNumberOfGroups
+} from '../../lib/constants'
 
 import shareIcon from '../../assets/icons/share21.svg'
 
@@ -27,10 +32,12 @@ export default ({
   isFullYear,
   search,
   group,
+  shiftModel,
   toggleFullYear,
   gotoMonth,
   onSearch,
   onGroupChange,
+  onChangeModel,
   onShare
 }) => {
   let searchValue = ''
@@ -41,7 +48,7 @@ export default ({
   }
 
   let groupOptions = []
-  for (let gr = 1; gr <= 6; gr += 1) {
+  for (let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1; gr <= max; gr += 1) {
     groupOptions.push(<option key={'group_' + gr} value={gr}>Nur Gruppe {gr}</option>)
   }
 
@@ -134,6 +141,20 @@ export default ({
     <button onClick={toggleFullYear}>
       Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
     </button>
+
+    <label>
+      Schichtmodell
+      <select
+        value={shiftModel}
+        onChange={event => {
+          onChangeModel(event.target.value)
+        }}
+      >
+        {shiftModelNames.map(model => <option key={model} value={model}>
+          {shiftModelText[model] || model}
+        </option>)}
+      </select>
+    </label>
 
     <select
       value={group}

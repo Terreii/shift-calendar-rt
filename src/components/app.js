@@ -15,6 +15,12 @@ import Main from './main'
 import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
 
+import {
+  shiftModelNames,
+  shift66Name,
+  shiftModelNumberOfGroups
+} from '../lib/constants'
+
 export default class App extends Component {
   constructor (args) {
     super(args)
@@ -26,7 +32,7 @@ export default class App extends Component {
     this.state = {
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
-      is64Model: false, // is it the 6-4 model or the 6-6 model?
+      shiftModel: shift66Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate(), now.getHours()], // Today
       search: null,
       year, // Selected year
@@ -70,6 +76,16 @@ export default class App extends Component {
         shouldSave = true
       }
 
+      const schichtmodell = hashSettings.schichtmodell
+      if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
+        this._changeModel(schichtmodell)
+        shouldSave = true
+
+        if (toChangeState.group && toChangeState.group > shiftModelNumberOfGroups[schichtmodell]) {
+          toChangeState.group = 0
+        }
+      }
+
       if (hashSettings.search != null && hashSettings.search.length >= 8) {
         const date = new Date(hashSettings.search)
         const searchYear = date.getFullYear()
@@ -101,11 +117,26 @@ export default class App extends Component {
   }
 
   _onSettingsChange = event => {
-    const { group = 0 } = JSON.parse(window.localStorage.getItem('settings') || '{}')
+    const {
+      group = 0,
+      shiftModel = shift66Name
+    } = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
     this.setState({
-      group
+      group,
+      shiftModel
     })
+  }
+
+  saveSettings () {
+    setTimeout(() => {
+      const data = {
+        group: this.state.group,
+        shiftModel: this.state.shiftModel
+      }
+
+      window.localStorage.setItem('settings', JSON.stringify(data))
+    }, 32)
   }
 
   /**
@@ -187,6 +218,23 @@ export default class App extends Component {
     if (scrollToToday) {
       this._scrollToToday()
     }
+  }
+
+  /**
+   * Change the displayed shift-model.
+   * @param {string} nextModel Name of the shift-model that should be displayed.
+   */
+  _changeModel = nextModel => {
+    if (shiftModelNames.every(model => model !== nextModel)) {
+      throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
+    }
+    this.setState({ shiftModel: nextModel })
+
+    if (this.state.group > shiftModelNumberOfGroups[nextModel]) {
+      this.setState({ group: 0 })
+    }
+
+    this.saveSettings()
   }
 
   /**
@@ -300,16 +348,6 @@ export default class App extends Component {
     this.currentUrl = e.url
   }
 
-  saveSettings () {
-    setTimeout(() => {
-      const data = {
-        group: this.state.group
-      }
-
-      window.localStorage.setItem('settings', JSON.stringify(data))
-    }, 32)
-  }
-
   /**
    * Renders the App with its routs
    * @returns {JSX.Element}
@@ -321,12 +359,14 @@ export default class App extends Component {
           year={this.state.year}
           month={this.state.month}
           isFullYear={this.state.fullYear}
+          shiftModel={this.state.shiftModel}
           onChange={this._onChangeMonth}
           toggleFullYear={this._toggleFullYear}
           search={this._search}
           searchResult={this.state.search}
           group={this.state.group}
           onGroupChange={this._changeGroup}
+          onChangeModel={this._changeModel}
         />
         <Router onChange={this.handleRoute}>
           <Main
@@ -334,7 +374,7 @@ export default class App extends Component {
             numberOfMonths={this.state.fullYear ? 12 : this.state.numberOfMonths}
             year={this.state.year}
             month={this.state.month}
-            is64Model={this.state.is64Model}
+            shiftModel={this.state.shiftModel}
             today={this.state.today}
             search={this.state.search}
             group={this.state.group}

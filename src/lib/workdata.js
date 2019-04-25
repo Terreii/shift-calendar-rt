@@ -5,6 +5,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import {
+  shift66Name,
+  shift64Name,
+  shiftWfW,
+  shiftAddedNight
+} from './constants'
 import { getDaysInMonth } from './utils'
 
 /**
@@ -17,15 +23,24 @@ import { getDaysInMonth } from './utils'
  * Calculate when groups will work.
  * @param {number} year Full Year of that month
  * @param {number} month Month number
- * @param {boolean=false} is64 Is it the new 6-4 model or the old 6-6 model
+ * @param {string} shiftModel Which shift-model is it.
  * @returns {MonthWorkData} Working data of a group.
  */
-export default function getMonthData (year, month, is64 = false) {
-  const data = is64
-    ? get64Model(year, month)
-    : get66Model(year, month)
+export default function getMonthData (year, month, shiftModel) {
+  switch (shiftModel) {
+    case shiftAddedNight:
+      return getAddedNightModel(year, month)
 
-  return data
+    case shiftWfW:
+      return getWfWModel(year, month)
+
+    case shift64Name:
+      return get64Model(year, month)
+
+    case shift66Name:
+    default:
+      return get66Model(year, month)
+  }
 }
 
 /**
@@ -43,7 +58,7 @@ function get66Model (year, month) {
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
     const aDay = isOldModel || (isOnSwitch && i < 3) // if it is before the 2010-04-03
       ? get44ModelDay(year, month, i + 1) // get the old model
-      : get66ModelDay(year, month, i + 1) // else get the 6-6 model
+      : get12DayCycleModelDay(year, month, i + 1, [3, 0, 2, 5, 1, 4]) // else get the 6-6 model
 
     daysData.push(aDay)
 
@@ -89,20 +104,49 @@ function get64Model (year, month) {
 }
 
 /**
+ * Get the working data of the WfW (factory fire department) Model.
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of the groups of the WfW model
+ */
+function getWfWModel (year, month) {
+  const daysData = []
+  const groupsWorkingDays = [0, 0, 0, 0, 0, 0]
+
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
+    const aDay = get12DayCycleModelDay(year, month, i + 1, [3, 2, 1, 0, 5, 4])
+
+    daysData.push(aDay)
+
+    aDay.forEach((isWorking, gr) => {
+      if (isWorking !== 'K') {
+        groupsWorkingDays[gr] += 1
+      }
+    })
+  }
+
+  return {
+    days: daysData,
+    workingCount: groupsWorkingDays
+  }
+}
+
+/**
  * Calculates the data of a day.
  * @param {number} year Full Year
  * @param {number} month Number of the month in the year
  * @param {number} day Day in the month
+ * @param {number[]} groupOffsets Offsets for every group
  * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
-function get66ModelDay (year, month, day) {
+function get12DayCycleModelDay (year, month, day, groupOffsets) {
   const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
   const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 6
 
   // Offset is for every group. When does the shift-cycle start?
-  const groups = [3, 0, 2, 5, 1, 4].map(offset => {
+  return groupOffsets.map(offset => {
     let shiftDay = daysInCycle + offset
 
     if (shiftDay > 5) {
@@ -120,8 +164,6 @@ function get66ModelDay (year, month, day) {
         return 'K' // No shift/free
     }
   })
-
-  return groups
 }
 
 /**
@@ -137,16 +179,16 @@ function get64ModelDay (year, month, day) {
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
   const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 5
 
-  // Offset is for every group. When does the shift-cycle start?
-  // TODO: change offsets as soon as the new shift-model calendars are released!
-  return [2, 1, 0, 4, 3].map((offset, group) => {
+  // Offset is for every group.
+  return [2, 3, 4, 0, 1].map((offset, group) => {
     let shiftDay = daysInCycle + offset
 
     if (shiftDay > 4) {
       shiftDay -= 5
     }
 
-    if (group < 3) {
+    // Groups 3 - 5 (index 2 - 4) are working FFSSNN
+    if (group >= 2) {
       switch (shiftDay) {
         case 0:
           return 'F' // Früh/Early   6 - 14:30
@@ -159,15 +201,15 @@ function get64ModelDay (year, month, day) {
       }
     }
 
-    // Group 4 (index 3) works FFFFSS
-    // Group 5 (index 4) works SSNNNN
+    // Group 1 (index 0) works SSNNNN
+    // Group 2 (index 1) works FFFFSS
     switch (shiftDay) {
       case 0:
-        return group === 3 ? 'F' : 'S'
+        return group === 1 ? 'F' : 'S'
       case 1:
-        return group === 3 ? 'F' : 'N'
+        return group === 1 ? 'F' : 'N'
       case 2:
-        return group === 3 ? 'S' : 'N'
+        return group === 1 ? 'S' : 'N'
       default:
         return 'K' // No shift/free
     }
@@ -190,7 +232,7 @@ function get44ModelDay (year, month, day) {
   const daysInCycle = (time / 1000 / 60 / 60 / 24) % 24
 
   // Offset is for every group. When does the shift-cycle start?
-  const groups = [14, 10, 6, 2, 22, 18].map(offset => {
+  return [14, 10, 6, 2, 22, 18].map(offset => {
     let shiftDay = Math.floor((daysInCycle + offset) / 4)
 
     if (shiftDay > 5) {
@@ -208,6 +250,74 @@ function get44ModelDay (year, month, day) {
         return 'K' // No shift/free
     }
   })
+}
 
-  return groups
+/**
+ * Get the working data of the added night-shift-model.
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of the groups
+ */
+function getAddedNightModel (year, month) {
+  const daysData = []
+  const groupsWorkingDays = [0, 0, 0]
+
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
+    const aDay = getAddedNightModelDay(year, month, i + 1)
+
+    daysData.push(aDay)
+
+    aDay.forEach((isWorking, gr) => {
+      if (isWorking !== 'K') {
+        groupsWorkingDays[gr] += 1
+      }
+    })
+  }
+
+  return {
+    days: daysData,
+    workingCount: groupsWorkingDays
+  }
+}
+
+/**
+ * Calculates the data of a day for the added night-shift-model.
+ * It is NNNN-K-NNNN-KKK-NN-KK-NN-KKK.
+ * @param {number} year Full Year
+ * @param {number} month Number of the month in the year
+ * @param {number} day Day in the month
+ * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ */
+function getAddedNightModelDay (year, month, day) {
+  const time = new Date(year, month, day, 0, 0, 0, 0).getTime()
+
+  // get days count since 1.1.1970
+  const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24) % 21
+
+  // Offset is for every group. When does the shift-cycle start?
+  return [3, 17, 10].map(offset => {
+    let shiftDay = daysInCycle + offset
+
+    if (shiftDay > 20) {
+      shiftDay -= 21
+    }
+
+    switch (shiftDay) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 5: // free
+      case 6:
+      case 7:
+      case 8:
+      case 12: // 3 free
+      case 13:
+      case 16: // 2 free
+      case 17:
+        return 'N' // Nacht/Night 22 -  6:30
+      default:
+        return 'K' // No shift/free
+    }
+  })
 }
