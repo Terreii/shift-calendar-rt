@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { shift6_6Name, shift6_4Name } from './constants'
 import { getDaysInMonth } from './utils'
 
 /**
@@ -17,15 +18,18 @@ import { getDaysInMonth } from './utils'
  * Calculate when groups will work.
  * @param {number} year Full Year of that month
  * @param {number} month Month number
- * @param {boolean=false} is64 Is it the new 6-4 model or the old 6-6 model
+ * @param {string} shiftModel Which shift-model is it.
  * @returns {MonthWorkData} Working data of a group.
  */
-export default function getMonthData (year, month, is64 = false) {
-  const data = is64
-    ? get64Model(year, month)
-    : get66Model(year, month)
+export default function getMonthData (year, month, shiftModel) {
+  switch (shiftModel) {
+    case shift6_4Name:
+      return get64Model(year, month)
 
-  return data
+    case shift6_6Name:
+    default:
+      return get66Model(year, month)
+  }
 }
 
 /**

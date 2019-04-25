@@ -16,15 +16,15 @@ import getHolidayData from './holiday-data'
 export default createCachedSelector(
   year => year,
   (year, month) => month,
-  (year, month, is64Model) => is64Model,
+  (year, month, shiftModel) => shiftModel,
 
-  (year, month, is64Model) => {
-    const data = getMonthData(year, month, is64Model)
+  (year, month, shiftModel) => {
+    const data = getMonthData(year, month, shiftModel)
 
     data.holidays = getHolidayData(year, month)
 
     return data
   }
 )( // Key selector. Data will be saved with this key.
-  (year, month, is64Model) => `${year}-${month}-${is64Model}`
+  (year, month, shiftModel) => `${year}-${month}-${shiftModel}`
 )

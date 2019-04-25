@@ -15,6 +15,8 @@ import Main from './main'
 import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
 
+import { shiftModelNames, shift6_6Name } from '../lib/constants'
+
 export default class App extends Component {
   constructor (args) {
     super(args)
@@ -26,7 +28,7 @@ export default class App extends Component {
     this.state = {
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
-      is64Model: false, // is it the 6-4 model or the 6-6 model?
+      shiftModel: shift6_6Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
       today: [year, month, now.getDate(), now.getHours()], // Today
       search: null,
       year, // Selected year
@@ -334,7 +336,7 @@ export default class App extends Component {
             numberOfMonths={this.state.fullYear ? 12 : this.state.numberOfMonths}
             year={this.state.year}
             month={this.state.month}
-            is64Model={this.state.is64Model}
+            shiftModel={this.state.shiftModel}
             today={this.state.today}
             search={this.state.search}
             group={this.state.group}
