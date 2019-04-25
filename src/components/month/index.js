@@ -18,21 +18,20 @@ import { monthNames } from '../../lib/constants'
  * @param {number}   arg0.month    Month number in the year of this month.
  * @param {Object}   arg0.data     Month-data that contains all workdays and holidays of that month.
  * @param {number[]} arg0.today    Array of numbers that contains todays date. [year, month, day].
- * @param {boolean}  arg0.is64Model Show 6-4 Model or the old 6-6 Model.
  * @param {?number}  arg0.search   Date of the search result. Or null.
  * @param {number}   arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
-export default ({ year, month, data, today, is64Model, search, group }) => {
-  const grRowAll = is64Model
-    ? [1, 2, 3, 4, 5]
-    : [1, 2, 3, 4, 5, 6]
+export default ({ year, month, data, today, search, group }) => {
+  const grRow = []
 
-  const grRow = group === 0
-    ? grRowAll // if 0 display all groups
-    : [ // else return array of one group number
-      grRowAll[Math.min(group - 1, grRowAll.length - 1)] // just a guard
-    ]
+  if (group === 0) {// if 0 display all groups
+    for (let i = 0, max = data.workingCount.length; i < max; ++i) {
+      grRow.push(i + 1)
+    }
+  } else { // else return array of one group number
+    grRow.push(group)
+  }
 
   const isToday = today != null && today[0] === year && today[1] === month
 

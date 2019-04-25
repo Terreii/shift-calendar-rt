@@ -104,7 +104,6 @@ export default ({ numberOfMonths, year, month, is64Model, today, search, group }
           month={month}
           data={data}
           today={today[0] === year && today[1] === month ? today : null}
-          is64Model={is64Model}
           search={search != null && search[0] === year && search[1] === month ? search[2] : null}
           group={group}
         />)}
