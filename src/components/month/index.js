@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h, Component } from 'preact'
 import style from './style.less'
 
 import MonthBody from '../month-body'
@@ -22,44 +22,65 @@ import { monthNames } from '../../lib/constants'
  * @param {number}   arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
-export default ({ year, month, data, today, search, group }) => {
-  const grRow = []
-
-  if (group === 0) { // if 0 display all groups
-    for (let i = 0, max = data.workingCount.length; i < max; ++i) {
-      grRow.push(i + 1)
-    }
-  } else { // else return array of one group number
-    grRow.push(group)
+export default class Month extends Component {
+  shouldComponentUpdate (nextProps, nextState) {
+    return [
+      'year',
+      'month',
+      'data',
+      'today',
+      'search',
+      'group'
+    ].some(key => this.props[key] !== nextProps[key])
   }
 
-  const isToday = today != null && today[0] === year && today[1] === month
+  render () {
+    const { year, month, data, today, search, group } = this.props
+    const grRow = []
 
-  return <table id={`month_${year}-${month + 1}`} class={style.Main}>
-    <caption class={isToday ? style.ThisMonth : null}>
-      {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
-    </caption>
-    <thead>
-      <tr>
-        <th>Tag</th>
-        <th />
-        {grRow.map(gr => <th key={gr}>Gr. {gr}</th>)}
-      </tr>
-    </thead>
+    if (group === 0) { // if 0 display all groups
+      for (let i = 0, max = data.workingCount.length; i < max; ++i) {
+        grRow.push(i + 1)
+      }
+    } else { // else return array of one group number
+      grRow.push(group)
+    }
 
-    <MonthBody year={year} month={month} data={data} today={today} search={search} group={group} />
+    const isToday = today != null && today[0] === year && today[1] === month
 
-    <tfoot>
-      <tr>
-        <td
-          class={style.WorkingDaysInfo}
-          colSpan='2'
-          title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
-        >
-          Anzahl
-        </td>
-        {grRow.map(gr => <td key={gr}>{data.workingCount[gr - 1]}</td>)}
-      </tr>
-    </tfoot>
-  </table>
+    return <table id={`month_${year}-${month + 1}`} class={style.Main}>
+      <caption class={isToday ? style.ThisMonth : null}>
+        {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
+      </caption>
+      <thead>
+        <tr>
+          <th>Tag</th>
+          <th />
+          {grRow.map(gr => <th key={gr}>Gr. {gr}</th>)}
+        </tr>
+      </thead>
+
+      <MonthBody
+        year={year}
+        month={month}
+        data={data}
+        today={today}
+        search={search}
+        group={group}
+      />
+
+      <tfoot>
+        <tr>
+          <td
+            class={style.WorkingDaysInfo}
+            colSpan='2'
+            title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
+          >
+            Anzahl
+          </td>
+          {grRow.map(gr => <td key={gr}>{data.workingCount[gr - 1]}</td>)}
+        </tr>
+      </tfoot>
+    </table>
+  }
 }
