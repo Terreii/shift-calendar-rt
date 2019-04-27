@@ -11,14 +11,24 @@ import style from './style.less'
 import Footer from '../footer'
 import { shiftModelNames, shiftModelText } from '../../lib/constants'
 
+import hamburgerIcon from '../../assets/icons/hamburger_icon.svg'
+
 export default ({ onClick }) => (
   <div class={style.Main}>
-    <h3>Willkommen zum inoffiziellen Schichtkalender für Reutlingen!</h3>
+    <h3>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h3>
 
     <p>
       Welches Schichtmodell interessiert sie?
       <br />
-      Sie können das Modell später jederzeit im Menü umändern.
+      Sie können das Modell später jederzeit im Menü
+      <img
+        class={style.MenuIcon}
+        src={hamburgerIcon}
+        height='20'
+        width='20'
+        alt='das Menü ist oben rechts'
+      />
+      umändern.
     </p>
 
     <ul class={style.List}>
