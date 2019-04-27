@@ -76,22 +76,21 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
       break
   }
 
-  return (
-    <main class={style.MainContainer}>
-      <div class={style.home} onClick={processClick}>
-        {monthsData.map(([year, month]) => <Month
-          key={`${year}-${month}-${shiftModel}`}
-          year={year}
-          month={month}
-          data={selectMonthData(year, month, shiftModel)}
-          today={today[0] === year && today[1] === month ? today : null}
-          search={search != null && search[0] === year && search[1] === month ? search[2] : null}
-          group={group}
-        />)}
-      </div>
-      <Footer />
-    </main>
-  )
+  return <main class={style.MainContainer}>
+    <div class={style.home} onClick={processClick}>
+      {monthsData.map(([year, month]) => <Month
+        key={`${year}-${month}-${shiftModel}`}
+        year={year}
+        month={month}
+        data={selectMonthData(year, month, shiftModel)}
+        today={today[0] === year && today[1] === month ? today : null}
+        search={search != null && search[0] === year && search[1] === month ? search[2] : null}
+        group={group}
+      />)}
+    </div>
+
+    <Footer />
+  </main>
 }
 
 /**
