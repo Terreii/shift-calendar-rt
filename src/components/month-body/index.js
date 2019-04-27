@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-import { dayName, shiftTitle } from '../../lib/constants'
+import { dayName, longDayName, shiftTitle } from '../../lib/constants'
 
 /**
  * Renders the body of a month.
@@ -27,7 +27,8 @@ export default ({ year, month, data, today, search, group }) => {
   // Render every row/day.
   const dayRows = data.days.map((dayData, index) => {
     const thatDay = index + 1
-    const aDay = new Date(year, month, thatDay).getDay()
+    const time = new Date(year, month, thatDay)
+    const aDay = time.getDay()
     const holidayData = data.holidays[thatDay]
 
     const day = group === 0
@@ -55,9 +56,11 @@ export default ({ year, month, data, today, search, group }) => {
         data-dayLightSaving={isDayLightSaving}
         title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
       >
-        {thatDay}
+        <time dateTime={`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`}>
+          {thatDay}
+        </time>
       </td>
-      <td>{dayName[aDay]}</td>
+      <td aria-label={longDayName[aDay]}>{dayName[aDay]}</td>
 
       {day.map((shift, index, all) => {
         const gr = all.length > 1 ? index : group - 1

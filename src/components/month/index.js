@@ -36,14 +36,14 @@ export default class Month extends Component {
 
   render () {
     const { year, month, data, today, search, group } = this.props
-    const grRow = []
+    const groups = []
 
     if (group === 0) { // if 0 display all groups
       for (let i = 0, max = data.workingCount.length; i < max; ++i) {
-        grRow.push(i + 1)
+        groups.push(i)
       }
     } else { // else return array of one group number
-      grRow.push(group)
+      groups.push(group - 1)
     }
 
     const isToday = today != null && today[0] === year && today[1] === month
@@ -56,7 +56,7 @@ export default class Month extends Component {
         <tr>
           <th>Tag</th>
           <th />
-          {grRow.map(gr => <th key={gr}>Gr. {gr}</th>)}
+          {groups.map(gr => <th key={gr}>Gr. {gr + 1}</th>)}
         </tr>
       </thead>
 
@@ -78,7 +78,7 @@ export default class Month extends Component {
           >
             Anzahl
           </td>
-          {grRow.map(gr => <td key={gr}>{data.workingCount[gr - 1]}</td>)}
+          {groups.map(gr => <td key={gr}>{data.workingCount[gr]}</td>)}
         </tr>
       </tfoot>
     </table>
