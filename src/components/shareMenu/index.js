@@ -37,7 +37,12 @@ export default class ShareMenu extends Component {
   doAddShiftModel = event => {
     if (this.props.shiftModel == null) return
 
-    this.updateHash({ shiftModel: event.target.checked })
+    const shiftModel = event.target.checked
+
+    this.updateHash({
+      shiftModel,
+      group: shiftModel ? this.state.group : false
+    })
   }
 
   updateHash ({
@@ -49,6 +54,7 @@ export default class ShareMenu extends Component {
 
     if (group && this.props.group !== 0) {
       props.group = this.props.group
+      shiftModel = true
     }
 
     if (search && this.props.search != null) {

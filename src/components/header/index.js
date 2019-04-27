@@ -31,6 +31,24 @@ export default class Header extends Component {
     this._removeListener()
   }
 
+  shouldComponentUpdate (nextProps, nextState) {
+    return this.state.showMenu !== nextState.showMenu ||
+      this.state.showShareMenu !== nextState.showShareMenu ||
+      [
+        'year',
+        'month',
+        'isFullYear',
+        'shiftModel',
+        'onChange',
+        'toggleFullYear',
+        'search',
+        'searchResult',
+        'group',
+        'onGroupChange',
+        'onChangeModel'
+      ].some(key => this.props[key] !== nextProps[key])
+  }
+
   _toggleShowMenu = event => {
     const shouldShow = !this.state.showMenu
 

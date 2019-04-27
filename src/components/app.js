@@ -14,6 +14,7 @@ import Header from './header'
 import Main from './main'
 import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
+import FirstRunDialog from './first-run'
 
 import {
   shiftModelNames,
@@ -30,6 +31,7 @@ export default class App extends Component {
     const month = now.getMonth()
 
     this.state = {
+      didSelectModel: true, // did the user select a shift-model once?
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
       shiftModel: shift66Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
@@ -118,11 +120,13 @@ export default class App extends Component {
 
   _onSettingsChange = event => {
     const {
+      didSelectModel = false,
       group = 0,
       shiftModel = shift66Name
     } = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
     this.setState({
+      didSelectModel,
       group,
       shiftModel
     })
@@ -131,6 +135,7 @@ export default class App extends Component {
   saveSettings () {
     setTimeout(() => {
       const data = {
+        didSelectModel: this.state.didSelectModel,
         group: this.state.group,
         shiftModel: this.state.shiftModel
       }
@@ -228,7 +233,10 @@ export default class App extends Component {
     if (shiftModelNames.every(model => model !== nextModel)) {
       throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
     }
-    this.setState({ shiftModel: nextModel })
+    this.setState({
+      shiftModel: nextModel,
+      didSelectModel: true
+    })
 
     if (this.state.group > shiftModelNumberOfGroups[nextModel]) {
       this.setState({ group: 0 })
@@ -381,7 +389,18 @@ export default class App extends Component {
           />
           <Impressum path='/impressum/' />
         </Router>
+
         <InstallPrompt />
+
+        {this.state.didSelectModel
+          ? null
+          : <FirstRunDialog
+            onClick={model => {
+              this._changeModel(model)
+              this._scrollToToday()
+            }}
+          />
+        }
       </div>
     )
   }
