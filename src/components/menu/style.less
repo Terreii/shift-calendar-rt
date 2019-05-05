@@ -21,6 +21,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   background: @header-background;
   box-shadow: @header-shadow;
 
+  & > * {
+    margin-left: 0.7em;
+    margin-right: 0.7em;
+  }
+
   & > * + * {
     margin-top: 1.3rem;
   }
@@ -31,9 +36,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     border-radius: 5px;
     background: #efefef;
     box-shadow: @header-shadow;
-    margin-left: 0.7em;
-    margin-right: 0.7em;
     height: auto;
+    width: auto;
     min-height: 2.5rem;
 
     &:active, &:hover {
@@ -43,8 +47,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     &.share {
       margin-left: auto;
       margin-right: auto;
-      padding-top: 0.5em;
-      padding-bottom: 0.5em;
+      padding: 0.5em 15px;
     }
   }
 
