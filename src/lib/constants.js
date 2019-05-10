@@ -60,8 +60,8 @@ export const shiftModelNames = [
 ]
 
 export const shiftModelText = {
-  [shift66Name]: '6 - 6',
-  [shift64Name]: '6 - 4',
+  [shift66Name]: '6 - 6 Kontischicht',
+  [shift64Name]: '6 - 4 Kontischicht',
   [shiftWfW]: 'Werksfeuerwehr',
   [shiftAddedNight]: 'aufgesetzte Nachtarbeit'
 }
