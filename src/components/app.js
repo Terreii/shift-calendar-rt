@@ -31,6 +31,7 @@ export default class App extends Component {
     const month = now.getMonth()
 
     this.state = {
+      url: window.location.pathname,
       didSelectModel: true, // did the user select a shift-model once?
       numberOfMonths: 1, // display mode for months: 1|4
       fullYear: false, // should the full year be displayed
@@ -354,6 +355,7 @@ export default class App extends Component {
    */
   handleRoute = e => {
     this.currentUrl = e.url
+    this.setState({ url: e.url })
   }
 
   /**
@@ -373,6 +375,7 @@ export default class App extends Component {
           search={this._search}
           searchResult={this.state.search}
           group={this.state.group}
+          url={this.state.url}
           onGroupChange={this._changeGroup}
           onChangeModel={this._changeModel}
         />
