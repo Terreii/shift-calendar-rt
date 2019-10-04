@@ -22,18 +22,29 @@ export default class Header extends Component {
     super(args)
 
     this.state = {
+      isSmallScreen: window.innerWidth < 350,
       showMenu: false,
       showShareMenu: false
     }
   }
 
+  componentDidMount () {
+    this.onResize = () => {
+      this.setState({ isSmallScreen: window.innerWidth < 350 })
+    }
+
+    window.addEventListener('resize', this.onResize)
+  }
+
   componentWillUnmount () {
     this._removeListener()
+    window.removeEventListener('resize', this.onResize)
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return this.state.showMenu !== nextState.showMenu ||
       this.state.showShareMenu !== nextState.showShareMenu ||
+      this.state.isSmallScreen !== nextState.isSmallScreen ||
       [
         'year',
         'month',
@@ -44,6 +55,7 @@ export default class Header extends Component {
         'search',
         'searchResult',
         'group',
+        'url',
         'onGroupChange',
         'onChangeModel'
       ].some(key => this.props[key] !== nextProps[key])
@@ -118,8 +130,10 @@ export default class Header extends Component {
   render () {
     return (
       <header class={style.header}>
-        <h1><Link href='/' tabIndex='0'>Kalender</Link></h1>
-        <nav>
+        {(this.props.url !== '/' || !this.state.isSmallScreen) &&
+          <h1><Link href='/' tabIndex='0'>Kalender</Link></h1>
+        }
+        {(this.props.url === '/' || !this.state.isSmallScreen) && <nav>
           <button
             title='vorigen Monat'
             aria-label='vorigen Monat'
@@ -161,7 +175,7 @@ export default class Header extends Component {
           <button class={style.Hamburger} onClick={this._toggleShowMenu}>
             <img src={hamburgerIcon} height='45' width='45' alt='Menu' />
           </button>
-        </nav>
+        </nav>}
 
         <Menu
           show={this.state.showMenu}
