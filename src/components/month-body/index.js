@@ -6,9 +6,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
+import { DateTime } from 'luxon'
 import style from './style.less'
 
-import { dayName, longDayName, shiftTitle } from '../../lib/constants'
+import { shiftTitle } from '../../lib/constants'
 
 /**
  * Renders the body of a month.
@@ -27,8 +28,8 @@ export default ({ year, month, data, today, search, group }) => {
   // Render every row/day.
   const dayRows = data.days.map((dayData, index) => {
     const thatDay = index + 1
-    const time = new Date(year, month, thatDay)
-    const aDay = time.getDay()
+    const time = DateTime.fromObject({ year, month: month + 1, day: thatDay, locale: 'de-DE' })
+    const weekDay = time.weekday
     const holidayData = data.holidays[thatDay]
 
     const day = group === 0
@@ -44,7 +45,7 @@ export default ({ year, month, data, today, search, group }) => {
     return <tr
       key={index}
       class={style.DayRow}
-      data-day={aDay}
+      data-day={weekDay}
       data-today={todayInThisMonth && (
         thatDay === today[2] || (today[3] < 6 && (thatDay + 1 === today[2]))
       )}
@@ -52,15 +53,22 @@ export default ({ year, month, data, today, search, group }) => {
       data-search={search === thatDay}
       title={holidayData != null ? holidayData.name : null}
     >
+      {(weekDay === 1 || index === 0) && <td
+        class={style.week}
+        rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
+      >
+        {time.weekNumber}
+      </td>}
       <td
+        class={style.day}
         data-dayLightSaving={isDayLightSaving}
         title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
       >
-        <time dateTime={`${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`}>
+        <time dateTime={time.toISODate()}>
           {thatDay}
         </time>
       </td>
-      <td aria-label={longDayName[aDay]}>{dayName[aDay]}</td>
+      <td aria-label={time.weekdayLong}>{time.weekdayShort}</td>
 
       {day.map((shift, index, all) => {
         const gr = all.length > 1 ? index : group - 1

@@ -54,6 +54,7 @@ export default class Month extends Component {
       </caption>
       <thead>
         <tr>
+          <th title='Woche'>Wo</th>
           <th>Tag</th>
           <th />
           {groups.map(gr => <th key={gr}>Gr. {gr + 1}</th>)}
@@ -73,7 +74,7 @@ export default class Month extends Component {
         <tr>
           <td
             class={style.WorkingDaysInfo}
-            colSpan='2'
+            colSpan='3'
             title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
           >
             Anzahl
