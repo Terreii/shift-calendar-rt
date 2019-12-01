@@ -20,26 +20,6 @@ export const monthNames = [
   'Dezember'
 ]
 
-export const dayName = [
-  'So',
-  'Mo',
-  'Di',
-  'Mi',
-  'Do',
-  'Fr',
-  'Sa'
-]
-
-export const longDayName = [
-  'Sonntag',
-  'Montag',
-  'Dienstag',
-  'Mittwoch',
-  'Donnerstag',
-  'Freitag',
-  'Samstag'
-]
-
 export const shiftTitle = {
   'F': 'Frühschicht\r\n6 - 14:30 Uhr',
   'S': 'Spätschicht\r\n14 - 22:30 Uhr',
