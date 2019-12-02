@@ -10,6 +10,7 @@ import style from './style.less'
 
 import Month from '../month'
 import Footer from '../footer'
+import Downloader from '../download'
 import selectMonthData from '../../lib/select-month-data'
 
 /**
@@ -88,6 +89,8 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
         group={group}
       />)}
     </div>
+
+    <Downloader shiftModel={shiftModel} />
 
     <Footer />
   </main>
