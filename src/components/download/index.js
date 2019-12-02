@@ -16,58 +16,58 @@ import {
   shiftAddedNight
 } from '../../lib/constants'
 
-import cal_6_6_group_1 from '../../assets/6-6_gruppe_1.ics'
-import cal_6_6_group_2 from '../../assets/6-6_gruppe_2.ics'
-import cal_6_6_group_3 from '../../assets/6-6_gruppe_3.ics'
-import cal_6_6_group_4 from '../../assets/6-6_gruppe_4.ics'
-import cal_6_6_group_5 from '../../assets/6-6_gruppe_5.ics'
-import cal_6_6_group_6 from '../../assets/6-6_gruppe_6.ics'
+import cal66Group1 from '../../assets/6-6_gruppe_1.ics'
+import cal66Group2 from '../../assets/6-6_gruppe_2.ics'
+import cal66Group3 from '../../assets/6-6_gruppe_3.ics'
+import cal66Group4 from '../../assets/6-6_gruppe_4.ics'
+import cal66Group5 from '../../assets/6-6_gruppe_5.ics'
+import cal66Group6 from '../../assets/6-6_gruppe_6.ics'
 
-import cal_6_4_group_1 from '../../assets/6-4_gruppe_1.ics'
-import cal_6_4_group_2 from '../../assets/6-4_gruppe_2.ics'
-import cal_6_4_group_3 from '../../assets/6-4_gruppe_3.ics'
-import cal_6_4_group_4 from '../../assets/6-4_gruppe_4.ics'
-import cal_6_4_group_5 from '../../assets/6-4_gruppe_5.ics'
+import cal64Group1 from '../../assets/6-4_gruppe_1.ics'
+import cal64Group2 from '../../assets/6-4_gruppe_2.ics'
+import cal64Group3 from '../../assets/6-4_gruppe_3.ics'
+import cal64Group4 from '../../assets/6-4_gruppe_4.ics'
+import cal64Group5 from '../../assets/6-4_gruppe_5.ics'
 
-import cal_wfw_group_1 from '../../assets/wfw_gruppe_1.ics'
-import cal_wfw_group_2 from '../../assets/wfw_gruppe_2.ics'
-import cal_wfw_group_3 from '../../assets/wfw_gruppe_3.ics'
-import cal_wfw_group_4 from '../../assets/wfw_gruppe_4.ics'
-import cal_wfw_group_5 from '../../assets/wfw_gruppe_5.ics'
-import cal_wfw_group_6 from '../../assets/wfw_gruppe_6.ics'
+import calWfwGroup1 from '../../assets/wfw_gruppe_1.ics'
+import calWfwGroup2 from '../../assets/wfw_gruppe_2.ics'
+import calWfwGroup3 from '../../assets/wfw_gruppe_3.ics'
+import calWfwGroup4 from '../../assets/wfw_gruppe_4.ics'
+import calWfwGroup5 from '../../assets/wfw_gruppe_5.ics'
+import calWfwGroup6 from '../../assets/wfw_gruppe_6.ics'
 
-import cal_night_group_1 from '../../assets/nacht_gruppe_1.ics'
-import cal_night_group_2 from '../../assets/nacht_gruppe_2.ics'
-import cal_night_group_3 from '../../assets/nacht_gruppe_3.ics'
+import calNightGroup1 from '../../assets/nacht_gruppe_1.ics'
+import calNightGroup2 from '../../assets/nacht_gruppe_2.ics'
+import calNightGroup3 from '../../assets/nacht_gruppe_3.ics'
 
 const urls = {
   [shift66Name]: [
-    cal_6_6_group_1,
-    cal_6_6_group_2,
-    cal_6_6_group_3,
-    cal_6_6_group_4,
-    cal_6_6_group_5,
-    cal_6_6_group_6
+    cal66Group1,
+    cal66Group2,
+    cal66Group3,
+    cal66Group4,
+    cal66Group5,
+    cal66Group6
   ],
   [shift64Name]: [
-    cal_6_4_group_1,
-    cal_6_4_group_2,
-    cal_6_4_group_3,
-    cal_6_4_group_4,
-    cal_6_4_group_5
+    cal64Group1,
+    cal64Group2,
+    cal64Group3,
+    cal64Group4,
+    cal64Group5
   ],
   [shiftWfW]: [
-    cal_wfw_group_1,
-    cal_wfw_group_2,
-    cal_wfw_group_3,
-    cal_wfw_group_4,
-    cal_wfw_group_5,
-    cal_wfw_group_6
+    calWfwGroup1,
+    calWfwGroup2,
+    calWfwGroup3,
+    calWfwGroup4,
+    calWfwGroup5,
+    calWfwGroup6
   ],
   [shiftAddedNight]: [
-    cal_night_group_1,
-    cal_night_group_2,
-    cal_night_group_3
+    calNightGroup1,
+    calNightGroup2,
+    calNightGroup3
   ]
 }
 
