@@ -8,7 +8,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-import { shiftModelText, shift66Name, shift64Name, shiftWfW } from '../../lib/constants'
+import {
+  shiftModelText,
+  shift66Name,
+  shift64Name,
+  shiftWfW,
+  shiftAddedNight
+} from '../../lib/constants'
 
 import cal_6_6_group_1 from '../../assets/Schichtgruppe_1.ics'
 import cal_6_6_group_2 from '../../assets/Schichtgruppe_2.ics'
@@ -29,6 +35,10 @@ import cal_wfw_group_3 from '../../assets/wfw_gruppe_3.ics'
 import cal_wfw_group_4 from '../../assets/wfw_gruppe_4.ics'
 import cal_wfw_group_5 from '../../assets/wfw_gruppe_5.ics'
 import cal_wfw_group_6 from '../../assets/wfw_gruppe_6.ics'
+
+import cal_night_group_1 from '../../assets/nacht_gruppe_1.ics'
+import cal_night_group_2 from '../../assets/nacht_gruppe_2.ics'
+import cal_night_group_3 from '../../assets/nacht_gruppe_3.ics'
 
 const urls = {
   [shift66Name]: [
@@ -53,6 +63,11 @@ const urls = {
     cal_wfw_group_4,
     cal_wfw_group_5,
     cal_wfw_group_6
+  ],
+  [shiftAddedNight]: [
+    cal_night_group_1,
+    cal_night_group_2,
+    cal_night_group_3
   ]
 }
 
