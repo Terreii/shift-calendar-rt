@@ -90,6 +90,7 @@ export default ({ shiftModel }) => {
         class={style.link}
         href={href}
         download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
+        target='_blank'
       >
         Gruppe {group}
       </a>
