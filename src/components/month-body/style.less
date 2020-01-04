@@ -9,28 +9,38 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 .week {
   background: @main-background;
+  color: @table-text-color;
 }
 
 .DayRow {
   &[data-today] {
-    border-right: 4px solid black;
+    border-right: @table-focus-border black;
 
-    td {
-      border-top: 4px solid black;
-      border-bottom: 4px solid black;
+    .day {
+      border-left: @table-focus-border black;
+      border-top: @table-focus-border black;
+      border-bottom: @table-focus-border black;
     }
 
-    td.day {
-      border-left: 4px solid black;
-    }
-
-    td.week {
-      border: 1px solid black;
+    .week_day, .groups {
+      border-top: @table-focus-border black;
+      border-bottom: @table-focus-border black;
     }
   }
 
   &[data-search] {
-    border: 4px solid rgb(201, 0, 241);
+    border-right: @table-search-border;
+
+    .day {
+      border-left: @table-search-border;
+      border-top: @table-search-border;
+      border-bottom: @table-search-border;
+    }
+
+    .week_day, .groups {
+      border-top: @table-search-border;
+      border-bottom: @table-search-border;
+    }
   }
 
   &[data-day='0'], &[data-day='6'], &[data-day='7'] { // Weekend
