@@ -68,13 +68,14 @@ export default ({ year, month, data, today, search, group }) => {
           {thatDay}
         </time>
       </td>
-      <td aria-label={time.weekdayLong}>{time.weekdayShort}</td>
+      <td class={style.week_day} aria-label={time.weekdayLong}>{time.weekdayShort}</td>
 
       {day.map((shift, index, all) => {
         const gr = all.length > 1 ? index : group - 1
 
         return <td
           key={gr}
+          class={style.groups}
           title={shiftTitle[shift]}
           data-group={gr}
           data-working={shift !== 'K'}
