@@ -32,7 +32,7 @@ prompt.get(
     const outPath = path.resolve('src', 'lib', 'ferien.json')
     const allHolidays = require(outPath)
 
-    const holidays = allHolidays.ferien.filter(event => event.year > 2017)
+    const holidays = allHolidays.ferien.filter(event => event.year > 2018)
 
     for (const event of Object.values(iCal.parseFile(result.filePath))) {
       if (typeof event !== 'object' || event.type !== 'VEVENT') {
