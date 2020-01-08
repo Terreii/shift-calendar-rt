@@ -3,7 +3,7 @@
 /*
  * Load Baden-Württemberg holidays from https://www.schulferien.org/
  * and saves them at ./src/lib/ferien.json
- * 
+ *
  * First load iCal from https://www.schulferien.org/deutschland/ical/
  */
 
