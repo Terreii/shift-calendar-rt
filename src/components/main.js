@@ -7,9 +7,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 
-import Month from './month'
-import Footer from './footer.js'
 import Downloader from './download.js'
+import Footer from './footer.js'
+import Month from './month.js'
 import selectMonthData from '../lib/select-month-data'
 
 /**
