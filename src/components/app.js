@@ -11,10 +11,10 @@ import Hammer from 'hammerjs'
 import qs from 'querystringify'
 
 import Header from './header'
-import Main from './main'
+import Main from './main.js'
 import Impressum from './impressum.js'
 import InstallPrompt from './install-prompt'
-import FirstRunDialog from './first-run'
+import FirstRunDialog from './first-run.js'
 
 import {
   shiftModelNames,
