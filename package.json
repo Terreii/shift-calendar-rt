@@ -8,10 +8,12 @@
     "node": ">=12.x"
   },
   "scripts": {
+    "predev": "npm run build:style",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --progress",
     "start": "serve dist -s -c 1",
     "prestart": "npm run build",
-    "build": "cross-env NODE_ENV=production webpack --progress",
+    "build": "npm run build:style && cross-env NODE_ENV=production webpack --progress",
+    "build:style": "tailwind build src/styles.css -o src/output.css",
     "now-build": "npm run build",
     "test": "npm run -s lint && jest --coverage",
     "test:watch": "npm run -s test -- --watch",
@@ -108,6 +110,7 @@
     "preact-render-to-string": "^4.1.0",
     "preact-router": "^2.5.1",
     "proptypes": "^1.0.0",
-    "serve": "^11.3.0"
+    "serve": "^11.3.0",
+    "tailwindcss": "^1.1.4"
   }
 }
