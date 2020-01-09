@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import style from './style.less'
 
-import Footer from '../footer'
+import Footer from '../footer.js'
 import { shiftModelNames, shiftModelText } from '../../lib/constants'
 
 import hamburgerIcon from '../../assets/icons/hamburger_icon.svg'

@@ -86,7 +86,7 @@ export default ({ shiftModel }) => {
       const group = index + 1
       return <a
         key={shiftModel + group}
-        class={'inline-block text-blue-700 underline' + (index === 0 ? '' : ' ml-2')}
+        class={'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
         href={href}
         download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
         target='_blank'

@@ -9,7 +9,7 @@ import { h } from 'preact'
 import style from './style.less'
 
 import Month from '../month'
-import Footer from '../footer'
+import Footer from '../footer.js'
 import Downloader from '../download.js'
 import selectMonthData from '../../lib/select-month-data'
 

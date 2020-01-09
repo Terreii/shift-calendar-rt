@@ -12,7 +12,7 @@ import qs from 'querystringify'
 
 import Header from './header'
 import Main from './main'
-import Impressum from './impressum'
+import Impressum from './impressum.js'
 import InstallPrompt from './install-prompt'
 import FirstRunDialog from './first-run'
 
