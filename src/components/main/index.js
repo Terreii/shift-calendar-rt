@@ -10,7 +10,7 @@ import style from './style.less'
 
 import Month from '../month'
 import Footer from '../footer'
-import Downloader from '../download'
+import Downloader from '../download.js'
 import selectMonthData from '../../lib/select-month-data'
 
 /**
