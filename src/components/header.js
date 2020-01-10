@@ -134,8 +134,9 @@ export default class Header extends Component {
             <Link
               href='/'
               tabIndex='0'
-              class=
+              class={
                 'pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline'
+              }
             >
               Kalender
             </Link>
@@ -189,13 +190,15 @@ export default class Header extends Component {
           </button>
 
           <button
-            class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
-              'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
+            class={
+              'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
+              'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'
+            }
             onClick={this._toggleShowMenu}
           >
             <img
               src={hamburgerIcon}
-              style={{ filter: 'invert(100%)'}}
+              style={{ filter: 'invert(100%)' }}
               height='45'
               width='45'
               alt='Menu'

@@ -73,7 +73,7 @@ export default ({
       ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Jahr
         <input
-          class={'flex-auto mt-1 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
             'hover:bg-gray-400 active:bg-gray-400'}
           type='number'
           min='2000'
@@ -97,7 +97,7 @@ export default ({
       ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Gehe zum Monat
         <input
-          class={'flex-auto mt-1 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
             'hover:bg-gray-400 active:bg-gray-400'}
           type='month'
           min='2000-01'
@@ -127,7 +127,7 @@ export default ({
       ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Suche einen Tag
         <input
-          class={'flex-auto mt-1 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
             'hover:bg-gray-400 active:bg-gray-400'}
           type='date'
           min='2000-01-01'
@@ -158,7 +158,7 @@ export default ({
     <label class='mt-5 flex flex-col items-stretch text-white text-center'>
       Schichtmodell
       <select
-        class={'flex-auto mt-1 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+        class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
           'hover:bg-gray-400 active:bg-gray-400'}
         value={shiftModel}
         onChange={event => {

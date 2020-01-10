@@ -6,7 +6,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h, render } from 'preact'
-import './style'
 import './output.css'
 
 let root
