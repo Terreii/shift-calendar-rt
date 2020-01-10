@@ -12,6 +12,10 @@ td, th {
   padding: 0.1rem
 }
 
+.mb-safe-area {
+  margin-bottom: env(safe-area-inset-bottom);
+}
+
 @tailwind components;
 
 @tailwind utilities;

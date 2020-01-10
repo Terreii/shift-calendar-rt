@@ -13,8 +13,8 @@ import qs from 'querystringify'
 import FirstRunDialog from './first-run.js'
 import Header from './header.js'
 import Impressum from './impressum.js'
+import InstallPrompt from './install-prompt.js'
 import Main from './main.js'
-import InstallPrompt from './install-prompt'
 
 import {
   shiftModelNames,

@@ -50,9 +50,9 @@ export default ({ year, month, data, today, search, group }) => {
 
     const isWeekend = [0, 6, 7].includes(weekDay)
     const isClosingHoliday = holidayData != null && holidayData.type === 'closing'
-    const rowBgColor = isWeekend
-      ? 'bg-gray-400'
-      : (isClosingHoliday ? 'bg-green-700' : '')
+    const rowBgColor = isClosingHoliday
+      ? 'bg-green-700'
+      : (isWeekend ? 'bg-gray-400' : '')
     const color = isClosingHoliday ? 'text-white' : ''
 
     return <tr

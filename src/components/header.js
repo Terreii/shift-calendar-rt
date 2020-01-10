@@ -9,7 +9,7 @@ import { h, Component } from 'preact'
 import { Link } from 'preact-router'
 
 import Menu from './menu.js'
-import ShareMenu from './shareMenu'
+import ShareMenu from './share-menu.js'
 
 import hamburgerIcon from '../assets/icons/hamburger_icon.svg'
 
