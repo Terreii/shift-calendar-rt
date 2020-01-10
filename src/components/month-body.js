@@ -46,7 +46,7 @@ export default ({ year, month, data, today, search, group }) => {
     )
     const isSearchResult = search === thatDay
     const isBorderWidth = isToday || isSearchResult
-    const borderColor = isSearchResult ? 'border-pink-500' : 'border-black'
+    const borderColor = isSearchResult ? 'border-teal-400' : 'border-black'
 
     const isWeekend = [0, 6, 7].includes(weekDay)
     const isClosingHoliday = holidayData != null && holidayData.type === 'closing'
