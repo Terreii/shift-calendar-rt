@@ -6,7 +6,7 @@ import { sleep } from '../utils'
 
 import App from '../../src/components/app'
 
-jest.mock('../../src/components/download/index.js')
+jest.mock('../../src/components/download.js')
 
 describe('App', () => {
   let scratch
