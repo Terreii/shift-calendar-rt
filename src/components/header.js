@@ -128,7 +128,10 @@ export default class Header extends Component {
    */
   render () {
     return (
-      <header class={`fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between bg-green-900 shadow-lg`}>
+      <header
+        class={'fixed top-0 left-0 w-screen h-12 flex flex-row items-center ' +
+          'justify-between bg-green-900 shadow-lg z-50'}
+      >
         {(this.props.url !== '/' || !this.state.isSmallScreen) &&
           <h1 class='m-0 text-2xl font-normal align-baseline'>
             <Link
