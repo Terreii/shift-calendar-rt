@@ -6,7 +6,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
-import style from './style.less'
 
 /**
  * Renders the Impressum.
@@ -14,15 +13,15 @@ import style from './style.less'
  * @returns {JSX.Element}
  */
 export default () => {
-  return <div class={style.Impressum}>
-    <h2>Datenschutzerklärung</h2>
+  return <div class='pt-16 pb-2 px-6'>
+    <h2 class='text-2xl font-bold'>Datenschutzerklärung</h2>
     <h3 id='dsg-general-intro' />
     <p>
       Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) im Rahmen der Erbringung unserer Leistungen sowie innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte sowie externen Onlinepräsenzen, wie z.B. unser Social Media Profile auf (nachfolgend gemeinsam bezeichnet als „Onlineangebot“). Im Hinblick auf die verwendeten Begrifflichkeiten, wie z.B. „Verarbeitung“ oder „Verantwortlicher“ verweisen wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).
     </p>
     <br />
     <br />
-    <h3 id='dsg-general-controller'>Verantwortlicher</h3>
+    <h3 id='dsg-general-controller' class='text-xl font-semibold'>Verantwortlicher</h3>
     <p>
       <span class='tsmcontroller'>
         Christopher Astfalk<br />
@@ -32,7 +31,7 @@ export default () => {
         {'work email: christopher.astfalk {dieses at Zeichen} de.bosch.com'}
       </span>
     </p>
-    <h3 id='dsg-general-datatype'>Arten der verarbeiteten Daten</h3>
+    <h3 id='dsg-general-datatype' class='text-xl font-semibold'>Arten der verarbeiteten Daten</h3>
     <p>
       - Bestandsdaten (z.B., Personen-Stammdaten, Namen oder Adressen).
       <br />
@@ -44,12 +43,14 @@ export default () => {
       <br />
       - Meta-/Kommunikationsdaten (z.B., Geräte-Informationen, IP-Adressen).
     </p>
-    <h3 id='dsg-general-datasubjects'>Kategorien betroffener Personen</h3>
+    <h3 id='dsg-general-datasubjects' class='text-xl font-semibold'>
+      Kategorien betroffener Personen
+    </h3>
     <p>
       Besucher und Nutzer des Onlineangebotes (Nachfolgend bezeichnen wir die betroffenen Personen zusammenfassend auch als „Nutzer“).
       <br />
     </p>
-    <h3 id='dsg-general-purpose'>Zweck der Verarbeitung</h3>
+    <h3 id='dsg-general-purpose' class='text-xl font-semibold'>Zweck der Verarbeitung</h3>
     <p>
       - Zurverfügungstellung des Onlineangebotes, seiner Funktionen und  Inhalte.<br />
       - Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.<br />
@@ -57,7 +58,7 @@ export default () => {
       - Reichweitenmessung/Marketing<br />
       <span class='tsmcom' />
     </p>
-    <h3 id='dsg-general-terms'>Verwendete Begrifflichkeiten </h3>
+    <h3 id='dsg-general-terms' class='text-xl font-semibold'>Verwendete Begrifflichkeiten </h3>
     <p>
       „Personenbezogene Daten“ sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person (im Folgenden „betroffene Person“) beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung (z.B. Cookie) oder zu einem oder mehreren besonderen Merkmalen identifiziert werden kann, die Ausdruck der physischen, physiologischen, genetischen, psychischen, wirtschaftlichen, kulturellen oder sozialen Identität dieser natürlichen Person sind.
       <br />
@@ -76,7 +77,7 @@ export default () => {
       „Auftragsverarbeiter“ eine natürliche oder juristische Person, Behörde, Einrichtung oder andere Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet.
       <br />
     </p>
-    <h3 id='dsg-general-legalbasis'>Maßgebliche Rechtsgrundlagen</h3>
+    <h3 id='dsg-general-legalbasis' class='text-xl font-semibold'>Maßgebliche Rechtsgrundlagen</h3>
     <p>
       Nach Maßgabe des Art. 13 DSGVO teilen wir Ihnen die Rechtsgrundlagen unserer Datenverarbeitungen mit.  Für Nutzer aus dem Geltungsbereich der Datenschutzgrundverordnung (DSGVO), d.h. der EU und des EWG gilt, sofern die Rechtsgrundlage in der Datenschutzerklärung nicht genannt wird, Folgendes:
       <br />
@@ -97,7 +98,7 @@ export default () => {
       Die Verarbeitung von besonderen Kategorien von Daten (entsprechend Art. 9 Abs. 1 DSGVO) bestimmt sich nach den Vorgaben des Art. 9 Abs. 2 DSGVO.
       <br />
     </p>
-    <h3 id='dsg-general-securitymeasures'>Sicherheitsmaßnahmen</h3>
+    <h3 id='dsg-general-securitymeasures' class='text-xl font-semibold'>Sicherheitsmaßnahmen</h3>
     <p>
       Wir treffen nach Maßgabe der gesetzlichen Vorgabenunter Berücksichtigung des Stands der Technik, der Implementierungskosten und der Art, des Umfangs, der Umstände und der Zwecke der Verarbeitung sowie der unterschiedlichen Eintrittswahrscheinlichkeit und Schwere des Risikos für die Rechte und Freiheiten natürlicher Personen, geeignete technische und organisatorische Maßnahmen, um ein dem Risiko angemessenes Schutzniveau zu gewährleisten.
       <br />
@@ -105,7 +106,9 @@ export default () => {
       Zu den Maßnahmen gehören insbesondere die Sicherung der Vertraulichkeit, Integrität und Verfügbarkeit von Daten durch Kontrolle des physischen Zugangs zu den Daten, als auch des sie betreffenden Zugriffs, der Eingabe, Weitergabe, der Sicherung der Verfügbarkeit und ihrer Trennung. Des Weiteren haben wir Verfahren eingerichtet, die eine Wahrnehmung von Betroffenenrechten, Löschung von Daten und Reaktion auf Gefährdung der Daten gewährleisten. Ferner berücksichtigen wir den Schutz personenbezogener Daten bereits bei der Entwicklung, bzw. Auswahl von Hardware, Software sowie Verfahren, entsprechend dem Prinzip des Datenschutzes durch Technikgestaltung und durch datenschutzfreundliche Voreinstellungen.
       <br />
     </p>
-    <h3 id='dsg-general-coprocessing'>Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen und Dritten</h3>
+    <h3 id='dsg-general-coprocessing' class='text-xl font-semibold'>
+      Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen und Dritten
+    </h3>
     <p>
       Sofern wir im Rahmen unserer Verarbeitung Daten gegenüber anderen Personen und Unternehmen (Auftragsverarbeitern, gemeinsam Verantwortlichen oder Dritten) offenbaren, sie an diese übermitteln oder ihnen sonst Zugriff auf die Daten gewähren, erfolgt dies nur auf Grundlage einer gesetzlichen Erlaubnis (z.B. wenn eine Übermittlung der Daten an Dritte, wie an Zahlungsdienstleister, zur Vertragserfüllung erforderlich ist), Nutzer eingewilligt haben, eine rechtliche Verpflichtung dies vorsieht oder auf Grundlage unserer berechtigten Interessen (z.B. beim Einsatz von Beauftragten, Webhostern, etc.).
       <br />
@@ -113,11 +116,13 @@ export default () => {
       Sofern wir Daten anderen Unternehmen unserer Unternehmensgruppe offenbaren, übermitteln oder ihnen sonst den Zugriff gewähren, erfolgt dies insbesondere zu administrativen Zwecken als berechtigtes Interesse und darüberhinausgehend auf einer den gesetzlichen Vorgaben entsprechenden Grundlage.
       <br />
     </p>
-    <h3 id='dsg-general-thirdparty'>Übermittlungen in Drittländer</h3>
+    <h3 id='dsg-general-thirdparty' class='text-xl font-semibold'>Übermittlungen in Drittländer</h3>
     <p>
       Sofern wir Daten in einem Drittland (d.h. außerhalb der Europäischen Union (EU), des Europäischen Wirtschaftsraums (EWR) oder der Schweizer Eidgenossenschaft) verarbeiten oder dies im Rahmen der Inanspruchnahme von Diensten Dritter oder Offenlegung, bzw. Übermittlung von Daten an andere Personen oder Unternehmen geschieht, erfolgt dies nur, wenn es zur Erfüllung unserer (vor)vertraglichen Pflichten, auf Grundlage Ihrer Einwilligung, aufgrund einer rechtlichen Verpflichtung oder auf Grundlage unserer berechtigten Interessen geschieht. Vorbehaltlich gesetzlicher oder vertraglicher Erlaubnisse, verarbeiten oder lassen wir die Daten in einem Drittland nur beim Vorliegen der gesetzlichen Voraussetzungen. D.h. die Verarbeitung erfolgt z.B. auf Grundlage besonderer Garantien, wie der offiziell anerkannten Feststellung eines der EU entsprechenden Datenschutzniveaus (z.B. für die USA durch das „Privacy Shield“) oder Beachtung offiziell anerkannter spezieller vertraglicher Verpflichtungen.
     </p>
-    <h3 id='dsg-general-rightssubject'>Rechte der betroffenen Personen</h3>
+    <h3 id='dsg-general-rightssubject' class='text-xl font-semibold'>
+      Rechte der betroffenen Personen
+    </h3>
     <p>
       Sie haben das Recht, eine Bestätigung darüber zu verlangen, ob betreffende Daten verarbeitet werden und auf Auskunft über diese Daten sowie auf weitere Informationen und Kopie der Daten entsprechend den gesetzlichen Vorgaben.
       <br />
@@ -134,7 +139,7 @@ export default () => {
       Sie haben ferner nach Maßgabe der gesetzlichen Vorgaben das Recht, eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen.
       <br />
     </p>
-    <h3 id='dsg-general-revokeconsent'>Widerrufsrecht</h3>
+    <h3 id='dsg-general-revokeconsent' class='text-xl font-semibold'>Widerrufsrecht</h3>
     <p>Sie haben das Recht, erteilte Einwilligungen mit Wirkung für die Zukunft zu widerrufen.</p>
     <h3 id='dsg-general-object'>Widerspruchsrecht</h3>
     <p>
@@ -142,7 +147,9 @@ export default () => {
         Sie können der künftigen Verarbeitung der Sie betreffenden Daten nach Maßgabe der gesetzlichen Vorgaben jederzeit widersprechen. Der Widerspruch kann insbesondere gegen die Verarbeitung für Zwecke der Direktwerbung erfolgen.
       </strong>
     </p>
-    <h3 id='dsg-general-cookies'>Cookies und Widerspruchsrecht bei Direktwerbung</h3>
+    <h3 id='dsg-general-cookies' class='text-xl font-semibold'>
+      Cookies und Widerspruchsrecht bei Direktwerbung
+    </h3>
     <p>
       Als „Cookies“ werden kleine Dateien bezeichnet, die auf Rechnern der Nutzer gespeichert werden. Innerhalb der Cookies können unterschiedliche Angaben gespeichert werden. Ein Cookie dient primär dazu, die Angaben zu einem Nutzer (bzw. dem Gerät auf dem das Cookie gespeichert ist) während oder auch nach seinem Besuch innerhalb eines Onlineangebotes zu speichern. Als temporäre Cookies, bzw. „Session-Cookies“ oder „transiente Cookies“, werden Cookies bezeichnet, die gelöscht werden, nachdem ein Nutzer ein Onlineangebot verlässt und seinen Browser schließt. In einem solchen Cookie kann z.B. der Inhalt eines Warenkorbs in einem Onlineshop oder ein Login-Status gespeichert werden. Als „permanent“ oder „persistent“ werden Cookies bezeichnet, die auch nach dem Schließen des Browsers gespeichert bleiben. So kann z.B. der Login-Status gespeichert werden, wenn die Nutzer diese nach mehreren Tagen aufsuchen. Ebenso können in einem solchen Cookie die Interessen der Nutzer gespeichert werden, die für Reichweitenmessung oder Marketingzwecke verwendet werden. Als „Third-Party-Cookie“ werden Cookies bezeichnet, die von anderen Anbietern als dem Verantwortlichen, der das Onlineangebot betreibt, angeboten werden (andernfalls, wenn es nur dessen Cookies sind spricht man von „First-Party Cookies“).
       <br />
@@ -155,19 +162,21 @@ export default () => {
       <br />
       Ein genereller Widerspruch gegen den Einsatz der zu Zwecken des Onlinemarketing eingesetzten Cookies kann bei einer Vielzahl der Dienste, vor allem im Fall des Trackings, über die US-amerikanische Seite <a href='http://www.aboutads.info/choices/'>http://www.aboutads.info/choices/</a> oder die EU-Seite <a href='http://www.youronlinechoices.com/'>http://www.youronlinechoices.com/</a> erklärt werden. Des Weiteren kann die Speicherung von Cookies mittels deren Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.
     </p>
-    <h3 id='dsg-general-erasure'>Löschung von Daten</h3>
+    <h3 id='dsg-general-erasure' class='text-xl font-semibold'>Löschung von Daten</h3>
     <p>
       Die von uns verarbeiteten Daten werden nach Maßgabe der gesetzlichen Vorgaben gelöscht oder in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser Datenschutzerklärung ausdrücklich angegeben, werden die bei uns gespeicherten Daten gelöscht, sobald sie für ihre Zweckbestimmung nicht mehr erforderlich sind und der Löschung keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
       <br />
       <br />
       Sofern die Daten nicht gelöscht werden, weil sie für andere und gesetzlich zulässige Zwecke erforderlich sind, wird deren Verarbeitung eingeschränkt. D.h. die Daten werden gesperrt und nicht für andere Zwecke verarbeitet. Das gilt z.B. für Daten, die aus handels- oder steuerrechtlichen Gründen aufbewahrt werden müssen.
     </p>
-    <h3 id='dsg-general-changes'>Änderungen und Aktualisierungen der Datenschutzerklärung</h3>
+    <h3 id='dsg-general-changes' class='text-xl font-semibold'>
+      Änderungen und Aktualisierungen der Datenschutzerklärung
+    </h3>
     <p>
       Wir bitten Sie sich regelmäßig über den Inhalt unserer Datenschutzerklärung zu informieren. Wir passen die Datenschutzerklärung an, sobald die Änderungen der von uns durchgeführten Datenverarbeitungen dies erforderlich machen. Wir informieren Sie, sobald durch die Änderungen eine Mitwirkungshandlung Ihrerseits (z.B. Einwilligung) oder eine sonstige individuelle Benachrichtigung erforderlich wird.
     </p>
     <p />
-    <h3 id='dsg-hostingprovider'>Hosting und E-Mail-Versand</h3>
+    <h3 id='dsg-hostingprovider' class='text-xl font-semibold'>Hosting und E-Mail-Versand</h3>
     <p />
     <p>
       <span class='ts-muster-content'>
@@ -177,7 +186,7 @@ export default () => {
       </span>
     </p>
     <p />
-    <h3 id='dsg-logfiles'>Erhebung von Zugriffsdaten und Logfiles</h3>
+    <h3 id='dsg-logfiles' class='text-xl font-semibold'>Erhebung von Zugriffsdaten und Logfiles</h3>
     <p />
     <p>
       <span class='ts-muster-content'>
@@ -187,7 +196,12 @@ export default () => {
         Logfile-Informationen werden aus Sicherheitsgründen (z.B. zur Aufklärung von Missbrauchs- oder Betrugshandlungen) für die Dauer von maximal 7 Tagen gespeichert und danach gelöscht. Daten, deren weitere Aufbewahrung zu Beweiszwecken erforderlich ist, sind bis zur endgültigen Klärung des jeweiligen Vorfalls von der Löschung ausgenommen.
       </span>
     </p>
-    <a href='https://datenschutz-generator.de' class='dsg1-6' rel='nofollow' target='_blank'>
+    <a
+      href='https://datenschutz-generator.de'
+      class='dsg1-6 inline-block text-blue-700 underline'
+      rel='nofollow'
+      target='_blank'
+    >
       Erstellt mit Datenschutz-Generator.de von RA Dr. Thomas Schwenke
     </a>
   </div>

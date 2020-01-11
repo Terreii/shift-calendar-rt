@@ -5,10 +5,17 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-@import '~style/helpers';
+@tailwind base;
 
-.Impressum {
-  padding: 66px 20px 10px;
-  margin-bottom: 0.5em;
+td, th {
+  border: 1px solid black;
+  padding: 0.1rem
+}
+
+.mb-safe-area {
   margin-bottom: env(safe-area-inset-bottom);
 }
+
+@tailwind components;
+
+@tailwind utilities;

@@ -6,12 +6,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
-import style from './style.less'
 
-import Month from '../month'
-import Footer from '../footer'
-import Downloader from '../download'
-import selectMonthData from '../../lib/select-month-data'
+import Downloader from './download.js'
+import Footer from './footer.js'
+import Month from './month.js'
+import selectMonthData from '../lib/select-month-data'
 
 /**
  * Renders the main content.
@@ -77,8 +76,11 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
       break
   }
 
-  return <main class={style.MainContainer}>
-    <div class={style.home} onClick={processClick}>
+  return <main class='flex flex-col content-center'>
+    <div
+      class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
+      onClick={processClick}
+    >
       {monthsData.map(([year, month]) => <Month
         key={`${year}-${month}-${shiftModel}`}
         year={year}

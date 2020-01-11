@@ -6,11 +6,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h, Component } from 'preact'
-import style from './style.less'
 
-import iosShare from '../../assets/icons/ios-share.png'
-import iosAddToHome from '../../assets/icons/ios-add-to-home-screen.png'
-import closeIcon from '../../assets/icons/close.svg'
+import iosShare from '../assets/icons/ios-share.png'
+import iosAddToHome from '../assets/icons/ios-add-to-home-screen.png'
+import closeIcon from '../assets/icons/close.svg'
 
 /**
  * Renders an install button for add-to-home-screen of PWA.
@@ -92,25 +91,34 @@ export default class InstallButton extends Component {
   render () {
     switch (this.state.show) {
       case 'button':
-        return <div class={style.Container}>
-          <button class={style.Button} onClick={this._onClickInstallButton}>
+        return <div class='text-base h-12 mb-safe-area'>
+          <button
+            class={'fixed bottom-0 left-0 w-screen bg-green-900 shadow-lg text-white ' +
+              'hover:bg-green-700 focus:bg-green-700 focus:shadow-outline'}
+            onClick={this._onClickInstallButton}
+          >
             + zum Home Screen hinzufügen
           </button>
         </div>
 
       case 'ios':
-        return <div class={style.IosContainer}>
-          <div class={style.IosInstallInfo}>
-            Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
-            <div class={style.IconsRow}>
-              <img src={iosShare} height='55' alt='klicke Teilen' />
-              ➡︎
-              <img src={iosAddToHome} height='65' alt='klicke Zum Home-Bildschirm' />
-            </div>
-            <button class={style.Dismiss} onClick={this._dismiss} aria-label='schließe Meldung'>
-              <img src={closeIcon} height='40' width='40' alt='' />
-            </button>
+        return <div
+          class={'fixed bottom-0 w-screen flex flex-col items-center text-base text-white ' +
+            'text-center bg-green-900 shadow-lg mb-safe-area'}
+        >
+          Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
+          <div class='flex flex-row items-center'>
+            <img src={iosShare} height='55' class='h-12' alt='klicke Teilen' />
+            ➡︎
+            <img src={iosAddToHome} height='65' class='h-16' alt='klicke Zum Home-Bildschirm' />
           </div>
+          <button
+            class='ml-1 absolute bottom-0 right-0 bg-transparent border-0'
+            onClick={this._dismiss}
+            aria-label='schließe Meldung'
+          >
+            <img src={closeIcon} height='40' width='40' alt='' />
+          </button>
         </div>
 
       case 'none':

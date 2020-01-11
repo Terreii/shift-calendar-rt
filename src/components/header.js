@@ -7,12 +7,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h, Component } from 'preact'
 import { Link } from 'preact-router'
-import style from './style.less'
 
-import Menu from '../menu'
-import ShareMenu from '../shareMenu'
+import Menu from './menu.js'
+import ShareMenu from './share-menu.js'
 
-import hamburgerIcon from '../../assets/icons/hamburger_icon.svg'
+import hamburgerIcon from '../assets/icons/hamburger_icon.svg'
 
 /**
  * Renders the Header.
@@ -129,12 +128,29 @@ export default class Header extends Component {
    */
   render () {
     return (
-      <header class={style.header}>
+      <header
+        class={'fixed top-0 left-0 w-screen h-12 flex flex-row items-center ' +
+          'justify-between bg-green-900 shadow-lg z-50'}
+      >
         {(this.props.url !== '/' || !this.state.isSmallScreen) &&
-          <h1><Link href='/' tabIndex='0'>Kalender</Link></h1>
+          <h1 class='m-0 text-2xl font-normal align-baseline'>
+            <Link
+              href='/'
+              tabIndex='0'
+              class={
+                'pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline'
+              }
+            >
+              Kalender
+            </Link>
+          </h1>
         }
-        {(this.props.url === '/' || !this.state.isSmallScreen) && <nav>
+        {(this.props.url === '/' || !this.state.isSmallScreen) && <nav
+          class='h-full flex flex-row text-base items-stretch'
+        >
           <button
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+              'focus:shadow-outline focus:outline-none'}
             title='vorigen Monat'
             aria-label='vorigen Monat'
             onClick={() => {
@@ -146,6 +162,8 @@ export default class Header extends Component {
           </button>
 
           <button
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+              'focus:shadow-outline focus:outline-none'}
             title='zeige aktuellen Monat'
             onClick={() => {
               const now = new Date()
@@ -162,6 +180,8 @@ export default class Header extends Component {
           </button>
 
           <button
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+              'focus:shadow-outline focus:outline-none'}
             title='nächster Monat'
             aria-label='nächster Monat'
             onClick={() => {
@@ -172,8 +192,20 @@ export default class Header extends Component {
             {'>'}
           </button>
 
-          <button class={style.Hamburger} onClick={this._toggleShowMenu}>
-            <img src={hamburgerIcon} height='45' width='45' alt='Menu' />
+          <button
+            class={
+              'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
+              'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'
+            }
+            onClick={this._toggleShowMenu}
+          >
+            <img
+              src={hamburgerIcon}
+              style={{ filter: 'invert(100%)' }}
+              height='45'
+              width='45'
+              alt='Menu'
+            />
           </button>
         </nav>}
 

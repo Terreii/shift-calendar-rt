@@ -7,9 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { DateTime } from 'luxon'
-import style from './style.less'
 
-import { shiftTitle } from '../../lib/constants'
+import { shiftTitle } from '../lib/constants'
 
 /**
  * Renders the body of a month.
@@ -42,43 +41,70 @@ export default ({ year, month, data, today, search, group }) => {
     const isDayLightSaving = data.holidays.daylightSavingSwitch != null &&
       data.holidays.daylightSavingSwitch.day === thatDay
 
+    const isToday = todayInThisMonth && (
+      thatDay === today[2] || (today[3] < 6 && (thatDay + 1 === today[2]))
+    )
+    const isSearchResult = search === thatDay
+    const isBorderWidth = isToday || isSearchResult
+    const borderColor = isSearchResult ? 'border-teal-400' : 'border-black'
+
+    const isWeekend = [0, 6, 7].includes(weekDay)
+    const isClosingHoliday = holidayData != null && holidayData.type === 'closing'
+    const rowBgColor = isClosingHoliday
+      ? 'bg-green-700'
+      : (isWeekend ? 'bg-gray-400' : '')
+    const color = isClosingHoliday ? 'text-white' : ''
+
     return <tr
       key={index}
-      class={style.DayRow}
-      data-day={weekDay}
-      data-today={todayInThisMonth && (
-        thatDay === today[2] || (today[3] < 6 && (thatDay + 1 === today[2]))
-      )}
-      data-holiday={holidayData != null ? holidayData.type : null}
-      data-search={search === thatDay}
+      class={`${borderColor} ${isBorderWidth ? 'border-r-4' : ''} ${rowBgColor} ${color}`}
       title={holidayData != null ? holidayData.name : null}
     >
       {(weekDay === 1 || index === 0) && <td
-        class={style.week}
+        class='text-gray-800 bg-gray-100'
         rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
       >
         {time.weekNumber}
       </td>}
       <td
-        class={style.day}
-        data-dayLightSaving={isDayLightSaving}
+        class={
+          `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : ''}` +
+          (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
+            holidayData != null && ['holiday', 'school'].includes(holidayData.name)
+              ? ' bg-teal-400 text-black'
+              : ''
+          ))
+        }
         title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
       >
         <time dateTime={time.toISODate()}>
           {thatDay}
         </time>
       </td>
-      <td class={style.week_day} aria-label={time.weekdayLong}>{time.weekdayShort}</td>
+      <td
+        class={isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''}
+        aria-label={time.weekdayLong}
+      >
+        {time.weekdayShort}
+      </td>
 
       {day.map((shift, index, all) => {
         const gr = all.length > 1 ? index : group - 1
+        const border = isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''
+        const groupColors = [
+          'bg-group-1',
+          'bg-group-2',
+          'bg-group-3',
+          'bg-group-4',
+          'bg-group-5',
+          'bg-group-6'
+        ]
+        const workStyle = shift !== 'K' ? 'text-black ' + groupColors[gr] : ''
 
         return <td
           key={gr}
-          class={style.groups}
+          class={`${border} ${workStyle}`}
           title={shiftTitle[shift]}
-          data-group={gr}
-          data-working={shift !== 'K'}
         >
           {shift === 'K' ? '' : shift}
         </td>

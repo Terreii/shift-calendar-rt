@@ -1,7 +1,6 @@
 import webpack from 'webpack'
 import ExtractTextPlugin from 'extract-text-webpack-plugin'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import autoprefixer from 'autoprefixer'
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import OfflinePlugin from 'offline-plugin'
 import path from 'path'
@@ -28,7 +27,6 @@ module.exports = {
     ],
     alias: {
       components: path.resolve(__dirname, 'src/components'), // used for tests
-      style: path.resolve(__dirname, 'src/style'),
       'react': 'preact-compat',
       'react-dom': 'preact-compat'
     }
@@ -48,54 +46,13 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        // Transform our own .(less|css) files with PostCSS and CSS-modules
-        test: /\.(less|css)$/,
-        include: [path.resolve(__dirname, 'src/components')],
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: { modules: true, sourceMap: CSS_MAPS, importLoaders: 1, minimize: true }
-            },
-            {
-              loader: `postcss-loader`,
-              options: {
-                sourceMap: CSS_MAPS,
-                plugins: () => {
-                  autoprefixer({ browsers: [ 'last 2 versions' ] })
-                }
-              }
-            },
-            {
-              loader: 'less-loader',
-              options: { sourceMap: CSS_MAPS }
-            }
-          ]
-        })
-      },
-      {
-        test: /\.(less|css)$/,
-        exclude: [path.resolve(__dirname, 'src/components')],
+        test: /\.(css)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
               options: { sourceMap: CSS_MAPS, importLoaders: 1, minimize: true }
-            },
-            {
-              loader: `postcss-loader`,
-              options: {
-                sourceMap: CSS_MAPS,
-                plugins: () => {
-                  autoprefixer({ browsers: [ 'last 2 versions' ] })
-                }
-              }
-            },
-            {
-              loader: 'less-loader',
-              options: { sourceMap: CSS_MAPS }
             }
           ]
         })
@@ -123,20 +80,20 @@ module.exports = {
         ]
       },
       {
-        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
+        test: /\.ics$/i,
         use: ENV !== 'production' ? 'url-loader' : {
           loader: 'file-loader',
           options: {
+            name: '[name].[ext]',
             outputPath: 'assets'
           }
         }
       },
       {
-        test: /\.(ics)(\?.*)?$/i,
+        test: /\.(svg|woff2?|ttf|eot|jpe?g|png|gif)(\?.*)?$/i,
         use: ENV !== 'production' ? 'url-loader' : {
           loader: 'file-loader',
           options: {
-            name: '[name].[ext]',
             outputPath: 'assets'
           }
         }

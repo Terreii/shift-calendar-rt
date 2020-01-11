@@ -6,10 +6,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h, Component } from 'preact'
-import style from './style.less'
 
-import MonthBody from '../month-body'
-import { monthNames } from '../../lib/constants'
+import MonthBody from './month-body.js'
+import { monthNames } from '../lib/constants'
 
 /**
  * Render a month
@@ -34,8 +33,7 @@ export default class Month extends Component {
     ].some(key => this.props[key] !== nextProps[key])
   }
 
-  render () {
-    const { year, month, data, today, search, group } = this.props
+  render ({ year, month, data, today, search, group }) {
     const groups = []
 
     if (group === 0) { // if 0 display all groups
@@ -48,16 +46,24 @@ export default class Month extends Component {
 
     const isToday = today != null && today[0] === year && today[1] === month
 
-    return <table id={`month_${year}-${month + 1}`} class={style.Main}>
-      <caption class={isToday ? style.ThisMonth : null}>
+    return <table
+      id={`month_${year}-${month + 1}`}
+      class=' mt-8 xl:mt-0 border border-black border-collapse text-center'
+    >
+      <caption
+        class={isToday
+          ? 'border border-b-0 border-black bg-gray-400 text-black font-bold'
+          : 'font-bold'
+        }
+      >
         {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
       </caption>
       <thead>
         <tr>
           <th title='Woche'>Wo</th>
-          <th>Tag</th>
-          <th />
-          {groups.map(gr => <th key={gr}>Gr. {gr + 1}</th>)}
+          <th title='Tag im Monat'>Tag</th>
+          <th title='Wochentag' />
+          {groups.map(gr => <th key={gr} aria-label={'Gruppe ' + (gr + 1)}>Gr. {gr + 1}</th>)}
         </tr>
       </thead>
 
@@ -70,10 +76,10 @@ export default class Month extends Component {
         group={group}
       />
 
-      <tfoot>
+      <tfoot class='text-sm font-bold'>
         <tr>
           <td
-            class={style.WorkingDaysInfo}
+            class='border border-black p-1 cursor-help'
             colSpan='3'
             title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
           >

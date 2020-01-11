@@ -6,16 +6,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
-import style from './style.less'
 
 import {
   monthNames,
   shiftModelNames,
   shiftModelText,
   shiftModelNumberOfGroups
-} from '../../lib/constants'
+} from '../lib/constants'
 
-import shareIcon from '../../assets/icons/share21.svg'
+import shareIcon from '../assets/icons/share21.svg'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   const parent = document.createElement('div')
@@ -52,10 +51,14 @@ export default ({
     groupOptions.push(<option key={'group_' + gr} value={gr}>Nur Gruppe {gr}</option>)
   }
 
-  return <div class={show ? style.Show : style.Menu}>
+  return <div
+    class={(show ? 'flex' : 'hidden') + ' absolute top-0 right-0 mt-12 p-3 ' +
+      ' flex-col justify-center items-stretch bg-green-900 shadow-lg'}
+  >
     {supportsMonthInput || isFullYear
       ? null
       : <select
+        class='h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 active:bg-gray-400'
         title='Gehe zum Monat'
         value={month}
         onChange={event => {
@@ -67,9 +70,11 @@ export default ({
     }
 
     {!supportsMonthInput || isFullYear
-      ? <label>
+      ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Jahr
         <input
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
+            'hover:bg-gray-400 active:bg-gray-400'}
           type='number'
           min='2000'
           value={year}
@@ -89,9 +94,11 @@ export default ({
     }
 
     {supportsMonthInput && !isFullYear
-      ? <label>
+      ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Gehe zum Monat
         <input
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
+            'hover:bg-gray-400 active:bg-gray-400'}
           type='month'
           min='2000-01'
           value={`${year}-${String(month + 1).padStart(2, '0')}`}
@@ -117,9 +124,11 @@ export default ({
     }
 
     {supportsDateInput
-      ? <label>
+      ? <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Suche einen Tag
         <input
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
+            'hover:bg-gray-400 active:bg-gray-400'}
           type='date'
           min='2000-01-01'
           value={searchValue}
@@ -138,13 +147,19 @@ export default ({
       : null
     }
 
-    <button onClick={toggleFullYear}>
+    <button
+      class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+        'hover:bg-gray-400 active:bg-gray-400'}
+      onClick={toggleFullYear}
+    >
       Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
     </button>
 
-    <label>
+    <label class='mt-5 flex flex-col items-stretch text-white text-center'>
       Schichtmodell
       <select
+        class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
+          'hover:bg-gray-400 active:bg-gray-400'}
         value={shiftModel}
         onChange={event => {
           onChangeModel(event.target.value)
@@ -157,6 +172,8 @@ export default ({
     </label>
 
     <select
+      class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+        'hover:bg-gray-400 active:bg-gray-400'}
       value={group}
       onChange={event => {
         const group = +event.target.value
@@ -167,7 +184,11 @@ export default ({
       {groupOptions}
     </select>
 
-    <button class={style.share} onClick={onShare}>
+    <button
+      class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
+        'hover:bg-gray-400 active:bg-gray-400'}
+      onClick={onShare}
+    >
       <img src={shareIcon} height='32' width='32' alt='teilen' />
     </button>
   </div>

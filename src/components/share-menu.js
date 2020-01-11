@@ -7,7 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h, Component } from 'preact'
 import qs from 'querystringify'
-import style from './style.less'
 
 export default class ShareMenu extends Component {
   state = {
@@ -101,8 +100,12 @@ export default class ShareMenu extends Component {
   }
 
   render () {
-    return <div class={style.Main}>
+    return <div
+      class={'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
+        'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
+    >
       <input
+        class='bg-transparent text-white'
         type='url'
         readonly
         value={this.getURL()}
@@ -111,10 +114,11 @@ export default class ShareMenu extends Component {
         }}
       />
 
-      <h6>Füge hinzu:</h6>
+      <h6 class='mt-5 text-lg p-0 m-0 mt-2 ml-4'>Füge hinzu:</h6>
 
-      <label class={style.checkbox}>
+      <label class='mt-5 ml-2'>
         <input
+          class='h-4 w-4 mr-1'
           type='checkbox'
           checked={this.state.shiftModel}
           onChange={this.doAddShiftModel}
@@ -122,8 +126,9 @@ export default class ShareMenu extends Component {
         Schichtmodell
       </label>
 
-      <label class={style.checkbox}>
+      <label class='mt-5 ml-2'>
         <input
+          class='h-4 w-4 mr-1'
           type='checkbox'
           checked={this.state.group}
           disabled={this.props.group === 0}
@@ -136,8 +141,9 @@ export default class ShareMenu extends Component {
         }
       </label>
 
-      <label class={style.checkbox}>
+      <label class='mt-5 ml-2'>
         <input
+          class='h-4 w-4 mr-1'
           type='checkbox'
           checked={this.state.search}
           disabled={this.props.search == null}
@@ -150,11 +156,19 @@ export default class ShareMenu extends Component {
         }
       </label>
 
-      <div class={style.ButtonRow}>
-        <button class={style.cancel} onClick={this.props.hide}>
+      <div class='mt-5 flex flex-row flex-wrap content-center'>
+        <button
+          class={'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
+            'shadow hover:bg-gray-400 active:bg-gray-400'}
+          onClick={this.props.hide}
+        >
           Abbrechen
         </button>
-        <button class={style.share} onClick={this.onShare}>
+        <button
+          class={'flex-auto mt-5 mx-3 h-10 w-32 text-white text-center rounded bg-purple-700 ' +
+            'shadow hover:bg-purple-500 active:bg-purple-500'}
+          onClick={this.onShare}
+        >
           Teilen
         </button>
       </div>
