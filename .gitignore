@@ -8,4 +8,4 @@
 /.idea
 yarn.lock
 /.vscode
-src/output.css
+src/style.css
