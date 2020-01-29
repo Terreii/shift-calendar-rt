@@ -31,24 +31,28 @@ export const shift66Name = '6-6'
 export const shift64Name = '6-4'
 export const shiftWfW = 'wfw'
 export const shiftAddedNight = 'added-night'
+export const shiftAddedNight8 = 'added-night-8'
 
 export const shiftModelNames = [
   shift66Name,
   shift64Name,
   shiftWfW,
-  shiftAddedNight
+  shiftAddedNight,
+  shiftAddedNight8
 ]
 
 export const shiftModelText = {
   [shift66Name]: '6 - 6 Kontischicht',
   [shift64Name]: '6 - 4 Kontischicht',
   [shiftWfW]: 'Werkfeuerwehr',
-  [shiftAddedNight]: 'aufgesetzte Nachtarbeit'
+  [shiftAddedNight]: 'aufgesetzte Nachtarbeit',
+  [shiftAddedNight8]: 'aufgesetzte Nachtarbeit 8 Wochen'
 }
 
 export const shiftModelNumberOfGroups = {
   [shift66Name]: 6,
   [shift64Name]: 5,
   [shiftWfW]: 6,
-  [shiftAddedNight]: 3
+  [shiftAddedNight]: 3,
+  [shiftAddedNight8]: 3
 }
