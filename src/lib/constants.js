@@ -46,7 +46,7 @@ export const shiftModelText = {
   [shift64Name]: '6 - 4 Kontischicht',
   [shiftWfW]: 'Werkfeuerwehr',
   [shiftAddedNight]: 'aufgesetzte Nachtarbeit',
-  [shiftAddedNight8]: 'aufgesetzte Nachtarbeit 8 Wochen'
+  [shiftAddedNight8]: '8 Wochen Nachtarbeit'
 }
 
 export const shiftModelNumberOfGroups = {

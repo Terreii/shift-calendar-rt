@@ -371,52 +371,37 @@ function getAddedNight8ModelDay (year, month, day) {
   // 8 weeks switching, 8 weeks night
   const weeksInCycle = Math.floor((dateTime.getTime() / 1000 / 60 / 60 / 24 + 54) / 7) % 16
 
-  // Offset is for every group. When does the shift-cycle start?
-  return [
-    { day: 0, week: 0 },
-    { day: 0, week: 0 },
-    { day: 0, week: 0 }
-  ].map(offset => {
+  // Offset for every group. When does the night shift start?
+  // It is also the group
+  return [0, 1, 2].map(gr => {
     // Type of work week
-    let shiftWeek = weeksInCycle + offset.week
-
-    if (shiftWeek >= 16) {
-      shiftWeek -= 16
-    }
-
-    switch (shiftWeek) {
+    switch (weeksInCycle) {
       case 0:
       case 2:
       case 4:
       case 6:
-        return weekDay === 0 || weekDay === 6 ? 'K' : 'F'
+        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+          return 'K'
+        } else {
+          return gr === 1 ? 'S' : 'F'
+        }
 
       case 1:
       case 3:
       case 5:
       case 7:
-        return weekDay === 0 || weekDay === 6 ? 'K' : 'S'
+        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+          return 'K'
+        } else {
+          return gr === 1 ? 'F' : 'S'
+        }
 
       default:
-        break
-    }
+        // night shift
+        // when does the night shift start?
+        let shiftDay = weekDay - gr
 
-    // In the night shift weeks, which week day is a working day
-    let shiftDay = weekDay + offset.day
-
-    if (shiftDay >= 7) {
-      shiftDay -= 7
-    }
-
-    switch (shiftDay) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-        return 'N'
-
-      default:
-        return 'K'
+        return shiftDay < 4 && shiftDay >= 0 ? 'N' : 'K'
     }
   })
 }
