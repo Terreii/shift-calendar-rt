@@ -401,7 +401,7 @@ function getAddedNight8ModelDay (year, month, day) {
       case 5:
       case 7:
         return weekDay === 0 || weekDay === 6 ? 'K' : 'S'
-    
+
       default:
         break
     }
@@ -412,7 +412,7 @@ function getAddedNight8ModelDay (year, month, day) {
       case 2:
       case 3:
         return 'N'
-    
+
       default:
         return 'K'
     }
