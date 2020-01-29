@@ -9,7 +9,8 @@ import {
   shift66Name,
   shift64Name,
   shiftWfW,
-  shiftAddedNight
+  shiftAddedNight,
+  shiftAddedNight8
 } from './constants'
 import { getDaysInMonth } from './utils'
 
@@ -30,6 +31,9 @@ export default function getMonthData (year, month, shiftModel) {
   switch (shiftModel) {
     case shiftAddedNight:
       return getAddedNightModel(year, month)
+
+    case shiftAddedNight8:
+      return getAddedNight8Model(year, month)
 
     case shiftWfW:
       return getWfWModel(year, month)
@@ -318,6 +322,86 @@ function getAddedNightModelDay (year, month, day) {
         return 'N' // Nacht/Night 22 -  6:30
       default:
         return 'K' // No shift/free
+    }
+  })
+}
+
+/**
+ * Get the working data of the added night-shift-model where they work for 8 week switch and
+ * 8 weeks night.
+ * @param {number} year Full Year of that month
+ * @param {number} month Month number
+ * @returns {MonthWorkData} Working data of the groups
+ */
+function getAddedNight8Model (year, month) {
+  const daysData = []
+  const groupsWorkingDays = [0, 0, 0]
+
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
+    const aDay = getAddedNight8ModelDay(year, month, i + 1)
+
+    daysData.push(aDay)
+
+    aDay.forEach((isWorking, gr) => {
+      if (isWorking !== 'K') {
+        groupsWorkingDays[gr] += 1
+      }
+    })
+  }
+
+  return {
+    days: daysData,
+    workingCount: groupsWorkingDays
+  }
+}
+
+/**
+ * Calculates the data of a day for the added night-shift-8-model.
+ * It is 8 weeks F or S switch for one week. Then 8 weeks 4 nights a week.
+ * @param {number} year Full Year
+ * @param {number} month Number of the month in the year
+ * @param {number} day Day in the month
+ * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ */
+function getAddedNight8ModelDay (year, month, day) {
+  const dateTime = new Date(year, month, day, 0, 0, 0, 0)
+  const weekDay = dateTime.getDay()
+
+  // get days count since 1.1.1970
+  // 8 weeks switching, 8 weeks night
+  const weeksInCycle = Math.floor((dateTime.getTime() / 1000 / 60 / 60 / 24 + 54) / 7) % 16
+
+  // Offset for every group. When does the night shift start?
+  // It is also the group
+  return [0, 1, 2].map(gr => {
+    // Type of work week
+    switch (weeksInCycle) {
+      case 0:
+      case 2:
+      case 4:
+      case 6:
+        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+          return 'K'
+        } else {
+          return gr === 1 ? 'S' : 'F'
+        }
+
+      case 1:
+      case 3:
+      case 5:
+      case 7:
+        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+          return 'K'
+        } else {
+          return gr === 1 ? 'F' : 'S'
+        }
+
+      default:
+        // night shift
+        // when does the night shift start?
+        let shiftDay = weekDay - gr
+
+        return shiftDay < 4 && shiftDay >= 0 ? 'N' : 'K'
     }
   })
 }

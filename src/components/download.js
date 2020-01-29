@@ -72,19 +72,17 @@ const urls = {
 
 export default ({ shiftModel }) => {
   if (!(shiftModel in urls)) {
-    return <div
-      class='my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 leading-loose rounded'
-    >
+    return <div class='my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded'>
       Für dieses Schichtmodell sind die Kalender noch in Arbeit
     </div>
   }
 
   return <div
-    class='my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 leading-loose rounded'
+    class='my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'
   >
     <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
-    <p>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+    <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
     {urls[shiftModel].map((href, index) => {
       const group = index + 1
