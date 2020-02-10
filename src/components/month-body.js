@@ -61,14 +61,14 @@ export default ({ year, month, data, today, search, group }) => {
       title={holidayData != null ? holidayData.name : null}
     >
       {(weekDay === 1 || index === 0) && <td
-        class='text-gray-800 bg-gray-100'
+        class='text-gray-800 bg-gray-100 border-r border-black'
         rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
       >
         {time.weekNumber}
       </td>}
       <td
         class={
-          `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : ''}` +
+          `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
           (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
             holidayData != null && ['holiday', 'school'].includes(holidayData.name)
               ? ' bg-teal-400 text-black'
