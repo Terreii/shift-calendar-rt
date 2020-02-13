@@ -380,20 +380,20 @@ function getAddedNight8ModelDay (year, month, day) {
       case 2:
       case 4:
       case 6:
-        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+        if (weekDay === 0 || weekDay === 6) {
           return 'K'
         } else {
-          return gr === 1 ? 'S' : 'F'
+          return gr === 0 ? 'S' : 'F'
         }
 
       case 1:
       case 3:
       case 5:
       case 7:
-        if (weekDay === 0 || weekDay === 6 || gr === 2) {
+        if (weekDay === 0 || weekDay === 6) {
           return 'K'
         } else {
-          return gr === 1 ? 'F' : 'S'
+          return gr === 0 ? 'F' : 'S'
         }
 
       default:
