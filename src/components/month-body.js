@@ -70,7 +70,7 @@ export default ({ year, month, data, today, search, group }) => {
         class={
           `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
           (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
-            holidayData != null && ['holiday', 'school'].includes(holidayData.name)
+            holidayData != null && ['holiday', 'school'].includes(holidayData.type)
               ? ' bg-teal-400 text-black'
               : ''
           ))
