@@ -1,11 +1,10 @@
 {
   "sourceMaps": true,
   "presets": [
-    ["es2015", { "loose": true }],
-    "stage-0"
+    "@babel/preset-env",
+    ["@babel/preset-react", { "pragma": "h" }]
   ],
   "plugins": [
-    ["transform-decorators-legacy"],
-    ["transform-react-jsx", { "pragma": "h" }]
+    "@babel/plugin-proposal-class-properties"
   ]
 }
