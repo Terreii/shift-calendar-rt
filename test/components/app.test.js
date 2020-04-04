@@ -1,8 +1,5 @@
 import { h, render } from 'preact'
-import { route } from 'preact-router'
 import { expect } from 'chai'
-
-import { sleep } from '../utils'
 
 import App from '../../src/components/app'
 
@@ -30,15 +27,6 @@ describe('App', () => {
       render(<App />, scratch)
 
       expect(scratch.innerHTML).to.contain('Kalender')
-    })
-
-    it('should render /impressum/', async () => {
-      render(<App />, scratch)
-      route('/impressum')
-
-      await sleep(1)
-
-      expect(scratch.innerHTML).to.contain('Datenschutzerklärung')
     })
   })
 })

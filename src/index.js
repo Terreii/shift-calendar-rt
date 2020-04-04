@@ -10,7 +10,7 @@ import { html, render } from './preact.js'
 import App from './components/app.js'
 
 // register ServiceWorker via OfflinePlugin, for prod only:
-if (globalThis.process && process.env && process.env.NODE_ENV === 'production') {
+if (window.process && process.env && process.env.NODE_ENV === 'production') {
   require('./pwa')
 }
 

@@ -6,7 +6,7 @@ module.exports = {
       content: [
         './src/components/*.js',
         './src/components/**/*.js',
-        './src/index.ejs',
+        './src/index.html'
       ],
       defaultExtractor: content => content.match(/[A-Za-z0-9-_:/]+/g) || []
     })
