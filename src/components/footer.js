@@ -5,8 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { Link } from 'preact-router/match'
+import { h } from '../web_modules/preact.js'
+import { Link } from '../web_modules/preact-router.js'
 
 export default () => {
   return <p class='mt-4 mb-3 text-center text-xs'>

@@ -11,8 +11,8 @@ import {
   shiftWfW,
   shiftAddedNight,
   shiftAddedNight8
-} from './constants'
-import { getDaysInMonth } from './utils'
+} from './constants.js'
+import { getDaysInMonth } from './utils.js'
 
 /**
  * @typedef {Object} MonthWorkData

@@ -5,10 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Component } from 'preact'
+import { h, Component } from '../web_modules/preact.js'
 
 import MonthBody from './month-body.js'
-import { monthNames } from '../lib/constants'
+import { monthNames } from '../lib/constants.js'
 
 /**
  * Render a month

@@ -5,13 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Component } from 'preact'
-import { Link } from 'preact-router'
+import { h, Component } from '../web_modules/preact.js'
+import { Link } from '../web_modules/preact-router.js'
 
 import Menu from './menu.js'
 import ShareMenu from './share-menu.js'
-
-import hamburgerIcon from '../assets/icons/hamburger_icon.svg'
 
 /**
  * Renders the Header.
@@ -200,7 +198,7 @@ export default class Header extends Component {
             onClick={this._toggleShowMenu}
           >
             <img
-              src={hamburgerIcon}
+              src='/assets/icons/hamburger_icon.svg'
               style={{ filter: 'invert(100%)' }}
               height='45'
               width='45'

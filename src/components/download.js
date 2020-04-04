@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h } from '../web_modules/preact.js'
 
 import {
   shiftModelText,
@@ -13,60 +13,36 @@ import {
   shift64Name,
   shiftWfW,
   shiftAddedNight
-} from '../lib/constants'
-
-import cal66Group1 from '../assets/6-6_gruppe_1.ics'
-import cal66Group2 from '../assets/6-6_gruppe_2.ics'
-import cal66Group3 from '../assets/6-6_gruppe_3.ics'
-import cal66Group4 from '../assets/6-6_gruppe_4.ics'
-import cal66Group5 from '../assets/6-6_gruppe_5.ics'
-import cal66Group6 from '../assets/6-6_gruppe_6.ics'
-
-import cal64Group1 from '../assets/6-4_gruppe_1.ics'
-import cal64Group2 from '../assets/6-4_gruppe_2.ics'
-import cal64Group3 from '../assets/6-4_gruppe_3.ics'
-import cal64Group4 from '../assets/6-4_gruppe_4.ics'
-import cal64Group5 from '../assets/6-4_gruppe_5.ics'
-
-import calWfwGroup1 from '../assets/wfw_gruppe_1.ics'
-import calWfwGroup2 from '../assets/wfw_gruppe_2.ics'
-import calWfwGroup3 from '../assets/wfw_gruppe_3.ics'
-import calWfwGroup4 from '../assets/wfw_gruppe_4.ics'
-import calWfwGroup5 from '../assets/wfw_gruppe_5.ics'
-import calWfwGroup6 from '../assets/wfw_gruppe_6.ics'
-
-import calNightGroup1 from '../assets/nacht_gruppe_1.ics'
-import calNightGroup2 from '../assets/nacht_gruppe_2.ics'
-import calNightGroup3 from '../assets/nacht_gruppe_3.ics'
+} from '../lib/constants.js'
 
 const urls = {
   [shift66Name]: [
-    cal66Group1,
-    cal66Group2,
-    cal66Group3,
-    cal66Group4,
-    cal66Group5,
-    cal66Group6
+    '/assets/6-6_gruppe_1.ics',
+    '/assets/6-6_gruppe_2.ics',
+    '/assets/6-6_gruppe_3.ics',
+    '/assets/6-6_gruppe_4.ics',
+    '/assets/6-6_gruppe_5.ics',
+    '/assets/6-6_gruppe_6.ics'
   ],
   [shift64Name]: [
-    cal64Group1,
-    cal64Group2,
-    cal64Group3,
-    cal64Group4,
-    cal64Group5
+    '/assets/6-4_gruppe_1.ics',
+    '/assets/6-4_gruppe_2.ics',
+    '/assets/6-4_gruppe_3.ics',
+    '/assets/6-4_gruppe_4.ics',
+    '/assets/6-4_gruppe_5.ics'
   ],
   [shiftWfW]: [
-    calWfwGroup1,
-    calWfwGroup2,
-    calWfwGroup3,
-    calWfwGroup4,
-    calWfwGroup5,
-    calWfwGroup6
+    '/assets/wfw_gruppe_1.ics',
+    '/assets/wfw_gruppe_2.ics',
+    '/assets/wfw_gruppe_3.ics',
+    '/assets/wfw_gruppe_4.ics',
+    '/assets/wfw_gruppe_5.ics',
+    '/assets/wfw_gruppe_6.ics'
   ],
   [shiftAddedNight]: [
-    calNightGroup1,
-    calNightGroup2,
-    calNightGroup3
+    '/assets/nacht_gruppe_1.ics',
+    '/assets/nacht_gruppe_2.ics',
+    '/assets/nacht_gruppe_3.ics'
   ]
 }
 

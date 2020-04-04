@@ -5,16 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h } from '../web_modules/preact.js'
 
 import {
   monthNames,
   shiftModelNames,
   shiftModelText,
   shiftModelNumberOfGroups
-} from '../lib/constants'
-
-import shareIcon from '../assets/icons/share21.svg'
+} from '../lib/constants.js'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   const parent = document.createElement('div')
@@ -189,7 +187,7 @@ export default ({
         'hover:bg-gray-400 active:bg-gray-400'}
       onClick={onShare}
     >
-      <img src={shareIcon} height='32' width='32' alt='teilen' />
+      <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
     </button>
   </div>
 }

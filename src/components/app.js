@@ -5,10 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Component } from 'preact'
-import { Router } from 'preact-router'
-import Hammer from 'hammerjs'
-import qs from 'querystringify'
+import { h, Component } from '../web_modules/preact.js'
+import { Router } from '../web_modules/preact-router.js'
+import Hammer from '../web_modules/hammerjs.js'
+import qs from '../web_modules/querystringify.js'
 
 import FirstRunDialog from './first-run.js'
 import Header from './header.js'
@@ -20,7 +20,7 @@ import {
   shiftModelNames,
   shift66Name,
   shiftModelNumberOfGroups
-} from '../lib/constants'
+} from '../lib/constants.js'
 
 export default class App extends Component {
   constructor (args) {

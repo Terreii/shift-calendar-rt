@@ -5,12 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h } from '../web_modules/preact.js'
 
 import Footer from './footer.js'
-import { shiftModelNames, shiftModelText } from '../lib/constants'
-
-import hamburgerIcon from '../assets/icons/hamburger_icon.svg'
+import { shiftModelNames, shiftModelText } from '../lib/constants.js'
 
 export default ({ onClick }) => (
   <div class='fixed top-0 pt-16 text-center w-full w-screen h-screen bg-gray-100'>
@@ -22,7 +20,7 @@ export default ({ onClick }) => (
       Sie können das Modell später jederzeit im Menü
       <img
         class='inline-block ml-1 mr-2'
-        src={hamburgerIcon}
+        src='/assets/icons/hamburger_icon.svg'
         height='20'
         width='20'
         alt='das Menü ist oben rechts'

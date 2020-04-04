@@ -1,4 +1,4 @@
-{
+export default {
   "lastUpdate": "2020-01-08T21:00:54.101Z",
   "ferien": [
     {

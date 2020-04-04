@@ -5,8 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { getDaysInMonth } from './utils'
-import { ferien } from './ferien.json'
+import { getDaysInMonth } from './utils.js'
+import { ferien } from './ferien.js'
 
 /**
  * Get easter and x-mas. Because those are the only closing days. And get daylight-saving switch.

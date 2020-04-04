@@ -5,12 +5,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h } from '../web_modules/preact.js'
 
 import Downloader from './download.js'
 import Footer from './footer.js'
 import Month from './month.js'
-import selectMonthData from '../lib/select-month-data'
+import selectMonthData from '../lib/select-month-data.js'
 
 /**
  * Renders the main content.
