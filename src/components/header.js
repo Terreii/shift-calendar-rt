@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Component } from '../web_modules/preact.js'
+import { html, Component } from '../preact.js'
 import { Link } from '../web_modules/preact-router.js'
 
 import Menu from './menu.js'
@@ -125,117 +125,112 @@ export default class Header extends Component {
    * @returns {JSX.Element}
    */
   render () {
-    return (
+    return html`
       <header
-        class={'fixed top-0 left-0 w-screen h-12 flex flex-row items-center ' +
-          'justify-between bg-green-900 shadow-lg z-50'}
+        class="fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between bg-green-900 shadow-lg z-50"
       >
-        {(this.props.url !== '/' || !this.state.isSmallScreen) &&
-          <h1 class='m-0 text-2xl font-normal align-baseline'>
-            <Link
-              href='/'
-              tabIndex='0'
-              class={
-                'pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline'
-              }
-            >
-              Kalender
-            </Link>
-          </h1>
+        ${(this.props.url !== '/' || !this.state.isSmallScreen) &&
+          html`
+            <h1 class='m-0 text-2xl font-normal align-baseline'>
+              <${Link}
+                href='/'
+                tabIndex='0'
+                class="pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline"
+              >
+                Kalender
+              </${Link}>
+            </h1>
+          `
         }
-        {(this.props.url === '/' || !this.state.isSmallScreen) && <nav
-          class='h-full flex flex-row text-base items-stretch'
-        >
-          <button
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title='vorigen Monat'
-            aria-label='vorigen Monat'
-            onClick={() => {
-              this.props.onChange({ relative: -1, toggleFullYear: true })
-              this.hideMenu()
-            }}
-          >
-            {'<'}
-          </button>
+        ${(this.props.url === '/' || !this.state.isSmallScreen) && html`
+          <nav class="h-full flex flex-row text-base items-stretch">
+            <button
+              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              title="vorigen Monat"
+              aria-label="vorigen Monat"
+              onClick=${() => {
+                this.props.onChange({ relative: -1, toggleFullYear: true })
+                this.hideMenu()
+              }}
+            >
+              ${'<'}
+            </button>
 
-          <button
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title='zeige aktuellen Monat'
-            onClick={() => {
-              const now = new Date()
-              this.props.onChange({
-                year: now.getFullYear(),
-                month: now.getMonth(),
-                toggleFullYear: true,
-                scrollToToday: true
-              })
-              this.hideMenu()
-            }}
-          >
-            Heute
-          </button>
+            <button
+              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              title="zeige aktuellen Monat"
+              onClick=${() => {
+                const now = new Date()
+                this.props.onChange({
+                  year: now.getFullYear(),
+                  month: now.getMonth(),
+                  toggleFullYear: true,
+                  scrollToToday: true
+                })
+                this.hideMenu()
+              }}
+            >
+              Heute
+            </button>
 
-          <button
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title='nächster Monat'
-            aria-label='nächster Monat'
-            onClick={() => {
-              this.props.onChange({ relative: 1, toggleFullYear: true })
-              this.hideMenu()
-            }}
-          >
-            {'>'}
-          </button>
+            <button
+              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              title="nächster Monat"
+              aria-label="nächster Monat"
+              onClick=${() => {
+                this.props.onChange({ relative: 1, toggleFullYear: true })
+                this.hideMenu()
+              }}
+            >
+              ${'>'}
+            </button>
 
-          <button
-            class={
-              'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
-              'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'
-            }
-            onClick={this._toggleShowMenu}
-          >
-            <img
-              src='/assets/icons/hamburger_icon.svg'
-              style={{ filter: 'invert(100%)' }}
-              height='45'
-              width='45'
-              alt='Menu'
-            />
-          </button>
-        </nav>}
+            <button
+              class="flex justify-center items-center bg-transparent hover:bg-green-600 active:bg-green-600 w-16 focus:shadow-outline focus:outline-none"
+              onClick=${this._toggleShowMenu}
+            >
+              <img
+                src="/assets/icons/hamburger_icon.svg"
+                style=${{ filter: 'invert(100%)' }}
+                height="45"
+                width="45"
+                alt="Menu"
+              />
+            </button>
+          </nav>
+        `}
 
-        <Menu
-          show={this.state.showMenu}
-          isFullYear={this.props.isFullYear}
-          month={this.props.month}
-          year={this.props.year}
-          search={this.props.searchResult}
-          group={this.props.group}
-          shiftModel={this.props.shiftModel}
-          gotoMonth={this._handleGotoEvent}
-          onSearch={this.props.search}
-          onChangeModel={this.props.onChangeModel}
-          toggleFullYear={() => {
+        <${Menu}
+          show=${this.state.showMenu}
+          isFullYear=${this.props.isFullYear}
+          month=${this.props.month}
+          year=${this.props.year}
+          search=${this.props.searchResult}
+          group=${this.props.group}
+          shiftModel=${this.props.shiftModel}
+          gotoMonth=${this._handleGotoEvent}
+          onSearch=${this.props.search}
+          onChangeModel=${this.props.onChangeModel}
+          toggleFullYear=${() => {
             this.props.toggleFullYear()
             this.hideMenu()
           }}
-          onGroupChange={this.props.onGroupChange}
-          onShare={this.onShare}
+          onGroupChange=${this.props.onGroupChange}
+          onShare=${this.onShare}
         />
 
-        {this.state.showShareMenu
-          ? <ShareMenu
-            group={this.props.group}
-            search={this.props.searchResult}
-            shiftModel={this.props.shiftModel}
-            hide={this.hideShare}
-          />
+        ${this.state.showShareMenu
+          ? html`
+            <${ShareMenu}
+              group=${this.props.group}
+              search=${this.props.searchResult}
+              shiftModel=${this.props.shiftModel}
+              hide=${this.hideShare}
+            />
+          `
           : null
         }
       </header>
-    )
+    `
   }
 }

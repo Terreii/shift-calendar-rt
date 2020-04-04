@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from '../web_modules/preact.js'
+import { html } from '../preact.js'
 
 import {
   shiftModelText,
@@ -48,29 +48,33 @@ const urls = {
 
 export default ({ shiftModel }) => {
   if (!(shiftModel in urls)) {
-    return <div class='my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded'>
-      Für dieses Schichtmodell sind die Kalender noch in Arbeit
-    </div>
+    return html`
+      <div class="my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded">
+        Für dieses Schichtmodell sind die Kalender noch in Arbeit
+      </div>
+    `
   }
 
-  return <div
-    class='my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'
-  >
-    <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
+  return html`
+    <div class="my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded">
+      <h4 class="text-xl font-semibold">Downloade einen ${shiftModelText[shiftModel]} Kalender</h4>
 
-    <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+      <p class="py-2">Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
-    {urls[shiftModel].map((href, index) => {
-      const group = index + 1
-      return <a
-        key={shiftModel + group}
-        class={'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
-        href={href}
-        download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
-        target='_blank'
-      >
-        Gruppe {group}
-      </a>
-    })}
-  </div>
+      ${urls[shiftModel].map((href, index) => {
+        const group = index + 1
+        return html`
+          <a
+            key=${shiftModel + group}
+            class=${'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
+            href=${href}
+            download=${`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
+            target="_blank"
+          >
+            Gruppe ${group}
+          </a>
+        `
+      })}
+    </div>
+  `
 }

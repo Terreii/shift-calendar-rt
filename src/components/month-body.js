@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from '../web_modules/preact.js'
+import { html } from '../preact.js'
 import { DateTime } from '../web_modules/luxon.js'
 
 import { shiftTitle } from '../lib/constants.js'
@@ -55,62 +55,68 @@ export default ({ year, month, data, today, search, group }) => {
       : (isWeekend ? 'bg-gray-400' : '')
     const color = isClosingHoliday ? 'text-white' : ''
 
-    return <tr
-      key={index}
-      class={`${borderColor} ${isBorderWidth ? 'border-r-4' : ''} ${rowBgColor} ${color}`}
-      title={holidayData != null ? holidayData.name : null}
-    >
-      {(weekDay === 1 || index === 0) && <td
-        class='text-gray-800 bg-gray-100 border-r border-black'
-        rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
+    return html`
+      <tr
+        key=${index}
+        class=${`${borderColor} ${isBorderWidth ? 'border-r-4' : ''} ${rowBgColor} ${color}`}
+        title=${holidayData != null ? holidayData.name : null}
       >
-        {time.weekNumber}
-      </td>}
-      <td
-        class={
-          `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
-          (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
-            holidayData != null && ['holiday', 'school'].includes(holidayData.type)
-              ? ' bg-teal-400 text-black'
-              : ''
-          ))
-        }
-        title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
-      >
-        <time dateTime={time.toISODate()}>
-          {thatDay}
-        </time>
-      </td>
-      <td
-        class={isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''}
-        aria-label={time.weekdayLong}
-      >
-        {time.weekdayShort}
-      </td>
-
-      {day.map((shift, index, all) => {
-        const gr = all.length > 1 ? index : group - 1
-        const border = isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''
-        const groupColors = [
-          'bg-group-1',
-          'bg-group-2',
-          'bg-group-3',
-          'bg-group-4',
-          'bg-group-5',
-          'bg-group-6'
-        ]
-        const workStyle = shift !== 'K' ? 'text-black ' + groupColors[gr] : ''
-
-        return <td
-          key={gr}
-          class={`${border} ${workStyle}`}
-          title={shiftTitle[shift]}
+        ${(weekDay === 1 || index === 0) && html`
+          <td
+            class="text-gray-800 bg-gray-100 border-r border-black"
+            rowSpan=${Math.min(8 - weekDay, time.daysInMonth - index)}
+          >
+            ${time.weekNumber}
+          </td>
+        `}
+        <td
+          class=${
+            `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
+            (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
+              holidayData != null && ['holiday', 'school'].includes(holidayData.type)
+                ? ' bg-teal-400 text-black'
+                : ''
+            ))
+          }
+          title=${isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
         >
-          {shift === 'K' ? '' : shift}
+          <time dateTime=${time.toISODate()}>
+            ${thatDay}
+          </time>
         </td>
-      })}
-    </tr>
+        <td
+          class=${isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''}
+          aria-label=${time.weekdayLong}
+        >
+          ${time.weekdayShort}
+        </td>
+
+        ${day.map((shift, index, all) => {
+          const gr = all.length > 1 ? index : group - 1
+          const border = isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''
+          const groupColors = [
+            'bg-group-1',
+            'bg-group-2',
+            'bg-group-3',
+            'bg-group-4',
+            'bg-group-5',
+            'bg-group-6'
+          ]
+          const workStyle = shift !== 'K' ? 'text-black ' + groupColors[gr] : ''
+
+          return html`
+            <td
+              key=${gr}
+              class=${`${border} ${workStyle}`}
+              title=${shiftTitle[shift]}
+            >
+              ${shift === 'K' ? '' : shift}
+            </td>
+          `
+        })}
+      </tr>
+    `
   })
 
-  return <tbody>{dayRows}</tbody>
+  return html`<tbody>${dayRows}</tbody>`
 }

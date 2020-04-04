@@ -67,7 +67,10 @@ prompt.get(
       return 0
     })
 
-    const ferienJSON = JSON.stringify({ lastUpdate: new Date(), ferien: holidays }, null, 2)
-    writeFile(outPath, `export default ${ferienJSON}\n`)
+    const ferienJSON = JSON.stringify(holidays, null, 2)
+    writeFile(outPath, `
+    export const lastUpdate = '${new Date().toJSON()}'
+    export const ferien = ${ferienJSON}
+    `)
   }
 )

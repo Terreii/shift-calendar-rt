@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Component } from '../web_modules/preact.js'
+import { html, Component } from '../preact.js'
 import qs from '../web_modules/querystringify.js'
 
 export default class ShareMenu extends Component {
@@ -100,78 +100,78 @@ export default class ShareMenu extends Component {
   }
 
   render () {
-    return <div
-      class={'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
-        'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
-    >
-      <input
-        class='bg-transparent text-white'
-        type='url'
-        readonly
-        value={this.getURL()}
-        onFocus={event => {
-          event.target.select()
-        }}
-      />
-
-      <h6 class='mt-5 text-lg p-0 m-0 mt-2 ml-4'>Füge hinzu:</h6>
-
-      <label class='mt-5 ml-2'>
+    return html`
+      <div
+        class=${'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
+          'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
+      >
         <input
-          class='h-4 w-4 mr-1'
-          type='checkbox'
-          checked={this.state.shiftModel}
-          onChange={this.doAddShiftModel}
+          class="bg-transparent text-white"
+          type="url"
+          readonly
+          value=${this.getURL()}
+          onFocus=${event => {
+            event.target.select()
+          }}
         />
-        Schichtmodell
-      </label>
 
-      <label class='mt-5 ml-2'>
-        <input
-          class='h-4 w-4 mr-1'
-          type='checkbox'
-          checked={this.state.group}
-          disabled={this.props.group === 0}
-          onChange={this.doAddGroup}
-        />
-        Gruppe
-        {this.props.group === 0
-          ? <small><br />Momentan sind alle Gruppen ausgewählt.</small>
-          : null
-        }
-      </label>
+        <h6 class="mt-5 text-lg p-0 m-0 mt-2 ml-4">Füge hinzu:</h6>
 
-      <label class='mt-5 ml-2'>
-        <input
-          class='h-4 w-4 mr-1'
-          type='checkbox'
-          checked={this.state.search}
-          disabled={this.props.search == null}
-          onChange={this.doAddSearch}
-        />
-        Der gesuchte Tag
-        {this.props.search == null
-          ? <small><br />Momentan gibt es kein Suchergebnis.</small>
-          : null
-        }
-      </label>
+        <label class="mt-5 ml-2">
+          <input
+            class="h-4 w-4 mr-1"
+            type="checkbox"
+            checked=${this.state.shiftModel}
+            onChange=${this.doAddShiftModel}
+          />
+          Schichtmodell
+        </label>
 
-      <div class='mt-5 flex flex-row flex-wrap content-center'>
-        <button
-          class={'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
-            'shadow hover:bg-gray-400 active:bg-gray-400'}
-          onClick={this.props.hide}
-        >
-          Abbrechen
-        </button>
-        <button
-          class={'flex-auto mt-5 mx-3 h-10 w-32 text-white text-center rounded bg-purple-700 ' +
-            'shadow hover:bg-purple-500 active:bg-purple-500'}
-          onClick={this.onShare}
-        >
-          Teilen
-        </button>
+        <label class="mt-5 ml-2">
+          <input
+            class="h-4 w-4 mr-1"
+            type="checkbox"
+            checked=${this.state.group}
+            disabled=${this.props.group === 0}
+            onChange=${this.doAddGroup}
+          />
+          Gruppe
+          ${this.props.group === 0 &&  html`
+            <small><br />Momentan sind alle Gruppen ausgewählt.</small>
+          `}
+        </label>
+
+        <label class="mt-5 ml-2">
+          <input
+            class="h-4 w-4 mr-1"
+            type="checkbox"
+            checked=${this.state.search}
+            disabled=${this.props.search == null}
+            onChange=${this.doAddSearch}
+          />
+          Der gesuchte Tag
+          ${this.props.search == null && html`
+            <small><br />Momentan gibt es kein Suchergebnis.</small>
+          `}
+        </label>
+
+        <div class="mt-5 flex flex-row flex-wrap content-center">
+          <button
+            class=${'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
+              'shadow hover:bg-gray-400 active:bg-gray-400'}
+            onClick=${this.props.hide}
+          >
+            Abbrechen
+          </button>
+          <button
+            class=${'flex-auto mt-5 mx-3 h-10 w-32 text-white text-center rounded bg-purple-700 ' +
+              'shadow hover:bg-purple-500 active:bg-purple-500'}
+            onClick=${this.onShare}
+          >
+            Teilen
+          </button>
+        </div>
       </div>
-    </div>
+    `
   }
 }
