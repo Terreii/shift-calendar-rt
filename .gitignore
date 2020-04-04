@@ -8,4 +8,5 @@
 /.idea
 yarn.lock
 /.vscode
+/src/web_modules
 src/style.css

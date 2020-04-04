@@ -8,15 +8,17 @@
     "node": ">=12.x"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:style dev:app",
-    "dev:app": "webpack-dev-server --inline --hot --progress",
-    "dev:style": "postcss src/tailwind.css -o src/style.css -w",
+    "prepare": "snowpack",
+    "predev": "snowpack",
+    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:*",
+    "dev:server": "servor src --reload",
+    "dev:style": "postcss ./tailwind.css -o src/style.css -w",
     "start": "serve dist -s -c 1",
     "prestart": "npm run build",
     "build": "cross-env NODE_ENV=production npm-run-all build:style build:app",
     "build:app": "webpack --progress",
-    "build:style": "postcss src/tailwind.css -o src/style.css",
-    "now-build": "npm run build",
+    "build:style": "postcss ./tailwind.css -o src/style.css",
+    "now-build": "snowpack && npm run build",
     "test": "npm run -s lint && jest --coverage",
     "test:watch": "npm run -s test -- --watch",
     "lint": "eslint src test",
@@ -46,6 +48,20 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
+  },
+  "snowpack": {
+    "webDependencies": [
+      "hammerjs",
+      "luxon",
+      "preact",
+      "preact-compat",
+      "preact-router",
+      "querystringify",
+      "re-reselect"
+    ],
+    "installOptions": {
+      "dest": "src/web_modules"
+    }
   },
   "devDependencies": {
     "@fullhuman/postcss-purgecss": "^2.0.6",
@@ -98,8 +114,10 @@
     "replace-bundle-webpack-plugin": "^1.0.0",
     "reselect": "^4.0.0",
     "script-ext-html-webpack-plugin": "^2.1.4",
+    "servor": "^3.2.0",
     "sinon": "^8.1.1",
     "sinon-chai": "^3.4.0",
+    "snowpack": "^1.6.0",
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.21.0",
     "url-loader": "^1.0.0",
