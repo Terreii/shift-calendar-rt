@@ -42,12 +42,12 @@ export default class App extends Component {
       month, // Selected month
       group: 0 // group to display; 0 = all, 1 - 6 is group number
     }
-
-    this._onResize({})
-    this._onSettingsChange({})
   }
 
   componentDidMount () {
+    this._onResize({})
+    this._onSettingsChange({})
+
     this.focusListener = this._onFocus.bind(this)
     this.resizeListener = this._onResize.bind(this)
     window.addEventListener('focus', this.focusListener)

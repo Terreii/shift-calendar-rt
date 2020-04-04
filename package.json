@@ -42,8 +42,8 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "moduleNameMapper": {
-      "^react$": "preact-compat",
-      "^react-dom$": "preact-compat"
+      "^react$": "preact/compat",
+      "^react-dom$": "preact/compat"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
@@ -55,7 +55,8 @@
       "htm",
       "luxon",
       "preact",
-      "preact-compat",
+      "preact/compat",
+      "preact/hooks",
       "preact-router",
       "querystringify",
       "re-reselect"
@@ -98,10 +99,9 @@
   },
   "dependencies": {
     "htm": "^3.0.3",
-    "preact": "^8.5.3",
-    "preact-compat": "^3.19.0",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.5.1",
+    "preact": "^10.3.4",
+    "preact-render-to-string": "^5.1.4",
+    "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
     "serve": "^11.3.0",
     "tailwindcss": "^1.2.0"
