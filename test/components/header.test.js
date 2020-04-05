@@ -1,45 +1,31 @@
 import { h } from 'preact'
-import { expect } from 'chai'
+import { render } from '@testing-library/preact'
 
 import Header from '../../src/components/header'
 
 describe('components/Header', () => {
   it('should show the correct navigation links and buttons', () => {
-    const header = <Header />
-    expect(header).to.contain(<a
-      href='/'
-      tabIndex='0'
-      class={
-        'pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline'
-      }
-    >
-      Kalender
-    </a>)
+    const { queryByText } = render(h(Header))
 
-    expect(header).to.contain(<button
-      title='zeige aktuellen Monat'
-      class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-    >
-      Heute
-    </button>)
+    const link = queryByText('Kalender')
+    expect(link).toBeTruthy()
+    expect(link.nodeName).toBe('A')
 
-    expect(header).to.contain(<button
-      title='vorigen Monat'
-      aria-label='vorigen Monat'
-      class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-        'focus:shadow-outline focus:outline-none'}
-    >
-      {'<'}
-    </button>)
+    const todayButton = queryByText('Heute')
+    expect(todayButton).toBeTruthy()
+    expect(todayButton.nodeName).toBe('BUTTON')
+    expect(todayButton.title).toBe('zeige aktuellen Monat')
 
-    expect(header).to.contain(<button
-      title='nächster Monat'
-      aria-label='nächster Monat'
-      class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-        'focus:shadow-outline focus:outline-none'}
-    >
-      {'>'}
-    </button>)
+    const yesterday = queryByText('<')
+    expect(yesterday).toBeTruthy()
+    expect(yesterday.nodeName).toBe('BUTTON')
+    expect(yesterday.title).toBe('vorigen Monat')
+    expect(yesterday.getAttribute('aria-label')).toBe('vorigen Monat')
+
+    const tomorrow = queryByText('>')
+    expect(tomorrow).toBeTruthy()
+    expect(tomorrow.nodeName).toBe('BUTTON')
+    expect(tomorrow.title).toBe('nächster Monat')
+    expect(tomorrow.getAttribute('aria-label')).toBe('nächster Monat')
   })
 })
