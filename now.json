@@ -10,6 +10,10 @@
       "dest": "/assets/$1"
     },
     {
+      "src": "^/web_modules/(.*).map",
+      "dest": "/web_modules/$1.map"
+    },
+    {
       "src": "^/favicon.ico",
       "dest": "/favicon.ico"
     },
@@ -35,6 +39,10 @@
     {
       "src": "^/bundle.js",
       "dest": "/bundle.js"
+    },
+    {
+      "src": "^/(.*).js",
+      "dest": "/$1.js"
     },
     {
       "src": "^/(.*)",
