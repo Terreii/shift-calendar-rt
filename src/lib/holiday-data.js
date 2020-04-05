@@ -25,6 +25,7 @@ export default function getHolidays (year, month) {
 
     case 2:
     case 3:
+    {
       const easter = getEaster(year) // Is the easter sunday
       // and the number is day since beginning of March
       const dayOfEaster = month === 3 ? easter - 31 : easter // transform it into a day in month
@@ -51,9 +52,11 @@ export default function getHolidays (year, month) {
       }
 
       return addSchoolHolidays(year, month, data)
+    }
 
     case 4:
     case 5:
+    {
       const easterDay = getEaster(year) - (31 * (month - 2))
 
       const dataOfMayJun = [
@@ -91,6 +94,7 @@ export default function getHolidays (year, month) {
       }
 
       return addSchoolHolidays(year, month, dataOfMayJun)
+    }
 
     case 9:
       return addSchoolHolidays(year, month, {
@@ -113,6 +117,7 @@ export default function getHolidays (year, month) {
       })
 
     case 11:
+    {
       const xmasData = {
         name: 'Weihnachten',
         type: 'closing'
@@ -126,6 +131,7 @@ export default function getHolidays (year, month) {
           type: 'holiday'
         }
       })
+    }
 
     default:
       return addSchoolHolidays(year, month)

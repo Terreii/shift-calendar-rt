@@ -35,12 +35,14 @@ export default ({ onClick }) => html`
           class=${index > 0 ? 'mt-3' : ''}
         >
           <button
-            class="inline-block mx-3 py-1 px-4 h-10 w-full border-0 bg-indigo-700 text-white text-center rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:shadow-outline"
+            class=${'inline-block mx-3 py-1 px-4 h-10 w-full border-0 bg-indigo-700 text-white' +
+              ' text-center rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 ' +
+              'focus:shadow-outline'}
             onClick=${() => { onClick(name) }}
           >
-            {shiftModelText[name]}
+            ${shiftModelText[name]}
           </button>
-        </li>)
+        </li>
       `)}
     </ul>
 

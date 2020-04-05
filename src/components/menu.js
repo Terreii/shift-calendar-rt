@@ -44,7 +44,7 @@ export default ({
     searchValue = `${search[0]}-${searchMonth}-${searchDay}`
   }
 
-  let groupOptions = []
+  const groupOptions = []
   for (let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1; gr <= max; gr += 1) {
     groupOptions.push(html`<option key=${'group_' + gr} value=${gr}>Nur Gruppe ${gr}</option>`)
   }
@@ -60,7 +60,8 @@ export default ({
         ? null
         : html`
           <select
-            class="h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 active:bg-gray-400"
+            class=${'h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 ' +
+              'active:bg-gray-400'}
             title="Gehe zum Monat"
             value=${month}
             onChange=${event => {
@@ -78,7 +79,8 @@ export default ({
         <label class="mt-5 flex flex-col items-stretch text-white text-center">
           Jahr
           <input
-            class="flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 active:bg-gray-400"
+            class=${'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
+              'shadow hover:bg-gray-400 active:bg-gray-400'}
             type="number"
             min="2000"
             value=${year}

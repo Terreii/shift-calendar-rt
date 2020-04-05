@@ -44,6 +44,7 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
       break
 
     case 2: // if there are only 2 months: show this and the next one
+    {
       monthsData.push([year, month])
 
       let nextMonth = month + 1
@@ -56,6 +57,7 @@ export default ({ numberOfMonths, year, month, shiftModel, today, search, group 
 
       monthsData.push([nextYear, nextMonth])
       break
+    }
 
     case 4: // Render the selected month, one before and the rest after it.
     default:

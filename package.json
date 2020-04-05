@@ -22,7 +22,7 @@
     "now-build": "snowpack && npm run build",
     "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
     "test:watch": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --watch",
-    "updateFerien": "node src/updateFerien.js"
+    "updateFerien": "node ./updateFerien.js"
   },
   "keywords": [],
   "license": "MPL",

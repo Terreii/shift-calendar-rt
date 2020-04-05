@@ -127,7 +127,8 @@ export default class Header extends Component {
   render () {
     return html`
       <header
-        class="fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between bg-green-900 shadow-lg z-50"
+        class=${'fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between ' +
+          'bg-green-900 shadow-lg z-50'}
       >
         ${(this.props.url !== '/' || !this.state.isSmallScreen) &&
           html`
@@ -135,7 +136,8 @@ export default class Header extends Component {
               <${Link}
                 href='/'
                 tabIndex='0'
-                class="pl-4 text-white no-underline hover:underline focus:underline focus:shadow-outline"
+                class=${'pl-4 text-white no-underline hover:underline focus:underline ' +
+                  'focus:shadow-outline'}
               >
                 Kalender
               </${Link}>
@@ -145,7 +147,8 @@ export default class Header extends Component {
         ${(this.props.url === '/' || !this.state.isSmallScreen) && html`
           <nav class="h-full flex flex-row text-base items-stretch">
             <button
-              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+                'focus:shadow-outline focus:outline-none'}
               title="vorigen Monat"
               aria-label="vorigen Monat"
               onClick=${() => {
@@ -157,7 +160,8 @@ export default class Header extends Component {
             </button>
 
             <button
-              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+                'focus:shadow-outline focus:outline-none'}
               title="zeige aktuellen Monat"
               onClick=${() => {
                 const now = new Date()
@@ -174,7 +178,8 @@ export default class Header extends Component {
             </button>
 
             <button
-              class="px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:shadow-outline focus:outline-none"
+              class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+                'focus:shadow-outline focus:outline-none'}
               title="nächster Monat"
               aria-label="nächster Monat"
               onClick=${() => {
@@ -186,7 +191,8 @@ export default class Header extends Component {
             </button>
 
             <button
-              class="flex justify-center items-center bg-transparent hover:bg-green-600 active:bg-green-600 w-16 focus:shadow-outline focus:outline-none"
+              class=${'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
+                'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
               onClick=${this._toggleShowMenu}
             >
               <img
