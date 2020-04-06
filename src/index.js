@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, render } from './preact.js'
+import { h, render } from './preact.js'
 
 import App from './components/app.js'
 
@@ -18,4 +18,4 @@ if ('serviceWorker' in navigator && window.location.host.includes('.now.sh')) {
     )
 }
 
-render(html`<${App} />`, document.body)
+render(h(App), document.body)
