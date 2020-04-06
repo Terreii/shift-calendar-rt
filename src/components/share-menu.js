@@ -66,15 +66,18 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
       class=${'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
         'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
     >
-      <input
-        class="bg-transparent text-white"
-        type="url"
-        readonly
-        value=${url.href}
-        onFocus=${event => {
-          event.target.select()
-        }}
-      />
+      <label class="flex flex-col">
+        Adresse zum teilen:
+        <input
+          class="bg-transparent text-white pt-1"
+          type="url"
+          readonly
+          value=${url.href}
+          onFocus=${event => {
+            event.target.select()
+          }}
+        />
+      </label>
 
       <h6 class="mt-5 text-lg p-0 m-0 mt-2 ml-4">Füge hinzu:</h6>
 
@@ -140,11 +143,16 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         >
           Abbrechen
         </button>
-        <button
-          class=${'flex-auto mt-5 mx-3 h-10 w-32 text-white text-center rounded bg-purple-700 ' +
-            'shadow hover:bg-purple-500 active:bg-purple-500'}
+        <a
+          class=${'flex-auto mt-5 mx-3 py-2 h-10 w-32 text-white text-center rounded ' +
+            'bg-purple-700 shadow hover:bg-purple-500 active:bg-purple-500'}
+          href="mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
+            url.toString().replace(/&/g, '%26')
+          }"
           onClick=${event => {
             if ('share' in window.navigator) {
+              event.preventDefault()
+
               window.navigator.share({
                 url,
                 title: 'Schichtkalender',
@@ -152,14 +160,12 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
               })
                 .then(() => { hide() })
             } else {
-              const u = url.toString().replace('&', '%26')
-              window.location.href =
-                `mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${u}`
+              setTimeout(hide, 16)
             }
           }}
         >
           Teilen
-        </button>
+        </a>
       </div>
     </div>
   `

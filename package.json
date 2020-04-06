@@ -42,6 +42,9 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "moduleNameMapper": {
+      ".*/web_modules/preact.js": "preact",
+      ".*/web_modules/preact/compat.js": "preact/compat",
+      ".*/web_modules/preact/hooks.js": "preact/hooks",
       "^react$": "preact/compat",
       "^react-dom$": "preact/compat"
     },
@@ -73,6 +76,7 @@
     "@babel/preset-react": "^7.9.4",
     "@fullhuman/postcss-purgecss": "^2.1.0",
     "@rollup/plugin-node-resolve": "^7.1.1",
+    "@testing-library/jest-dom": "^5.3.0",
     "@testing-library/preact": "^1.0.2",
     "autoprefixer": "^9.7.5",
     "babel-eslint": "^10.1.0",
