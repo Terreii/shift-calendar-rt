@@ -11,8 +11,8 @@ import {
   shiftWfW,
   shiftAddedNight,
   shiftAddedNight8
-} from './constants'
-import { getDaysInMonth } from './utils'
+} from './constants.js'
+import { getDaysInMonth } from './utils.js'
 
 /**
  * @typedef {Object} MonthWorkData
@@ -397,11 +397,13 @@ function getAddedNight8ModelDay (year, month, day) {
         }
 
       default:
+      {
         // night shift
         // when does the night shift start?
-        let shiftDay = weekDay - gr
+        const shiftDay = weekDay - gr
 
         return shiftDay < 4 && shiftDay >= 0 ? 'N' : 'K'
+      }
     }
   })
 }

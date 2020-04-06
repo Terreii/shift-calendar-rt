@@ -4,16 +4,14 @@
   "alias": [
     "schichtkalender-rt.now.sh"
   ],
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@now/static-build"
-    }
-  ],
   "routes": [
     {
       "src": "^/assets/(.*)",
       "dest": "/assets/$1"
+    },
+    {
+      "src": "^/web_modules/(.*).map",
+      "dest": "/web_modules/$1.map"
     },
     {
       "src": "^/favicon.ico",
@@ -41,6 +39,10 @@
     {
       "src": "^/bundle.js",
       "dest": "/bundle.js"
+    },
+    {
+      "src": "^/(.*).js",
+      "dest": "/$1.js"
     },
     {
       "src": "^/(.*)",

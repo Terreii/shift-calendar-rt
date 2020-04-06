@@ -21,10 +21,10 @@ export const monthNames = [
 ]
 
 export const shiftTitle = {
-  'F': 'Frühschicht\r\n6 - 14:30 Uhr',
-  'S': 'Spätschicht\r\n14 - 22:30 Uhr',
-  'N': 'Nachtschicht\r\n22 - 6:30 Uhr (in den nächsten Tag)',
-  'K': null
+  F: 'Frühschicht\r\n6 - 14:30 Uhr',
+  S: 'Spätschicht\r\n14 - 22:30 Uhr',
+  N: 'Nachtschicht\r\n22 - 6:30 Uhr (in den nächsten Tag)',
+  K: null
 }
 
 export const shift66Name = '6-6'

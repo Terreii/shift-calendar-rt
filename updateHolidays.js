@@ -29,8 +29,11 @@ prompt.get(
       process.exit(1)
     }
 
-    const outPath = path.resolve('src', 'lib', 'ferien.json')
-    const allHolidays = require(outPath)
+    const outPath = path.resolve('src', 'lib', 'ferien.js')
+    const allHolidays = JSON.parse(
+      fs.readFileSync(outPath, { encoding: 'utf8' })
+        .replace(/export default /i, '')
+    )
 
     const holidays = allHolidays.ferien.filter(event => event.year > 2018)
 
@@ -64,7 +67,10 @@ prompt.get(
       return 0
     })
 
-    const ferienJSON = JSON.stringify({ lastUpdate: new Date(), ferien: holidays }, null, 2) + '\n'
-    writeFile(outPath, ferienJSON)
+    const ferienJSON = JSON.stringify(holidays, null, 2)
+    writeFile(outPath, `
+    export const lastUpdate = '${new Date().toJSON()}'
+    export const ferien = ${ferienJSON}
+    `)
   }
 )

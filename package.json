@@ -1,6 +1,6 @@
 {
   "name": "schichtkalender-bosch-rt",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Listet alle Kontischichten von Bosch Reutlingen auf.",
   "homepage": "https://schichtkalender-rt.now.sh/",
   "private": true,
@@ -8,109 +8,103 @@
     "node": ">=12.x"
   },
   "scripts": {
-    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:style dev:app",
-    "dev:app": "webpack-dev-server --inline --hot --progress",
-    "dev:style": "postcss src/tailwind.css -o src/style.css -w",
-    "start": "serve dist -s -c 1",
+    "prepare": "snowpack",
+    "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:*",
+    "dev:server": "servor src --reload",
+    "dev:style": "postcss ./tailwind.css -o src/style.css -w",
+    "start": "serve src",
     "prestart": "npm run build",
-    "build": "cross-env NODE_ENV=production npm-run-all build:style build:app",
-    "build:app": "webpack --progress",
-    "build:style": "postcss src/tailwind.css -o src/style.css",
-    "now-build": "npm run build",
-    "test": "npm run -s lint && jest --coverage",
-    "test:watch": "npm run -s test -- --watch",
-    "lint": "eslint src test",
-    "updateFerien": "node src/updateFerien.js"
+    "build": "cross-env NODE_ENV=production npm-run-all build:style build:app build:legacy build:sw",
+    "build:app": "snowpack --optimize --clean",
+    "build:legacy": "rollup --config",
+    "build:sw": "workbox generateSW workbox-config.js",
+    "build:style": "postcss ./tailwind.css -o src/style.css",
+    "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
+    "test:watch": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --watch",
+    "update:holidays": "node ./updateHolidays.js"
   },
   "keywords": [],
   "license": "MPL",
   "author": "Christopher Astfalk",
+  "standard": {
+    "parser": "babel-eslint",
+    "env": [
+      "jest",
+      "es6"
+    ]
+  },
   "jest": {
     "setupFiles": [
       "./test/setup.js"
     ],
     "testURL": "http://localhost:8080",
-    "moduleFileExtensions": [
-      "js",
-      "jsx"
-    ],
-    "moduleDirectories": [
-      "node_modules"
-    ],
+    "transform": {
+      "^.+\\.jsx?$": "babel-jest"
+    },
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test/__mocks__/fileMock.js",
-      "\\.(css)$": "identity-obj-proxy",
-      "^react$": "preact-compat",
-      "^react-dom$": "preact-compat"
+      "^react$": "preact/compat",
+      "^react-dom$": "preact/compat"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx}"
     ]
   },
+  "snowpack": {
+    "webDependencies": [
+      "hammerjs",
+      "htm",
+      "luxon",
+      "preact",
+      "preact/compat",
+      "preact/hooks",
+      "preact-router",
+      "querystringify",
+      "re-reselect"
+    ],
+    "installOptions": {
+      "dest": "src/web_modules"
+    }
+  },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^2.0.6",
-    "app-manifest-loader": "^2.4.1",
-    "autoprefixer": "^9.7.4",
-    "babel": "^6.5.2",
-    "babel-core": "^6.24.0",
-    "babel-eslint": "^10.0.3",
-    "babel-jest": "^23.6.0",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-react-jsx": "^6.8.0",
-    "babel-preset-es2015": "^6.24.0",
-    "babel-preset-stage-0": "^6.5.0",
-    "babel-register": "^6.24.0",
-    "babel-runtime": "^6.11.6",
-    "chai": "^4.0.2",
-    "copy-webpack-plugin": "^4.0.1",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "@fullhuman/postcss-purgecss": "^2.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@testing-library/preact": "^1.0.2",
+    "autoprefixer": "^9.7.5",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.2.6",
     "core-js": "^3.6.4",
-    "cross-env": "^6.0.3",
-    "css-loader": "^0.28.0",
-    "eslint": "^5.16.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-config-standard-preact": "^1.1.6",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-jest": "^22.21.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-standard": "^4.0.1",
-    "extract-text-webpack-plugin": "^3.0.0",
-    "file-loader": "^1.1.7",
+    "cross-env": "^7.0.2",
     "hammerjs": "^2.0.8",
-    "html-webpack-plugin": "^3.0.0",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.6.0",
-    "json-loader": "^0.5.4",
-    "luxon": "^1.22.0",
-    "mkdirp": "^0.5.1",
+    "jest": "^25.2.7",
+    "luxon": "^1.23.0",
+    "mkdirp": "^1.0.4",
     "node-ical": "^0.10.0",
     "npm-run-all": "^4.1.5",
-    "offline-plugin": "^5.0.7",
     "postcss-cli": "^7.1.0",
-    "preact-jsx-chai": "^2.3.2",
     "prompt": "^1.0.0",
     "querystringify": "^2.1.1",
-    "raw-loader": "^0.5.1",
     "re-reselect": "^3.4.0",
-    "regenerator-runtime": "^0.13.3",
-    "replace-bundle-webpack-plugin": "^1.0.0",
+    "regenerator-runtime": "^0.13.5",
     "reselect": "^4.0.0",
-    "script-ext-html-webpack-plugin": "^2.1.4",
-    "sinon": "^8.1.1",
-    "sinon-chai": "^3.4.0",
-    "source-map-loader": "^0.2.1",
-    "style-loader": "^0.21.0",
-    "url-loader": "^1.0.0",
-    "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.11.5"
+    "rollup": "^2.3.3",
+    "rollup-plugin-babel": "^4.4.0",
+    "servor": "^3.2.0",
+    "sinon": "^9.0.1",
+    "sinon-chai": "^3.5.0",
+    "snowpack": "^1.6.0",
+    "standard": "^14.3.3",
+    "workbox-cli": "^5.1.2"
   },
   "dependencies": {
-    "preact": "^8.5.3",
-    "preact-compat": "^3.19.0",
-    "preact-render-to-string": "^4.1.0",
-    "preact-router": "^2.5.1",
+    "htm": "^3.0.3",
+    "preact": "^10.3.4",
+    "preact-render-to-string": "^5.1.4",
+    "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
     "serve": "^11.3.0",
     "tailwindcss": "^1.2.0"

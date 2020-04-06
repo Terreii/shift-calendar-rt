@@ -5,8 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { getDaysInMonth } from './utils'
-import { ferien } from './ferien.json'
+import { getDaysInMonth } from './utils.js'
+import { ferien } from './ferien.js'
 
 /**
  * Get easter and x-mas. Because those are the only closing days. And get daylight-saving switch.
@@ -25,6 +25,7 @@ export default function getHolidays (year, month) {
 
     case 2:
     case 3:
+    {
       const easter = getEaster(year) // Is the easter sunday
       // and the number is day since beginning of March
       const dayOfEaster = month === 3 ? easter - 31 : easter // transform it into a day in month
@@ -51,9 +52,11 @@ export default function getHolidays (year, month) {
       }
 
       return addSchoolHolidays(year, month, data)
+    }
 
     case 4:
     case 5:
+    {
       const easterDay = getEaster(year) - (31 * (month - 2))
 
       const dataOfMayJun = [
@@ -91,6 +94,7 @@ export default function getHolidays (year, month) {
       }
 
       return addSchoolHolidays(year, month, dataOfMayJun)
+    }
 
     case 9:
       return addSchoolHolidays(year, month, {
@@ -113,6 +117,7 @@ export default function getHolidays (year, month) {
       })
 
     case 11:
+    {
       const xmasData = {
         name: 'Weihnachten',
         type: 'closing'
@@ -126,6 +131,7 @@ export default function getHolidays (year, month) {
           type: 'holiday'
         }
       })
+    }
 
     default:
       return addSchoolHolidays(year, month)
