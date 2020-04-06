@@ -9,31 +9,39 @@ import { html, Component } from '../preact.js'
 import qs from '../web_modules/querystringify.js'
 
 export default class ShareMenu extends Component {
-  state = {
-    origin: window.location.origin,
-    group: false,
-    search: false,
-    shiftModel: false,
-    hash: ''
+  constructor (props) {
+    super(props)
+    this.state = {
+      origin: window.location.origin,
+      group: false,
+      search: false,
+      shiftModel: false,
+      hash: ''
+    }
+
+    this.doAddGroup = this.doAddGroup.bind(this)
+    this.doAddSearch = this.doAddSearch.bind(this)
+    this.doAddShiftModel = this.doAddShiftModel.bind(this)
+    this.onShare = this.onShare.bind(this)
   }
 
   componentWillReceiveProps (nextProps) {
     setTimeout(() => { this.updateHash() }, 0)
   }
 
-  doAddGroup = event => {
+  doAddGroup (event) {
     if (this.props.group === 0 || this.props.group == null) return
 
     this.updateHash({ group: event.target.checked })
   }
 
-  doAddSearch = event => {
+  doAddSearch (event) {
     if (this.props.search == null) return
 
     this.updateHash({ search: event.target.checked })
   }
 
-  doAddShiftModel = event => {
+  doAddShiftModel (event) {
     if (this.props.shiftModel == null) return
 
     const shiftModel = event.target.checked
@@ -77,7 +85,7 @@ export default class ShareMenu extends Component {
     })
   }
 
-  onShare = event => {
+  onShare (event) {
     const url = this.getURL()
 
     if ('share' in window.navigator) {

@@ -18,6 +18,9 @@ export default class InstallButton extends Component {
       show: 'none'
     }
 
+    this._onClickInstallButton = this._onClickInstallButton.bind(this)
+    this._dismiss = this._dismiss.bind(this)
+
     this.deferredPrompt = null
 
     const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
@@ -50,7 +53,7 @@ export default class InstallButton extends Component {
    * Event handler for when the user did click the button.
    * @param {Object} event Click event.
    */
-  _onClickInstallButton = event => {
+  _onClickInstallButton (event) {
     this.setState({ show: false })
 
     if (this.deferredPrompt == null) return
@@ -75,7 +78,7 @@ export default class InstallButton extends Component {
    * Dismiss the install message. It will not be shown again!
    * @param {Object} event Click event from the button
    */
-  _dismiss = event => {
+  _dismiss (event) {
     window.localStorage.setItem('dismissedInstallMessage', new Date().toJSON())
     this.setState({ show: 'none' })
   }

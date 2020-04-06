@@ -42,6 +42,15 @@ export default class App extends Component {
       month, // Selected month
       group: 0 // group to display; 0 = all, 1 - 6 is group number
     }
+
+    this._onSettingsChange = this._onSettingsChange.bind(this)
+    this._onChangeMonth = this._onChangeMonth.bind(this)
+    this._changeModel = this._changeModel.bind(this)
+    this._search = this._search.bind(this)
+    this._onSwipe = this._onSwipe.bind(this)
+    this._toggleFullYear = this._toggleFullYear.bind(this)
+    this._changeGroup = this._changeGroup.bind(this)
+    this.handleRoute = this.handleRoute.bind(this)
   }
 
   componentDidMount () {
@@ -119,7 +128,7 @@ export default class App extends Component {
     clearInterval(this.hourChangeInterval)
   }
 
-  _onSettingsChange = event => {
+  _onSettingsChange (event) {
     const {
       didSelectModel = false,
       group = 0,
@@ -190,13 +199,13 @@ export default class App extends Component {
    * @param {boolean} [arg0.toggleFullYear] Deactivate full year mode, if it is set.
    * @param {boolean} [arg0.scrollToToday] Should scroll to today, if it is in this month.
    */
-  _onChangeMonth = ({
+  _onChangeMonth ({
     year = this.state.year,
     month = this.state.month,
     relative,
     toggleFullYear,
     scrollToToday
-  }) => {
+  }) {
     if (typeof relative === 'number') {
       let nextMonth = this.state.month + relative
       let nextYear = this.state.year
@@ -230,7 +239,7 @@ export default class App extends Component {
    * Change the displayed shift-model.
    * @param {string} nextModel Name of the shift-model that should be displayed.
    */
-  _changeModel = nextModel => {
+  _changeModel (nextModel) {
     if (shiftModelNames.every(model => model !== nextModel)) {
       throw new TypeError(`Unknown shift-model! "${nextModel}" is unknown!`)
     }
@@ -253,7 +262,7 @@ export default class App extends Component {
    * @param {number} month Month of the searched day.
    * @param {number} day Date in the month of the searched day.
    */
-  _search = (doSearch, year, month, day) => {
+  _search (doSearch, year, month, day) {
     if (doSearch) {
       this._onChangeMonth({ year, month, toggleFullYear: true })
       this.setState({
@@ -309,7 +318,7 @@ export default class App extends Component {
    * @param {Object} event            "change" event from hammerjs.
    * @param {number} event.direction  direction of the swipe
    */
-  _onSwipe = event => {
+  _onSwipe (event) {
     if (this.state.fullYear) return
 
     switch (event.direction) {
@@ -329,7 +338,7 @@ export default class App extends Component {
   /**
    * Toggle between showing the full year or the selected display option.
    */
-  _toggleFullYear = () => {
+  _toggleFullYear () {
     this.setState({
       fullYear: !this.state.fullYear
     })
@@ -339,7 +348,7 @@ export default class App extends Component {
    * Change to display group.
    * @param {number} group number of group to display; 0 = all, 1 - 6 group number.
    */
-  _changeGroup = group => {
+  _changeGroup (group) {
     group = +group
     if (Number.isNaN(group) || group < 0 || group > 6) return
 
@@ -353,7 +362,7 @@ export default class App extends Component {
    * @param {Object} event     "change" event from [preact-router](http://git.io/preact-router)
    * @param {string} event.url The newly routed URL
    */
-  handleRoute = e => {
+  handleRoute (e) {
     this.currentUrl = e.url
     this.setState({ url: e.url })
   }

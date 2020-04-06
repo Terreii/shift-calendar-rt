@@ -23,6 +23,12 @@ export default class Header extends Component {
       showMenu: false,
       showShareMenu: false
     }
+
+    this._toggleShowMenu = this._toggleShowMenu.bind(this)
+    this.hideMenu = this.hideMenu.bind(this)
+    this._handleGotoEvent = this._handleGotoEvent.bind(this)
+    this.onShare = this.onShare.bind(this)
+    this.hideShare = this.hideShare.bind(this)
   }
 
   componentDidMount () {
@@ -58,7 +64,7 @@ export default class Header extends Component {
       ].some(key => this.props[key] !== nextProps[key])
   }
 
-  _toggleShowMenu = event => {
+  _toggleShowMenu (event) {
     const shouldShow = !this.state.showMenu
 
     this.setState({
@@ -79,7 +85,7 @@ export default class Header extends Component {
     }, 0)
   }
 
-  hideMenu = () => {
+  hideMenu () {
     this.setState({
       showMenu: false
     })
@@ -93,7 +99,7 @@ export default class Header extends Component {
     }
   }
 
-  _handleGotoEvent = (event, hide) => {
+  _handleGotoEvent (event, hide) {
     this.props.onChange(event)
 
     if (hide) {
@@ -101,7 +107,7 @@ export default class Header extends Component {
     }
   }
 
-  onShare = event => {
+  onShare (event) {
     this.setState({
       showShareMenu: true
     })
@@ -111,7 +117,7 @@ export default class Header extends Component {
     element.addEventListener('click', this.hideShare)
   }
 
-  hideShare = () => {
+  hideShare () {
     const element = document.getElementsByTagName('main')[0]
     element.removeEventListener('click', this.hideShare)
 
