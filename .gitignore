@@ -2,7 +2,6 @@
 !.gitignore
 /node_modules
 /npm-debug.log
-/dist/
 .DS_Store
 /coverage
 /.idea
@@ -11,3 +10,7 @@ yarn.lock
 src/web_modules
 src/bundle.js
 src/style.css
+src/sw.js
+src/sw.js.map
+src/workbox-*.js
+src/workbox-*.js.map

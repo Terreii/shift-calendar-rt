@@ -9,20 +9,19 @@
   },
   "scripts": {
     "prepare": "snowpack",
-    "predev": "snowpack",
     "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:*",
     "dev:server": "servor src --reload",
     "dev:style": "postcss ./tailwind.css -o src/style.css -w",
     "start": "serve src",
     "prestart": "npm run build",
-    "build": "cross-env NODE_ENV=production npm-run-all build:style build:app build:legacy",
+    "build": "cross-env NODE_ENV=production npm-run-all build:style build:app build:legacy build:sw",
     "build:app": "snowpack --optimize --clean",
     "build:legacy": "rollup --config",
+    "build:sw": "workbox generateSW workbox-config.js",
     "build:style": "postcss ./tailwind.css -o src/style.css",
-    "now-build": "snowpack && npm run build",
     "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
     "test:watch": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --watch",
-    "updateFerien": "node ./updateFerien.js"
+    "update:holidays": "node ./updateHolidays.js"
   },
   "keywords": [],
   "license": "MPL",
@@ -98,7 +97,8 @@
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
     "snowpack": "^1.6.0",
-    "standard": "^14.3.3"
+    "standard": "^14.3.3",
+    "workbox-cli": "^5.1.2"
   },
   "dependencies": {
     "htm": "^3.0.3",

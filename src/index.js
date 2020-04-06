@@ -9,9 +9,13 @@ import { html, render } from './preact.js'
 
 import App from './components/app.js'
 
-// register ServiceWorker via OfflinePlugin, for prod only:
-if (window.process && process.env && process.env.NODE_ENV === 'production') {
-  require('./pwa')
+// register ServiceWorker only on *.now.sh (production)
+if ('serviceWorker' in navigator && window.location.host.includes('.now.sh')) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(
+      event => { console.log('Service Worker registered!\nThis Web-App works offline now!') },
+      error => { console.error(error) }
+    )
 }
 
 render(html`<${App} />`, document.body)
