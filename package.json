@@ -8,7 +8,7 @@
     "node": ">=12.x"
   },
   "scripts": {
-    "prepare": "snowpack",
+    "prepare": "npm run snyk-protect && snowpack",
     "dev": "cross-env NODE_ENV=development npm-run-all --parallel dev:*",
     "dev:server": "servor src --reload",
     "dev:style": "postcss ./tailwind.css -o src/style.css -w",
@@ -21,7 +21,8 @@
     "build:style": "postcss ./tailwind.css -o src/style.css",
     "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
     "test:watch": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --watch",
-    "update:holidays": "node ./updateHolidays.js"
+    "update:holidays": "node ./updateHolidays.js",
+    "snyk-protect": "snyk protect"
   },
   "keywords": [],
   "license": "MPL",
@@ -107,6 +108,8 @@
     "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
     "serve": "^11.3.0",
-    "tailwindcss": "^1.2.0"
-  }
+    "tailwindcss": "^1.2.0",
+    "snyk": "^1.316.1"
+  },
+  "snyk": true
 }
