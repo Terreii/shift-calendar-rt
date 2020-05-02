@@ -102,7 +102,7 @@
   },
   "dependencies": {
     "htm": "^3.0.3",
-    "preact": "^10.3.4",
+    "preact": "^10.4.0",
     "preact-render-to-string": "^5.1.4",
     "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
