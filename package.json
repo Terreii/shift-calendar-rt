@@ -101,7 +101,7 @@
     "workbox-cli": "^5.1.2"
   },
   "dependencies": {
-    "htm": "^3.0.3",
+    "htm": "^3.0.4",
     "preact": "^10.3.4",
     "preact-render-to-string": "^5.1.4",
     "preact-router": "^3.2.1",
