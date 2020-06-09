@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, useState, useEffect } from '../preact.js'
+import { html, useState, useEffect, useMemo } from '../preact.js'
 import qs from '../web_modules/querystringify.js'
 
 /**
@@ -39,27 +39,31 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
     [search, addSearch]
   )
 
-  const url = new URL(window.location.href)
+  const url = useMemo(() => {
+    const url = new URL(window.location.href)
 
-  const props = {}
+    const props = {}
 
-  if (addGroup && group !== 0) {
-    props.group = group
-  }
+    if (addGroup && group !== 0) {
+      props.group = group
+    }
 
-  if (addSearch && search != null) {
-    const [year, month, date] = search
-    props.search = `${year}-${month + 1}-${date}`
-  }
+    if (addSearch && search != null) {
+      const [year, month, date] = search
+      props.search = `${year}-${month + 1}-${date}`
+    }
 
-  if (addShiftModel) {
-    props.schichtmodell = shiftModel
-  }
+    if (addShiftModel) {
+      props.schichtmodell = shiftModel
+    }
 
-  const hash = addGroup || addSearch || addShiftModel
-    ? qs.stringify(props, '#')
-    : ''
-  url.hash = hash
+    const hash = addGroup || addSearch || addShiftModel
+      ? qs.stringify(props, '#')
+      : ''
+    url.hash = hash
+
+    return url
+  }, [addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
   return html`
     <div
@@ -90,6 +94,9 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
             setAddShiftModel(event.target.checked)
             if (!event.target.checked && addGroup) {
               setAddGroup(false)
+            }
+            if (!event.target.checked && addSearch) {
+              setAddSearch(false)
             }
           }}
         />
@@ -127,6 +134,9 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
             if (search == null) return
 
             setAddSearch(event.target.checked)
+            if (event.target.checked && !addShiftModel) {
+              setAddShiftModel(true)
+            }
           }}
         />
         Der gesuchte Tag

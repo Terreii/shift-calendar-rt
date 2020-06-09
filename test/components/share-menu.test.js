@@ -142,6 +142,42 @@ describe('components/ShareMenu', () => {
     expect(queryByLabelText('Der gesuchte Tag')).not.toBeChecked()
   })
 
+  it('should update the shift model and search together', async () => {
+    const { queryByLabelText, findByLabelText } = render(h(ShareMenu, {
+      group: 2,
+      search: [2020, 4, 5],
+      shiftModel: '6-6',
+      hide: () => {}
+    }))
+
+    expect(queryByLabelText('Schichtmodell')).not.toBeChecked()
+    expect(queryByLabelText('Gruppe')).not.toBeChecked()
+    expect(queryByLabelText('Der gesuchte Tag')).not.toBeChecked()
+
+    fireEvent.click(queryByLabelText('Der gesuchte Tag'))
+    expect(await findByLabelText('Der gesuchte Tag')).toBeChecked()
+    expect(queryByLabelText('Schichtmodell')).toBeChecked()
+    expect(queryByLabelText('Gruppe')).not.toBeChecked()
+
+    fireEvent.click(queryByLabelText('Schichtmodell'))
+    expect(await findByLabelText('Schichtmodell')).not.toBeChecked()
+    expect(queryByLabelText('Der gesuchte Tag')).not.toBeChecked()
+    expect(queryByLabelText('Gruppe')).not.toBeChecked()
+
+    fireEvent.click(queryByLabelText('Schichtmodell'))
+    expect(await findByLabelText('Schichtmodell')).toBeChecked()
+    expect(queryByLabelText('Der gesuchte Tag')).not.toBeChecked()
+    expect(queryByLabelText('Gruppe')).not.toBeChecked()
+
+    fireEvent.click(queryByLabelText('Der gesuchte Tag'))
+    expect(await findByLabelText('Der gesuchte Tag')).toBeChecked()
+
+    fireEvent.click(queryByLabelText('Der gesuchte Tag'))
+    expect(await findByLabelText('Der gesuchte Tag')).not.toBeChecked()
+    expect(queryByLabelText('Schichtmodell')).toBeChecked()
+    expect(queryByLabelText('Gruppe')).not.toBeChecked()
+  })
+
   it('should close if the cancel button is clicked', () => {
     const hideCallback = jest.fn()
 
