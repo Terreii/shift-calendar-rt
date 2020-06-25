@@ -42,7 +42,7 @@ export default function App () {
   const [state, dispatch] = useReducer(reducer, initialState, initReducer)
 
   const today = useToday()
-  useHammer(dispatch, state.fullYear)
+  useHammer(dispatch, state.fullYear, state.url)
 
   useEffect(() => {
     window.localStorage.setItem('settings', JSON.stringify({
@@ -298,10 +298,11 @@ function useToday () {
  * Setup Hammer and handle swipes.
  * @param {function} dispatch   Dispatch function of the reducer.
  * @param {boolean}  isFullYear Is the full year displayed?
+ * @param {string}   path       The URL path.
  */
-function useHammer (dispatch, isFullYear) {
+function useHammer (dispatch, isFullYear, path) {
   useEffect(() => {
-    if (isFullYear) return
+    if (isFullYear || path === '/impressum/') return
 
     const handler = event => {
       switch (event.direction) {
@@ -326,5 +327,5 @@ function useHammer (dispatch, isFullYear) {
     return () => {
       hammertime.off('swipe', handler)
     }
-  }, [isFullYear])
+  }, [isFullYear, path])
 }
