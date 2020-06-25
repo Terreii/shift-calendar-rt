@@ -22,7 +22,7 @@ const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   return parent.firstChild.type === type
 })
 
-export default ({
+export default function Menu ({
   show,
   month,
   year,
@@ -32,11 +32,9 @@ export default ({
   shiftModel,
   toggleFullYear,
   gotoMonth,
-  onSearch,
-  onGroupChange,
-  onChangeModel,
+  dispatch,
   onShare
-}) => {
+}) {
   let searchValue = ''
   if (search != null) {
     const searchMonth = String(search[1] + 1).padStart(2, '0')
@@ -65,7 +63,7 @@ export default ({
             title="Gehe zum Monat"
             value=${month}
             onChange=${event => {
-              gotoMonth({ month: +event.target.value, toggleFullYear: true }, true)
+              gotoMonth({ type: 'goto', month: +event.target.value, fullYear: false }, true)
             }}
           >
             ${monthNames.map((name, index) => html`
@@ -92,7 +90,7 @@ export default ({
                 return
               }
 
-              gotoMonth({ year, toggleFullYear: !isFullYear }, false)
+              gotoMonth({ type: 'goto', year, fullYear: isFullYear }, false)
             }}
           />
         </label>
@@ -111,18 +109,23 @@ export default ({
             onChange=${event => {
               const value = event.target.value
               if (value == null || value.length === 0) {
-                gotoMonth({ year, month })
+                gotoMonth({ type: 'goto', year, month })
                 return
               }
 
               const [nextYear, nextMonth] = value.split('-').map(s => parseInt(s, 10))
 
               if (Number.isNaN(nextYear) || Number.isNaN(nextMonth)) {
-                gotoMonth({ year, month })
+                gotoMonth({ type: 'goto', year, month })
                 return
               }
 
-              gotoMonth({ year: nextYear, month: nextMonth - 1, toggleFullYear: true }, false)
+              gotoMonth({
+                type: 'goto',
+                year: nextYear,
+                month: nextMonth - 1,
+                fullYear: isFullYear
+              }, false)
             }}
           />
         </label>
@@ -141,10 +144,15 @@ export default ({
               const value = event.target.value
 
               if (value == null || value.length === 0) {
-                onSearch(false)
+                dispatch({ type: 'clear_search' })
               } else {
                 const date = new Date(value)
-                onSearch(true, date.getFullYear(), date.getMonth(), date.getDate())
+                dispatch({
+                  type: 'search',
+                  year: date.getFullYear(),
+                  month: date.getMonth(),
+                  day: date.getDate()
+                })
               }
             }}
           />
@@ -166,7 +174,10 @@ export default ({
             'hover:bg-gray-400 active:bg-gray-400'}
           value=${shiftModel}
           onChange=${event => {
-            onChangeModel(event.target.value)
+            dispatch({
+              type: 'model_change',
+              payload: event.target.value
+            })
           }}
         >
           ${shiftModelNames.map(model => html`
@@ -183,7 +194,10 @@ export default ({
         value=${group}
         onChange=${event => {
           const group = +event.target.value
-          onGroupChange(group)
+          dispatch({
+            type: 'group_change',
+            payload: group
+          })
         }}
       >
         <option value="0">Alle Gruppen</option>

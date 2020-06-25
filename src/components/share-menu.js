@@ -5,181 +5,178 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, Component } from '../preact.js'
+import { html, useState, useEffect, useMemo } from '../preact.js'
 import qs from '../web_modules/querystringify.js'
 
-export default class ShareMenu extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      origin: window.location.origin,
-      group: false,
-      search: false,
-      shiftModel: false,
-      hash: ''
-    }
+/**
+ * Display the share menu.
+ * @param {object}   params            - Preact props.
+ * @param {number}   params.group      - Number of selected group. 0 = no group selected/all
+ * @param {number[]} [params.search]   - Searched day. [year, month, day]
+ * @param {string}   params.shiftModel - Name of the selected shift-model.
+ * @param {function} hide              - Hide the share menu.
+ */
+export default function ShareMenu ({ group, search, shiftModel, hide }) {
+  const [addGroup, setAddGroup] = useState(false)
+  const [addSearch, setAddSearch] = useState(false)
+  const [addShiftModel, setAddShiftModel] = useState(false)
 
-    this.doAddGroup = this.doAddGroup.bind(this)
-    this.doAddSearch = this.doAddSearch.bind(this)
-    this.doAddShiftModel = this.doAddShiftModel.bind(this)
-    this.onShare = this.onShare.bind(this)
-  }
+  useEffect(
+    () => {
+      if (group === 0 && addGroup) {
+        setAddGroup(false)
+      }
+    },
+    [group, addGroup]
+  )
 
-  componentWillReceiveProps (nextProps) {
-    setTimeout(() => { this.updateHash() }, 0)
-  }
+  useEffect(
+    () => {
+      if (search == null && addSearch) {
+        setAddSearch(false)
+      }
+    },
+    [search, addSearch]
+  )
 
-  doAddGroup (event) {
-    if (this.props.group === 0 || this.props.group == null) return
+  const url = useMemo(() => {
+    const url = new URL(window.location.href)
 
-    this.updateHash({ group: event.target.checked })
-  }
-
-  doAddSearch (event) {
-    if (this.props.search == null) return
-
-    this.updateHash({ search: event.target.checked })
-  }
-
-  doAddShiftModel (event) {
-    if (this.props.shiftModel == null) return
-
-    const shiftModel = event.target.checked
-
-    this.updateHash({
-      shiftModel,
-      group: shiftModel ? this.state.group : false
-    })
-  }
-
-  updateHash ({
-    group = this.state.group,
-    search = this.state.search,
-    shiftModel = this.state.shiftModel
-  } = {}) {
     const props = {}
 
-    if (group && this.props.group !== 0) {
-      props.group = this.props.group
-      shiftModel = true
+    if (addGroup && group !== 0) {
+      props.group = group
     }
 
-    if (search && this.props.search != null) {
-      const [year, month, date] = this.props.search
+    if (addSearch && search != null) {
+      const [year, month, date] = search
       props.search = `${year}-${month + 1}-${date}`
     }
 
-    if (shiftModel && this.props.shiftModel != null) {
-      props.schichtmodell = this.props.shiftModel
+    if (addShiftModel) {
+      props.schichtmodell = shiftModel
     }
 
-    const hash = group || search || shiftModel
+    const hash = addGroup || addSearch || addShiftModel
       ? qs.stringify(props, '#')
       : ''
+    url.hash = hash
 
-    this.setState({
-      group,
-      search,
-      shiftModel,
-      hash
-    })
-  }
+    return url
+  }, [addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
-  onShare (event) {
-    const url = this.getURL()
-
-    if ('share' in window.navigator) {
-      window.navigator.share({
-        url,
-        title: 'Schichtkalender',
-        text: 'Meine Schichten beim Bosch Reutlingen: ' + url
-      })
-        .then(() => {
-          this.props.hide()
-        })
-    } else {
-      window.location.href =
-        `mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${url}`
-    }
-  }
-
-  getURL () {
-    return `${this.state.origin}/${this.state.hash}`
-  }
-
-  render () {
-    return html`
-      <div
-        class=${'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
-          'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
-      >
+  return html`
+    <div
+      class=${'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
+        'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
+    >
+      <label class="flex flex-col">
+        Adresse zum teilen:
         <input
-          class="bg-transparent text-white"
+          class="bg-transparent text-white pt-1"
           type="url"
           readonly
-          value=${this.getURL()}
+          value=${url.href}
           onFocus=${event => {
             event.target.select()
           }}
         />
+      </label>
 
-        <h6 class="mt-5 text-lg p-0 m-0 mt-2 ml-4">Füge hinzu:</h6>
+      <h6 class="mt-5 text-lg p-0 m-0 ml-4">Füge hinzu:</h6>
 
-        <label class="mt-5 ml-2">
-          <input
-            class="h-4 w-4 mr-1"
-            type="checkbox"
-            checked=${this.state.shiftModel}
-            onChange=${this.doAddShiftModel}
-          />
-          Schichtmodell
-        </label>
+      <label class="mt-5 ml-2">
+        <input
+          class="h-4 w-4 mr-1"
+          type="checkbox"
+          checked=${addShiftModel}
+          onChange=${event => {
+            setAddShiftModel(event.target.checked)
+            if (!event.target.checked && addGroup) {
+              setAddGroup(false)
+            }
+            if (!event.target.checked && addSearch) {
+              setAddSearch(false)
+            }
+          }}
+        />
+        Schichtmodell
+      </label>
 
-        <label class="mt-5 ml-2">
-          <input
-            class="h-4 w-4 mr-1"
-            type="checkbox"
-            checked=${this.state.group}
-            disabled=${this.props.group === 0}
-            onChange=${this.doAddGroup}
-          />
-          Gruppe
-          ${this.props.group === 0 &&  html`
-            <small><br />Momentan sind alle Gruppen ausgewählt.</small>
-          `}
-        </label>
+      <label class="mt-5 ml-2">
+        <input
+          class="h-4 w-4 mr-1"
+          type="checkbox"
+          checked=${addGroup}
+          disabled=${group === 0}
+          onChange=${event => {
+            if (group === 0 || group == null) return
 
-        <label class="mt-5 ml-2">
-          <input
-            class="h-4 w-4 mr-1"
-            type="checkbox"
-            checked=${this.state.search}
-            disabled=${this.props.search == null}
-            onChange=${this.doAddSearch}
-          />
-          Der gesuchte Tag
-          ${this.props.search == null && html`
-            <small><br />Momentan gibt es kein Suchergebnis.</small>
-          `}
-        </label>
+            setAddGroup(event.target.checked)
+            if (event.target.checked && !addShiftModel) {
+              setAddShiftModel(true)
+            }
+          }}
+        />
+        Gruppe
+        ${group === 0 && html`
+          <small><br />Momentan sind alle Gruppen ausgewählt.</small>
+        `}
+      </label>
 
-        <div class="mt-5 flex flex-row flex-wrap content-center">
-          <button
-            class=${'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
-              'shadow hover:bg-gray-400 active:bg-gray-400'}
-            onClick=${this.props.hide}
-          >
-            Abbrechen
-          </button>
-          <button
-            class=${'flex-auto mt-5 mx-3 h-10 w-32 text-white text-center rounded bg-purple-700 ' +
-              'shadow hover:bg-purple-500 active:bg-purple-500'}
-            onClick=${this.onShare}
-          >
-            Teilen
-          </button>
-        </div>
+      <label class="mt-5 ml-2">
+        <input
+          class="h-4 w-4 mr-1"
+          type="checkbox"
+          checked=${addSearch}
+          disabled=${search == null}
+          onChange=${event => {
+            if (search == null) return
+
+            setAddSearch(event.target.checked)
+            if (event.target.checked && !addShiftModel) {
+              setAddShiftModel(true)
+            }
+          }}
+        />
+        Der gesuchte Tag
+        ${search == null && html`
+          <small><br />Momentan gibt es kein Suchergebnis.</small>
+        `}
+      </label>
+
+      <div class="mt-5 flex flex-row flex-wrap content-center">
+        <button
+          class=${'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
+            'shadow hover:bg-gray-400 active:bg-gray-400'}
+          onClick=${hide}
+        >
+          Abbrechen
+        </button>
+        <a
+          class=${'flex-auto mt-5 mx-3 py-2 h-10 w-32 text-white text-center rounded ' +
+            'bg-purple-700 shadow hover:bg-purple-500 active:bg-purple-500'}
+          href="mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
+            url.toString().replace(/&/g, '%26')
+          }"
+          onClick=${event => {
+            if ('share' in window.navigator) {
+              event.preventDefault()
+
+              window.navigator.share({
+                url,
+                title: 'Schichtkalender',
+                text: 'Meine Schichten beim Bosch Reutlingen: ' + url
+              })
+                .then(() => { hide() })
+            } else {
+              setTimeout(hide, 16)
+            }
+          }}
+        >
+          Teilen
+        </a>
       </div>
-    `
-  }
+    </div>
+  `
 }

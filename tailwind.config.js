@@ -6,6 +6,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 module.exports = {
+  purge: [
+    './src/components/*.js',
+    './src/components/**/*.js',
+    './src/index.html'
+  ],
   theme: {
     extend: {
       backgroundColor: {

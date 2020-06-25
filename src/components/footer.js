@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { html } from '../preact.js'
 import { Link } from '../web_modules/preact-router.js'
 
-export default () => {
+export default function Footer () {
   return html`
     <p class="mt-4 mb-3 text-center text-xs">
       <b>Der inoffizielle Schichtkalender für Bosch Reutlingen.</b>
@@ -20,7 +20,8 @@ export default () => {
       <br />
       Alle Angaben sind ohne Gewähr.
       <br />
-      Alle Daten werden nur lokal gespeichert! Deswegen gibt es keine Cookie Meldung.
+      Alle Daten werden nur lokal gespeichert! Und nicht an einen Server übertragen.
+      Deswegen gibt es keine Cookie Meldung.
       <br />
       Lizenz: <a
         href="https://www.mozilla.org/en-US/MPL/2.0/"

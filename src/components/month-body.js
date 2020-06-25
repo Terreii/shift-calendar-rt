@@ -21,7 +21,7 @@ import { shiftTitle } from '../lib/constants.js'
  * @param {number}    arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
-export default ({ year, month, data, today, search, group }) => {
+export default function MonthBody ({ year, month, data, today, search, group }) {
   const todayInThisMonth = today != null && today[0] === year && today[1] === month
 
   // Render every row/day.

@@ -15,3 +15,20 @@ export function getDaysInMonth (year, month) {
   // first day in month is 1. 0 is the one before --> last day of month!
   return new Date(year, month + 1, 0).getDate()
 }
+
+/**
+ * Scroll to a day. But only if that day is displayed.
+ * @param {number} year  The year of the day.
+ * @param {number} month The month of the day.
+ * @param {number} day   The day in month.
+ */
+export function scrollToADay (year, month, day) {
+  const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`)
+
+  if (row != null && row.scrollIntoView != null) {
+    row.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center'
+    })
+  }
+}
