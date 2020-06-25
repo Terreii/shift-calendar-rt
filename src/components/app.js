@@ -121,14 +121,23 @@ export default function App () {
 function initReducer (initialState) {
   const now = new Date()
 
+  const state = {
+    ...initialState,
+    year: now.getFullYear(),
+    month: now.getMonth()
+  }
+
   // load the stored settings
   const storedSettings = JSON.parse(window.localStorage.getItem('settings') || '{}')
 
-  const state = {
-    ...initialState,
-    ...storedSettings,
-    year: now.getFullYear(),
-    month: now.getMonth()
+  if (storedSettings.didSelectModel != null) {
+    state.didSelectModel = storedSettings.didSelectModel
+  }
+  if (typeof storedSettings.group === 'number') {
+    state.group = storedSettings.group
+  }
+  if (storedSettings.shiftModel != null && shiftModelNames.includes(storedSettings.shiftModel)) {
+    state.shiftModel = storedSettings.shiftModel
   }
 
   // Load the settings from the share hash

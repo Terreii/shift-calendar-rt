@@ -9,17 +9,6 @@ import { h } from './web_modules/preact.js'
 import htm from './web_modules/htm.js'
 
 export * from './web_modules/preact.js'
-export {
-  useState,
-  useReducer,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useImperativeHandle,
-  useMemo,
-  useCallback,
-  useContext,
-  useDebugValue
-} from './web_modules/preact/hooks.js'
+export * from './web_modules/preact/hooks.js'
 
 export const html = htm.bind(h)
