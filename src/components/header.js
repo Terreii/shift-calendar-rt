@@ -11,6 +11,8 @@ import { Link } from '../web_modules/preact-router.js'
 import Menu from './menu.js'
 import ShareMenu from './share-menu.js'
 
+import { scrollToADay } from '../lib/utils.js'
+
 /**
  * Renders the Header.
  * @param {object}   param            Preact params.
@@ -18,14 +20,10 @@ import ShareMenu from './share-menu.js'
  * @param {boolean}  param.isFullYear Is the full year shown.
  * @param {number}   param.month      The shown month in the year.
  * @param {number}   param.year       The shown year.
- * @param {number[]} [param.searchResult] Result of the search. [year, month, day]
+ * @param {number[]} [param.search]   Result of the search. [year, month, day]
  * @param {number}   param.group      The shown group. 0 = all groups
  * @param {string}   param.shiftModel The shown shift model. As in constants.shiftModelNames.
- * @param {function} param.onChange   Change the current shown month.
- * @param {function} param.onChangeModel Change the shown shift model.
- * @param {function} param.onGroupChange Change the shown group.
- * @param {function} param.search     Do a search for a day.
- * @param {function} param.toggleFullYear Toggle between showing the full year and some months.
+ * @param {function} param.dispatch   Change the global state using the reducers dispatch function.
  * @returns {JSX.Element}
  */
 export default function Header ({
@@ -33,14 +31,10 @@ export default function Header ({
   isFullYear,
   month,
   year,
-  searchResult,
+  search,
   group,
   shiftModel,
-  onChange,
-  onChangeModel,
-  onGroupChange,
-  search,
-  toggleFullYear
+  dispatch
 }) {
   const isSmallScreen = useIsSmallScreen()
   const [showMenu, setShowMenu] = useShowMenu()
@@ -69,12 +63,13 @@ export default function Header ({
       ${(url === '/' || !isSmallScreen) && html`
         <nav class="h-full flex flex-row text-base items-stretch">
           <button
+            type="button"
             class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
               'focus:shadow-outline focus:outline-none'}
             title="vorigen Monat"
             aria-label="vorigen Monat"
             onClick=${() => {
-              onChange({ relative: -1, toggleFullYear: true })
+              dispatch({ type: 'move', payload: -1 })
               hideMenu()
             }}
           >
@@ -82,30 +77,36 @@ export default function Header ({
           </button>
 
           <button
+            type="button"
             class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
               'focus:shadow-outline focus:outline-none'}
             title="zeige aktuellen Monat"
             onClick=${() => {
               const now = new Date()
-              onChange({
-                year: now.getFullYear(),
-                month: now.getMonth(),
-                toggleFullYear: true,
-                scrollToToday: true
+              const year = now.getFullYear()
+              const month = now.getMonth()
+              dispatch({
+                type: 'goto',
+                fullYear: false,
+                year,
+                month
               })
               hideMenu()
+
+              setTimeout(scrollToADay, 16, year, month, now.getDate())
             }}
           >
             Heute
           </button>
 
           <button
+            type="button"
             class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
               'focus:shadow-outline focus:outline-none'}
             title="nächster Monat"
             aria-label="nächster Monat"
             onClick=${() => {
-              onChange({ relative: 1, toggleFullYear: true })
+              dispatch({ type: 'move', payload: 1 })
               hideMenu()
             }}
           >
@@ -133,23 +134,22 @@ export default function Header ({
         isFullYear=${isFullYear}
         month=${month}
         year=${year}
-        search=${searchResult}
+        search=${search}
         group=${group}
         shiftModel=${shiftModel}
         gotoMonth=${(event, hide) => {
-          onChange(event)
+          dispatch(event)
 
           if (hide) {
             hideMenu()
           }
         }}
+        dispatch=${dispatch}
         onSearch=${search}
-        onChangeModel=${onChangeModel}
         toggleFullYear=${() => {
-          toggleFullYear()
+          dispatch({ type: 'toggle_full_year' })
           hideMenu()
         }}
-        onGroupChange=${onGroupChange}
         onShare=${() => {
           hideMenu()
           setShowShareMenu(true)
@@ -159,7 +159,7 @@ export default function Header ({
       ${showShareMenu && html`
         <${ShareMenu}
           group=${group}
-          search=${searchResult}
+          search=${search}
           shiftModel=${shiftModel}
           hide=${() => {
             setShowShareMenu(false)
