@@ -46,7 +46,7 @@ const urls = {
   ]
 }
 
-export default ({ shiftModel }) => {
+export default function Download ({ shiftModel }) {
   if (!(shiftModel in urls)) {
     return html`
       <div class="my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded">

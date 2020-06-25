@@ -152,6 +152,7 @@ function initReducer (initialState) {
     const schichtmodell = hashSettings.schichtmodell
     if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
       state.shiftModel = schichtmodell
+      state.didSelectModel = true
 
       if (state.group > shiftModelNumberOfGroups[schichtmodell]) {
         state.group = 0

@@ -12,7 +12,7 @@ import { html } from '../preact.js'
  * This is required by the German Low.
  * @returns {JSX.Element}
  */
-export default () => {
+export default function Impressum () {
   return html`
     <div class="pt-16 pb-2 px-6">
       <h2 class="text-2xl font-bold">Datenschutzerklärung</h2>
