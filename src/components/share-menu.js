@@ -83,7 +83,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         />
       </label>
 
-      <h6 class="mt-5 text-lg p-0 m-0 mt-2 ml-4">Füge hinzu:</h6>
+      <h6 class="mt-5 text-lg p-0 m-0 ml-4">Füge hinzu:</h6>
 
       <label class="mt-5 ml-2">
         <input

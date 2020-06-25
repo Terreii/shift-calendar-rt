@@ -12,7 +12,7 @@ import { shiftModelNames, shiftModelText } from '../lib/constants.js'
 
 export default function FirstRun ({ onClick }) {
   return html`
-    <div class="fixed top-0 pt-16 text-center w-full w-screen h-screen bg-gray-100">
+    <div class="fixed top-0 pt-16 text-center w-screen h-screen bg-gray-100">
       <h3>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h3>
 
       <p>
