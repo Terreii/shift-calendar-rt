@@ -25,7 +25,7 @@ import {
 
 const initialState = {
   url: window.location.pathname,
-  didSelectModel: true, // did the user select a shift-model once?
+  didSelectModel: false, // did the user select a shift-model once?
   fullYear: false, // should the full year be displayed
   shiftModel: shift66Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
   search: null,
@@ -38,17 +38,19 @@ const initialState = {
  * The App main component
  * @returns {JSX.Element}
  */
-export default function App() {
+export default function App () {
   const [state, dispatch] = useReducer(reducer, initialState, initReducer)
 
   const today = useToday()
   useHammer(dispatch, state.fullYear)
 
   useEffect(() => {
-    if (state.search) {
-      scrollToADay(...state.search)
-    }
-  }, [state.search])
+    window.localStorage.setItem('settings', JSON.stringify({
+      didSelectModel: state.didSelectModel,
+      group: state.group,
+      shiftModel: state.shiftModel
+    }))
+  }, [state.didSelectModel, state.group, state.shiftModel])
 
   useEffect(() => {
     // on first render, and every time the shift model changes.
@@ -57,6 +59,12 @@ export default function App() {
       scrollToADay(now.getFullYear(), now.getMonth(), now.getDate())
     }
   }, [state.shiftModel, state.didSelectModel])
+
+  useEffect(() => {
+    if (state.search) {
+      scrollToADay(...state.search)
+    }
+  }, [state.search])
 
   return html`
     <div id="app">
@@ -105,16 +113,57 @@ export default function App() {
   `
 }
 
+/**
+ * Load the stored settings from localStorage or the share hash.
+ * And sets year and month to today.
+ * @param {object} initialState The initial Reducer state
+ */
 function initReducer (initialState) {
   const now = new Date()
-  const year = now.getFullYear()
-  const month = now.getMonth()
 
-  return {
+  // load the stored settings
+  const storedSettings = JSON.parse(window.localStorage.getItem('settings') || '{}')
+
+  const state = {
     ...initialState,
-    year,
-    month
+    ...storedSettings,
+    year: now.getFullYear(),
+    month: now.getMonth()
   }
+
+  // Load the settings from the share hash
+  if (window.location.hash.length > 1) {
+    const hashSettings = qs.parse(window.location.hash.slice(1))
+
+    const group = +hashSettings.group
+    if (!Number.isNaN(group) && group > 0 && group <= 6) {
+      state.group = group
+    }
+
+    const schichtmodell = hashSettings.schichtmodell
+    if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
+      state.shiftModel = schichtmodell
+
+      if (state.group > shiftModelNumberOfGroups[schichtmodell]) {
+        state.group = 0
+      }
+    }
+
+    if (hashSettings.search != null && hashSettings.search.length >= 8) {
+      const date = new Date(hashSettings.search)
+      const year = date.getFullYear()
+      const month = date.getMonth()
+      const day = date.getDate()
+
+      state.search = [year, month, day]
+      state.year = year
+      state.month = month
+    }
+
+    window.location.hash = ''
+  }
+
+  return state
 }
 
 function reducer (state, action) {
