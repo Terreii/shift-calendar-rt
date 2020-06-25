@@ -140,7 +140,7 @@ function useNumberOfMonths (group, displayFullYear) {
 function processClick (event) {
   let target = event.target
 
-  while (['td', 'tr'].some(tag => target.nodeName.toLowerCase() === tag)) {
+  while (target && target.nodeName !== 'MAIN') {
     if (target.title && target.title.length > 0) {
       window.alert(target.title)
       return
