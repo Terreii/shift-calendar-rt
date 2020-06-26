@@ -3,5 +3,10 @@
   "scripts": {
     "build:css": "postcss"
   },
-  "plugins": []
+  "buildOptions": {
+    "baseUrl": "/"
+  },
+  "plugins": [
+    ["@snowpack/plugin-webpack", {}]
+  ]
 }

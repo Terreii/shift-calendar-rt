@@ -20,4 +20,4 @@ if ('serviceWorker' in navigator && window.location.host.includes('.now.sh')) {
     )
 }
 
-render(<App />, document.body)
+render(<App />, document.getElementById('root'))
