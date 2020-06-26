@@ -19,6 +19,9 @@
     },
     {
       "src": "^/(.*).txt",
+      "headers": {
+        "content-type": "text/plain; charset=\"utf-8\""
+      },
       "dest": "/$1.txt"
     },
     {
@@ -37,6 +40,9 @@
     },
     {
       "src": "^/(.*).css",
+      "headers": {
+        "content-type": "text/css; charset=\"utf-8\""
+      },
       "dest": "/$1.css"
     },
     {
