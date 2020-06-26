@@ -6,10 +6,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
-import { useReducer, useState, useEffect } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 import { Router } from 'preact-router'
 import Hammer from 'hammerjs'
-import qs from 'querystringify'
 
 import FirstRunDialog from './first-run.js'
 import Header from './header.js'
@@ -18,40 +17,17 @@ import InstallPrompt from './install-prompt.js'
 import Main from './main.js'
 
 import { scrollToADay } from '../lib/utils.js'
-import {
-  shiftModelNames,
-  shift66Name,
-  shiftModelNumberOfGroups
-} from '../lib/constants.js'
-
-const initialState = {
-  url: window.location.pathname,
-  didSelectModel: false, // did the user select a shift-model once?
-  fullYear: false, // should the full year be displayed
-  shiftModel: shift66Name, // Which shift-model is it, the 6-4 model or the 6-6 model?
-  search: null,
-  year: 2020, // Selected year
-  month: 1, // Selected month
-  group: 0 // group to display; 0 = all, 1 - 6 is group number
-}
+import useStateReducer from '../lib/state'
 
 /**
  * The App main component
  * @returns {JSX.Element}
  */
 export default function App () {
-  const [state, dispatch] = useReducer(reducer, initialState, initReducer)
+  const [state, dispatch] = useStateReducer()
 
   const today = useToday()
   useHammer(dispatch, state.fullYear, state.url)
-
-  useEffect(() => {
-    window.localStorage.setItem('settings', JSON.stringify({
-      didSelectModel: state.didSelectModel,
-      group: state.group,
-      shiftModel: state.shiftModel
-    }))
-  }, [state.didSelectModel, state.group, state.shiftModel])
 
   useEffect(() => {
     // on first render, and every time the shift model changes.
@@ -113,150 +89,6 @@ export default function App () {
         )}
     </div>
   )
-}
-
-/**
- * Load the stored settings from localStorage or the share hash.
- * And sets year and month to today.
- * @param {object} initialState The initial Reducer state
- */
-function initReducer (initialState) {
-  const now = new Date()
-
-  const state = {
-    ...initialState,
-    year: now.getFullYear(),
-    month: now.getMonth()
-  }
-
-  // load the stored settings
-  const storedSettings = JSON.parse(window.localStorage.getItem('settings') || '{}')
-
-  if (storedSettings.didSelectModel != null) {
-    state.didSelectModel = storedSettings.didSelectModel
-  }
-  if (typeof storedSettings.group === 'number') {
-    state.group = storedSettings.group
-  }
-  if (storedSettings.shiftModel != null && shiftModelNames.includes(storedSettings.shiftModel)) {
-    state.shiftModel = storedSettings.shiftModel
-  }
-
-  // Load the settings from the share hash
-  if (window.location.hash.length > 1) {
-    const hashSettings = qs.parse(window.location.hash.slice(1))
-
-    const group = +hashSettings.group
-    if (!Number.isNaN(group) && group > 0 && group <= 6) {
-      state.group = group
-    }
-
-    const schichtmodell = hashSettings.schichtmodell
-    if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
-      state.shiftModel = schichtmodell
-      state.didSelectModel = true
-
-      if (state.group > shiftModelNumberOfGroups[schichtmodell]) {
-        state.group = 0
-      }
-    }
-
-    if (hashSettings.search != null && hashSettings.search.length >= 8) {
-      const date = new Date(hashSettings.search)
-      const year = date.getFullYear()
-      const month = date.getMonth()
-      const day = date.getDate()
-
-      state.search = [year, month, day]
-      state.year = year
-      state.month = month
-    }
-
-    window.location.hash = ''
-  }
-
-  return state
-}
-
-function reducer (state, action) {
-  switch (action.type) {
-    case 'url_change':
-      return {
-        ...state,
-        url: action.url
-      }
-
-    case 'goto':
-      return {
-        ...state,
-        fullYear: action.fullYear != null
-          ? action.fullYear
-          : state.fullYear,
-        year: action.year || state.year,
-        month: action.month || state.month
-      }
-
-    case 'move':
-    {
-      let month = state.month + action.payload
-      let year = state.year
-      if (month < 0) {
-        year -= 1
-        month += 12
-      } else if (month >= 12) {
-        year += 1
-        month -= 12
-      }
-      return {
-        ...state,
-        fullYear: false,
-        year,
-        month
-      }
-    }
-
-    case 'toggle_full_year':
-      return {
-        ...state,
-        fullYear: !state.fullYear
-      }
-
-    case 'group_change':
-      return {
-        ...state,
-        group: action.payload
-      }
-
-    case 'model_change':
-      if (shiftModelNames.every(model => model !== action.payload)) {
-        throw new TypeError(`Unknown shift-model! "${action.payload}" is unknown!`)
-      }
-      return {
-        ...state,
-        shiftModel: action.payload,
-        didSelectModel: true,
-        group: state.group > shiftModelNumberOfGroups[action.payload]
-          ? 0
-          : state.group
-      }
-
-    case 'search':
-      return {
-        ...state,
-        year: action.year,
-        month: action.month,
-        search: [action.year, action.month, action.day]
-      }
-
-    case 'clear_search':
-      return {
-        ...state,
-        search: null
-      }
-
-    default:
-      return state
-  }
 }
 
 /**
