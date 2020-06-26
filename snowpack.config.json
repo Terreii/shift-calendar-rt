@@ -1,0 +1,12 @@
+{
+  "extends": "@snowpack/app-scripts-preact",
+  "scripts": {
+    "build:css": "postcss"
+  },
+  "buildOptions": {
+    "baseUrl": "/"
+  },
+  "plugins": [
+    ["@snowpack/plugin-webpack", {}]
+  ]
+}

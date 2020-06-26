@@ -10,16 +10,19 @@
       "dest": "/assets/$1"
     },
     {
-      "src": "^/web_modules/(.*).map",
-      "dest": "/web_modules/$1.map"
-    },
-    {
       "src": "^/favicon.ico",
       "dest": "/favicon.ico"
     },
     {
       "src": "^/manifest.webmanifest",
       "dest": "/manifest.webmanifest"
+    },
+    {
+      "src": "^/(.*).txt",
+      "headers": {
+        "content-type": "text/plain; charset=\"utf-8\""
+      },
+      "dest": "/$1.txt"
     },
     {
       "src": "^/sw.js",
@@ -29,16 +32,18 @@
       "dest": "/sw.js"
     },
     {
-      "src": "^/style.css",
-      "dest": "/style.css"
+      "src": "^/workbox(.*).js",
+      "headers": {
+        "cache-control": "s-maxage=0"
+      },
+      "dest": "/workbox$1.js"
     },
     {
-      "src": "^/style.css.map",
-      "dest": "/style.css.map"
-    },
-    {
-      "src": "^/bundle.js",
-      "dest": "/bundle.js"
+      "src": "^/(.*).css",
+      "headers": {
+        "content-type": "text/css; charset=\"utf-8\""
+      },
+      "dest": "/$1.css"
     },
     {
       "src": "^/(.*).js",

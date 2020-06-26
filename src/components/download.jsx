@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html } from '../preact.js'
+import { h } from 'preact'
 
 import {
   shiftModelText,
@@ -48,33 +48,34 @@ const urls = {
 
 export default function Download ({ shiftModel }) {
   if (!(shiftModel in urls)) {
-    return html`
-      <div class="my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded">
+    return (
+      <div class='my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded'>
         Für dieses Schichtmodell sind die Kalender noch in Arbeit
       </div>
-    `
+    )
   }
 
-  return html`
-    <div class="my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded">
-      <h4 class="text-xl font-semibold">Downloade einen ${shiftModelText[shiftModel]} Kalender</h4>
+  return (
+    <div class='my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'>
+      <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
-      <p class="py-2">Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+      <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
-      ${urls[shiftModel].map((href, index) => {
+      {urls[shiftModel].map((href, index) => {
         const group = index + 1
-        return html`
+        return (
           <a
-            key=${shiftModel + group}
-            class=${'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
-            href=${href}
-            download=${`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
-            target="_blank"
+            key={shiftModel + group}
+            class={'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
+            href={href}
+            download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
+            target='_blank'
+            rel='noopener noreferrer'
           >
-            Gruppe ${group}
+            Gruppe {group}
           </a>
-        `
+        )
       })}
     </div>
-  `
+  )
 }

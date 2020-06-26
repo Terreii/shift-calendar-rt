@@ -5,8 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, useState, useEffect } from '../preact.js'
-import { Link } from '../web_modules/preact-router.js'
+import { h } from 'preact'
+import { useState, useEffect } from 'preact/hooks'
+import { Link } from 'preact-router'
 
 import Menu from './menu.js'
 import ShareMenu from './share-menu.js'
@@ -43,45 +44,45 @@ export default function Header ({
   const hideMenu = () => setShowMenu(false)
   const toggleShowMenu = () => setShowMenu(old => !old)
 
-  return html`
+  return (
     <header
-      class=${'fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between ' +
-        'bg-green-900 shadow-lg z-50'}
+      class={'fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between ' +
+      'bg-green-900 shadow-lg z-50'}
     >
-      ${(url !== '/' || !isSmallScreen) && html`
+      {(url !== '/' || !isSmallScreen) && (
         <h1 class='m-0 text-2xl font-normal align-baseline'>
-          <${Link}
+          <Link
             href='/'
             tabIndex='0'
-            class=${'pl-4 text-white no-underline hover:underline focus:underline ' +
-              'focus:shadow-outline'}
+            class={'pl-4 text-white no-underline hover:underline focus:underline ' +
+            'focus:shadow-outline'}
           >
             Kalender
-          </${Link}>
+          </Link>
         </h1>
-      `}
-      ${(url === '/' || !isSmallScreen) && html`
-        <nav class="h-full flex flex-row text-base items-stretch">
+      )}
+      {(url === '/' || !isSmallScreen) && (
+        <nav class='h-full flex flex-row text-base items-stretch'>
           <button
-            type="button"
-            class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title="vorigen Monat"
-            aria-label="vorigen Monat"
-            onClick=${() => {
+            type='button'
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+            'focus:shadow-outline focus:outline-none'}
+            title='vorigen Monat'
+            aria-label='vorigen Monat'
+            onClick={() => {
               dispatch({ type: 'move', payload: -1 })
               hideMenu()
             }}
           >
-            ${'<'}
+            {'<'}
           </button>
 
           <button
-            type="button"
-            class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title="zeige aktuellen Monat"
-            onClick=${() => {
+            type='button'
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+            'focus:shadow-outline focus:outline-none'}
+            title='zeige aktuellen Monat'
+            onClick={() => {
               const now = new Date()
               const year = now.getFullYear()
               const month = now.getMonth()
@@ -100,74 +101,74 @@ export default function Header ({
           </button>
 
           <button
-            type="button"
-            class=${'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-              'focus:shadow-outline focus:outline-none'}
-            title="nächster Monat"
-            aria-label="nächster Monat"
-            onClick=${() => {
+            type='button'
+            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
+            'focus:shadow-outline focus:outline-none'}
+            title='nächster Monat'
+            aria-label='nächster Monat'
+            onClick={() => {
               dispatch({ type: 'move', payload: 1 })
               hideMenu()
             }}
           >
-            ${'>'}
+            {'>'}
           </button>
 
           <button
-            class=${'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
-              'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
-            onClick=${toggleShowMenu}
+            class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
+            'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
+            onClick={toggleShowMenu}
           >
             <img
-              src="/assets/icons/hamburger_icon.svg"
-              style=${{ filter: 'invert(100%)' }}
-              height="45"
-              width="45"
-              alt="Menu"
+              src='/assets/icons/hamburger_icon.svg'
+              style={{ filter: 'invert(100%)' }}
+              height='45'
+              width='45'
+              alt='Menu'
             />
           </button>
         </nav>
-      `}
+      )}
 
-      <${Menu}
-        show=${showMenu}
-        isFullYear=${isFullYear}
-        month=${month}
-        year=${year}
-        search=${search}
-        group=${group}
-        shiftModel=${shiftModel}
-        gotoMonth=${(event, hide) => {
+      <Menu
+        show={showMenu}
+        isFullYear={isFullYear}
+        month={month}
+        year={year}
+        search={search}
+        group={group}
+        shiftModel={shiftModel}
+        gotoMonth={(event, hide) => {
           dispatch(event)
 
           if (hide) {
             hideMenu()
           }
         }}
-        dispatch=${dispatch}
-        onSearch=${search}
-        toggleFullYear=${() => {
+        dispatch={dispatch}
+        onSearch={search}
+        toggleFullYear={() => {
           dispatch({ type: 'toggle_full_year' })
           hideMenu()
         }}
-        onShare=${() => {
+        onShare={() => {
           hideMenu()
           setShowShareMenu(true)
         }}
       />
 
-      ${showShareMenu && html`
-        <${ShareMenu}
-          group=${group}
-          search=${search}
-          shiftModel=${shiftModel}
-          hide=${() => {
+      {showShareMenu && (
+        <ShareMenu
+          group={group}
+          search={search}
+          shiftModel={shiftModel}
+          hide={() => {
             setShowShareMenu(false)
           }}
         />
-      `}
+      )}
     </header>
-  `
+  )
 }
 
 function useIsSmallScreen () {

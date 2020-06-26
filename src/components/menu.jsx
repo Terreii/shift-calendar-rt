@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html } from '../preact.js'
+import { h } from 'preact'
 
 import {
   monthNames,
@@ -44,45 +44,44 @@ export default function Menu ({
 
   const groupOptions = []
   for (let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1; gr <= max; gr += 1) {
-    groupOptions.push(html`<option key=${'group_' + gr} value=${gr}>Nur Gruppe ${gr}</option>`)
+    groupOptions.push(<option key={'group_' + gr} value={gr}>Nur Gruppe {gr}</option>)
   }
 
-  return html`
+  return (
     <div
-      class=${
+      class={
         (show ? 'flex' : 'hidden') + ' absolute top-0 right-0 mt-12 p-3 ' +
-        ' flex-col justify-center items-stretch bg-green-900 shadow-lg'
+      ' flex-col justify-center items-stretch bg-green-900 shadow-lg'
       }
     >
-      ${supportsMonthInput || isFullYear
+      {supportsMonthInput || isFullYear
         ? null
-        : html`
+        : (
           <select
-            class=${'h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 ' +
-              'active:bg-gray-400'}
-            title="Gehe zum Monat"
-            value=${month}
-            onChange=${event => {
+            class={'h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 ' +
+            'active:bg-gray-400'}
+            title='Gehe zum Monat'
+            value={month}
+            onChange={event => {
               gotoMonth({ type: 'goto', month: +event.target.value, fullYear: false }, true)
             }}
           >
-            ${monthNames.map((name, index) => html`
-              <option key=${name} value=${index}>${name}</option>
-            `)}
+            {monthNames.map((name, index) => (
+              <option key={name} value={index}>{name}</option>
+            ))}
           </select>
-        `
-      }
+        )}
 
-      ${(!supportsMonthInput || isFullYear) && html`
-        <label class="mt-5 flex flex-col items-stretch text-white text-center">
+      {(!supportsMonthInput || isFullYear) && (
+        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Jahr
           <input
-            class=${'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-              'shadow hover:bg-gray-400 active:bg-gray-400'}
-            type="number"
-            min="2000"
-            value=${year}
-            onChange=${event => {
+            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
+            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            type='number'
+            min='2000'
+            value={year}
+            onChange={event => {
               const year = +event.target.value
 
               if (Number.isNaN(year)) {
@@ -94,19 +93,18 @@ export default function Menu ({
             }}
           />
         </label>
-      `}
+      )}
 
-      ${supportsMonthInput && !isFullYear && html`
-        <label class="mt-5 flex flex-col items-stretch text-white text-center">
+      {supportsMonthInput && !isFullYear && (
+        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Gehe zum Monat
           <input
-            class=${'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-              'shadow hover:bg-gray-400 active:bg-gray-400'
-            }
-            type="month"
-            min="2000-01"
-            value=${`${year}-${String(month + 1).padStart(2, '0')}`}
-            onChange=${event => {
+            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
+            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            type='month'
+            min='2000-01'
+            value={`${year}-${String(month + 1).padStart(2, '0')}`}
+            onChange={event => {
               const value = event.target.value
               if (value == null || value.length === 0) {
                 gotoMonth({ type: 'goto', year, month })
@@ -129,18 +127,18 @@ export default function Menu ({
             }}
           />
         </label>
-      `}
+      )}
 
-      ${supportsDateInput && html`
-        <label class="mt-5 flex flex-col items-stretch text-white text-center">
+      {supportsDateInput && (
+        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Suche einen Tag
           <input
-            class=${'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-              'shadow hover:bg-gray-400 active:bg-gray-400'}
-            type="date"
-            min="2000-01-01"
-            value=${searchValue}
-            onChange=${event => {
+            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
+            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            type='date'
+            min='2000-01-01'
+            value={searchValue}
+            onChange={event => {
               const value = event.target.value
 
               if (value == null || value.length === 0) {
@@ -157,42 +155,42 @@ export default function Menu ({
             }}
           />
         </label>
-      `}
+      )}
 
       <button
-        class=${'mt-5 h-10 text-black text-center rounded bg-gray-100 ' +
-          'shadow hover:bg-gray-400 active:bg-gray-400'}
-        onClick=${toggleFullYear}
+        class={'mt-5 h-10 text-black text-center rounded bg-gray-100 ' +
+        'shadow hover:bg-gray-400 active:bg-gray-400'}
+        onClick={toggleFullYear}
       >
-        Zeige ${isFullYear ? 'Monate' : 'ganzes Jahr'}
+        Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
       </button>
 
-      <label class="mt-5 flex flex-col items-stretch text-white text-center">
+      <label class='mt-5 flex flex-col items-stretch text-white text-center'>
         Schichtmodell
         <select
-          class=${'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
-            'hover:bg-gray-400 active:bg-gray-400'}
-          value=${shiftModel}
-          onChange=${event => {
+          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
+          'hover:bg-gray-400 active:bg-gray-400'}
+          value={shiftModel}
+          onChange={event => {
             dispatch({
               type: 'model_change',
               payload: event.target.value
             })
           }}
         >
-          ${shiftModelNames.map(model => html`
-            <option key=${model} value=${model}>
-              ${shiftModelText[model] || model}
+          {shiftModelNames.map(model => (
+            <option key={model} value={model}>
+              {shiftModelText[model] || model}
             </option>
-          `)}
+          ))}
         </select>
       </label>
 
       <select
-        class=${'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
-          'hover:bg-gray-400 active:bg-gray-400'}
-        value=${group}
-        onChange=${event => {
+        class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
+        'hover:bg-gray-400 active:bg-gray-400'}
+        value={group}
+        onChange={event => {
           const group = +event.target.value
           dispatch({
             type: 'group_change',
@@ -200,17 +198,17 @@ export default function Menu ({
           })
         }}
       >
-        <option value="0">Alle Gruppen</option>
-        ${groupOptions}
+        <option value='0'>Alle Gruppen</option>
+        {groupOptions}
       </select>
 
       <button
-        class=${'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
-          'hover:bg-gray-400 active:bg-gray-400'}
-        onClick=${onShare}
+        class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
+        'hover:bg-gray-400 active:bg-gray-400'}
+        onClick={onShare}
       >
-        <img src="/assets/icons/share21.svg" height="32" width="32" alt="teilen" />
+        <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
       </button>
     </div>
-  `
+  )
 }

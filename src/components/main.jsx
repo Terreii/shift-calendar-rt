@@ -5,7 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, useState, useEffect } from '../preact.js'
+import { h } from 'preact'
+import { useState, useEffect } from 'preact/hooks'
 
 import Downloader from './download.js'
 import Footer from './footer.js'
@@ -77,30 +78,30 @@ export default function Main ({ isFullYear, year, month, shiftModel, today, sear
     }
   }
 
-  return html`
-    <main class="flex flex-col content-center">
+  return (
+    <main class='flex flex-col content-center'>
       <div
-        class="flex flex-row flex-wrap justify-around pt-16 px-5 pb-2"
-        onClick=${processClick}
+        class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
+        onClick={processClick}
       >
-        ${monthsData.map(([year, month]) => html`
-          <${Month}
-            key=${`${year}-${month}-${shiftModel}-${group}`}
-            year=${year}
-            month=${month}
-            data=${selectMonthData(year, month, shiftModel)}
-            today=${today[0] === year && today[1] === month ? today : null}
-            search=${search != null && search[0] === year && search[1] === month ? search[2] : null}
-            group=${group}
+        {monthsData.map(([year, month]) => (
+          <Month
+            key={`${year}-${month}-${shiftModel}-${group}`}
+            year={year}
+            month={month}
+            data={selectMonthData(year, month, shiftModel)}
+            today={today[0] === year && today[1] === month ? today : null}
+            search={search != null && search[0] === year && search[1] === month ? search[2] : null}
+            group={group}
           />
-        `)}
+        ))}
       </div>
 
-      <${Downloader} shiftModel=${shiftModel} />
+      <Downloader shiftModel={shiftModel} />
 
-      <${Footer} />
+      <Footer />
     </main>
-  `
+  )
 }
 
 /**
