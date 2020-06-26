@@ -5,10 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, useReducer, useState, useEffect } from '../preact.js'
-import { Router } from '../web_modules/preact-router.js'
-import Hammer from '../web_modules/hammerjs.js'
-import qs from '../web_modules/querystringify.js'
+import { h } from 'preact'
+import { useReducer, useState, useEffect } from 'preact/hooks'
+import { Router } from 'preact-router'
+import Hammer from 'hammerjs'
+import qs from 'querystringify'
 
 import FirstRunDialog from './first-run.js'
 import Header from './header.js'
@@ -66,51 +67,52 @@ export default function App () {
     }
   }, [state.search])
 
-  return html`
-    <div id="app">
-      <${Header}
-        year=${state.year}
-        month=${state.month}
-        isFullYear=${state.fullYear}
-        shiftModel=${state.shiftModel}
-        search=${state.search}
-        group=${state.group}
-        url=${state.url}
-        dispatch=${dispatch}
+  return (
+    <div id='app'>
+      <Header
+        year={state.year}
+        month={state.month}
+        isFullYear={state.fullYear}
+        shiftModel={state.shiftModel}
+        search={state.search}
+        group={state.group}
+        url={state.url}
+        dispatch={dispatch}
       />
-      <${Router}
-        onChange=${event => {
+      <Router
+        onChange={event => {
           dispatch({ type: 'url_change', url: event.url })
         }}
       >
-        <${Main}
-          path="/"
-          isFullYear=${state.fullYear}
-          year=${state.year}
-          month=${state.month}
-          shiftModel=${state.shiftModel}
-          today=${today}
-          search=${state.search}
-          group=${state.group}
+        <Main
+          path='/'
+          isFullYear={state.fullYear}
+          year={state.year}
+          month={state.month}
+          shiftModel={state.shiftModel}
+          today={today}
+          search={state.search}
+          group={state.group}
         />
-        <${Impressum} path="/impressum/" />
-      </${Router}>
+        <Impressum path='/impressum/' />
+      </Router>
 
-      <${InstallPrompt} />
+      <InstallPrompt />
 
-      ${state.didSelectModel
+      {state.didSelectModel
         ? null
-        : html`<${FirstRunDialog}
-          onClick=${model => {
-            dispatch({
-              type: 'model_change',
-              payload: model
-            })
-          }}
-        />`
-      }
+        : (
+          <FirstRunDialog
+            onClick={model => {
+              dispatch({
+                type: 'model_change',
+                payload: model
+              })
+            }}
+          />
+        )}
     </div>
-  `
+  )
 }
 
 /**

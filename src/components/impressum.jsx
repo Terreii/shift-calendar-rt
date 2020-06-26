@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html } from '../preact.js'
+import { h } from 'preact'
 
 /**
  * Renders the Impressum.
@@ -13,10 +13,10 @@ import { html } from '../preact.js'
  * @returns {JSX.Element}
  */
 export default function Impressum () {
-  return html`
-    <div class="pt-16 pb-2 px-6">
-      <h2 class="text-2xl font-bold">Datenschutzerklärung</h2>
-      <h3 id="dsg-general-intro"></h3>
+  return (
+    <div class='pt-16 pb-2 px-6'>
+      <h2 class='text-2xl font-bold'>Datenschutzerklärung</h2>
+      <h3 id='dsg-general-intro' />
       <p>
         Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung
         von personenbezogenen Daten (nachfolgend kurz „Daten“) im Rahmen der Erbringung unserer
@@ -28,17 +28,17 @@ export default function Impressum () {
       </p>
       <br />
       <br />
-      <h3 id="dsg-general-controller" class="text-xl font-semibold">Verantwortlicher</h3>
+      <h3 id='dsg-general-controller' class='text-xl font-semibold'>Verantwortlicher</h3>
       <p>
-        <span class="tsmcontroller">
+        <span class='tsmcontroller'>
           Christopher Astfalk<br />
           <i>Adresse auf Nachfrage</i><br />
           72760 Reutlingen<br />
           BW Germany<br />
-          work email: christopher.astfalk {dieses at Zeichen} de.bosch.com
+          work email: christopher.astfalk {'{dieses at Zeichen}'} de.bosch.com
         </span>
       </p>
-      <h3 id="dsg-general-datatype" class="text-xl font-semibold">Arten der verarbeiteten Daten</h3>
+      <h3 id='dsg-general-datatype' class='text-xl font-semibold'>Arten der verarbeiteten Daten</h3>
       <p>
         - Bestandsdaten (z.B., Personen-Stammdaten, Namen oder Adressen).
         <br />
@@ -50,7 +50,7 @@ export default function Impressum () {
         <br />
         - Meta-/Kommunikationsdaten (z.B., Geräte-Informationen, IP-Adressen).
       </p>
-      <h3 id="dsg-general-datasubjects" class="text-xl font-semibold">
+      <h3 id='dsg-general-datasubjects' class='text-xl font-semibold'>
         Kategorien betroffener Personen
       </h3>
       <p>
@@ -58,15 +58,15 @@ export default function Impressum () {
         Personen zusammenfassend auch als „Nutzer“).
         <br />
       </p>
-      <h3 id="dsg-general-purpose" class="text-xl font-semibold">Zweck der Verarbeitung</h3>
+      <h3 id='dsg-general-purpose' class='text-xl font-semibold'>Zweck der Verarbeitung</h3>
       <p>
         - Zurverfügungstellung des Onlineangebotes, seiner Funktionen und  Inhalte.<br />
         - Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.<br />
         - Sicherheitsmaßnahmen.<br />
         - Reichweitenmessung/Marketing<br />
-        <span class="tsmcom"></span>
+        <span class='tsmcom' />
       </p>
-      <h3 id="dsg-general-terms" class="text-xl font-semibold">Verwendete Begrifflichkeiten</h3>
+      <h3 id='dsg-general-terms' class='text-xl font-semibold'>Verwendete Begrifflichkeiten</h3>
       <p>
         „Personenbezogene Daten“ sind alle Informationen, die sich auf eine identifizierte oder
         identifizierbare natürliche Person (im Folgenden „betroffene Person“) beziehen; als
@@ -107,7 +107,7 @@ export default function Impressum () {
         andere Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet.
         <br />
       </p>
-      <h3 id="dsg-general-legalbasis" class="text-xl font-semibold">
+      <h3 id='dsg-general-legalbasis' class='text-xl font-semibold'>
         Maßgebliche Rechtsgrundlagen
       </h3>
       <p>
@@ -143,7 +143,7 @@ export default function Impressum () {
         bestimmt sich nach den Vorgaben des Art. 9 Abs. 2 DSGVO.
         <br />
       </p>
-      <h3 id="dsg-general-securitymeasures" class="text-xl font-semibold">Sicherheitsmaßnahmen</h3>
+      <h3 id='dsg-general-securitymeasures' class='text-xl font-semibold'>Sicherheitsmaßnahmen</h3>
       <p>
         Wir treffen nach Maßgabe der gesetzlichen Vorgabenunter Berücksichtigung des Stands der
         Technik, der Implementierungskosten und der Art, des Umfangs, der Umstände und der Zwecke
@@ -162,7 +162,7 @@ export default function Impressum () {
         Datenschutzes durch Technikgestaltung und durch datenschutzfreundliche Voreinstellungen.
         <br />
       </p>
-      <h3 id="dsg-general-coprocessing" class="text-xl font-semibold">
+      <h3 id='dsg-general-coprocessing' class='text-xl font-semibold'>
         Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen und Dritten
       </h3>
       <p>
@@ -181,7 +181,7 @@ export default function Impressum () {
         entsprechenden Grundlage.
         <br />
       </p>
-      <h3 id="dsg-general-thirdparty" class="text-xl font-semibold">
+      <h3 id='dsg-general-thirdparty' class='text-xl font-semibold'>
         Übermittlungen in Drittländer
       </h3>
       <p>
@@ -198,7 +198,7 @@ export default function Impressum () {
         für die USA durch das „Privacy Shield“) oder Beachtung offiziell anerkannter spezieller
         vertraglicher Verpflichtungen.
       </p>
-      <h3 id="dsg-general-rightssubject" class="text-xl font-semibold">
+      <h3 id='dsg-general-rightssubject' class='text-xl font-semibold'>
         Rechte der betroffenen Personen
       </h3>
       <p>
@@ -226,9 +226,9 @@ export default function Impressum () {
         zuständigen Aufsichtsbehörde einzureichen.
         <br />
       </p>
-      <h3 id="dsg-general-revokeconsent" class="text-xl font-semibold">Widerrufsrecht</h3>
+      <h3 id='dsg-general-revokeconsent' class='text-xl font-semibold'>Widerrufsrecht</h3>
       <p>Sie haben das Recht, erteilte Einwilligungen mit Wirkung für die Zukunft zu widerrufen.</p>
-      <h3 id="dsg-general-object">Widerspruchsrecht</h3>
+      <h3 id='dsg-general-object'>Widerspruchsrecht</h3>
       <p>
         <strong>
           Sie können der künftigen Verarbeitung der Sie betreffenden Daten nach Maßgabe der
@@ -236,7 +236,7 @@ export default function Impressum () {
           die Verarbeitung für Zwecke der Direktwerbung erfolgen.
         </strong>
       </p>
-      <h3 id="dsg-general-cookies" class="text-xl font-semibold">
+      <h3 id='dsg-general-cookies' class='text-xl font-semibold'>
         Cookies und Widerspruchsrecht bei Direktwerbung
       </h3>
       <p>
@@ -270,15 +270,18 @@ export default function Impressum () {
         <br />
         Ein genereller Widerspruch gegen den Einsatz der zu Zwecken des Onlinemarketing
         eingesetzten Cookies kann bei einer Vielzahl der Dienste, vor allem im Fall des Trackings,
-        über die US-amerikanische Seite <a href="http://www.aboutads.info/choices/">
+        {'über die US-amerikanische Seite '}
+        <a href='http://www.aboutads.info/choices/'>
           http://www.aboutads.info/choices/
-        </a> oder die EU-Seite <a href="http://www.youronlinechoices.com/">
+        </a>
+        {' oder die EU-Seite '}
+        <a href='http://www.youronlinechoices.com/'>
           http://www.youronlinechoices.com/
         </a> erklärt werden. Des Weiteren kann die Speicherung von Cookies mittels deren
         Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass
         dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.
       </p>
-      <h3 id="dsg-general-erasure" class="text-xl font-semibold">Löschung von Daten</h3>
+      <h3 id='dsg-general-erasure' class='text-xl font-semibold'>Löschung von Daten</h3>
       <p>
         Die von uns verarbeiteten Daten werden nach Maßgabe der gesetzlichen Vorgaben gelöscht oder
         in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser Datenschutzerklärung
@@ -292,7 +295,7 @@ export default function Impressum () {
         und nicht für andere Zwecke verarbeitet. Das gilt z.B. für Daten, die aus handels- oder
         steuerrechtlichen Gründen aufbewahrt werden müssen.
       </p>
-      <h3 id="dsg-general-changes" class="text-xl font-semibold">
+      <h3 id='dsg-general-changes' class='text-xl font-semibold'>
         Änderungen und Aktualisierungen der Datenschutzerklärung
       </h3>
       <p>
@@ -302,11 +305,11 @@ export default function Impressum () {
         Änderungen eine Mitwirkungshandlung Ihrerseits (z.B. Einwilligung) oder eine sonstige
         individuelle Benachrichtigung erforderlich wird.
       </p>
-      <p></p>
-      <h3 id="dsg-hostingprovider" class="text-xl font-semibold">Hosting und E-Mail-Versand</h3>
-      <p></p>
+      <p />
+      <h3 id='dsg-hostingprovider' class='text-xl font-semibold'>Hosting und E-Mail-Versand</h3>
+      <p />
       <p>
-        <span class="ts-muster-content">
+        <span class='ts-muster-content'>
           Die von uns in Anspruch genommenen Hosting-Leistungen dienen der Zurverfügungstellung der
           folgenden Leistungen: Infrastruktur- und Plattformdienstleistungen, Rechenkapazität,
           Speicherplatz und Datenbankdienste, E-Mail-Versand, Sicherheitsleistungen sowie
@@ -321,13 +324,13 @@ export default function Impressum () {
           Auftragsverarbeitungsvertrag).
         </span>
       </p>
-      <p></p>
-      <h3 id="dsg-logfiles" class="text-xl font-semibold">
+      <p />
+      <h3 id='dsg-logfiles' class='text-xl font-semibold'>
         Erhebung von Zugriffsdaten und Logfiles
       </h3>
-      <p></p>
+      <p />
       <p>
-        <span class="ts-muster-content">
+        <span class='ts-muster-content'>
           Wir, bzw. unser Hostinganbieter, erhebt auf Grundlage unserer berechtigten Interessen im
           Sinne des Art. 6 Abs. 1 lit. f. DSGVO Daten über jeden Zugriff auf den Server, auf dem
           sich dieser Dienst befindet (sogenannte Serverlogfiles). Zu den Zugriffsdaten gehören
@@ -344,13 +347,13 @@ export default function Impressum () {
         </span>
       </p>
       <a
-        href="https://datenschutz-generator.de"
-        class="dsg1-6 inline-block text-blue-700 underline"
-        rel="nofollow"
-        target="_blank"
+        href='https://datenschutz-generator.de'
+        class='dsg1-6 inline-block text-blue-700 underline'
+        rel='nofollow noopener noreferrer'
+        target='_blank'
       >
         Erstellt mit Datenschutz-Generator.de von RA Dr. Thomas Schwenke
       </a>
     </div>
-  `
+  )
 }

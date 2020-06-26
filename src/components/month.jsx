@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { html, Component } from '../preact.js'
+import { h, Component } from 'preact'
 
 import MonthBody from './month-body.js'
 import { monthNames } from '../lib/constants.js'
@@ -46,52 +46,51 @@ export default class Month extends Component {
 
     const isToday = today != null && today[0] === year && today[1] === month
 
-    return html`
+    return (
       <table
-        id=${`month_${year}-${month + 1}`}
-        class="mt-8 xl:mt-0 border border-black border-collapse text-center"
+        id={`month_${year}-${month + 1}`}
+        class='mt-8 xl:mt-0 border border-black border-collapse text-center'
       >
         <caption
-          class=${isToday
+          class={isToday
             ? 'border border-b-0 border-black bg-gray-400 text-black font-bold'
-            : 'font-bold'
-          }
+            : 'font-bold'}
         >
-          ${monthNames[month]} ${year}${isToday ? ' (Jetzt)' : ''}
+          {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
         </caption>
         <thead>
           <tr>
-            <th title="Woche">Wo</th>
-            <th title="Tag im Monat">Tag</th>
-            <th title="Wochentag"></th>
-            ${groups.map(gr => html`
-              <th key=${gr} aria-label=${'Gruppe ' + (gr + 1)}>Gr. ${gr + 1}</th>
-            `)}
+            <th title='Woche'>Wo</th>
+            <th title='Tag im Monat'>Tag</th>
+            <th title='Wochentag' />
+            {groups.map(gr => (
+              <th key={gr} aria-label={'Gruppe ' + (gr + 1)}>Gr. {gr + 1}</th>
+            ))}
           </tr>
         </thead>
 
-        <${MonthBody}
-          year=${year}
-          month=${month}
-          data=${data}
-          today=${today}
-          search=${search}
-          group=${group}
+        <MonthBody
+          year={year}
+          month={month}
+          data={data}
+          today={today}
+          search={search}
+          group={group}
         />
 
-        <tfoot class="text-sm font-bold">
+        <tfoot class='text-sm font-bold'>
           <tr>
             <td
-              class="border border-black p-1 cursor-help"
-              colSpan="3"
-              title="Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet."
+              class='border border-black p-1 cursor-help'
+              colSpan='3'
+              title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
             >
               Anzahl
             </td>
-            ${groups.map(gr => html`<td key=${gr}>${data.workingCount[gr]}</td>`)}
+            {groups.map(gr => <td key={gr}>{data.workingCount[gr]}</td>)}
           </tr>
         </tfoot>
       </table>
-    `
+    )
   }
 }

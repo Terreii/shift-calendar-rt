@@ -7,10 +7,8 @@
 /.idea
 yarn.lock
 /.vscode
-src/web_modules
-src/bundle.js
-src/style.css
-src/sw.js
-src/sw.js.map
-src/workbox-*.js
-src/workbox-*.js.map
+
+.build
+build
+web_modules
+node_modules
