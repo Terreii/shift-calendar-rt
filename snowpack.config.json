@@ -6,5 +6,7 @@
   "buildOptions": {
     "baseUrl": "/"
   },
-  "plugins": []
+  "plugins": [
+    ["@snowpack/plugin-webpack", {}]
+  ]
 }

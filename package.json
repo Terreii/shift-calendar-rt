@@ -45,6 +45,7 @@
   "dependencies": {
     "htm": "^3.0.4",
     "preact": "^10.4.4",
-    "preact-router": "^3.2.1"
+    "preact-router": "^3.2.1",
+    "serve": "^11.3.2"
   }
 }
