@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
+import Hammer from 'hammerjs'
 
 import Downloader from './download.js'
 import Footer from './footer.js'
@@ -24,12 +25,24 @@ import selectMonthData from '../lib/select-month-data.js'
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
  * @param {number}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
+ * @param {Function}  arg0.dispatch   Change the global state using the reducers dispatch function.
  * @returns {JSX.Element}
  */
-export default function Main ({ isFullYear, year, month, shiftModel, today, search, group }) {
-  const monthsData = []
+export default function Main ({
+  isFullYear,
+  year,
+  month,
+  shiftModel,
+  today,
+  search,
+  group,
+  dispatch
+}) {
+  const ref = useHammer(dispatch, isFullYear)
 
   const numberOfMonths = useNumberOfMonths(group, isFullYear)
+
+  const monthsData = []
 
   if (isFullYear) {
     // Render all 12 months of the selected year
@@ -83,6 +96,7 @@ export default function Main ({ isFullYear, year, month, shiftModel, today, sear
       <div
         class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
         onClick={processClick}
+        ref={ref}
       >
         {monthsData.map(([year, month]) => (
           <Month
@@ -132,6 +146,45 @@ function useNumberOfMonths (group, displayFullYear) {
   return group > 0
     ? numberOfMonths * 2
     : numberOfMonths
+}
+
+/**
+ * Setup Hammer and handle swipes.
+ * @param {function} dispatch    Dispatch function of the reducer.
+ * @param {boolean}  isFullYear  Is the full year displayed?
+ */
+function useHammer (dispatch, isFullYear) {
+  const [container, setContainer] = useState(null)
+
+  useEffect(() => {
+    if (isFullYear || container == null) return
+
+    const handler = event => {
+      switch (event.direction) {
+        case 2: // right to left
+          dispatch({
+            type: 'move',
+            payload: 1
+          })
+          break
+
+        case 4: // left to right
+          dispatch({
+            type: 'move',
+            payload: -1
+          })
+          break
+      }
+    }
+
+    const hammertime = new Hammer(container)
+    hammertime.on('swipe', handler)
+    return () => {
+      hammertime.off('swipe', handler)
+    }
+  }, [isFullYear, container])
+
+  return setContainer
 }
 
 /**

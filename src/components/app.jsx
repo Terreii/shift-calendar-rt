@@ -8,7 +8,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
 import { Router } from 'preact-router'
-import Hammer from 'hammerjs'
 
 import FirstRunDialog from './first-run.js'
 import Header from './header.js'
@@ -27,7 +26,6 @@ export default function App () {
   const [state, dispatch] = useStateReducer()
 
   const today = useToday()
-  useHammer(dispatch, state.fullYear, state.url)
 
   useEffect(() => {
     // on first render, and every time the shift model changes.
@@ -69,6 +67,7 @@ export default function App () {
           today={today}
           search={state.search}
           group={state.group}
+          dispatch={dispatch}
         />
         <Impressum path='/impressum/' />
       </Router>
@@ -127,40 +126,4 @@ function useToday () {
   }, [today])
 
   return today
-}
-
-/**
- * Setup Hammer and handle swipes.
- * @param {function} dispatch   Dispatch function of the reducer.
- * @param {boolean}  isFullYear Is the full year displayed?
- * @param {string}   path       The URL path.
- */
-function useHammer (dispatch, isFullYear, path) {
-  useEffect(() => {
-    if (isFullYear || path === '/impressum/') return
-
-    const handler = event => {
-      switch (event.direction) {
-        case 2: // right to left
-          dispatch({
-            type: 'move',
-            payload: 1
-          })
-          break
-
-        case 4: // left to right
-          dispatch({
-            type: 'move',
-            payload: -1
-          })
-          break
-      }
-    }
-
-    const hammertime = new Hammer(document.getElementById('app'))
-    hammertime.on('swipe', handler)
-    return () => {
-      hammertime.off('swipe', handler)
-    }
-  }, [isFullYear, path])
 }
