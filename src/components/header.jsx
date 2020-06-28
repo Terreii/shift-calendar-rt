@@ -197,6 +197,7 @@ function useIsSmallScreen () {
 function useShowMenu () {
   const [show, setShow] = useState(false)
 
+  // Hide on click main element
   useEffect(() => {
     if (show) {
       const hide = () => {
@@ -207,6 +208,28 @@ function useShowMenu () {
       element.addEventListener('click', hide)
       return () => {
         element.removeEventListener('click', hide)
+      }
+    }
+  }, [show])
+
+  // Hide on hitting ESC
+  useEffect(() => {
+    if (show) {
+      const keyEvent = event => {
+        if (event.code === 'Escape' || event.keyCode === 27) {
+          setShow(false)
+
+          // Focus the menu toggle button, Because both menus start from there.
+          const element = document.getElementById('hamburger_menu_toggle')
+          if (element) {
+            element.focus()
+          }
+        }
+      }
+
+      document.body.addEventListener('keyup', keyEvent)
+      return () => {
+        document.body.removeEventListener('keyup', keyEvent)
       }
     }
   }, [show])
