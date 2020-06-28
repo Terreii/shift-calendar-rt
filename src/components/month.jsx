@@ -50,8 +50,10 @@ export default class Month extends Component {
       <table
         id={`month_${year}-${month + 1}`}
         class='mt-8 xl:mt-0 border border-black border-collapse text-center'
+        aria-labelledby={`month_${year}-${month + 1}_caption`}
       >
         <caption
+          id={`month_${year}-${month + 1}_caption`}
           class={isToday
             ? 'border border-b-0 border-black bg-gray-400 text-black font-bold'
             : 'font-bold'}
@@ -60,11 +62,21 @@ export default class Month extends Component {
         </caption>
         <thead>
           <tr>
-            <th title='Woche'>Wo</th>
-            <th title='Tag im Monat'>Tag</th>
-            <th title='Wochentag' />
+            <th>
+              <span class='sr-only'>Woche</span>
+              <span aria-hidden='true' title='Woche'>Wo</span>
+            </th>
+            <th title='Tag im Monat' aria-label='Tag im Monat'>Tag</th>
+            <th title='Wochentag'>
+              <span class='sr-only'>Wochentag</span>
+            </th>
             {groups.map(gr => (
-              <th key={gr} aria-label={'Gruppe ' + (gr + 1)}>Gr. {gr + 1}</th>
+              <th key={gr}>
+                <span class='sr-only'>{'Gruppe ' + (gr + 1)}</span>
+                <span aria-hidden='true' title={'Gruppe ' + (gr + 1)}>
+                  Gr. {gr + 1}
+                </span>
+              </th>
             ))}
           </tr>
         </thead>
@@ -83,11 +95,15 @@ export default class Month extends Component {
             <td
               class='border border-black p-1 cursor-help'
               colSpan='3'
-              title='Die Anzahl der Tage, an denen eine Schichtgruppe diesen Monat arbeitet.'
+              title='Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet.'
             >
-              Anzahl
+              Summe
             </td>
-            {groups.map(gr => <td key={gr}>{data.workingCount[gr]}</td>)}
+            {groups.map(gr => (
+              <td key={gr} aria-label='Summe Arbeitstage'>
+                {data.workingCount[gr]}
+              </td>
+            ))}
           </tr>
         </tfoot>
       </table>

@@ -56,3 +56,9 @@ export const shiftModelNumberOfGroups = {
   [shiftAddedNight]: 3,
   [shiftAddedNight8]: 3
 }
+
+export const workingLongName = {
+  F: 'Frühschicht',
+  S: 'Spätschicht',
+  N: 'Nachtschicht'
+}
