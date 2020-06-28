@@ -49,6 +49,9 @@ export default function Menu ({
 
   return (
     <div
+      id='hamburger_menu'
+      aria-live='polite'
+      aria-label='Menü'
       class={
         (show ? 'flex' : 'hidden') + ' absolute top-0 right-0 mt-12 p-3 ' +
       ' flex-col justify-center items-stretch bg-green-900 shadow-lg'
@@ -65,6 +68,7 @@ export default function Menu ({
             onChange={event => {
               gotoMonth({ type: 'goto', month: +event.target.value, fullYear: false }, true)
             }}
+            aria-controls='calendar_main_out'
           >
             {monthNames.map((name, index) => (
               <option key={name} value={index}>{name}</option>
@@ -80,6 +84,7 @@ export default function Menu ({
             'shadow hover:bg-gray-400 active:bg-gray-400'}
             type='number'
             min='2000'
+            aria-controls='calendar_main_out'
             value={year}
             onChange={event => {
               const year = +event.target.value
@@ -102,6 +107,7 @@ export default function Menu ({
             class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
             'shadow hover:bg-gray-400 active:bg-gray-400'}
             type='month'
+            aria-controls='calendar_main_out'
             min='2000-01'
             value={`${year}-${String(month + 1).padStart(2, '0')}`}
             onChange={event => {
@@ -136,6 +142,7 @@ export default function Menu ({
             class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
             'shadow hover:bg-gray-400 active:bg-gray-400'}
             type='date'
+            aria-controls='calendar_main_out'
             min='2000-01-01'
             value={searchValue}
             onChange={event => {
@@ -161,6 +168,7 @@ export default function Menu ({
         class={'mt-5 h-10 text-black text-center rounded bg-gray-100 ' +
         'shadow hover:bg-gray-400 active:bg-gray-400'}
         onClick={toggleFullYear}
+        aria-controls='calendar_main_out'
       >
         Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
       </button>
@@ -170,6 +178,7 @@ export default function Menu ({
         <select
           class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
           'hover:bg-gray-400 active:bg-gray-400'}
+          aria-controls='calendar_main_out'
           value={shiftModel}
           onChange={event => {
             dispatch({
@@ -189,6 +198,8 @@ export default function Menu ({
       <select
         class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
         'hover:bg-gray-400 active:bg-gray-400'}
+        aria-controls='calendar_main_out'
+        aria-label='Schichtgruppen'
         value={group}
         onChange={event => {
           const group = +event.target.value
@@ -206,6 +217,7 @@ export default function Menu ({
         class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
         'hover:bg-gray-400 active:bg-gray-400'}
         onClick={onShare}
+        aria-label='Teile deine Schicht'
       >
         <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
       </button>

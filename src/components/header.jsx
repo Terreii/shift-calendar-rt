@@ -69,6 +69,7 @@ export default function Header ({
             'focus:shadow-outline focus:outline-none'}
             title='vorigen Monat'
             aria-label='vorigen Monat'
+            aria-controls='calendar_main_out'
             onClick={() => {
               dispatch({ type: 'move', payload: -1 })
               hideMenu()
@@ -106,6 +107,7 @@ export default function Header ({
             'focus:shadow-outline focus:outline-none'}
             title='nächster Monat'
             aria-label='nächster Monat'
+            aria-controls='calendar_main_out'
             onClick={() => {
               dispatch({ type: 'move', payload: 1 })
               hideMenu()
@@ -118,6 +120,7 @@ export default function Header ({
             class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
             'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
             onClick={toggleShowMenu}
+            aria-controls='hamburger_menu'
           >
             <img
               src='/assets/icons/hamburger_icon.svg'
@@ -127,35 +130,35 @@ export default function Header ({
               alt='Menu'
             />
           </button>
+
+          <Menu
+            show={showMenu}
+            isFullYear={isFullYear}
+            month={month}
+            year={year}
+            search={search}
+            group={group}
+            shiftModel={shiftModel}
+            gotoMonth={(event, hide) => {
+              dispatch(event)
+
+              if (hide) {
+                hideMenu()
+              }
+            }}
+            dispatch={dispatch}
+            onSearch={search}
+            toggleFullYear={() => {
+              dispatch({ type: 'toggle_full_year' })
+              hideMenu()
+            }}
+            onShare={() => {
+              hideMenu()
+              setShowShareMenu(true)
+            }}
+          />
         </nav>
       )}
-
-      <Menu
-        show={showMenu}
-        isFullYear={isFullYear}
-        month={month}
-        year={year}
-        search={search}
-        group={group}
-        shiftModel={shiftModel}
-        gotoMonth={(event, hide) => {
-          dispatch(event)
-
-          if (hide) {
-            hideMenu()
-          }
-        }}
-        dispatch={dispatch}
-        onSearch={search}
-        toggleFullYear={() => {
-          dispatch({ type: 'toggle_full_year' })
-          hideMenu()
-        }}
-        onShare={() => {
-          hideMenu()
-          setShowShareMenu(true)
-        }}
-      />
 
       {showShareMenu && (
         <ShareMenu
