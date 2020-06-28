@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect, useRef } from 'preact/hooks'
+import ms from 'milliseconds'
 
 /**
  * Renders an install button for add-to-home-screen of PWA.
@@ -21,7 +22,7 @@ export default function InstallButton () {
     const dismissedTime = new Date(window.localStorage.getItem('dismissedInstallMessage'))
       .getTime()
 
-    if (isIos && !isInStandaloneMode && dismissedTime < (Date.now() - 12 * 24 * 60 * 60 * 1000)) {
+    if (isIos && !isInStandaloneMode && dismissedTime < (Date.now() - ms.days(12))) {
       setShow('ios')
     } else {
       const handler = event => {
@@ -90,7 +91,7 @@ export default function InstallButton () {
           class={'fixed bottom-0 w-screen flex flex-col items-center text-base text-white ' +
           'text-center bg-green-900 shadow-lg mb-safe-area'}
         >
-          Klicke auf Teilen & dann "Zum Home-Bildschirm" um den Kalender zum installieren:
+          Klicke auf Teilen &amp; dann "Zum Home-Bildschirm" um den Kalender zum installieren:
           <div class='flex flex-row items-center'>
             <img src='/assets/icons/ios-share.png' height='55' class='h-12' alt='klicke Teilen' />
             ➡︎
