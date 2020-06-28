@@ -95,7 +95,7 @@ export default function Main ({
     <main class='flex flex-col content-center'>
       <div
         id='calendar_main_out'
-        class='flex flex-row flex-wrap justify-around px-5 pb-2'
+        class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
         onClick={processClick}
         ref={ref}
         aria-live='polite'

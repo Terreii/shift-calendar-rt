@@ -156,34 +156,46 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <div class='mt-5 flex flex-row flex-wrap content-center'>
         <button
+          type='button'
           class='flex-auto mt-5 mx-3 w-32 form-item'
           onClick={hide}
         >
           Abbrechen
         </button>
-        <a
-          class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
-          'hover:bg-purple-500 active:bg-purple-500 form-item'}
-          href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
-            url.toString().replace(/&/g, '%26')
-          }`}
-          onClick={event => {
-            if ('share' in window.navigator) {
-              event.preventDefault()
+        {'share' in window.navigator
+          ? (
+            <button
+              type='button'
+              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
+              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              onClick={event => {
+                event.preventDefault()
 
-              window.navigator.share({
-                url,
-                title: 'Schichtkalender',
-                text: 'Meine Schichten beim Bosch Reutlingen: ' + url
-              })
-                .then(() => { hide() })
-            } else {
-              setTimeout(hide, 16)
-            }
-          }}
-        >
-          Teilen
-        </a>
+                window.navigator.share({
+                  url,
+                  title: 'Schichtkalender',
+                  text: 'Meine Schichten beim Bosch Reutlingen: ' + url
+                })
+                  .then(() => { hide() })
+              }}
+            >
+              Teilen
+            </button>
+          )
+          : (
+            <a
+              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
+              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
+                url.toString().replace(/&/g, '%26')
+              }`}
+              onClick={() => {
+                setTimeout(hide, 16)
+              }}
+            >
+              Teilen
+            </a>
+          )}
       </div>
     </div>
   )

@@ -63,7 +63,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
       >
         {(weekDay === 1 || index === 0) && (
           <td
-            class='text-gray-800 border-r border-black'
+            class='text-gray-800 bg-white border-r border-black'
             rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
           >
             <span class='sr-only'>{'Woche ' + time.weekNumber}</span>

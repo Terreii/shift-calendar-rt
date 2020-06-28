@@ -161,6 +161,7 @@ export default function Menu ({
       )}
 
       <button
+        type='button'
         class='mt-5 form-item'
         onClick={toggleFullYear}
         aria-controls='calendar_main_out'
@@ -209,6 +210,7 @@ export default function Menu ({
       </select>
 
       <button
+        type='button'
         class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
         'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
         onClick={onShare}
