@@ -40,6 +40,13 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
     [search, addSearch]
   )
 
+  useEffect(() => {
+    document.getElementById('share_url').focus()
+    return () => {
+      document.getElementById('hamburger_menu_toggle').focus()
+    }
+  }, [])
+
   const url = useMemo(() => {
     const url = new URL(window.location.href)
 
@@ -74,6 +81,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
       <label class='flex flex-col'>
         Adresse zum teilen:
         <input
+          id='share_url'
           class='bg-transparent text-white pt-1'
           type='url'
           readonly

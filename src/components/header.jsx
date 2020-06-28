@@ -117,6 +117,7 @@ export default function Header ({
           </button>
 
           <button
+            id='hamburger_menu_toggle'
             class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
             'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
             onClick={toggleShowMenu}
