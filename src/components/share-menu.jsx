@@ -82,7 +82,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         Adresse zum teilen:
         <input
           id='share_url'
-          class='bg-transparent text-white pt-1'
+          class='bg-transparent text-white pt-1 focus:shadow-outline focus:outline-none'
           type='url'
           readonly
           value={url.href}
@@ -96,7 +96,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1'
+          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -114,7 +114,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1'
+          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -135,7 +135,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1'
+          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
           type='checkbox'
           checked={addSearch}
           disabled={search == null}
@@ -156,15 +156,14 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <div class='mt-5 flex flex-row flex-wrap content-center'>
         <button
-          class={'flex-auto mt-5 mx-3 h-10 w-32 text-black text-center rounded bg-gray-100 ' +
-          'shadow hover:bg-gray-400 active:bg-gray-400'}
+          class='flex-auto mt-5 mx-3 w-32 form-item'
           onClick={hide}
         >
           Abbrechen
         </button>
         <a
-          class={'flex-auto mt-5 mx-3 py-2 h-10 w-32 text-white text-center rounded ' +
-          'bg-purple-700 shadow hover:bg-purple-500 active:bg-purple-500'}
+          class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
+          'hover:bg-purple-500 active:bg-purple-500 form-item'}
           href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
             url.toString().replace(/&/g, '%26')
           }`}

@@ -61,8 +61,7 @@ export default function Menu ({
         ? null
         : (
           <select
-            class={'h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-400 ' +
-            'active:bg-gray-400'}
+            class='form-item'
             title='Gehe zum Monat'
             value={month}
             onChange={event => {
@@ -80,8 +79,7 @@ export default function Menu ({
         <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Jahr
           <input
-            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            class='flex-auto mt-1 w-full form-item'
             type='number'
             min='2000'
             aria-controls='calendar_main_out'
@@ -104,8 +102,7 @@ export default function Menu ({
         <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Gehe zum Monat
           <input
-            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            class='flex-auto mt-1 w-full form-item'
             type='month'
             aria-controls='calendar_main_out'
             min='2000-01'
@@ -139,8 +136,7 @@ export default function Menu ({
         <label class='mt-5 flex flex-col items-stretch text-white text-center'>
           Suche einen Tag
           <input
-            class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 ' +
-            'shadow hover:bg-gray-400 active:bg-gray-400'}
+            class='flex-auto mt-1 w-full form-item'
             type='date'
             aria-controls='calendar_main_out'
             min='2000-01-01'
@@ -165,8 +161,7 @@ export default function Menu ({
       )}
 
       <button
-        class={'mt-5 h-10 text-black text-center rounded bg-gray-100 ' +
-        'shadow hover:bg-gray-400 active:bg-gray-400'}
+        class='mt-5 form-item'
         onClick={toggleFullYear}
         aria-controls='calendar_main_out'
       >
@@ -177,7 +172,7 @@ export default function Menu ({
         Schichtmodell
         <select
           class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
-          'hover:bg-gray-400 active:bg-gray-400'}
+          'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
           aria-controls='calendar_main_out'
           value={shiftModel}
           onChange={event => {
@@ -197,7 +192,7 @@ export default function Menu ({
 
       <select
         class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-400 active:bg-gray-400'}
+        'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
         aria-controls='calendar_main_out'
         aria-label='Schichtgruppen'
         value={group}
@@ -215,7 +210,7 @@ export default function Menu ({
 
       <button
         class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-400 active:bg-gray-400'}
+        'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
         onClick={onShare}
         aria-label='Teile deine Schicht'
       >
