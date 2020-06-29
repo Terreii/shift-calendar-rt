@@ -8,7 +8,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h, Fragment } from 'preact'
 import { DateTime } from 'luxon'
 
-import { shiftTitle, workingLongName } from '../lib/constants.js'
+import WeekCell from './cells/week'
+import DayInMonthCell from './cells/dayInMonth'
+import WeekDayCell from './cells/weekDay'
+import GroupShiftCell from './cells/groupShift'
 
 /**
  * @typedef {Object} MonthData
@@ -104,123 +107,4 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
   })
 
   return <tbody>{dayRows}</tbody>
-}
-
-/**
- * Render the weekday.
- * @param {object}   param       Preact arguments.
- * @param {DateTime} param.time  luxon DateTime object.
- */
-function WeekCell ({ time }) {
-  return (
-    <td
-      class='text-gray-800 bg-white border-r border-black'
-      rowSpan={Math.min(7 - time.weekday, time.daysInMonth - time.day) + 1}
-    >
-      <span class='sr-only'>Woche {time.weekNumber}</span>
-      <span aria-hidden='true'>{time.weekNumber}</span>
-    </td>
-  )
-}
-
-/**
- * Render the day in month cell.
- * @param {object}   param                  Preact arguments.
- * @param {DateTime} param.time             luxon DateTime object.
- * @param {object}   [param.holidayData]    Holiday data of that day.
- * @param {object}   [param.dayLightSaving] Data about the daylight saving switch.
- * @param {boolean}  param.isToday          Is that day today.
- * @param {boolean}  param.isSearchResult   Is that day searched for?
- */
-function DayInMonthCell ({ time, holidayData, dayLightSaving, isToday, isSearchResult }) {
-  // is on this day the switch from or to day-light-saving.
-  const isDayLightSaving = dayLightSaving != null && dayLightSaving.day === time.day
-
-  const border = isToday || isSearchResult ? 'border-l-4 border-t-4 border-b-4' : 'border-l'
-  const borderColor = isSearchResult ? 'border-teal-400' : 'border-black'
-
-  let holidayStyle = ''
-  if (isDayLightSaving) {
-    holidayStyle = 'bg-yellow-300 text-black cursor-help border-4 border-red-600'
-  } else if (holidayData != null && ['holiday', 'school'].includes(holidayData.type)) {
-    holidayStyle = 'bg-teal-400 text-black'
-  }
-
-  return (
-    <td
-      class={`${borderColor} ${border} ${holidayStyle}`}
-      title={isDayLightSaving
-        ? dayLightSaving.name
-        : (holidayData != null ? holidayData.name : null)}
-    >
-      <time dateTime={time.toISODate()}>
-        {time.day}
-      </time>
-    </td>
-  )
-}
-
-/**
- * Render the cell with the week day.
- * @param {object}   param                 Preact arguments.
- * @param {DateTime} param.time            luxon DateTime object.
- * @param {boolean}  param.isToday         Is that cell of today?
- * @param {boolean}  param.isSearchResult  Is that cell part of a day that was searched for?
- */
-function WeekDayCell ({ time, isToday, isSearchResult }) {
-  let border = ''
-  if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-teal-400'
-  } else if (isToday) {
-    border = 'border-t-4 border-b-4 border-black'
-  }
-
-  return (
-    <td class={border}>
-      <span class='sr-only'>{time.weekdayLong}</span>
-      <span aria-hidden='true'>{time.weekdayShort}</span>
-    </td>
-  )
-}
-
-/**
- * Render a cell that displays if that shift group is working and what shift.
- * @param {object}          param                 Preact arguments.
- * @param {number}          param.group           Number of group. Group 1 is 0.
- * @param {"F"|"S"|"N"|"K"} param.shift           Shift data.
- * @param {boolean}         param.isToday         Is that cell of today?
- * @param {boolean}         param.isSearchResult  Is that day searched for?
- */
-function GroupShiftCell ({ group, shift, isToday, isSearchResult }) {
-  let border = ''
-  if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-teal-400'
-  } else if (isToday) {
-    border = 'border-t-4 border-b-4 border-black'
-  }
-
-  const groupColors = [
-    'bg-group-1',
-    'bg-group-2',
-    'bg-group-3',
-    'bg-group-4',
-    'bg-group-5',
-    'bg-group-6'
-  ]
-  const workStyle = shift !== 'K' ? groupColors[group] : ''
-  const title = isToday ? 'Heute ' + shiftTitle[shift] : shiftTitle[shift]
-
-  return (
-    <td
-      class={`text-black ${border} ${workStyle}`}
-      title={title}
-    >
-      {shift !== 'K' && (
-        <>
-          <span class='sr-only'>{workingLongName[shift]}</span>
-          <span aria-hidden='true'>{shift}</span>
-        </>
-      )}
-    </td>
-  )
 }
