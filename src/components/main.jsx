@@ -94,9 +94,11 @@ export default function Main ({
   return (
     <main class='flex flex-col content-center'>
       <div
+        id='calendar_main_out'
         class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
         onClick={processClick}
         ref={ref}
+        aria-live='polite'
       >
         {monthsData.map(([year, month]) => (
           <Month

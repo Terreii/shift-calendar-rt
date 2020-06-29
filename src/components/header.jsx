@@ -69,6 +69,7 @@ export default function Header ({
             'focus:shadow-outline focus:outline-none'}
             title='vorigen Monat'
             aria-label='vorigen Monat'
+            aria-controls='calendar_main_out'
             onClick={() => {
               dispatch({ type: 'move', payload: -1 })
               hideMenu()
@@ -106,6 +107,7 @@ export default function Header ({
             'focus:shadow-outline focus:outline-none'}
             title='nächster Monat'
             aria-label='nächster Monat'
+            aria-controls='calendar_main_out'
             onClick={() => {
               dispatch({ type: 'move', payload: 1 })
               hideMenu()
@@ -115,9 +117,11 @@ export default function Header ({
           </button>
 
           <button
+            id='hamburger_menu_toggle'
             class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
             'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
             onClick={toggleShowMenu}
+            aria-controls='hamburger_menu'
           >
             <img
               src='/assets/icons/hamburger_icon.svg'
@@ -127,35 +131,35 @@ export default function Header ({
               alt='Menu'
             />
           </button>
+
+          <Menu
+            show={showMenu}
+            isFullYear={isFullYear}
+            month={month}
+            year={year}
+            search={search}
+            group={group}
+            shiftModel={shiftModel}
+            gotoMonth={(event, hide) => {
+              dispatch(event)
+
+              if (hide) {
+                hideMenu()
+              }
+            }}
+            dispatch={dispatch}
+            onSearch={search}
+            toggleFullYear={() => {
+              dispatch({ type: 'toggle_full_year' })
+              hideMenu()
+            }}
+            onShare={() => {
+              hideMenu()
+              setShowShareMenu(true)
+            }}
+          />
         </nav>
       )}
-
-      <Menu
-        show={showMenu}
-        isFullYear={isFullYear}
-        month={month}
-        year={year}
-        search={search}
-        group={group}
-        shiftModel={shiftModel}
-        gotoMonth={(event, hide) => {
-          dispatch(event)
-
-          if (hide) {
-            hideMenu()
-          }
-        }}
-        dispatch={dispatch}
-        onSearch={search}
-        toggleFullYear={() => {
-          dispatch({ type: 'toggle_full_year' })
-          hideMenu()
-        }}
-        onShare={() => {
-          hideMenu()
-          setShowShareMenu(true)
-        }}
-      />
 
       {showShareMenu && (
         <ShareMenu
@@ -193,6 +197,7 @@ function useIsSmallScreen () {
 function useShowMenu () {
   const [show, setShow] = useState(false)
 
+  // Hide on click main element
   useEffect(() => {
     if (show) {
       const hide = () => {
@@ -203,6 +208,28 @@ function useShowMenu () {
       element.addEventListener('click', hide)
       return () => {
         element.removeEventListener('click', hide)
+      }
+    }
+  }, [show])
+
+  // Hide on hitting ESC
+  useEffect(() => {
+    if (show) {
+      const keyEvent = event => {
+        if (event.code === 'Escape' || event.keyCode === 27) {
+          setShow(false)
+
+          // Focus the menu toggle button, Because both menus start from there.
+          const element = document.getElementById('hamburger_menu_toggle')
+          if (element) {
+            element.focus()
+          }
+        }
+      }
+
+      document.body.addEventListener('keyup', keyEvent)
+      return () => {
+        document.body.removeEventListener('keyup', keyEvent)
       }
     }
   }, [show])

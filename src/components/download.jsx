@@ -56,26 +56,28 @@ export default function Download ({ shiftModel }) {
   }
 
   return (
-    <div class='my-4 mx-auto p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'>
-      <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
+    <div class='my-4 mx-auto px-1'>
+      <section class='p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'>
+        <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
-      <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+        <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
-      {urls[shiftModel].map((href, index) => {
-        const group = index + 1
-        return (
-          <a
-            key={shiftModel + group}
-            class={'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
-            href={href}
-            download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Gruppe {group}
-          </a>
-        )
-      })}
+        {urls[shiftModel].map((href, index) => {
+          const group = index + 1
+          return (
+            <a
+              key={shiftModel + group}
+              class={'inline-block text-blue-800 underline' + (index === 0 ? '' : ' ml-2')}
+              href={href}
+              download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Gruppe {group}
+            </a>
+          )
+        })}
+      </section>
     </div>
   )
 }

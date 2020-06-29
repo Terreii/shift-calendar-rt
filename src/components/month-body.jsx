@@ -5,10 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
+import { h, Fragment } from 'preact'
 import { DateTime } from 'luxon'
 
-import { shiftTitle } from '../lib/constants.js'
+import { shiftTitle, workingLongName } from '../lib/constants.js'
 
 /**
  * Renders the body of a month.
@@ -45,7 +45,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
       thatDay === today[2] || (today[3] < 6 && (thatDay + 1 === today[2]))
     )
     const isSearchResult = search === thatDay
-    const isBorderWidth = isToday || isSearchResult
+    const isBorderBold = isToday || isSearchResult
     const borderColor = isSearchResult ? 'border-teal-400' : 'border-black'
 
     const isWeekend = [0, 6, 7].includes(weekDay)
@@ -58,42 +58,45 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
     return (
       <tr
         key={index}
-        class={`${borderColor} ${isBorderWidth ? 'border-r-4' : ''} ${rowBgColor} ${color}`}
-        title={holidayData != null ? holidayData.name : null}
+        class={`${borderColor} ${isBorderBold ? 'border-r-4' : ''} ${rowBgColor} ${color}`}
+        title={holidayData != null && holidayData.type === 'closing' ? holidayData.name : undefined}
       >
         {(weekDay === 1 || index === 0) && (
           <td
-            class='text-gray-800 bg-gray-100 border-r border-black'
+            class='text-gray-800 bg-white border-r border-black'
             rowSpan={Math.min(8 - weekDay, time.daysInMonth - index)}
           >
-            {time.weekNumber}
+            <span class='sr-only'>{'Woche ' + time.weekNumber}</span>
+            <span aria-hidden='true'>{time.weekNumber}</span>
           </td>
         )}
         <td
           class={
-            `${borderColor} ${isBorderWidth ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
+            `${borderColor} ${isBorderBold ? 'border-l-4 border-t-4 border-b-4' : 'border-l'}` +
             (isDayLightSaving ? ' bg-yellow-300 text-black cursor-help border-4 border-red-600' : (
               holidayData != null && ['holiday', 'school'].includes(holidayData.type)
                 ? ' bg-teal-400 text-black'
                 : ''
             ))
           }
-          title={isDayLightSaving ? data.holidays.daylightSavingSwitch.name : null}
+          title={isDayLightSaving
+            ? data.holidays.daylightSavingSwitch.name
+            : (holidayData != null ? holidayData.name : null)}
         >
           <time dateTime={time.toISODate()}>
             {thatDay}
           </time>
         </td>
         <td
-          class={isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''}
-          aria-label={time.weekdayLong}
+          class={isBorderBold ? 'border-t-4 border-b-4 ' + borderColor : ''}
         >
-          {time.weekdayShort}
+          <span class='sr-only'>{time.weekdayLong}</span>
+          <span aria-hidden='true'>{time.weekdayShort}</span>
         </td>
 
         {day.map((shift, index, all) => {
           const gr = all.length > 1 ? index : group - 1
-          const border = isBorderWidth ? 'border-t-4 border-b-4 ' + borderColor : ''
+          const border = isBorderBold ? 'border-t-4 border-b-4 ' + borderColor : ''
           const groupColors = [
             'bg-group-1',
             'bg-group-2',
@@ -103,14 +106,20 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
             'bg-group-6'
           ]
           const workStyle = shift !== 'K' ? 'text-black ' + groupColors[gr] : ''
+          const title = isToday ? 'Heute ' + shiftTitle[shift] : shiftTitle[shift]
 
           return (
             <td
               key={gr}
               class={`${border} ${workStyle}`}
-              title={shiftTitle[shift]}
+              title={title}
             >
-              {shift === 'K' ? '' : shift}
+              {shift !== 'K' && (
+                <>
+                  <span class='sr-only'>{workingLongName[shift]}</span>
+                  <span aria-hidden='true'>{shift}</span>
+                </>
+              )}
             </td>
           )
         })}
