@@ -32,13 +32,6 @@
       "dest": "/sw.js"
     },
     {
-      "src": "^/workbox(.*).js",
-      "headers": {
-        "cache-control": "s-maxage=0"
-      },
-      "dest": "/workbox$1.js"
-    },
-    {
       "src": "^/(.*).css",
       "headers": {
         "content-type": "text/css; charset=\"utf-8\""
