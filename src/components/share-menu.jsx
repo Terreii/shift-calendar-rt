@@ -82,7 +82,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         Adresse zum teilen:
         <input
           id='share_url'
-          class='bg-transparent text-white pt-1 focus:shadow-outline focus:outline-none'
+          class='bg-transparent text-white pt-1 focus:ring focus:outline-none'
           type='url'
           readonly
           value={url.href}
@@ -96,7 +96,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
+          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -114,7 +114,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
+          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -135,7 +135,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:shadow-outline focus:outline-none'
+          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addSearch}
           disabled={search == null}

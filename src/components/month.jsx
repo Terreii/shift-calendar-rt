@@ -55,7 +55,7 @@ export default class Month extends Component {
         <caption
           id={`month_${year}-${month + 1}_caption`}
           class={isToday
-            ? 'border border-b-0 border-black bg-gray-400 text-black font-bold'
+            ? 'border border-b-0 border-black bg-gray-300 text-black font-bold'
             : 'font-bold'}
         >
           {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}

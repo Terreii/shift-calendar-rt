@@ -49,7 +49,7 @@ const urls = {
 export default function Download ({ shiftModel }) {
   if (!(shiftModel in urls)) {
     return (
-      <div class='my-4 mx-auto p-4 text-center bg-gray-400 text-gray-900 rounded'>
+      <div class='my-4 mx-auto p-4 text-center bg-gray-300 text-gray-900 rounded'>
         Für dieses Schichtmodell sind die Kalender noch in Arbeit
       </div>
     )
@@ -57,7 +57,7 @@ export default function Download ({ shiftModel }) {
 
   return (
     <div class='my-4 mx-auto px-1'>
-      <section class='p-4 pt-2 text-center bg-gray-400 text-gray-900 rounded'>
+      <section class='p-4 pt-2 text-center bg-gray-300 text-gray-900 rounded'>
         <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
         <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>

@@ -80,7 +80,7 @@ export default function InstallButton () {
         >
           <button
             class={'flex flex-row justify-center items-center w-screen h-8 text-black ' +
-            'hover:bg-green-700 focus:bg-green-700 focus:shadow-outline focus:outline-none'}
+            'hover:bg-green-700 focus:bg-green-700 focus:ring focus:outline-none'}
             onClick={onClickInstallButton}
           >
             <img src='/assets/icons/add-outline.svg' height='30' width='30' alt='' />
@@ -103,7 +103,7 @@ export default function InstallButton () {
               src='/assets/icons/ios-share.png'
               height='81'
               width='57'
-              class='bg-gray-400 rounded object-contain object-center h-16 w-16 p-1 border border-gray-500'
+              class='bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border border-gray-500'
               alt='klicke Teilen'
             />
             <span class='block my-auto mx-3'>➡︎</span>
@@ -111,7 +111,7 @@ export default function InstallButton () {
               src='/assets/icons/ios-add-to-home-screen.png'
               height='283'
               width='190'
-              class={'bg-gray-400 rounded object-contain object-center h-16 w-16 p-1 border ' +
+              class={'bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border ' +
               'border-gray-500'}
               alt='klicke Zum Home-Bildschirm'
             />

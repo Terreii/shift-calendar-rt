@@ -65,7 +65,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
     if (isClosingHoliday) {
       background = 'bg-green-700 text-white'
     } else if (isWeekend) {
-      background = 'bg-gray-400'
+      background = 'bg-gray-300'
     }
 
     return (
