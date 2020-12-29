@@ -75,12 +75,10 @@ export default function InstallButton () {
     case 'button':
       return (
         <div
-          class={'fixed bottom-0 left-0 bg-gray-200 text-base border-t border-gray-500 py-1 ' +
-          'shadow pb-safe-area'}
+          class='fixed bottom-0 left-0 bg-gray-200 text-base border-t border-gray-500 py-1 shadow pb-safe-area focus-within:bg-gray-400 hover:bg-gray-300 focus-within:ring'
         >
           <button
-            class={'flex flex-row justify-center items-center w-screen h-8 text-black ' +
-            'hover:bg-green-700 focus:bg-green-700 focus:ring focus:outline-none'}
+            className='flex flex-row items-center justify-center w-screen h-8 text-black focus:outline-none'
             onClick={onClickInstallButton}
           >
             <img src='/assets/icons/add-outline.svg' height='30' width='30' alt='' />
@@ -92,8 +90,7 @@ export default function InstallButton () {
     case 'ios':
       return (
         <div
-          class={'fixed bottom-0 w-screen flex flex-col items-center bg-gray-200 border-t ' +
-          'border-gray-500 shadow-lg pb-safe-area'}
+          class='fixed bottom-0 w-screen flex flex-col items-center bg-gray-200 border-t border-gray-500 shadow-lg pb-safe-area'
         >
           <span class='text-sm text-gray-900 text-center my-1'>
             Klicke auf Teilen &amp; dann "Zum Home-Bildschirm" um den Kalender zum installieren:
@@ -111,8 +108,7 @@ export default function InstallButton () {
               src='/assets/icons/ios-add-to-home-screen.png'
               height='283'
               width='190'
-              class={'bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border ' +
-              'border-gray-500'}
+              class='bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border border-gray-500'
               alt='klicke Zum Home-Bildschirm'
             />
           </div>
