@@ -23,7 +23,7 @@ export default function InstallButton () {
       .getTime()
 
     if (isIos && !isInStandaloneMode && dismissedTime < (Date.now() - ms.days(12))) {
-      setShow('ios')
+      setTimeout(setShow, ms.seconds(15), 'ios')
     } else {
       const handler = event => {
         // for Chrome 67 and earlier
@@ -33,7 +33,7 @@ export default function InstallButton () {
         deferredPrompt.current = event
 
         if (dismissedTime < (Date.now() - ms.days(12))) {
-          setShow('button')
+          setTimeout(setShow, ms.seconds(15), 'button')
         }
       }
 
