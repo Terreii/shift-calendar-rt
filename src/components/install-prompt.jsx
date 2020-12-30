@@ -87,7 +87,7 @@ export default function InstallButton () {
           </p>
           <div className='flex flex-col border-l border-black'>
             <button
-              className='flex flex-col items-center justify-center flex-grow px-2 py-1 text-black hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
+              className='flex flex-col items-center justify-center flex-grow px-2 py-1 text-black rounded-tr-lg hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
               onClick={onClickInstallButton}
             >
               <img src='/assets/icons/add-outline.svg' height='30' width='30' alt='' />
@@ -97,7 +97,7 @@ export default function InstallButton () {
               type='button'
               onClick={dismiss}
               title='Klicke um den Kalender nicht zu installieren'
-              className='flex flex-col items-center justify-center flex-grow px-2 py-1 border-t border-black hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
+              className='flex flex-col items-center justify-center flex-grow px-2 py-1 border-t border-black rounded-br-lg hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
             >
               Abbrechen
             </button>
