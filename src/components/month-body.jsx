@@ -53,7 +53,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
 
     let border = ''
     if (isSearchResult) {
-      border = 'border-r-4 border-teal-400'
+      border = 'border-r-4 border-violet-400'
     } else if (isToday) {
       border = 'border-r-4 border-black'
     }
@@ -83,6 +83,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
           dayLightSaving={data.holidays.daylightSavingSwitch}
           isToday={isToday}
           isSearchResult={isSearchResult}
+          isWeekCellStart={weekDay === 1 || index === 0}
         />
         <WeekDayCell
           time={time}

@@ -15,7 +15,7 @@ import { h } from 'preact'
 export default function WeekCell ({ time }) {
   return (
     <td
-      class='text-gray-800 bg-white border-r border-black'
+      class='text-gray-800 bg-white border-r border-black border'
       rowSpan={Math.min(7 - time.weekday, time.daysInMonth - time.day) + 1}
     >
       <span class='sr-only'>Woche {time.weekNumber}</span>

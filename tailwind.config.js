@@ -5,6 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+const colors = require('tailwindcss/colors')
+
 module.exports = {
   purge: [
     './src/components/*.jsx',
@@ -13,6 +15,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        teal: colors.teal,
+        violet: colors.violet
+      },
       backgroundColor: {
         'group-1': '#ff69b4',
         'group-2': '#ff0',

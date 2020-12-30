@@ -20,7 +20,7 @@ import { shiftTitle, workingLongName } from '../../lib/constants.js'
 export default function GroupShiftCell ({ group, shift, isToday, isSearchResult }) {
   let border = ''
   if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-teal-400'
+    border = 'border-t-4 border-b-4 border-violet-400'
   } else if (isToday) {
     border = 'border-t-4 border-b-4 border-black'
   }

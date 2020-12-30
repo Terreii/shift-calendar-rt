@@ -17,7 +17,7 @@ import { h } from 'preact'
 export default function WeekDayCell ({ time, isToday, isSearchResult }) {
   let border = ''
   if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-teal-400'
+    border = 'border-t-4 border-b-4 border-violet-400'
   } else if (isToday) {
     border = 'border-t-4 border-b-4 border-black'
   }

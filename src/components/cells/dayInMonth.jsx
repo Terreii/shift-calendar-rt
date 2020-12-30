@@ -21,13 +21,16 @@ export default function DayInMonthCell ({
   holidayData,
   dayLightSaving,
   isToday,
-  isSearchResult
+  isSearchResult,
+  isWeekCellStart
 }) {
   // is on this day the switch from or to day-light-saving.
   const isDayLightSaving = dayLightSaving != null && dayLightSaving.day === time.day
 
-  const border = isToday || isSearchResult ? 'border-l-4 border-t-4 border-b-4' : 'border-l'
-  const borderColor = isSearchResult ? 'border-teal-400' : 'border-black'
+  const border = isToday || isSearchResult
+    ? `${isWeekCellStart ? '' : 'border-l-4'} border-t-4 border-b-4`
+    : 'border-l'
+  const borderColor = isSearchResult ? 'border-violet-400' : 'border-black'
 
   let holidayStyle = ''
   if (isDayLightSaving) {
