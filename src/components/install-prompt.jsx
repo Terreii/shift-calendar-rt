@@ -83,7 +83,7 @@ export default function InstallButton () {
             Dieser Kalender kann wie eine <em>App installiert</em> werden!
             <em> Ohne auf deine Daten zugreifen zu können!</em>
             <br />
-            Klicke auf installieren um ihn zu deinen Apps hinzu zufügen.
+            Klicke auf installieren um ihn bei deinen Apps zu speichern.
           </p>
           <div className='flex flex-col border-l border-black'>
             <button
