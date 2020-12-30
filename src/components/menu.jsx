@@ -173,7 +173,7 @@ export default function Menu ({
         Schichtmodell
         <select
           class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
-          'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
+          'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
           aria-controls='calendar_main_out'
           value={shiftModel}
           onChange={event => {
@@ -193,7 +193,7 @@ export default function Menu ({
 
       <select
         class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
+        'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
         aria-controls='calendar_main_out'
         aria-label='Schichtgruppen'
         value={group}
@@ -212,7 +212,7 @@ export default function Menu ({
       <button
         type='button'
         class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-400 active:bg-gray-400 focus:shadow-outline focus:outline-none'}
+        'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
         onClick={onShare}
         aria-label='Teile deine Schicht'
       >

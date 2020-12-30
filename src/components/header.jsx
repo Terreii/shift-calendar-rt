@@ -54,8 +54,7 @@ export default function Header ({
           <Link
             href='/'
             tabIndex='0'
-            class={'pl-4 text-white no-underline hover:underline focus:underline ' +
-            'focus:shadow-outline'}
+            class='pl-4 text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
           >
             Kalender
           </Link>
@@ -65,8 +64,7 @@ export default function Header ({
         <nav class='h-full flex flex-row text-base items-stretch'>
           <button
             type='button'
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-            'focus:shadow-outline focus:outline-none'}
+            class='px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
             title='vorigen Monat'
             aria-label='vorigen Monat'
             aria-controls='calendar_main_out'
@@ -80,8 +78,7 @@ export default function Header ({
 
           <button
             type='button'
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-            'focus:shadow-outline focus:outline-none'}
+            class='px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
             title='zeige aktuellen Monat'
             onClick={() => {
               const now = new Date()
@@ -103,8 +100,7 @@ export default function Header ({
 
           <button
             type='button'
-            class={'px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 ' +
-            'focus:shadow-outline focus:outline-none'}
+            class='px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
             title='nächster Monat'
             aria-label='nächster Monat'
             aria-controls='calendar_main_out'
@@ -118,8 +114,7 @@ export default function Header ({
 
           <button
             id='hamburger_menu_toggle'
-            class={'flex justify-center items-center bg-transparent hover:bg-green-600 ' +
-            'active:bg-green-600 w-16 focus:shadow-outline focus:outline-none'}
+            class='flex justify-center items-center bg-transparent hover:bg-green-600 active:bg-green-600 w-16 focus:ring focus:outline-none'
             onClick={toggleShowMenu}
             aria-controls='hamburger_menu'
           >
