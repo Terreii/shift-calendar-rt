@@ -12,3 +12,5 @@ yarn.lock
 build
 web_modules
 node_modules
+
+.vercel
