@@ -9,8 +9,8 @@
   },
   "browserslist": ">0.75%, not ie 11, not UCAndroid >0, not OperaMini all",
   "scripts": {
-    "start": "vercel dev",
-    "dev": "snowpack dev",
+    "start": "snowpack dev",
+    "vercel": "vercel dev",
     "build": "cross-env NODE_ENV=production npm-run-all build:app build:sw",
     "build:app": "snowpack build",
     "build:sw": "workbox generateSW workbox-config.js",
@@ -24,7 +24,6 @@
   "devDependencies": {
     "@prefresh/snowpack": "^3.0.0",
     "@snowpack/plugin-dotenv": "^2.0.5",
-    "@snowpack/plugin-webpack": "^2.2.0",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/preact": "^2.0.1",
     "autoprefixer": "^10.1.0",
