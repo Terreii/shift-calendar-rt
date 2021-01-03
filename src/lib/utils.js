@@ -17,6 +17,18 @@ export function getDaysInMonth (year, month) {
 }
 
 /**
+ * Is this running on the server (true) or in a browser (false).
+ */
+export const isSSR = (() => {
+  try {
+    const isBrowser = 'document' in window && 'navigator' in window
+    return !isBrowser
+  } catch (err) {
+    return true
+  }
+})()
+
+/**
  * Scroll to a day. But only if that day is displayed.
  * @param {number} year  The year of the day.
  * @param {number} month The month of the day.

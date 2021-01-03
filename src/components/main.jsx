@@ -9,10 +9,11 @@ import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
 import Hammer from 'hammerjs'
 
-import Downloader from './download.js'
-import Footer from './footer.js'
-import Month from './month.js'
-import selectMonthData from '../lib/select-month-data.js'
+import Downloader from './download'
+import Footer from './footer'
+import Month from './month'
+import selectMonthData from '../lib/select-month-data'
+import { isSSR } from '../lib/utils'
 
 /**
  * Renders the main content.
@@ -127,7 +128,9 @@ export default function Main ({
  * @returns {number} Number of months to display.
  */
 function useNumberOfMonths (group, displayFullYear) {
-  const [numberOfMonths, setNumberOfMonths] = useState(() => window.innerWidth < 1220 ? 1 : 4)
+  const [numberOfMonths, setNumberOfMonths] = useState(
+    () => isSSR || window.innerWidth < 1220 ? 1 : 4
+  )
 
   useEffect(() => {
     const onResize = () => {

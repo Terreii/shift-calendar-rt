@@ -11,7 +11,8 @@
   "scripts": {
     "start": "snowpack dev",
     "vercel": "vercel dev",
-    "build": "cross-env NODE_ENV=production npm-run-all build:app build:sw",
+    "build": "cross-env NODE_ENV=production npm-run-all build:api build:app build:sw",
+    "build:api": "esbuild src/components/main.jsx src/components/header.jsx --bundle --platform=node --target=node12 --jsx-factory=h --jsx-fragment=Fragment --external:preact --outdir=api_files",
     "build:app": "snowpack build",
     "build:sw": "workbox generateSW workbox-config.js",
     "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
@@ -47,7 +48,9 @@
     "workbox-cli": "^6.0.2"
   },
   "dependencies": {
+    "esbuild": "^0.8.29",
     "preact": "^10.5.8",
+    "preact-render-to-string": "^5.1.12",
     "preact-router": "^3.2.1",
     "serve": "^11.3.2"
   }

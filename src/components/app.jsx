@@ -9,13 +9,13 @@ import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
 import { Router } from 'preact-router'
 
-import FirstRunDialog from './first-run.js'
-import Header from './header.js'
-import Impressum from './impressum.js'
-import InstallPrompt from './install-prompt.js'
-import Main from './main.js'
+import FirstRunDialog from './first-run'
+import Header from './header'
+import Impressum from './impressum'
+import InstallPrompt from './install-prompt'
+import Main from './main'
 
-import { scrollToADay } from '../lib/utils.js'
+import { scrollToADay } from '../lib/utils'
 import useStateReducer from '../lib/state'
 
 /**

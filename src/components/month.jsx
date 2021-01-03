@@ -7,8 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h, Component } from 'preact'
 
-import MonthBody from './month-body.js'
-import { monthNames } from '../lib/constants.js'
+import MonthBody from './month-body'
+import { monthNames } from '../lib/constants'
 
 /**
  * Render a month

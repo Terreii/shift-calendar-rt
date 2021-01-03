@@ -13,7 +13,7 @@ import {
   shift64Name,
   shiftWfW,
   shiftAddedNight
-} from '../lib/constants.js'
+} from '../lib/constants'
 
 const urls = {
   [shift66Name]: [

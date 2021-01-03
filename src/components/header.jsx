@@ -9,10 +9,10 @@ import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
 import { Link } from 'preact-router'
 
-import Menu from './menu.js'
-import ShareMenu from './share-menu.js'
+import Menu from './menu'
+import ShareMenu from './share-menu'
 
-import { scrollToADay } from '../lib/utils.js'
+import { scrollToADay, isSSR } from '../lib/utils'
 
 /**
  * Renders the Header.
@@ -172,7 +172,7 @@ export default function Header ({
 
 function useIsSmallScreen () {
   const [isSmallScreen, setIsSmallScreen] = useState(() => (
-    window.innerWidth < 350
+    isSSR || window.innerWidth < 350
   ))
 
   useEffect(() => {

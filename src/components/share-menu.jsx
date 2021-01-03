@@ -9,6 +9,8 @@ import { h } from 'preact'
 import { useState, useEffect, useMemo } from 'preact/hooks'
 import qs from 'querystringify'
 
+import { isSSR } from '../lib/utils'
+
 /**
  * Display the share menu.
  * @param {object}   params            - Preact props.
@@ -48,6 +50,9 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
   }, [])
 
   const url = useMemo(() => {
+    if (isSSR) {
+      return ''
+    }
     const url = new URL(window.location.href)
 
     const props = {}
@@ -162,7 +167,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         >
           Abbrechen
         </button>
-        {'share' in window.navigator
+        {!isSSR && ('share' in window.navigator)
           ? (
             <button
               type='button'

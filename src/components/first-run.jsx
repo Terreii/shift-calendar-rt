@@ -7,8 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 
-import Footer from './footer.js'
-import { shiftModelNames, shiftModelText } from '../lib/constants.js'
+import Footer from './footer'
+import { shiftModelNames, shiftModelText } from '../lib/constants'
 
 export default function FirstRun ({ onClick }) {
   return (

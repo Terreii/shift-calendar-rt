@@ -12,9 +12,12 @@ import {
   shiftModelNames,
   shiftModelText,
   shiftModelNumberOfGroups
-} from '../lib/constants.js'
+} from '../lib/constants'
+import { isSSR } from '../lib/utils'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
+  if (isSSR) return false
+
   const parent = document.createElement('div')
   const input = document.createElement('input')
   input.type = type
