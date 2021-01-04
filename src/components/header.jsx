@@ -172,7 +172,7 @@ export default function Header ({
 
 function useIsSmallScreen () {
   const [isSmallScreen, setIsSmallScreen] = useState(() => (
-    isSSR || window.innerWidth < 350
+    !isSSR && window.innerWidth < 350
   ))
 
   useEffect(() => {
