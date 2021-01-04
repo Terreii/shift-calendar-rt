@@ -1,0 +1,8 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/cal/:match*", "destination": "/api/cal/:match*" },
+    { "source": "/", "destination": "/api/cal/index" }
+  ]
+}

@@ -6,6 +6,9 @@ module.exports = {
   scripts: {
     'build:css': 'postcss'
   },
+  devOptions: {
+    fallback: 'app-shell.html'
+  },
   buildOptions: {
     baseUrl: '/'
   },

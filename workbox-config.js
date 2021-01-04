@@ -3,5 +3,6 @@ module.exports = {
   globPatterns: [
     '**/*.{ics,png,svg,js,ico,html,webmanifest,css,json}'
   ],
+  navigateFallback: '/app-shell.html',
   swDest: 'build/sw.js'
 }
