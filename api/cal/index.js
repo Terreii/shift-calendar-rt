@@ -6,7 +6,7 @@ const { h } = require('preact')
 const Header = require('../../api_files/header').default
 const FirstRun = require('../../api_files/first-run').default
 
-const file = join(__dirname, '..', '..', 'build', 'app-shell.html')
+const file = join(__dirname, '..', '..', 'public', 'app-shell.html')
 
 module.exports = async (req, res) => {
   const now = new Date()

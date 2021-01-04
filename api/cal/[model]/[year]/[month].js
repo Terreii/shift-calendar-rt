@@ -16,7 +16,7 @@ const Header = require('../../../../api_files/header').default
 const Main = require('../../../../api_files/main').default
 const { shiftModelNames, shift66Name } = require('../../../../src/lib/constants')
 
-const file = join(__dirname, '..', '..', '..', '..', 'build', 'app-shell.html')
+const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
 
 module.exports = async (req, res) => {
   const now = new Date()
