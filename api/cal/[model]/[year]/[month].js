@@ -11,12 +11,38 @@ const fs = require('fs')
 const { join } = require('path')
 const render = require('preact-render-to-string')
 const { h } = require('preact')
+const esbuild = require('esbuild')
 
-const Header = require('../../../../api_files/header').default
-const Main = require('../../../../api_files/main').default
+const projectDir = join(__dirname, '..', '..', '..', '..')
+const headerFile = join(projectDir, 'src', 'components', 'header.jsx')
+const mainFile = join(projectDir, 'src', 'components', 'main.jsx')
+const apiFiles = join(projectDir, 'api_files')
+const headerBuildFile = join(projectDir, 'api_files', 'header.js')
+const mainBuildFile = join(projectDir, 'api_files', 'main.js')
 const { shiftModelNames, shift66Name } = require('../../../../src/lib/constants')
 
-const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
+const file = join(projectDir, 'public', 'app-shell.html')
+
+let Header
+let Main
+
+try {
+  Header = require(headerBuildFile).default
+  Main = require(mainBuildFile).default
+} catch (err) {
+  esbuild.buildSync({
+    entryPoints: [headerFile, mainFile],
+    bundle: true,
+    outdir: apiFiles,
+    platform: 'node',
+    target: 'node12',
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
+    external: ['preact']
+  })
+  Header = require(headerBuildFile).default
+  FirstRun = require(mainBuildFile).default
+}
 
 module.exports = async (req, res) => {
   const now = new Date()

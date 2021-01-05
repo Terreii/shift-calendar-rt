@@ -11,7 +11,6 @@
   "scripts": {
     "start": "snowpack dev",
     "vercel": "vercel dev",
-    "vercel-build": "esbuild src/components/main.jsx src/components/header.jsx src/components/first-run.jsx --bundle --platform=node --target=node12 --jsx-factory=h --jsx-fragment=Fragment --external:preact --outdir=api_files",
     "build": "cross-env NODE_ENV=production npm-run-all build:app build:sw",
     "build:app": "snowpack build",
     "build:sw": "workbox generateSW workbox-config.js",
