@@ -10,7 +10,6 @@ yarn.lock
 
 .build
 build
-api_files
 web_modules
 node_modules
 

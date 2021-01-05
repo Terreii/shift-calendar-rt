@@ -1,16 +1,24 @@
-import fs from 'fs'
-import { join } from 'path'
-import render from 'preact-render-to-string'
-import { h } from 'preact'
-import { NowRequest, NowResponse } from '@vercel/node'
+global.window = global
+global.document = {
+  createElement () {
+    return {
+      style: {}
+    }
+  }
+}
 
-import Header from '../../../../src/components/header'
-import Main from '../../../../src/components/header'
-import { shiftModelNames, shift66Name } from '../../../../src/lib/constants'
+const fs = require('fs')
+const { join } = require('path')
+const render = require('preact-render-to-string')
+const { h } = require('preact')
+
+const Header = require('../../../../api_files/header').default
+const Main = require('../../../../api_files/main').default
+const { shiftModelNames, shift66Name } = require('../../../../src/lib/constants')
 
 const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
 
-export default async (req: NowRequest, res: NowResponse) => {
+module.exports = async (req, res) => {
   const now = new Date()
 
   const htmlFileHandler = fs.promises.readFile(file, { encoding: 'utf-8' })

@@ -1,15 +1,13 @@
-import fs from 'fs'
-import { join } from 'path'
-import render from 'preact-render-to-string'
-import { h } from 'preact'
-import { NowRequest, NowResponse } from '@vercel/node'
+const fs = require('fs')
+const { join } = require('path')
+const render = require('preact-render-to-string')
+const { h } = require('preact')
 
-const Header = require('../../src/components/header')
-const FirstRun = require('../../src/components/first-run')
-
+const Header = require('../../api_files/header').default
+const FirstRun = require('../../api_files/first-run').default
 const file = join(__dirname, '..', '..', 'public', 'app-shell.html')
 
-export default async (_req: NowRequest, res: NowResponse) => {
+module.exports = async (req, res) => {
   const now = new Date()
   const year = now.getUTCFullYear()
   const month = now.getUTCMonth()
