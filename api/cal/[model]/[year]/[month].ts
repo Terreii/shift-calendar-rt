@@ -1,50 +1,16 @@
-global.window = global
-global.document = {
-  createElement () {
-    return {
-      style: {}
-    }
-  }
-}
+import fs from 'fs'
+import { join } from 'path'
+import render from 'preact-render-to-string'
+import { h } from 'preact'
+import { NowRequest, NowResponse } from '@vercel/node'
 
-const fs = require('fs')
-const { join } = require('path')
-const render = require('preact-render-to-string')
-const { h } = require('preact')
-const esbuild = require('esbuild')
+import Header from '../../../../src/components/header'
+import Main from '../../../../src/components/header'
+import { shiftModelNames, shift66Name } from '../../../../src/lib/constants'
 
-const projectDir = join(__dirname, '..', '..', '..', '..')
-const headerFile = join(projectDir, 'src', 'components', 'header.jsx')
-const mainFile = join(projectDir, 'src', 'components', 'main.jsx')
-const apiFiles = join(projectDir, 'api_files')
-const headerBuildFile = join(projectDir, 'api_files', 'header.js')
-const mainBuildFile = join(projectDir, 'api_files', 'main.js')
-const { shiftModelNames, shift66Name } = require('../../../../src/lib/constants')
+const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
 
-const file = join(projectDir, 'public', 'app-shell.html')
-
-let Header
-let Main
-
-try {
-  Header = require(headerBuildFile).default
-  Main = require(mainBuildFile).default
-} catch (err) {
-  esbuild.buildSync({
-    entryPoints: [headerFile, mainFile],
-    bundle: true,
-    outdir: apiFiles,
-    platform: 'node',
-    target: 'node12',
-    jsxFactory: 'h',
-    jsxFragment: 'Fragment',
-    external: ['preact']
-  })
-  Header = require(headerBuildFile).default
-  FirstRun = require(mainBuildFile).default
-}
-
-module.exports = async (req, res) => {
+export default async (req: NowRequest, res: NowResponse) => {
   const now = new Date()
 
   const htmlFileHandler = fs.promises.readFile(file, { encoding: 'utf-8' })

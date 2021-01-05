@@ -26,6 +26,7 @@
     "@snowpack/plugin-dotenv": "^2.0.5",
     "@testing-library/jest-dom": "^5.11.8",
     "@testing-library/preact": "^2.0.1",
+    "@vercel/node": "^1.8.5",
     "autoprefixer": "^10.1.0",
     "cross-env": "^7.0.3",
     "hammerjs": "^2.0.8",
@@ -43,6 +44,7 @@
     "snowpack": "^2.18.5",
     "standard": "^14.3.4",
     "tailwindcss": "^2.0.2",
+    "typescript": "^4.1.3",
     "vercel": "^21.0.1",
     "workbox-cli": "^6.0.2"
   },
