@@ -1,3 +1,10 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 global.window = global
 global.document = {
   createElement () {
@@ -20,6 +27,11 @@ const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
 
 module.exports = async (req, res) => {
   const now = new Date()
+  const today = [
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate()
+  ]
 
   const htmlFileHandler = fs.promises.readFile(file, { encoding: 'utf-8' })
 
@@ -44,8 +56,7 @@ module.exports = async (req, res) => {
 
       h(Header, {
         url: `/${shiftModel}/${year}/${month}`,
-        year,
-        month,
+        today,
         search: null,
         group: 0,
         shiftModel: shiftModel,
@@ -57,11 +68,7 @@ module.exports = async (req, res) => {
         year,
         month,
         shiftModel: shiftModel,
-        today: [
-          now.getUTCFullYear(),
-          now.getUTCMonth(),
-          now.getUTCDate()
-        ],
+        today,
         search: null,
         group: 0,
         dispatch: () => {}

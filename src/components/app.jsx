@@ -25,6 +25,7 @@ import { shiftModelNames } from '../lib/constants'
  */
 export default function App () {
   const [state, dispatch] = useStateReducer()
+  const [isFirstRenderedPage, setIsFirstRenderedPage] = useState(true)
 
   const today = useToday()
 
@@ -45,32 +46,33 @@ export default function App () {
   return (
     <div id='app'>
       <Header
-        year={state.year}
-        month={state.month}
-        isFullYear={state.fullYear}
         shiftModel={state.shiftModel}
         search={state.search}
         group={state.group}
         url={state.url}
+        today={today}
         dispatch={dispatch}
       />
       <Router
         onChange={event => {
+          setIsFirstRenderedPage(false)
+
           if (event.url.length > 5 && event.url.startsWith('/cal/')) {
             const { group, shiftModel } = event.current.props.matches
-            dispatch({ type: 'change', payload: { group, shiftModel } })
+            dispatch({
+              type: 'change',
+              payload: {
+                url: event.url,
+                group,
+                shiftModel
+              }
+            })
+          } else {
+            dispatch({ type: 'url_change', url: event.url })
           }
         }}
       >
-        <FirstRunDialog
-          path='/'
-          onClick={model => {
-            dispatch({
-              type: 'model_change',
-              payload: model
-            })
-          }}
-        />
+        <FirstRunDialog path='/' isFirstRender={isFirstRenderedPage} />
         <Redirect path='/cal' to='/' replace />
         <ModelRedirect path='/cal/:shiftModel' />
         <AsyncRoute
@@ -140,7 +142,6 @@ function useToday () {
 
 function ModelRedirect ({ shiftModel }) {
   useEffect(() => {
-    console.log(shiftModel, shiftModelNames, shiftModelNames.includes(shiftModel))
     if (shiftModelNames.includes(shiftModel)) {
       const now = new Date()
       const month = String(now.getMonth() + 1).padStart(2, '0')
