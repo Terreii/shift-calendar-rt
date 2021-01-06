@@ -6337,7 +6337,7 @@ function Footer() {
     rel: "noopener noreferrer"
   }, "Mozilla Public License 2.0"), /* @__PURE__ */ import_preact2.h("br", null), /* @__PURE__ */ import_preact2.h(import_preact_router.Link, {
     class: "inline-block text-blue-700 underline",
-    href: "/impressum/",
+    href: "/impressum",
     tabIndex: "0",
     onClick: () => {
       window.scrollTo(0, 0);
@@ -7135,14 +7135,17 @@ var select_month_data_default = import_re_reselect.default((year) => year, (year
 // src/components/main.jsx
 function Main({
   isFullYear,
-  year,
-  month,
+  year: yearString,
+  month: monthString = "1",
   shiftModel,
   today,
   search,
-  group,
+  group: groupString = "0",
   dispatch
 }) {
+  const year = +yearString;
+  const month = Math.min(Math.max(parseInt(monthString, 10) - 1, 0), 11);
+  const group = Number.isNaN(groupString) ? 0 : Math.max(parseInt(groupString, 10), 0);
   const ref = useHammer(dispatch, isFullYear);
   const numberOfMonths = useNumberOfMonths(group, isFullYear);
   const monthsData = [];

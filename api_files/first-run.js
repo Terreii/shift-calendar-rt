@@ -209,7 +209,7 @@ function Footer() {
     rel: "noopener noreferrer"
   }, "Mozilla Public License 2.0"), /* @__PURE__ */ import_preact.h("br", null), /* @__PURE__ */ import_preact.h(import_preact_router.Link, {
     class: "inline-block text-blue-700 underline",
-    href: "/impressum/",
+    href: "/impressum",
     tabIndex: "0",
     onClick: () => {
       window.scrollTo(0, 0);
@@ -249,7 +249,7 @@ var shiftModelNumberOfGroups = {
 function FirstRun({onClick}) {
   return /* @__PURE__ */ import_preact2.h("div", {
     class: "fixed top-0 pt-16 text-center w-screen h-screen bg-gray-100"
-  }, /* @__PURE__ */ import_preact2.h("h3", null, "Willkommen zum inoffiziellen Schichtkalender f\xFCr Bosch Reutlingen!"), /* @__PURE__ */ import_preact2.h("p", null, "Welches Schichtmodell interessiert sie?", /* @__PURE__ */ import_preact2.h("br", null), "Sie k\xF6nnen das Modell sp\xE4ter jederzeit im Men\xFC", /* @__PURE__ */ import_preact2.h("img", {
+  }, /* @__PURE__ */ import_preact2.h("h2", null, "Willkommen zum inoffiziellen Schichtkalender f\xFCr Bosch Reutlingen!"), /* @__PURE__ */ import_preact2.h("p", null, "Welches Schichtmodell interessiert sie?", /* @__PURE__ */ import_preact2.h("br", null), "Sie k\xF6nnen das Modell sp\xE4ter jederzeit im Men\xFC", /* @__PURE__ */ import_preact2.h("img", {
     class: "inline-block ml-1 mr-2",
     src: "/assets/icons/hamburger_icon.svg",
     height: "20",

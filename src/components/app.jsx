@@ -7,16 +7,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
-import { Router } from 'preact-router'
+import { Router, route } from 'preact-router'
+import AsyncRoute from 'preact-async-route'
 
 import FirstRunDialog from './first-run'
 import Header from './header'
-import Impressum from './impressum'
 import InstallPrompt from './install-prompt'
-import Main from './main'
 
 import { scrollToADay } from '../lib/utils'
 import useStateReducer from '../lib/state'
+
+import { shiftModelNames } from '../lib/constants'
 
 /**
  * The App main component
@@ -55,37 +56,46 @@ export default function App () {
       />
       <Router
         onChange={event => {
-          dispatch({ type: 'url_change', url: event.url })
+          if (event.url.length > 5 && event.url.startsWith('/cal/')) {
+            const { group, shiftModel } = event.current.props.matches
+            dispatch({ type: 'change', payload: { group, shiftModel } })
+          }
         }}
       >
-        <Main
+        <FirstRunDialog
           path='/'
-          isFullYear={state.fullYear}
-          year={state.year}
-          month={state.month}
-          shiftModel={state.shiftModel}
+          onClick={model => {
+            dispatch({
+              type: 'model_change',
+              payload: model
+            })
+          }}
+        />
+        <Redirect path='/cal' to='/' replace />
+        <ModelRedirect path='/cal/:shiftModel' />
+        <AsyncRoute
+          path='/cal/:shiftModel/:year'
+          getComponent={() => import('./main').then(m => m.default)}
+          isFullYear
           today={today}
-          search={state.search}
-          group={state.group}
+          search={state.today}
           dispatch={dispatch}
         />
-        <Impressum path='/impressum/' />
+        <AsyncRoute
+          path='/cal/:shiftModel/:year/:month'
+          getComponent={() => import('./main').then(m => m.default)}
+          isFullYear={false}
+          today={today}
+          search={state.today}
+          dispatch={dispatch}
+        />
+        <AsyncRoute
+          path='/impressum'
+          getComponent={() => import('./impressum').then(m => m.default)}
+        />
       </Router>
 
       <InstallPrompt />
-
-      {state.didSelectModel
-        ? null
-        : (
-          <FirstRunDialog
-            onClick={model => {
-              dispatch({
-                type: 'model_change',
-                payload: model
-              })
-            }}
-          />
-        )}
     </div>
   )
 }
@@ -126,4 +136,25 @@ function useToday () {
   }, [today])
 
   return today
+}
+
+function ModelRedirect ({ shiftModel }) {
+  useEffect(() => {
+    console.log(shiftModel, shiftModelNames, shiftModelNames.includes(shiftModel))
+    if (shiftModelNames.includes(shiftModel)) {
+      const now = new Date()
+      const month = String(now.getMonth() + 1).padStart(2, '0')
+      route(`/cal/${shiftModel}/${now.getFullYear()}/${month}`, true)
+    } else {
+      route('/', true)
+    }
+  })
+  return null
+}
+
+function Redirect ({ to, replace = false }) {
+  useEffect(() => {
+    route(to, replace)
+  })
+  return null
 }

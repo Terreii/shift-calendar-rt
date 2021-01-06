@@ -97,6 +97,27 @@ function initReducer (initialState) {
 
 function reducer (state, action) {
   switch (action.type) {
+    case 'change':
+    {
+      const shiftModelSelected = action.payload.shiftModel || state.shiftModel || shift66Name
+      const shiftModel = shiftModelNames.includes(shiftModelSelected)
+        ? shiftModelSelected
+        : state.shiftModel
+
+      const groupMin = Math.max(parseInt(action.payload.group, 10) || 0, 0)
+      const group = Math.min(groupMin, shiftModelNumberOfGroups[shiftModel])
+
+      if (group === state.group && shiftModel === state.shiftModel) {
+        return state
+      } else {
+        return {
+          ...state,
+          group,
+          shiftModel
+        }
+      }
+    }
+
     case 'url_change':
       return {
         ...state,

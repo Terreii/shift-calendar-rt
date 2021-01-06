@@ -20,25 +20,30 @@ import { isSSR } from '../lib/utils'
  * It will get the month-data from "selectMonthData" and renders the months.
  * @param {Object}    arg0                React/Preact arguments.
  * @param {number}    arg0.isFullYear     Display the full year. All 12 months.
- * @param {number}    arg0.year           Year of the selected month.
- * @param {number}    arg0.month          Month number of the selected month.
+ * @param {string}    arg0.year           Year of the selected month.
+ * @param {string}    arg0.month          Month number of the selected month.
  * @param {string}    arg0.shiftModel     Which shift-model should be used.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
  * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
- * @param {number}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
+ * @param {string}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
  * @param {Function}  arg0.dispatch   Change the global state using the reducers dispatch function.
  * @returns {JSX.Element}
  */
 export default function Main ({
   isFullYear,
-  year,
-  month,
+  year: yearString,
+  month: monthString = '1',
   shiftModel,
   today,
   search,
-  group,
+  group: groupString = '0',
   dispatch
 }) {
+  const year = +yearString
+  const month = Math.min(Math.max(parseInt(monthString, 10) - 1, 0), 11)
+  const group = Number.isNaN(groupString)
+    ? 0
+    : Math.max(parseInt(groupString, 10), 0)
   const ref = useHammer(dispatch, isFullYear)
 
   const numberOfMonths = useNumberOfMonths(group, isFullYear)

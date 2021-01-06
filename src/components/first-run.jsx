@@ -13,7 +13,7 @@ import { shiftModelNames, shiftModelText } from '../lib/constants'
 export default function FirstRun ({ onClick }) {
   return (
     <div class='fixed top-0 pt-16 text-center w-screen h-screen bg-gray-100'>
-      <h3>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h3>
+      <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
       <p>
         Welches Schichtmodell interessiert sie?
