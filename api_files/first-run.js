@@ -190,11 +190,67 @@ var require_preact_router = __commonJS((exports2, module2) => {
   });
 });
 
+// node_modules/querystringify/index.js
+var require_querystringify = __commonJS((exports2) => {
+  "use strict";
+  var has = Object.prototype.hasOwnProperty;
+  var undef;
+  function decode(input) {
+    try {
+      return decodeURIComponent(input.replace(/\+/g, " "));
+    } catch (e) {
+      return null;
+    }
+  }
+  function encode(input) {
+    try {
+      return encodeURIComponent(input);
+    } catch (e) {
+      return null;
+    }
+  }
+  function querystring(query) {
+    var parser = /([^=?#&]+)=?([^&]*)/g, result = {}, part;
+    while (part = parser.exec(query)) {
+      var key = decode(part[1]), value = decode(part[2]);
+      if (key === null || value === null || key in result)
+        continue;
+      result[key] = value;
+    }
+    return result;
+  }
+  function querystringify(obj, prefix) {
+    prefix = prefix || "";
+    var pairs = [], value, key;
+    if (typeof prefix !== "string")
+      prefix = "?";
+    for (key in obj) {
+      if (has.call(obj, key)) {
+        value = obj[key];
+        if (!value && (value === null || value === undef || isNaN(value))) {
+          value = "";
+        }
+        key = encode(key);
+        value = encode(value);
+        if (key === null || value === null)
+          continue;
+        pairs.push(key + "=" + value);
+      }
+    }
+    return pairs.length ? prefix + pairs.join("&") : "";
+  }
+  exports2.stringify = querystringify;
+  exports2.parse = querystring;
+});
+
 // src/components/first-run.jsx
 __export(exports, {
   default: () => FirstRun
 });
 var import_preact2 = __toModule(require("preact"));
+var import_hooks = __toModule(require("preact/hooks"));
+var import_preact_router2 = __toModule(require_preact_router());
+var import_querystringify = __toModule(require_querystringify());
 
 // src/components/footer.jsx
 var import_preact = __toModule(require("preact"));
@@ -245,9 +301,64 @@ var shiftModelNumberOfGroups = {
   [shiftAddedNight8]: 3
 };
 
+// src/lib/utils.js
+var isSSR = (() => {
+  try {
+    const isBrowser = "document" in window && "navigator" in window;
+    return !isBrowser;
+  } catch (err) {
+    return true;
+  }
+})();
+
 // src/components/first-run.jsx
-function FirstRun({onClick}) {
-  return /* @__PURE__ */ import_preact2.h("div", {
+function FirstRun({isFirstRender = false}) {
+  import_hooks.useEffect(() => {
+    if (isFirstRender) {
+      const storedSettings = JSON.parse(window.localStorage.getItem("settings") || "{}");
+      if (window.location.hash.length > 1) {
+        const hashSettings = import_querystringify.default.parse(window.location.hash.slice(1));
+        const group = +hashSettings.group;
+        if (!Number.isNaN(group) && group > 0 && group <= 6) {
+          storedSettings.group = group;
+        }
+        const schichtmodell = hashSettings.schichtmodell;
+        if (schichtmodell != null && shiftModelNames.includes(schichtmodell)) {
+          storedSettings.didSelectModel = true;
+          storedSettings.shiftModel = schichtmodell;
+          if (storedSettings.group > shiftModelNumberOfGroups[schichtmodell]) {
+            storedSettings.group = 0;
+          }
+        }
+        if (hashSettings.search != null && hashSettings.search.length >= 8) {
+          const date = new Date(hashSettings.search);
+          const year = date.getFullYear();
+          const month = date.getMonth();
+          const day = date.getDate();
+          window.location.hash = "";
+          const params = new URLSearchParams();
+          if (storedSettings.group && storedSettings.group > 0) {
+            params.set("group", storedSettings.group);
+          }
+          params.set("search", day);
+          import_preact_router2.route(`/cal/${storedSettings.shiftModel}/${year}/${month}?${params.toString()}`);
+          return;
+        }
+        window.location.hash = "";
+      }
+      if (storedSettings.didSelectModel && shiftModelNames.includes(storedSettings.shiftModel)) {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, "0");
+        const group = typeof storedSettings.group === "number" && storedSettings.group > 0 ? "?group=" + storedSettings.group : "";
+        import_preact_router2.route(`/cal/${storedSettings.shiftModel}/${year}/${month}${group}`);
+      }
+    }
+  }, [isFirstRender]);
+  if (!isSSR && isFirstRender) {
+    return null;
+  }
+  return /* @__PURE__ */ import_preact2.h("main", {
     class: "fixed top-0 pt-16 text-center w-screen h-screen bg-gray-100"
   }, /* @__PURE__ */ import_preact2.h("h2", null, "Willkommen zum inoffiziellen Schichtkalender f\xFCr Bosch Reutlingen!"), /* @__PURE__ */ import_preact2.h("p", null, "Welches Schichtmodell interessiert sie?", /* @__PURE__ */ import_preact2.h("br", null), "Sie k\xF6nnen das Modell sp\xE4ter jederzeit im Men\xFC", /* @__PURE__ */ import_preact2.h("img", {
     class: "inline-block ml-1 mr-2",
@@ -256,14 +367,11 @@ function FirstRun({onClick}) {
     width: "20",
     alt: "das Men\xFC ist oben rechts"
   }), "um\xE4ndern."), /* @__PURE__ */ import_preact2.h("ul", {
-    class: "list-none flex flex-col justify-center w-64 mt-2 mb-16 mx-auto p-0"
-  }, shiftModelNames.map((name, index) => /* @__PURE__ */ import_preact2.h("li", {
-    key: name,
-    class: index > 0 ? "mt-3" : ""
-  }, /* @__PURE__ */ import_preact2.h("button", {
-    class: "inline-block mx-3 py-1 px-4 h-10 w-full border-0 bg-indigo-700 text-white text-center rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:ring focus:outline-none",
-    onClick: () => {
-      onClick(name);
-    }
+    class: "list-none flex flex-col justify-center w-64 mt-2 mb-16 mx-auto p-0 space-y-3"
+  }, shiftModelNames.map((name) => /* @__PURE__ */ import_preact2.h("li", {
+    key: name
+  }, /* @__PURE__ */ import_preact2.h(import_preact_router2.Link, {
+    class: "inline-block mx-3 py-3 px-4 h-12 w-full border-0 bg-indigo-700 text-white text-center rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:ring focus:outline-none",
+    href: `/cal/${name}`
   }, shiftModelText[name])))), /* @__PURE__ */ import_preact2.h(Footer, null));
 }

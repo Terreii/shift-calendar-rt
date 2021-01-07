@@ -8,7 +8,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { h, Fragment } from 'preact'
 import { useState, useEffect, useMemo } from 'preact/hooks'
 import { Link } from 'preact-router'
-import ms from 'milliseconds'
 
 import Menu from './menu'
 import ShareMenu from './share-menu'
@@ -40,7 +39,6 @@ export default function Header ({
   const [showShareMenu, setShowShareMenu] = useShowMenu()
 
   const hideMenu = () => setShowMenu(false)
-  const toggleShowMenu = () => setShowMenu(old => !old)
 
   const { year, month, isFullYear } = useParseURL(url)
 
@@ -67,27 +65,13 @@ export default function Header ({
             isFullYear={isFullYear}
             month={month}
             year={year}
+            group={group}
             shiftModel={shiftModel}
             onClick={() => {
               setTimeout(scrollToADay, 32, ...today)
             }}
           />
         )}
-
-        <button
-          id='hamburger_menu_toggle'
-          class='flex justify-center items-center bg-transparent hover:bg-green-600 active:bg-green-600 w-16 focus:ring focus:outline-none'
-          onClick={toggleShowMenu}
-          aria-controls='hamburger_menu'
-        >
-          <img
-            src='/assets/icons/hamburger_icon.svg'
-            style={{ filter: 'invert(100%)' }}
-            height='45'
-            width='45'
-            alt='Menu'
-          />
-        </button>
 
         <Menu
           show={showMenu}
@@ -97,19 +81,7 @@ export default function Header ({
           search={search}
           group={group}
           shiftModel={shiftModel}
-          gotoMonth={(event, hide) => {
-            dispatch(event)
-
-            if (hide) {
-              hideMenu()
-            }
-          }}
-          dispatch={dispatch}
-          onSearch={search}
-          toggleFullYear={() => {
-            dispatch({ type: 'toggle_full_year' })
-            hideMenu()
-          }}
+          setShowMenu={setShowMenu}
           onShare={() => {
             hideMenu()
             setShowShareMenu(true)
@@ -120,6 +92,8 @@ export default function Header ({
       {showShareMenu && (
         <ShareMenu
           group={group}
+          month={month}
+          year={year}
           search={search}
           shiftModel={shiftModel}
           hide={() => {
@@ -150,10 +124,10 @@ function useParseURL (url) {
     // If there is the month part, then it is not a full year.
     // /cal/:shiftModel/:year/:month
     if (parts.length > 4 && !Number.isNaN(parts[4])) {
-      const month = parseInt(parts[4]) - 1
+      const month = parseInt(parts[4])
       return {
         isFullYear: false,
-        month: Math.min(Math.max(month, 0), 11),
+        month: Math.min(Math.max(month, 1), 12),
         year
       }
     }
@@ -214,7 +188,7 @@ function useShowMenu () {
           setShow(false)
 
           // Focus the menu toggle button, Because both menus start from there.
-          const element = document.getElementById('hamburger_menu_toggle')
+          const element = document.getElementById('menu_summary')
           if (element) {
             element.focus()
           }

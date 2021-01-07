@@ -15,11 +15,13 @@ import { isSSR } from '../lib/utils'
  * Display the share menu.
  * @param {object}   params            - Preact props.
  * @param {number}   params.group      - Number of selected group. 0 = no group selected/all
- * @param {number[]} [params.search]   - Searched day. [year, month, day]
+ * @param {number}   [params.year]     - Searched day's year.
+ * @param {number}   [params.month]    - Searched day's month.
+ * @param {number}   [params.search]   - Searched day.
  * @param {string}   params.shiftModel - Name of the selected shift-model.
  * @param {function} hide              - Hide the share menu.
  */
-export default function ShareMenu ({ group, search, shiftModel, hide }) {
+export default function ShareMenu ({ group, year, month, search, shiftModel, hide }) {
   const [addGroup, setAddGroup] = useState(false)
   const [addSearch, setAddSearch] = useState(false)
   const [addShiftModel, setAddShiftModel] = useState(false)
@@ -45,7 +47,10 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
   useEffect(() => {
     document.getElementById('share_url').focus()
     return () => {
-      document.getElementById('hamburger_menu_toggle').focus()
+      const element = document.getElementById('menu_summary')
+      if (element) {
+        element.focus()
+      }
     }
   }, [])
 
@@ -62,8 +67,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
     }
 
     if (addSearch && search != null) {
-      const [year, month, date] = search
-      props.search = `${year}-${month + 1}-${date}`
+      props.search = `${year}-${month}-${search}`
     }
 
     if (addShiftModel) {

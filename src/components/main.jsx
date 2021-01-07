@@ -13,7 +13,7 @@ import Downloader from './download'
 import Footer from './footer'
 import Month from './month'
 import selectMonthData from '../lib/select-month-data'
-import { isSSR } from '../lib/utils'
+import { isSSR, scrollToADay } from '../lib/utils'
 
 /**
  * Renders the main content.
@@ -58,12 +58,12 @@ export default function Main ({
   } else {
     switch (numberOfMonths) {
       case 1: // Renders the selected month
-        monthsData.push([year, month])
+        monthsData.push([year, month, search])
         break
 
       case 2: // if there are only 2 months: show this and the next one
       {
-        monthsData.push([year, month])
+        monthsData.push([year, month, search])
 
         let nextMonth = month + 1
         let nextYear = year
@@ -83,6 +83,11 @@ export default function Main ({
           let monthNr = month + (i - 1)
           let yearNr = year
 
+          if (search && monthNr === month && yearNr === year) {
+            monthsData.push([year, month, search])
+            continue
+          }
+
           if (monthNr > 11) {
             monthNr -= 12
             yearNr += 1
@@ -97,6 +102,12 @@ export default function Main ({
     }
   }
 
+  useEffect(() => {
+    if (search) {
+      scrollToADay(year, month, search)
+    }
+  }, [search])
+
   return (
     <main class='flex flex-col content-center'>
       <div
@@ -106,14 +117,14 @@ export default function Main ({
         ref={ref}
         aria-live='polite'
       >
-        {monthsData.map(([year, month]) => (
+        {monthsData.map(([year, month, search]) => (
           <Month
             key={`${year}-${month}-${shiftModel}-${group}`}
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
             today={today[0] === year && today[1] === month ? today : null}
-            search={search != null && search[0] === year && search[1] === month ? search[2] : null}
+            search={search != null ? +search : null}
             group={group}
           />
         ))}

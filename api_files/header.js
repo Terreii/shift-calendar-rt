@@ -53,13 +53,13 @@ var require_preact_router = __commonJS((exports2, module2) => {
       t2 = i(t2.replace(o2, "")), e2 = i(e2 || "");
       for (var l2 = Math.max(t2.length, e2.length), s2 = 0; s2 < l2; s2++)
         if (e2[s2] && e2[s2].charAt(0) === ":") {
-          var h5 = e2[s2].replace(/(^:|[+*?]+$)/g, ""), d2 = (e2[s2].match(/[+*?]+$/) || C)[0] || "", g2 = ~d2.indexOf("+"), y2 = ~d2.indexOf("*"), m2 = t2[s2] || "";
+          var h6 = e2[s2].replace(/(^:|[+*?]+$)/g, ""), d2 = (e2[s2].match(/[+*?]+$/) || C)[0] || "", g2 = ~d2.indexOf("+"), y2 = ~d2.indexOf("*"), m2 = t2[s2] || "";
           if (!m2 && !y2 && (d2.indexOf("?") < 0 || g2)) {
             r2 = false;
             break;
           }
-          if (a2[h5] = decodeURIComponent(m2), g2 || y2) {
-            a2[h5] = t2.slice(s2).map(decodeURIComponent).join("/");
+          if (a2[h6] = decodeURIComponent(m2), g2 || y2) {
+            a2[h6] = t2.slice(s2).map(decodeURIComponent).join("/");
             break;
           }
         } else if (e2[s2] !== t2[s2]) {
@@ -94,7 +94,7 @@ var require_preact_router = __commonJS((exports2, module2) => {
       return t2 = b && b.location ? b.location : b && b.getCurrentLocation ? b.getCurrentLocation() : typeof location != "undefined" ? location : x, "" + (t2.pathname || "") + (t2.search || "");
     }
     function l(t2, e2) {
-      return e2 === void 0 && (e2 = false), typeof t2 != "string" && t2.url && (e2 = t2.replace, t2 = t2.url), s(t2) && c(t2, e2 ? "replace" : "push"), h4(t2);
+      return e2 === void 0 && (e2 = false), typeof t2 != "string" && t2.url && (e2 = t2.replace, t2 = t2.url), s(t2) && c(t2, e2 ? "replace" : "push"), h5(t2);
     }
     function s(t2) {
       for (var e2 = U.length; e2--; )
@@ -102,7 +102,7 @@ var require_preact_router = __commonJS((exports2, module2) => {
           return true;
       return false;
     }
-    function h4(t2) {
+    function h5(t2) {
       for (var e2 = false, n2 = 0; n2 < U.length; n2++)
         U[n2].routeTo(t2) === true && (e2 = true);
       for (var r2 = k.length; r2--; )
@@ -138,7 +138,7 @@ var require_preact_router = __commonJS((exports2, module2) => {
     }
     function v() {
       A || (typeof addEventListener == "function" && (b || addEventListener("popstate", function() {
-        h4(f());
+        h5(f());
       }), addEventListener("click", m)), A = true);
     }
     var C = {}, b = null, U = [], k = [], x = {}, A = false, R = function(i2) {
@@ -243,16 +243,35 @@ var require_querystringify = __commonJS((exports2) => {
   exports2.parse = querystring;
 });
 
+// node_modules/milliseconds/milliseconds.js
+var require_milliseconds = __commonJS((exports2, module2) => {
+  function calc(m) {
+    return function(n) {
+      return Math.round(n * m);
+    };
+  }
+  module2.exports = {
+    seconds: calc(1e3),
+    minutes: calc(6e4),
+    hours: calc(36e5),
+    days: calc(864e5),
+    weeks: calc(6048e5),
+    months: calc(26298e5),
+    years: calc(315576e5)
+  };
+});
+
 // src/components/header.jsx
 __export(exports, {
   default: () => Header
 });
-var import_preact3 = __toModule(require("preact"));
-var import_hooks2 = __toModule(require("preact/hooks"));
-var import_preact_router = __toModule(require_preact_router());
+var import_preact4 = __toModule(require("preact"));
+var import_hooks3 = __toModule(require("preact/hooks"));
+var import_preact_router3 = __toModule(require_preact_router());
 
 // src/components/menu.jsx
 var import_preact = __toModule(require("preact"));
+var import_preact_router = __toModule(require_preact_router());
 
 // src/lib/constants.js
 var monthNames = [
@@ -314,6 +333,31 @@ function scrollToADay(year, month, day) {
     });
   }
 }
+function getCalUrl({
+  shiftModel,
+  isFullYear = false,
+  year,
+  month,
+  group = 0,
+  search = null
+} = {}) {
+  const params = new URLSearchParams();
+  if (search != null && !Number.isNaN(search)) {
+    params.set("search", search);
+  }
+  if (group > 0) {
+    params.set("group", group);
+  }
+  const paramsString = params.toString();
+  const paramsStr = paramsString.length > 0 ? "?" + paramsString : "";
+  if (isFullYear) {
+    return `/cal/${shiftModel}/${year}${paramsStr}`;
+  } else {
+    const monthNum = month != null && month > 0 && month <= 12 ? month : new Date().getMonth() + 1;
+    const monthStr = String(monthNum).padStart(2, "0");
+    return `/cal/${shiftModel}/${year}/${monthStr}${paramsStr}`;
+  }
+}
 
 // src/components/menu.jsx
 var [supportsMonthInput, supportsDateInput] = ["month", "date"].map((type) => {
@@ -333,16 +377,14 @@ function Menu({
   search,
   group,
   shiftModel,
-  toggleFullYear,
-  gotoMonth,
-  dispatch,
+  setShowMenu,
   onShare
 }) {
   let searchValue = "";
   if (search != null) {
-    const searchMonth = String(search[1] + 1).padStart(2, "0");
-    const searchDay = String(search[2]).padStart(2, "0");
-    searchValue = `${search[0]}-${searchMonth}-${searchDay}`;
+    const searchMonth = String(month).padStart(2, "0");
+    const searchDay = String(search).padStart(2, "0");
+    searchValue = `${year}-${searchMonth}-${searchDay}`;
   }
   const groupOptions = [];
   for (let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1; gr <= max; gr += 1) {
@@ -351,42 +393,63 @@ function Menu({
       value: gr
     }, "Nur Gruppe ", gr));
   }
-  return /* @__PURE__ */ import_preact.h("div", {
+  return /* @__PURE__ */ import_preact.h("details", {
+    open: show,
+    onToggle: (event) => {
+      setShowMenu(event.target.open);
+    }
+  }, /* @__PURE__ */ import_preact.h("summary", {
+    id: "menu_summary",
+    class: "flex items-center justify-center w-16 list-none bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none"
+  }, /* @__PURE__ */ import_preact.h("img", {
+    src: "/assets/icons/hamburger_icon.svg",
+    style: {filter: "invert(100%)"},
+    height: "45",
+    width: "45",
+    alt: "Menu"
+  })), /* @__PURE__ */ import_preact.h("div", {
     id: "hamburger_menu",
     "aria-live": "polite",
     "aria-label": "Men\xFC",
-    class: (show ? "flex" : "hidden") + " absolute top-0 right-0 mt-12 p-3  flex-col justify-center items-stretch bg-green-900 shadow-lg"
+    class: "absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg"
   }, supportsMonthInput || isFullYear ? null : /* @__PURE__ */ import_preact.h("select", {
     class: "form-item",
     title: "Gehe zum Monat",
     value: month,
     onChange: (event) => {
-      gotoMonth({type: "goto", month: +event.target.value, fullYear: false}, true);
+      import_preact_router.route(getCalUrl({
+        group,
+        shiftModel,
+        isFullYear: false,
+        month: event.target.value,
+        year
+      }));
     },
     "aria-controls": "calendar_main_out"
   }, monthNames.map((name, index) => /* @__PURE__ */ import_preact.h("option", {
     key: name,
-    value: index
+    value: index + 1
   }, name))), (!supportsMonthInput || isFullYear) && /* @__PURE__ */ import_preact.h("label", {
-    class: "mt-5 flex flex-col items-stretch text-white text-center"
+    class: "flex flex-col items-stretch mt-5 text-center text-white"
   }, "Jahr", /* @__PURE__ */ import_preact.h("input", {
-    class: "flex-auto mt-1 w-full form-item",
+    class: "flex-auto w-full mt-1 form-item",
     type: "number",
     min: "2000",
     "aria-controls": "calendar_main_out",
     value: year,
     onChange: (event) => {
-      const year2 = +event.target.value;
-      if (Number.isNaN(year2)) {
-        event.target.value = String(event.target.value).replace(/\D/g, "");
-        return;
-      }
-      gotoMonth({type: "goto", year: year2, fullYear: isFullYear}, false);
+      import_preact_router.route(getCalUrl({
+        group,
+        shiftModel,
+        isFullYear,
+        year: +event.target.value,
+        month
+      }));
     }
   })), supportsMonthInput && !isFullYear && /* @__PURE__ */ import_preact.h("label", {
-    class: "mt-5 flex flex-col items-stretch text-white text-center"
+    class: "flex flex-col items-stretch mt-5 text-center text-white"
   }, "Gehe zum Monat", /* @__PURE__ */ import_preact.h("input", {
-    class: "flex-auto mt-1 w-full form-item",
+    class: "flex-auto w-full mt-1 form-item",
     type: "month",
     "aria-controls": "calendar_main_out",
     min: "2000-01",
@@ -394,80 +457,103 @@ function Menu({
     onChange: (event) => {
       const value = event.target.value;
       if (value == null || value.length === 0) {
-        gotoMonth({type: "goto", year, month});
         return;
       }
-      const [nextYear, nextMonth] = value.split("-").map((s) => parseInt(s, 10));
-      if (Number.isNaN(nextYear) || Number.isNaN(nextMonth)) {
-        gotoMonth({type: "goto", year, month});
+      const [nextYear, nextMonth] = value.split("-");
+      if (!nextYear || !nextMonth) {
         return;
       }
-      gotoMonth({
-        type: "goto",
-        year: nextYear,
-        month: nextMonth - 1,
-        fullYear: isFullYear
-      }, false);
+      import_preact_router.route(getCalUrl({
+        group,
+        shiftModel,
+        isFullYear,
+        month: nextMonth,
+        year: nextYear
+      }));
     }
   })), supportsDateInput && /* @__PURE__ */ import_preact.h("label", {
-    class: "mt-5 flex flex-col items-stretch text-white text-center"
+    class: "flex flex-col items-stretch mt-5 text-center text-white"
   }, "Suche einen Tag", /* @__PURE__ */ import_preact.h("input", {
-    class: "flex-auto mt-1 w-full form-item",
+    class: "flex-auto w-full mt-1 form-item",
     type: "date",
     "aria-controls": "calendar_main_out",
     min: "2000-01-01",
     value: searchValue,
     onChange: (event) => {
       const value = event.target.value;
+      console.log(value);
       if (value == null || value.length === 0) {
-        dispatch({type: "clear_search"});
+        import_preact_router.route(getCalUrl({
+          search: null,
+          group,
+          shiftModel,
+          isFullYear,
+          month,
+          year
+        }));
       } else {
-        const date = new Date(value);
-        dispatch({
-          type: "search",
+        const date = event.target.valueAsDate || new Date(value);
+        import_preact_router.route(getCalUrl({
+          group,
+          shiftModel,
+          isFullYear: false,
           year: date.getFullYear(),
-          month: date.getMonth(),
-          day: date.getDate()
-        });
+          month: date.getMonth() + 1,
+          search: date.getDate()
+        }));
       }
     }
-  })), /* @__PURE__ */ import_preact.h("button", {
-    type: "button",
-    class: "mt-5 form-item",
-    onClick: toggleFullYear,
-    "aria-controls": "calendar_main_out"
+  })), /* @__PURE__ */ import_preact.h(import_preact_router.Link, {
+    key: isFullYear,
+    href: getCalUrl({
+      group,
+      shiftModel,
+      isFullYear: !isFullYear,
+      year,
+      month
+    }),
+    className: "py-2 mt-5 form-item",
+    "aria-controls": "calendar_main_out",
+    onClick: () => {
+      setShowMenu(false);
+    }
   }, "Zeige ", isFullYear ? "Monate" : "ganzes Jahr"), /* @__PURE__ */ import_preact.h("label", {
-    class: "mt-5 flex flex-col items-stretch text-white text-center"
+    class: "flex flex-col items-stretch mt-5 text-center text-white"
   }, "Schichtmodell", /* @__PURE__ */ import_preact.h("select", {
-    class: "flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
+    class: "flex-auto w-full h-10 mt-1 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
     "aria-controls": "calendar_main_out",
     value: shiftModel,
     onChange: (event) => {
-      dispatch({
-        type: "model_change",
-        payload: event.target.value
-      });
+      import_preact_router.route(getCalUrl({
+        group: 0,
+        shiftModel: event.target.value,
+        isFullYear,
+        year,
+        month
+      }));
     }
   }, shiftModelNames.map((model) => /* @__PURE__ */ import_preact.h("option", {
     key: model,
     value: model
   }, shiftModelText[model] || model)))), /* @__PURE__ */ import_preact.h("select", {
-    class: "mt-5 h-10 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
+    class: "h-10 mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
     "aria-controls": "calendar_main_out",
     "aria-label": "Schichtgruppen",
     value: group,
     onChange: (event) => {
-      const group2 = +event.target.value;
-      dispatch({
-        type: "group_change",
-        payload: group2
-      });
+      import_preact_router.route(getCalUrl({
+        group: +event.target.value,
+        shiftModel,
+        isFullYear,
+        year,
+        month
+      }));
     }
   }, /* @__PURE__ */ import_preact.h("option", {
     value: "0"
   }, "Alle Gruppen"), groupOptions), /* @__PURE__ */ import_preact.h("button", {
     type: "button",
-    class: "mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
+    class: "h-12 px-4 py-2 mx-auto mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none",
     onClick: onShare,
     "aria-label": "Teile deine Schicht"
   }, /* @__PURE__ */ import_preact.h("img", {
@@ -475,14 +561,14 @@ function Menu({
     height: "32",
     width: "32",
     alt: "teilen"
-  })));
+  }))));
 }
 
 // src/components/share-menu.jsx
 var import_preact2 = __toModule(require("preact"));
 var import_hooks = __toModule(require("preact/hooks"));
 var import_querystringify = __toModule(require_querystringify());
-function ShareMenu({group, search, shiftModel, hide}) {
+function ShareMenu({group, year, month, search, shiftModel, hide}) {
   const [addGroup, setAddGroup] = import_hooks.useState(false);
   const [addSearch, setAddSearch] = import_hooks.useState(false);
   const [addShiftModel, setAddShiftModel] = import_hooks.useState(false);
@@ -499,7 +585,10 @@ function ShareMenu({group, search, shiftModel, hide}) {
   import_hooks.useEffect(() => {
     document.getElementById("share_url").focus();
     return () => {
-      document.getElementById("hamburger_menu_toggle").focus();
+      const element = document.getElementById("menu_summary");
+      if (element) {
+        element.focus();
+      }
     };
   }, []);
   const url = import_hooks.useMemo(() => {
@@ -512,8 +601,7 @@ function ShareMenu({group, search, shiftModel, hide}) {
       props.group = group;
     }
     if (addSearch && search != null) {
-      const [year, month, date] = search;
-      props.search = `${year}-${month + 1}-${date}`;
+      props.search = `${year}-${month}-${search}`;
     }
     if (addShiftModel) {
       props.schichtmodell = shiftModel;
@@ -610,12 +698,68 @@ function ShareMenu({group, search, shiftModel, hide}) {
   }, "Teilen")));
 }
 
+// src/components/header-nav-links.jsx
+var import_preact3 = __toModule(require("preact"));
+var import_hooks2 = __toModule(require("preact/hooks"));
+var import_preact_router2 = __toModule(require_preact_router());
+var import_milliseconds = __toModule(require_milliseconds());
+function HeaderNavLinks({
+  today,
+  year,
+  month,
+  isFullYear,
+  shiftModel,
+  group,
+  onClick
+}) {
+  const {lastMonth, nextMonth} = import_hooks2.useMemo(() => {
+    const then = new Date();
+    then.setFullYear(year);
+    then.setMonth(month - 1);
+    return {
+      lastMonth: getMonthUrl(then.getTime() - import_milliseconds.default.months(1), isFullYear, shiftModel, group),
+      nextMonth: getMonthUrl(then.getTime() + import_milliseconds.default.months(1), isFullYear, shiftModel, group)
+    };
+  }, [year, month, isFullYear, shiftModel, group]);
+  return /* @__PURE__ */ import_preact3.h(import_preact3.Fragment, null, /* @__PURE__ */ import_preact3.h(import_preact_router2.Link, {
+    key: `previous_${year}_${month}`,
+    href: lastMonth,
+    class: "inline-block px-4 py-3 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
+    title: isFullYear ? "voriges Jahr" : "vorigen Monat",
+    "aria-controls": "calendar_main_out"
+  }, "<"), /* @__PURE__ */ import_preact3.h(import_preact_router2.Link, {
+    href: getCalUrl({
+      group,
+      shiftModel,
+      year: today[0],
+      month: today[1]
+    }),
+    class: "inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
+    title: "zeige aktuellen Monat",
+    onClick
+  }, "Heute"), /* @__PURE__ */ import_preact3.h(import_preact_router2.Link, {
+    key: `next_${year}_${month}`,
+    href: nextMonth,
+    class: "inline-block px-4 py-3 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
+    title: isFullYear ? "n\xE4chstes Jahr" : "n\xE4chster Monat",
+    "aria-controls": "calendar_main_out"
+  }, ">"));
+}
+function getMonthUrl(time, isFullYear, shiftModel, group) {
+  const t = new Date(time);
+  return getCalUrl({
+    group,
+    shiftModel,
+    isFullYear,
+    year: t.getFullYear(),
+    month: t.getMonth() + 1
+  });
+}
+
 // src/components/header.jsx
 function Header({
   url,
-  isFullYear,
-  month,
-  year,
+  today,
   search,
   group,
   shiftModel,
@@ -625,66 +769,28 @@ function Header({
   const [showMenu, setShowMenu] = useShowMenu();
   const [showShareMenu, setShowShareMenu] = useShowMenu();
   const hideMenu = () => setShowMenu(false);
-  const toggleShowMenu = () => setShowMenu((old) => !old);
-  return /* @__PURE__ */ import_preact3.h("header", {
+  const {year, month, isFullYear} = useParseURL(url);
+  return /* @__PURE__ */ import_preact4.h("header", {
     class: "fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between bg-green-900 shadow-lg z-50"
-  }, (url !== "/" || !isSmallScreen) && /* @__PURE__ */ import_preact3.h("h1", {
+  }, (!isSmallScreen || !url.startsWith("/cal")) && /* @__PURE__ */ import_preact4.h("h1", {
     class: "m-0 text-2xl font-normal align-baseline"
-  }, /* @__PURE__ */ import_preact3.h(import_preact_router.Link, {
+  }, /* @__PURE__ */ import_preact4.h(import_preact_router3.Link, {
     href: "/",
     tabIndex: "0",
     class: "pl-4 text-white no-underline hover:underline focus:underline focus:ring focus:outline-none"
-  }, "Kalender")), (url === "/" || !isSmallScreen) && /* @__PURE__ */ import_preact3.h("nav", {
+  }, "Kalender")), /* @__PURE__ */ import_preact4.h("nav", {
     class: "h-full flex flex-row text-base items-stretch"
-  }, /* @__PURE__ */ import_preact3.h("button", {
-    type: "button",
-    class: "px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
-    title: "vorigen Monat",
-    "aria-label": "vorigen Monat",
-    "aria-controls": "calendar_main_out",
+  }, (!isSmallScreen || url.startsWith("/cal")) && /* @__PURE__ */ import_preact4.h(HeaderNavLinks, {
+    today,
+    isFullYear,
+    month,
+    year,
+    group,
+    shiftModel,
     onClick: () => {
-      dispatch({type: "move", payload: -1});
-      hideMenu();
+      setTimeout(scrollToADay, 32, ...today);
     }
-  }, "<"), /* @__PURE__ */ import_preact3.h("button", {
-    type: "button",
-    class: "px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
-    title: "zeige aktuellen Monat",
-    onClick: () => {
-      const now = new Date();
-      const year2 = now.getFullYear();
-      const month2 = now.getMonth();
-      dispatch({
-        type: "goto",
-        fullYear: false,
-        year: year2,
-        month: month2
-      });
-      hideMenu();
-      setTimeout(scrollToADay, 16, year2, month2, now.getDate());
-    }
-  }, "Heute"), /* @__PURE__ */ import_preact3.h("button", {
-    type: "button",
-    class: "px-4 bg-transparent text-white hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none",
-    title: "n\xE4chster Monat",
-    "aria-label": "n\xE4chster Monat",
-    "aria-controls": "calendar_main_out",
-    onClick: () => {
-      dispatch({type: "move", payload: 1});
-      hideMenu();
-    }
-  }, ">"), /* @__PURE__ */ import_preact3.h("button", {
-    id: "hamburger_menu_toggle",
-    class: "flex justify-center items-center bg-transparent hover:bg-green-600 active:bg-green-600 w-16 focus:ring focus:outline-none",
-    onClick: toggleShowMenu,
-    "aria-controls": "hamburger_menu"
-  }, /* @__PURE__ */ import_preact3.h("img", {
-    src: "/assets/icons/hamburger_icon.svg",
-    style: {filter: "invert(100%)"},
-    height: "45",
-    width: "45",
-    alt: "Menu"
-  })), /* @__PURE__ */ import_preact3.h(Menu, {
+  }), /* @__PURE__ */ import_preact4.h(Menu, {
     show: showMenu,
     isFullYear,
     month,
@@ -692,24 +798,15 @@ function Header({
     search,
     group,
     shiftModel,
-    gotoMonth: (event, hide) => {
-      dispatch(event);
-      if (hide) {
-        hideMenu();
-      }
-    },
-    dispatch,
-    onSearch: search,
-    toggleFullYear: () => {
-      dispatch({type: "toggle_full_year"});
-      hideMenu();
-    },
+    setShowMenu,
     onShare: () => {
       hideMenu();
       setShowShareMenu(true);
     }
-  })), showShareMenu && /* @__PURE__ */ import_preact3.h(ShareMenu, {
+  })), showShareMenu && /* @__PURE__ */ import_preact4.h(ShareMenu, {
     group,
+    month,
+    year,
     search,
     shiftModel,
     hide: () => {
@@ -717,9 +814,36 @@ function Header({
     }
   }));
 }
+function useParseURL(url) {
+  return import_hooks3.useMemo(() => {
+    if (!url.startsWith("/cal")) {
+      const now = new Date();
+      return {
+        isFullYear: false,
+        month: now.getMonth(),
+        year: now.getFullYear()
+      };
+    }
+    const parts = new URL(url, "https://test.es").pathname.split("/");
+    const year = Number.isNaN(parts[3]) ? new Date().getFullYear() : parseInt(parts[3]);
+    if (parts.length > 4 && !Number.isNaN(parts[4])) {
+      const month = parseInt(parts[4]);
+      return {
+        isFullYear: false,
+        month: Math.min(Math.max(month, 1), 12),
+        year
+      };
+    }
+    return {
+      isFullYear: true,
+      month: new Date().getMonth(),
+      year
+    };
+  }, [url]);
+}
 function useIsSmallScreen() {
-  const [isSmallScreen, setIsSmallScreen] = import_hooks2.useState(() => !isSSR && window.innerWidth < 350);
-  import_hooks2.useEffect(() => {
+  const [isSmallScreen, setIsSmallScreen] = import_hooks3.useState(() => !isSSR && window.innerWidth < 350);
+  import_hooks3.useEffect(() => {
     const onResize = () => {
       setIsSmallScreen(window.innerWidth < 350);
     };
@@ -731,25 +855,27 @@ function useIsSmallScreen() {
   return isSmallScreen;
 }
 function useShowMenu() {
-  const [show, setShow] = import_hooks2.useState(false);
-  import_hooks2.useEffect(() => {
+  const [show, setShow] = import_hooks3.useState(false);
+  import_hooks3.useEffect(() => {
     if (show) {
       const hide = () => {
         setShow(false);
       };
       const element = document.getElementsByTagName("main")[0];
-      element.addEventListener("click", hide);
-      return () => {
-        element.removeEventListener("click", hide);
-      };
+      if (element) {
+        element.addEventListener("click", hide);
+        return () => {
+          element.removeEventListener("click", hide);
+        };
+      }
     }
   }, [show]);
-  import_hooks2.useEffect(() => {
+  import_hooks3.useEffect(() => {
     if (show) {
       const keyEvent = (event) => {
         if (event.code === "Escape" || event.keyCode === 27) {
           setShow(false);
-          const element = document.getElementById("hamburger_menu_toggle");
+          const element = document.getElementById("menu_summary");
           if (element) {
             element.focus();
           }

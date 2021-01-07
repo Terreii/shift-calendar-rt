@@ -41,6 +41,7 @@ function reducer (state, action) {
       const group = Math.min(groupMin, shiftModelNumberOfGroups[shiftModel])
 
       if (
+        action.payload.search === state.search &&
         group === state.group &&
         shiftModel === state.shiftModel &&
         state.didSelectModel &&
@@ -51,32 +52,13 @@ function reducer (state, action) {
         return {
           ...state,
           url: action.payload.url,
+          search: action.payload.search,
           didSelectModel: true,
           group,
           shiftModel
         }
       }
     }
-
-    case 'url_change':
-      return {
-        ...state,
-        url: action.url
-      }
-
-    case 'search':
-      return {
-        ...state,
-        year: action.year,
-        month: action.month,
-        search: [action.year, action.month, action.day]
-      }
-
-    case 'clear_search':
-      return {
-        ...state,
-        search: null
-      }
 
     default:
       return state

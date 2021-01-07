@@ -37,12 +37,6 @@ export default function App () {
     }
   }, [state.shiftModel, state.didSelectModel])
 
-  useEffect(() => {
-    if (state.search) {
-      scrollToADay(...state.search)
-    }
-  }, [state.search])
-
   return (
     <div id='app'>
       <Header
@@ -58,11 +52,12 @@ export default function App () {
           setIsFirstRenderedPage(false)
 
           if (event.url.length > 5 && event.url.startsWith('/cal/')) {
-            const { group, shiftModel } = event.current.props.matches
+            const { group, shiftModel, search } = event.current.props.matches
             dispatch({
               type: 'change',
               payload: {
                 url: event.url,
+                search: search ? parseInt(search, 10) : null,
                 group,
                 shiftModel
               }
@@ -80,7 +75,6 @@ export default function App () {
           getComponent={() => import('./main').then(m => m.default)}
           isFullYear
           today={today}
-          search={state.today}
           dispatch={dispatch}
         />
         <AsyncRoute
@@ -88,7 +82,6 @@ export default function App () {
           getComponent={() => import('./main').then(m => m.default)}
           isFullYear={false}
           today={today}
-          search={state.today}
           dispatch={dispatch}
         />
         <AsyncRoute

@@ -44,3 +44,33 @@ export function scrollToADay (year, month, day) {
     })
   }
 }
+
+export function getCalUrl ({
+  shiftModel,
+  isFullYear = false,
+  year,
+  month,
+  group = 0,
+  search = null
+} = {}) {
+  const params = new URLSearchParams()
+
+  if (search != null && !Number.isNaN(search)) {
+    params.set('search', search)
+  }
+  if (group > 0) {
+    params.set('group', group)
+  }
+  const paramsString = params.toString()
+  const paramsStr = paramsString.length > 0 ? '?' + paramsString : ''
+
+  if (isFullYear) {
+    return `/cal/${shiftModel}/${year}${paramsStr}`
+  } else {
+    const monthNum = month != null && month > 0 && month <= 12
+      ? month
+      : new Date().getMonth() + 1
+    const monthStr = String(monthNum).padStart(2, '0')
+    return `/cal/${shiftModel}/${year}/${monthStr}${paramsStr}`
+  }
+}

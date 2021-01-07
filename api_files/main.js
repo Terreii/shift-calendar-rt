@@ -6579,6 +6579,15 @@ var isSSR = (() => {
     return true;
   }
 })();
+function scrollToADay(year, month, day) {
+  const row = document.querySelector(`#month_${year}-${month + 1} tr:nth-child(${day})`);
+  if (row != null && row.scrollIntoView != null) {
+    row.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+  }
+}
 
 // src/lib/workdata.js
 function getMonthData(year, month, shiftModel) {
@@ -7156,10 +7165,10 @@ function Main({
   } else {
     switch (numberOfMonths) {
       case 1:
-        monthsData.push([year, month]);
+        monthsData.push([year, month, search]);
         break;
       case 2: {
-        monthsData.push([year, month]);
+        monthsData.push([year, month, search]);
         let nextMonth = month + 1;
         let nextYear = year;
         if (nextMonth > 11) {
@@ -7174,6 +7183,10 @@ function Main({
         for (let i = 0; i < numberOfMonths; ++i) {
           let monthNr = month + (i - 1);
           let yearNr = year;
+          if (search && monthNr === month && yearNr === year) {
+            monthsData.push([year, month, search]);
+            continue;
+          }
           if (monthNr > 11) {
             monthNr -= 12;
             yearNr += 1;
@@ -7186,6 +7199,11 @@ function Main({
         break;
     }
   }
+  import_hooks.useEffect(() => {
+    if (search) {
+      scrollToADay(year, month, search);
+    }
+  }, [search]);
   return /* @__PURE__ */ import_preact9.h("main", {
     class: "flex flex-col content-center"
   }, /* @__PURE__ */ import_preact9.h("div", {
@@ -7194,13 +7212,13 @@ function Main({
     onClick: processClick,
     ref,
     "aria-live": "polite"
-  }, monthsData.map(([year2, month2]) => /* @__PURE__ */ import_preact9.h(month_default, {
+  }, monthsData.map(([year2, month2, search2]) => /* @__PURE__ */ import_preact9.h(month_default, {
     key: `${year2}-${month2}-${shiftModel}-${group}`,
     year: year2,
     month: month2,
     data: select_month_data_default(year2, month2, shiftModel),
     today: today[0] === year2 && today[1] === month2 ? today : null,
-    search: search != null && search[0] === year2 && search[1] === month2 ? search[2] : null,
+    search: search2 != null ? +search2 : null,
     group
   }))), /* @__PURE__ */ import_preact9.h(Download, {
     shiftModel
