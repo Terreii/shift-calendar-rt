@@ -190,59 +190,6 @@ var require_preact_router = __commonJS((exports2, module2) => {
   });
 });
 
-// node_modules/querystringify/index.js
-var require_querystringify = __commonJS((exports2) => {
-  "use strict";
-  var has = Object.prototype.hasOwnProperty;
-  var undef;
-  function decode(input) {
-    try {
-      return decodeURIComponent(input.replace(/\+/g, " "));
-    } catch (e) {
-      return null;
-    }
-  }
-  function encode(input) {
-    try {
-      return encodeURIComponent(input);
-    } catch (e) {
-      return null;
-    }
-  }
-  function querystring(query) {
-    var parser = /([^=?#&]+)=?([^&]*)/g, result = {}, part;
-    while (part = parser.exec(query)) {
-      var key = decode(part[1]), value = decode(part[2]);
-      if (key === null || value === null || key in result)
-        continue;
-      result[key] = value;
-    }
-    return result;
-  }
-  function querystringify(obj, prefix) {
-    prefix = prefix || "";
-    var pairs = [], value, key;
-    if (typeof prefix !== "string")
-      prefix = "?";
-    for (key in obj) {
-      if (has.call(obj, key)) {
-        value = obj[key];
-        if (!value && (value === null || value === undef || isNaN(value))) {
-          value = "";
-        }
-        key = encode(key);
-        value = encode(value);
-        if (key === null || value === null)
-          continue;
-        pairs.push(key + "=" + value);
-      }
-    }
-    return pairs.length ? prefix + pairs.join("&") : "";
-  }
-  exports2.stringify = querystringify;
-  exports2.parse = querystring;
-});
-
 // node_modules/milliseconds/milliseconds.js
 var require_milliseconds = __commonJS((exports2, module2) => {
   function calc(m) {
@@ -350,6 +297,9 @@ function getCalUrl({
   }
   const paramsString = params.toString();
   const paramsStr = paramsString.length > 0 ? "?" + paramsString : "";
+  if (year == null) {
+    return `/cal/${shiftModel}${paramsStr}`;
+  }
   if (isFullYear) {
     return `/cal/${shiftModel}/${year}${paramsStr}`;
   } else {
@@ -481,7 +431,6 @@ function Menu({
     value: searchValue,
     onChange: (event) => {
       const value = event.target.value;
-      console.log(value);
       if (value == null || value.length === 0) {
         import_preact_router.route(getCalUrl({
           search: null,
@@ -567,7 +516,6 @@ function Menu({
 // src/components/share-menu.jsx
 var import_preact2 = __toModule(require("preact"));
 var import_hooks = __toModule(require("preact/hooks"));
-var import_querystringify = __toModule(require_querystringify());
 function ShareMenu({group, year, month, search, shiftModel, hide}) {
   const [addGroup, setAddGroup] = import_hooks.useState(false);
   const [addSearch, setAddSearch] = import_hooks.useState(false);
@@ -596,27 +544,33 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
       return "";
     }
     const url2 = new URL(window.location.href);
-    const props = {};
-    if (addGroup && group !== 0) {
-      props.group = group;
-    }
-    if (addSearch && search != null) {
-      props.search = `${year}-${month}-${search}`;
-    }
+    url2.search = "";
+    url2.hash = "";
     if (addShiftModel) {
-      props.schichtmodell = shiftModel;
+      url2.pathname = getCalUrl({
+        shiftModel,
+        isFullYear: false,
+        year: addSearch ? year : null,
+        month: addSearch ? month : null
+      });
+      if (addSearch && search != null) {
+        url2.searchParams.set("search", search);
+      }
+      if (addGroup && group > 0) {
+        url2.searchParams.set("group", group);
+      }
+    } else {
+      url2.pathname = "";
     }
-    const hash = addGroup || addSearch || addShiftModel ? import_querystringify.default.stringify(props, "#") : "";
-    url2.hash = hash;
     return url2;
-  }, [addGroup, group, addSearch, search, addShiftModel, shiftModel]);
+  }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel]);
   return /* @__PURE__ */ import_preact2.h("div", {
-    class: "flex flex-col content-center items-stretch absolute top-0 left-0 mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg"
+    class: "absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg"
   }, /* @__PURE__ */ import_preact2.h("label", {
     class: "flex flex-col"
   }, "Adresse zum teilen:", /* @__PURE__ */ import_preact2.h("input", {
     id: "share_url",
-    class: "bg-transparent text-white pt-1 focus:ring focus:outline-none",
+    class: "pt-1 text-white bg-transparent focus:ring focus:outline-none",
     type: "url",
     readonly: true,
     value: url.href,
@@ -624,11 +578,11 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
       event.target.select();
     }
   })), /* @__PURE__ */ import_preact2.h("h6", {
-    class: "mt-5 text-lg p-0 m-0 ml-4"
+    class: "p-0 m-0 mt-5 ml-4 text-lg"
   }, "F\xFCge hinzu:"), /* @__PURE__ */ import_preact2.h("label", {
     class: "mt-5 ml-2"
   }, /* @__PURE__ */ import_preact2.h("input", {
-    class: "h-4 w-4 mr-1 focus:ring focus:outline-none",
+    class: "w-4 h-4 mr-1 focus:ring focus:outline-none",
     type: "checkbox",
     checked: addShiftModel,
     onChange: (event) => {
@@ -643,7 +597,7 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
   }), "Schichtmodell"), /* @__PURE__ */ import_preact2.h("label", {
     class: "mt-5 ml-2"
   }, /* @__PURE__ */ import_preact2.h("input", {
-    class: "h-4 w-4 mr-1 focus:ring focus:outline-none",
+    class: "w-4 h-4 mr-1 focus:ring focus:outline-none",
     type: "checkbox",
     checked: addGroup,
     disabled: group === 0,
@@ -658,7 +612,7 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
   }), "Gruppe", group === 0 && /* @__PURE__ */ import_preact2.h("small", null, /* @__PURE__ */ import_preact2.h("br", null), "Momentan sind alle Gruppen ausgew\xE4hlt.")), /* @__PURE__ */ import_preact2.h("label", {
     class: "mt-5 ml-2"
   }, /* @__PURE__ */ import_preact2.h("input", {
-    class: "h-4 w-4 mr-1 focus:ring focus:outline-none",
+    class: "w-4 h-4 mr-1 focus:ring focus:outline-none",
     type: "checkbox",
     checked: addSearch,
     disabled: search == null,
@@ -671,14 +625,14 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
       }
     }
   }), "Der gesuchte Tag", search == null && /* @__PURE__ */ import_preact2.h("small", null, /* @__PURE__ */ import_preact2.h("br", null), "Momentan gibt es kein Suchergebnis.")), /* @__PURE__ */ import_preact2.h("div", {
-    class: "mt-5 flex flex-row flex-wrap content-center"
+    class: "flex flex-row flex-wrap content-center mt-5"
   }, /* @__PURE__ */ import_preact2.h("button", {
     type: "button",
-    class: "flex-auto mt-5 mx-3 w-32 form-item",
+    class: "flex-auto w-32 mx-3 mt-5 form-item",
     onClick: hide
   }, "Abbrechen"), !isSSR && "share" in window.navigator ? /* @__PURE__ */ import_preact2.h("button", {
     type: "button",
-    class: "flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item",
+    class: "flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item",
     onClick: (event) => {
       event.preventDefault();
       window.navigator.share({
@@ -690,7 +644,7 @@ function ShareMenu({group, year, month, search, shiftModel, hide}) {
       });
     }
   }, "Teilen") : /* @__PURE__ */ import_preact2.h("a", {
-    class: "flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item",
+    class: "flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item",
     href: `mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${url.toString().replace(/&/g, "%26")}`,
     onClick: () => {
       setTimeout(hide, 16);
@@ -757,21 +711,14 @@ function getMonthUrl(time, isFullYear, shiftModel, group) {
 }
 
 // src/components/header.jsx
-function Header({
-  url,
-  today,
-  search,
-  group,
-  shiftModel,
-  dispatch
-}) {
+function Header({url, today, search, group, shiftModel}) {
   const isSmallScreen = useIsSmallScreen();
   const [showMenu, setShowMenu] = useShowMenu();
   const [showShareMenu, setShowShareMenu] = useShowMenu();
   const hideMenu = () => setShowMenu(false);
   const {year, month, isFullYear} = useParseURL(url);
   return /* @__PURE__ */ import_preact4.h("header", {
-    class: "fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between bg-green-900 shadow-lg z-50"
+    class: "fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg"
   }, (!isSmallScreen || !url.startsWith("/cal")) && /* @__PURE__ */ import_preact4.h("h1", {
     class: "m-0 text-2xl font-normal align-baseline"
   }, /* @__PURE__ */ import_preact4.h(import_preact_router3.Link, {

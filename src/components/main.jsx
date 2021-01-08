@@ -7,13 +7,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect } from 'preact/hooks'
+import { route } from 'preact-router'
 import Hammer from 'hammerjs'
+import ms from 'milliseconds'
 
 import Downloader from './download'
 import Footer from './footer'
 import Month from './month'
 import selectMonthData from '../lib/select-month-data'
-import { isSSR, scrollToADay } from '../lib/utils'
+import { isSSR, scrollToADay, getCalUrl } from '../lib/utils'
 
 /**
  * Renders the main content.
@@ -24,9 +26,8 @@ import { isSSR, scrollToADay } from '../lib/utils'
  * @param {string}    arg0.month          Month number of the selected month.
  * @param {string}    arg0.shiftModel     Which shift-model should be used.
  * @param {Number[]}  arg0.today      Array of numbers that contains todays date. [year, month, day]
- * @param {number[]}  arg0.search     Array of numbers that contains the date of the search result.
+ * @param {number}    arg0.search         The day in the month that was searched.
  * @param {string}    arg0.group          Group to display. 0 = All, 1 - 6 is group number.
- * @param {Function}  arg0.dispatch   Change the global state using the reducers dispatch function.
  * @returns {JSX.Element}
  */
 export default function Main ({
@@ -36,15 +37,14 @@ export default function Main ({
   shiftModel,
   today,
   search,
-  group: groupString = '0',
-  dispatch
+  group: groupString = '0'
 }) {
   const year = +yearString
   const month = Math.min(Math.max(parseInt(monthString, 10) - 1, 0), 11)
   const group = Number.isNaN(groupString)
     ? 0
     : Math.max(parseInt(groupString, 10), 0)
-  const ref = useHammer(dispatch, isFullYear)
+  const ref = useHammer(isFullYear, year, month, shiftModel, group)
 
   const numberOfMonths = useNumberOfMonths(group, isFullYear)
 
@@ -171,10 +171,13 @@ function useNumberOfMonths (group, displayFullYear) {
 
 /**
  * Setup Hammer and handle swipes.
- * @param {function} dispatch    Dispatch function of the reducer.
  * @param {boolean}  isFullYear  Is the full year displayed?
+ * @param {number}   year        The current year.
+ * @param {number}   month       The current month.
+ * @param {string}   shiftModel  Selected shift-model.
+ * @param {number}   group       Shift group.
  */
-function useHammer (dispatch, isFullYear) {
+function useHammer (isFullYear, year, month, shiftModel, group) {
   const [container, setContainer] = useState(null)
 
   useEffect(() => {
@@ -183,18 +186,40 @@ function useHammer (dispatch, isFullYear) {
     const handler = event => {
       switch (event.direction) {
         case 2: // right to left
-          dispatch({
-            type: 'move',
-            payload: 1
-          })
+        {
+          const time = new Date()
+          time.setMonth(month)
+          time.setFullYear(year)
+          time.setTime(time.getTime() + ms.months(1))
+
+          route(getCalUrl({
+            group,
+            shiftModel,
+            isFullYear,
+            year: time.getFullYear(),
+            month: time.getMonth() + 1
+          }))
           break
+        }
 
         case 4: // left to right
-          dispatch({
-            type: 'move',
-            payload: -1
-          })
+        {
+          const time = new Date()
+          time.setMonth(month)
+          time.setFullYear(year)
+          time.setTime(time.getTime() - ms.months(1))
+
+          route(getCalUrl({
+            group,
+            shiftModel,
+            isFullYear,
+            year: time.getFullYear(),
+            month: time.getMonth() + 1
+          }))
           break
+        }
+
+        default: break
       }
     }
 
@@ -203,7 +228,7 @@ function useHammer (dispatch, isFullYear) {
     return () => {
       hammertime.off('swipe', handler)
     }
-  }, [isFullYear, container])
+  }, [isFullYear, year, month, shiftModel, group, container])
 
   return setContainer
 }

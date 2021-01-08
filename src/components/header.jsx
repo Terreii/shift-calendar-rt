@@ -23,17 +23,9 @@ import { scrollToADay, isSSR } from '../lib/utils'
  * @param {number[]} [param.search]   Result of the search. [year, month, day]
  * @param {number}   param.group      The shown group. 0 = all groups
  * @param {string}   param.shiftModel The shown shift model. As in constants.shiftModelNames.
- * @param {function} param.dispatch   Change the global state using the reducers dispatch function.
  * @returns {JSX.Element}
  */
-export default function Header ({
-  url,
-  today,
-  search,
-  group,
-  shiftModel,
-  dispatch
-}) {
+export default function Header ({ url, today, search, group, shiftModel }) {
   const isSmallScreen = useIsSmallScreen()
   const [showMenu, setShowMenu] = useShowMenu()
   const [showShareMenu, setShowShareMenu] = useShowMenu()
@@ -44,8 +36,7 @@ export default function Header ({
 
   return (
     <header
-      class={'fixed top-0 left-0 w-screen h-12 flex flex-row items-center justify-between ' +
-      'bg-green-900 shadow-lg z-50'}
+      class='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
     >
       {(!isSmallScreen || !url.startsWith('/cal')) && (
         <h1 class='m-0 text-2xl font-normal align-baseline'>

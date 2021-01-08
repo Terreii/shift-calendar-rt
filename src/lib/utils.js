@@ -64,6 +64,10 @@ export function getCalUrl ({
   const paramsString = params.toString()
   const paramsStr = paramsString.length > 0 ? '?' + paramsString : ''
 
+  if (year == null) {
+    return `/cal/${shiftModel}${paramsStr}`
+  }
+
   if (isFullYear) {
     return `/cal/${shiftModel}/${year}${paramsStr}`
   } else {

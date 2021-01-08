@@ -7,9 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect, useMemo } from 'preact/hooks'
-import qs from 'querystringify'
 
-import { isSSR } from '../lib/utils'
+import { isSSR, getCalUrl } from '../lib/utils'
 
 /**
  * Display the share menu.
@@ -59,39 +58,39 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
       return ''
     }
     const url = new URL(window.location.href)
-
-    const props = {}
-
-    if (addGroup && group !== 0) {
-      props.group = group
-    }
-
-    if (addSearch && search != null) {
-      props.search = `${year}-${month}-${search}`
-    }
+    url.search = ''
+    url.hash = ''
 
     if (addShiftModel) {
-      props.schichtmodell = shiftModel
+      url.pathname = getCalUrl({
+        shiftModel,
+        isFullYear: false,
+        year: addSearch ? year : null,
+        month: addSearch ? month : null
+      })
+
+      if (addSearch && search != null) {
+        url.searchParams.set('search', search)
+      }
+      if (addGroup && group > 0) {
+        url.searchParams.set('group', group)
+      }
+    } else {
+      url.pathname = ''
     }
 
-    const hash = addGroup || addSearch || addShiftModel
-      ? qs.stringify(props, '#')
-      : ''
-    url.hash = hash
-
     return url
-  }, [addGroup, group, addSearch, search, addShiftModel, shiftModel])
+  }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
   return (
     <div
-      class={'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
-      'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
+      class='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
     >
       <label class='flex flex-col'>
         Adresse zum teilen:
         <input
           id='share_url'
-          class='bg-transparent text-white pt-1 focus:ring focus:outline-none'
+          class='pt-1 text-white bg-transparent focus:ring focus:outline-none'
           type='url'
           readonly
           value={url.href}
@@ -101,11 +100,11 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         />
       </label>
 
-      <h6 class='mt-5 text-lg p-0 m-0 ml-4'>Füge hinzu:</h6>
+      <h6 class='p-0 m-0 mt-5 ml-4 text-lg'>Füge hinzu:</h6>
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -123,7 +122,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -144,7 +143,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addSearch}
           disabled={search == null}
@@ -163,10 +162,10 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         )}
       </label>
 
-      <div class='mt-5 flex flex-row flex-wrap content-center'>
+      <div class='flex flex-row flex-wrap content-center mt-5'>
         <button
           type='button'
-          class='flex-auto mt-5 mx-3 w-32 form-item'
+          class='flex-auto w-32 mx-3 mt-5 form-item'
           onClick={hide}
         >
           Abbrechen
@@ -175,8 +174,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           ? (
             <button
               type='button'
-              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
-              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               onClick={event => {
                 event.preventDefault()
 
@@ -193,8 +191,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           )
           : (
             <a
-              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
-              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
                 url.toString().replace(/&/g, '%26')
               }`}

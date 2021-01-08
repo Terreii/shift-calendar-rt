@@ -164,7 +164,6 @@ export default function Menu ({
               value={searchValue}
               onChange={event => {
                 const value = event.target.value
-                console.log(value)
 
                 if (value == null || value.length === 0) {
                   route(getCalUrl({

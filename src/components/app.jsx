@@ -14,7 +14,7 @@ import FirstRunDialog from './first-run'
 import Header from './header'
 import InstallPrompt from './install-prompt'
 
-import { scrollToADay } from '../lib/utils'
+import { scrollToADay, getCalUrl } from '../lib/utils'
 import useStateReducer from '../lib/state'
 
 import { shiftModelNames } from '../lib/constants'
@@ -45,7 +45,6 @@ export default function App () {
         group={state.group}
         url={state.url}
         today={today}
-        dispatch={dispatch}
       />
       <Router
         onChange={event => {
@@ -75,14 +74,12 @@ export default function App () {
           getComponent={() => import('./main').then(m => m.default)}
           isFullYear
           today={today}
-          dispatch={dispatch}
         />
         <AsyncRoute
           path='/cal/:shiftModel/:year/:month'
           getComponent={() => import('./main').then(m => m.default)}
           isFullYear={false}
           today={today}
-          dispatch={dispatch}
         />
         <AsyncRoute
           path='/impressum'
@@ -133,12 +130,18 @@ function useToday () {
   return today
 }
 
-function ModelRedirect ({ shiftModel }) {
+function ModelRedirect ({ shiftModel, search, group }) {
   useEffect(() => {
     if (shiftModelNames.includes(shiftModel)) {
       const now = new Date()
-      const month = String(now.getMonth() + 1).padStart(2, '0')
-      route(`/cal/${shiftModel}/${now.getFullYear()}/${month}`, true)
+      route(getCalUrl({
+        search,
+        group,
+        shiftModel,
+        isFullYear: false,
+        year: now.getFullYear(),
+        month: now.getMonth() + 1
+      }), true)
     } else {
       route('/', true)
     }

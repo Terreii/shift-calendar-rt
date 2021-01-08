@@ -33,6 +33,163 @@ var __toModule = (module2) => {
   return __exportStar(__defProp(module2 != null ? __create(__getProtoOf(module2)) : {}, "default", {value: module2, enumerable: true}), module2);
 };
 
+// node_modules/preact-router/dist/preact-router.js
+var require_preact_router = __commonJS((exports2, module2) => {
+  !function(t, e) {
+    typeof exports2 == "object" && typeof module2 != "undefined" ? module2.exports = e(require("preact")) : typeof define == "function" && define.amd ? define(["preact"], e) : t.preactRouter = e(t.preact);
+  }(exports2, function(t) {
+    function e(t2, e2) {
+      for (var n2 in e2)
+        t2[n2] = e2[n2];
+      return t2;
+    }
+    function n(t2, e2, n2) {
+      var r2, o2 = /(?:\?([^#]*))?(#.*)?$/, u2 = t2.match(o2), a2 = {};
+      if (u2 && u2[1])
+        for (var p2 = u2[1].split("&"), c2 = 0; c2 < p2.length; c2++) {
+          var f2 = p2[c2].split("=");
+          a2[decodeURIComponent(f2[0])] = decodeURIComponent(f2.slice(1).join("="));
+        }
+      t2 = i(t2.replace(o2, "")), e2 = i(e2 || "");
+      for (var l2 = Math.max(t2.length, e2.length), s2 = 0; s2 < l2; s2++)
+        if (e2[s2] && e2[s2].charAt(0) === ":") {
+          var h11 = e2[s2].replace(/(^:|[+*?]+$)/g, ""), d2 = (e2[s2].match(/[+*?]+$/) || C)[0] || "", g2 = ~d2.indexOf("+"), y2 = ~d2.indexOf("*"), m2 = t2[s2] || "";
+          if (!m2 && !y2 && (d2.indexOf("?") < 0 || g2)) {
+            r2 = false;
+            break;
+          }
+          if (a2[h11] = decodeURIComponent(m2), g2 || y2) {
+            a2[h11] = t2.slice(s2).map(decodeURIComponent).join("/");
+            break;
+          }
+        } else if (e2[s2] !== t2[s2]) {
+          r2 = false;
+          break;
+        }
+      return (n2.default === true || r2 !== false) && a2;
+    }
+    function r(t2, e2) {
+      return t2.rank < e2.rank ? 1 : t2.rank > e2.rank ? -1 : t2.index - e2.index;
+    }
+    function o(t2, e2) {
+      return t2.index = e2, t2.rank = p(t2), t2.props;
+    }
+    function i(t2) {
+      return t2.replace(/(^\/+|\/+$)/g, "").split("/");
+    }
+    function u(t2) {
+      return t2.charAt(0) == ":" ? 1 + "*+?".indexOf(t2.charAt(t2.length - 1)) || 4 : 5;
+    }
+    function a(t2) {
+      return i(t2).map(u).join("");
+    }
+    function p(t2) {
+      return t2.props.default ? 0 : a(t2.props.path);
+    }
+    function c(t2, e2) {
+      e2 === void 0 && (e2 = "push"), b && b[e2] ? b[e2](t2) : typeof history != "undefined" && history[e2 + "State"] && history[e2 + "State"](null, null, t2);
+    }
+    function f() {
+      var t2;
+      return t2 = b && b.location ? b.location : b && b.getCurrentLocation ? b.getCurrentLocation() : typeof location != "undefined" ? location : x, "" + (t2.pathname || "") + (t2.search || "");
+    }
+    function l(t2, e2) {
+      return e2 === void 0 && (e2 = false), typeof t2 != "string" && t2.url && (e2 = t2.replace, t2 = t2.url), s(t2) && c(t2, e2 ? "replace" : "push"), h10(t2);
+    }
+    function s(t2) {
+      for (var e2 = U.length; e2--; )
+        if (U[e2].canRoute(t2))
+          return true;
+      return false;
+    }
+    function h10(t2) {
+      for (var e2 = false, n2 = 0; n2 < U.length; n2++)
+        U[n2].routeTo(t2) === true && (e2 = true);
+      for (var r2 = k.length; r2--; )
+        k[r2](t2);
+      return e2;
+    }
+    function d(t2) {
+      if (t2 && t2.getAttribute) {
+        var e2 = t2.getAttribute("href"), n2 = t2.getAttribute("target");
+        if (e2 && e2.match(/^\//g) && (!n2 || n2.match(/^_?self$/i)))
+          return l(e2);
+      }
+    }
+    function g(t2) {
+      if (!(t2.ctrlKey || t2.metaKey || t2.altKey || t2.shiftKey || t2.button !== 0))
+        return d(t2.currentTarget || t2.target || this), y(t2);
+    }
+    function y(t2) {
+      return t2 && (t2.stopImmediatePropagation && t2.stopImmediatePropagation(), t2.stopPropagation && t2.stopPropagation(), t2.preventDefault()), false;
+    }
+    function m(t2) {
+      if (!(t2.ctrlKey || t2.metaKey || t2.altKey || t2.shiftKey || t2.button !== 0)) {
+        var e2 = t2.target;
+        do {
+          if ((e2.nodeName + "").toUpperCase() === "A" && e2.getAttribute("href")) {
+            if (e2.hasAttribute("native"))
+              return;
+            if (d(e2))
+              return y(t2);
+          }
+        } while (e2 = e2.parentNode);
+      }
+    }
+    function v() {
+      A || (typeof addEventListener == "function" && (b || addEventListener("popstate", function() {
+        h10(f());
+      }), addEventListener("click", m)), A = true);
+    }
+    var C = {}, b = null, U = [], k = [], x = {}, A = false, R = function(i2) {
+      function u2(t2) {
+        i2.call(this, t2), t2.history && (b = t2.history), this.state = {url: t2.url || f()}, v();
+      }
+      return i2 && (u2.__proto__ = i2), u2.prototype = Object.create(i2 && i2.prototype), u2.prototype.constructor = u2, u2.prototype.shouldComponentUpdate = function(t2) {
+        return t2.static !== true || (t2.url !== this.props.url || t2.onChange !== this.props.onChange);
+      }, u2.prototype.canRoute = function(e2) {
+        return this.getMatchingChildren(t.toChildArray(this.props.children), e2, false).length > 0;
+      }, u2.prototype.routeTo = function(t2) {
+        this.setState({url: t2});
+        var e2 = this.canRoute(t2);
+        return this.updating || this.forceUpdate(), e2;
+      }, u2.prototype.componentWillMount = function() {
+        U.push(this), this.updating = true;
+      }, u2.prototype.componentDidMount = function() {
+        var t2 = this;
+        b && (this.unlisten = b.listen(function(e2) {
+          t2.routeTo("" + (e2.pathname || "") + (e2.search || ""));
+        })), this.updating = false;
+      }, u2.prototype.componentWillUnmount = function() {
+        typeof this.unlisten == "function" && this.unlisten(), U.splice(U.indexOf(this), 1);
+      }, u2.prototype.componentWillUpdate = function() {
+        this.updating = true;
+      }, u2.prototype.componentDidUpdate = function() {
+        this.updating = false;
+      }, u2.prototype.getMatchingChildren = function(i3, u3, a2) {
+        return i3.filter(o).sort(r).map(function(r2) {
+          var o2 = n(u3, r2.props.path, r2.props);
+          if (o2) {
+            if (a2 !== false) {
+              var i4 = {url: u3, matches: o2};
+              return e(i4, o2), delete i4.ref, delete i4.key, t.cloneElement(r2, i4);
+            }
+            return r2;
+          }
+        }).filter(Boolean);
+      }, u2.prototype.render = function(e2, n2) {
+        var r2 = e2.children, o2 = e2.onChange, i3 = n2.url, u3 = this.getMatchingChildren(t.toChildArray(r2), i3, true), a2 = u3[0] || null, p2 = this.previousUrl;
+        return i3 !== p2 && (this.previousUrl = i3, typeof o2 == "function" && o2({router: this, url: i3, previous: p2, active: u3, current: a2})), a2;
+      }, u2;
+    }(t.Component), K = function(n2) {
+      return t.createElement("a", e({onClick: g}, n2));
+    }, E = function(e2) {
+      return t.createElement(e2.component, e2);
+    };
+    return R.subscribers = k, R.getCurrentUrl = f, R.route = l, R.Router = R, R.Route = E, R.Link = K, R.exec = n, R;
+  });
+});
+
 // node_modules/hammerjs/hammer.js
 var require_hammer = __commonJS((exports2, module2) => {
   /*! Hammer.JS - v2.0.7 - 2016-04-22
@@ -1531,161 +1688,22 @@ var require_hammer = __commonJS((exports2, module2) => {
   })(window, document, "Hammer");
 });
 
-// node_modules/preact-router/dist/preact-router.js
-var require_preact_router = __commonJS((exports2, module2) => {
-  !function(t, e) {
-    typeof exports2 == "object" && typeof module2 != "undefined" ? module2.exports = e(require("preact")) : typeof define == "function" && define.amd ? define(["preact"], e) : t.preactRouter = e(t.preact);
-  }(exports2, function(t) {
-    function e(t2, e2) {
-      for (var n2 in e2)
-        t2[n2] = e2[n2];
-      return t2;
-    }
-    function n(t2, e2, n2) {
-      var r2, o2 = /(?:\?([^#]*))?(#.*)?$/, u2 = t2.match(o2), a2 = {};
-      if (u2 && u2[1])
-        for (var p2 = u2[1].split("&"), c2 = 0; c2 < p2.length; c2++) {
-          var f2 = p2[c2].split("=");
-          a2[decodeURIComponent(f2[0])] = decodeURIComponent(f2.slice(1).join("="));
-        }
-      t2 = i(t2.replace(o2, "")), e2 = i(e2 || "");
-      for (var l2 = Math.max(t2.length, e2.length), s2 = 0; s2 < l2; s2++)
-        if (e2[s2] && e2[s2].charAt(0) === ":") {
-          var h11 = e2[s2].replace(/(^:|[+*?]+$)/g, ""), d2 = (e2[s2].match(/[+*?]+$/) || C)[0] || "", g2 = ~d2.indexOf("+"), y2 = ~d2.indexOf("*"), m2 = t2[s2] || "";
-          if (!m2 && !y2 && (d2.indexOf("?") < 0 || g2)) {
-            r2 = false;
-            break;
-          }
-          if (a2[h11] = decodeURIComponent(m2), g2 || y2) {
-            a2[h11] = t2.slice(s2).map(decodeURIComponent).join("/");
-            break;
-          }
-        } else if (e2[s2] !== t2[s2]) {
-          r2 = false;
-          break;
-        }
-      return (n2.default === true || r2 !== false) && a2;
-    }
-    function r(t2, e2) {
-      return t2.rank < e2.rank ? 1 : t2.rank > e2.rank ? -1 : t2.index - e2.index;
-    }
-    function o(t2, e2) {
-      return t2.index = e2, t2.rank = p(t2), t2.props;
-    }
-    function i(t2) {
-      return t2.replace(/(^\/+|\/+$)/g, "").split("/");
-    }
-    function u(t2) {
-      return t2.charAt(0) == ":" ? 1 + "*+?".indexOf(t2.charAt(t2.length - 1)) || 4 : 5;
-    }
-    function a(t2) {
-      return i(t2).map(u).join("");
-    }
-    function p(t2) {
-      return t2.props.default ? 0 : a(t2.props.path);
-    }
-    function c(t2, e2) {
-      e2 === void 0 && (e2 = "push"), b && b[e2] ? b[e2](t2) : typeof history != "undefined" && history[e2 + "State"] && history[e2 + "State"](null, null, t2);
-    }
-    function f() {
-      var t2;
-      return t2 = b && b.location ? b.location : b && b.getCurrentLocation ? b.getCurrentLocation() : typeof location != "undefined" ? location : x, "" + (t2.pathname || "") + (t2.search || "");
-    }
-    function l(t2, e2) {
-      return e2 === void 0 && (e2 = false), typeof t2 != "string" && t2.url && (e2 = t2.replace, t2 = t2.url), s(t2) && c(t2, e2 ? "replace" : "push"), h10(t2);
-    }
-    function s(t2) {
-      for (var e2 = U.length; e2--; )
-        if (U[e2].canRoute(t2))
-          return true;
-      return false;
-    }
-    function h10(t2) {
-      for (var e2 = false, n2 = 0; n2 < U.length; n2++)
-        U[n2].routeTo(t2) === true && (e2 = true);
-      for (var r2 = k.length; r2--; )
-        k[r2](t2);
-      return e2;
-    }
-    function d(t2) {
-      if (t2 && t2.getAttribute) {
-        var e2 = t2.getAttribute("href"), n2 = t2.getAttribute("target");
-        if (e2 && e2.match(/^\//g) && (!n2 || n2.match(/^_?self$/i)))
-          return l(e2);
-      }
-    }
-    function g(t2) {
-      if (!(t2.ctrlKey || t2.metaKey || t2.altKey || t2.shiftKey || t2.button !== 0))
-        return d(t2.currentTarget || t2.target || this), y(t2);
-    }
-    function y(t2) {
-      return t2 && (t2.stopImmediatePropagation && t2.stopImmediatePropagation(), t2.stopPropagation && t2.stopPropagation(), t2.preventDefault()), false;
-    }
-    function m(t2) {
-      if (!(t2.ctrlKey || t2.metaKey || t2.altKey || t2.shiftKey || t2.button !== 0)) {
-        var e2 = t2.target;
-        do {
-          if ((e2.nodeName + "").toUpperCase() === "A" && e2.getAttribute("href")) {
-            if (e2.hasAttribute("native"))
-              return;
-            if (d(e2))
-              return y(t2);
-          }
-        } while (e2 = e2.parentNode);
-      }
-    }
-    function v() {
-      A || (typeof addEventListener == "function" && (b || addEventListener("popstate", function() {
-        h10(f());
-      }), addEventListener("click", m)), A = true);
-    }
-    var C = {}, b = null, U = [], k = [], x = {}, A = false, R = function(i2) {
-      function u2(t2) {
-        i2.call(this, t2), t2.history && (b = t2.history), this.state = {url: t2.url || f()}, v();
-      }
-      return i2 && (u2.__proto__ = i2), u2.prototype = Object.create(i2 && i2.prototype), u2.prototype.constructor = u2, u2.prototype.shouldComponentUpdate = function(t2) {
-        return t2.static !== true || (t2.url !== this.props.url || t2.onChange !== this.props.onChange);
-      }, u2.prototype.canRoute = function(e2) {
-        return this.getMatchingChildren(t.toChildArray(this.props.children), e2, false).length > 0;
-      }, u2.prototype.routeTo = function(t2) {
-        this.setState({url: t2});
-        var e2 = this.canRoute(t2);
-        return this.updating || this.forceUpdate(), e2;
-      }, u2.prototype.componentWillMount = function() {
-        U.push(this), this.updating = true;
-      }, u2.prototype.componentDidMount = function() {
-        var t2 = this;
-        b && (this.unlisten = b.listen(function(e2) {
-          t2.routeTo("" + (e2.pathname || "") + (e2.search || ""));
-        })), this.updating = false;
-      }, u2.prototype.componentWillUnmount = function() {
-        typeof this.unlisten == "function" && this.unlisten(), U.splice(U.indexOf(this), 1);
-      }, u2.prototype.componentWillUpdate = function() {
-        this.updating = true;
-      }, u2.prototype.componentDidUpdate = function() {
-        this.updating = false;
-      }, u2.prototype.getMatchingChildren = function(i3, u3, a2) {
-        return i3.filter(o).sort(r).map(function(r2) {
-          var o2 = n(u3, r2.props.path, r2.props);
-          if (o2) {
-            if (a2 !== false) {
-              var i4 = {url: u3, matches: o2};
-              return e(i4, o2), delete i4.ref, delete i4.key, t.cloneElement(r2, i4);
-            }
-            return r2;
-          }
-        }).filter(Boolean);
-      }, u2.prototype.render = function(e2, n2) {
-        var r2 = e2.children, o2 = e2.onChange, i3 = n2.url, u3 = this.getMatchingChildren(t.toChildArray(r2), i3, true), a2 = u3[0] || null, p2 = this.previousUrl;
-        return i3 !== p2 && (this.previousUrl = i3, typeof o2 == "function" && o2({router: this, url: i3, previous: p2, active: u3, current: a2})), a2;
-      }, u2;
-    }(t.Component), K = function(n2) {
-      return t.createElement("a", e({onClick: g}, n2));
-    }, E = function(e2) {
-      return t.createElement(e2.component, e2);
+// node_modules/milliseconds/milliseconds.js
+var require_milliseconds = __commonJS((exports2, module2) => {
+  function calc(m) {
+    return function(n) {
+      return Math.round(n * m);
     };
-    return R.subscribers = k, R.getCurrentUrl = f, R.route = l, R.Router = R, R.Route = E, R.Link = K, R.exec = n, R;
-  });
+  }
+  module2.exports = {
+    seconds: calc(1e3),
+    minutes: calc(6e4),
+    hours: calc(36e5),
+    days: calc(864e5),
+    weeks: calc(6048e5),
+    months: calc(26298e5),
+    years: calc(315576e5)
+  };
 });
 
 // node_modules/luxon/build/node/luxon.js
@@ -2995,20 +3013,20 @@ var require_luxon = __commonJS((exports2) => {
     }
   }
   function mapMonths(f) {
-    const ms = [];
+    const ms2 = [];
     for (let i = 1; i <= 12; i++) {
       const dt = DateTime2.utc(2016, i, 1);
-      ms.push(f(dt));
+      ms2.push(f(dt));
     }
-    return ms;
+    return ms2;
   }
   function mapWeekdays(f) {
-    const ms = [];
+    const ms2 = [];
     for (let i = 1; i <= 7; i++) {
       const dt = DateTime2.utc(2016, 11, 13 + i);
-      ms.push(f(dt));
+      ms2.push(f(dt));
     }
-    return ms;
+    return ms2;
   }
   function listStuff(loc, length, defaultOK, englishFn, intlFn) {
     const mode = loc.listingMode(defaultOK);
@@ -4251,8 +4269,8 @@ var require_luxon = __commonJS((exports2) => {
   function dayDiff(earlier, later) {
     const utcDayStart = (dt) => dt.toUTC(0, {
       keepLocalTime: true
-    }).startOf("day").valueOf(), ms = utcDayStart(later) - utcDayStart(earlier);
-    return Math.floor(Duration.fromMillis(ms).as("days"));
+    }).startOf("day").valueOf(), ms2 = utcDayStart(later) - utcDayStart(earlier);
+    return Math.floor(Duration.fromMillis(ms2).as("days"));
   }
   function highOrderDiffs(cursor, later, units) {
     const differs = [["years", (a, b) => b.year - a.year], ["months", (a, b) => b.month - a.month + (b.year - a.year) * 12], ["weeks", (a, b) => {
@@ -6215,7 +6233,9 @@ __export(exports, {
 });
 var import_preact9 = __toModule(require("preact"));
 var import_hooks = __toModule(require("preact/hooks"));
+var import_preact_router2 = __toModule(require_preact_router());
 var import_hammerjs = __toModule(require_hammer());
+var import_milliseconds = __toModule(require_milliseconds());
 
 // src/components/download.jsx
 var import_preact = __toModule(require("preact"));
@@ -6586,6 +6606,34 @@ function scrollToADay(year, month, day) {
       behavior: "smooth",
       block: "center"
     });
+  }
+}
+function getCalUrl({
+  shiftModel,
+  isFullYear = false,
+  year,
+  month,
+  group = 0,
+  search = null
+} = {}) {
+  const params = new URLSearchParams();
+  if (search != null && !Number.isNaN(search)) {
+    params.set("search", search);
+  }
+  if (group > 0) {
+    params.set("group", group);
+  }
+  const paramsString = params.toString();
+  const paramsStr = paramsString.length > 0 ? "?" + paramsString : "";
+  if (year == null) {
+    return `/cal/${shiftModel}${paramsStr}`;
+  }
+  if (isFullYear) {
+    return `/cal/${shiftModel}/${year}${paramsStr}`;
+  } else {
+    const monthNum = month != null && month > 0 && month <= 12 ? month : new Date().getMonth() + 1;
+    const monthStr = String(monthNum).padStart(2, "0");
+    return `/cal/${shiftModel}/${year}/${monthStr}${paramsStr}`;
   }
 }
 
@@ -7149,13 +7197,12 @@ function Main({
   shiftModel,
   today,
   search,
-  group: groupString = "0",
-  dispatch
+  group: groupString = "0"
 }) {
   const year = +yearString;
   const month = Math.min(Math.max(parseInt(monthString, 10) - 1, 0), 11);
   const group = Number.isNaN(groupString) ? 0 : Math.max(parseInt(groupString, 10), 0);
-  const ref = useHammer(dispatch, isFullYear);
+  const ref = useHammer(isFullYear, year, month, shiftModel, group);
   const numberOfMonths = useNumberOfMonths(group, isFullYear);
   const monthsData = [];
   if (isFullYear) {
@@ -7241,24 +7288,42 @@ function useNumberOfMonths(group, displayFullYear) {
   }
   return group > 0 ? numberOfMonths * 2 : numberOfMonths;
 }
-function useHammer(dispatch, isFullYear) {
+function useHammer(isFullYear, year, month, shiftModel, group) {
   const [container, setContainer] = import_hooks.useState(null);
   import_hooks.useEffect(() => {
     if (isFullYear || container == null)
       return;
     const handler = (event) => {
       switch (event.direction) {
-        case 2:
-          dispatch({
-            type: "move",
-            payload: 1
-          });
+        case 2: {
+          const time = new Date();
+          time.setMonth(month);
+          time.setFullYear(year);
+          time.setTime(time.getTime() + import_milliseconds.default.months(1));
+          import_preact_router2.route(getCalUrl({
+            group,
+            shiftModel,
+            isFullYear,
+            year: time.getFullYear(),
+            month: time.getMonth() + 1
+          }));
           break;
-        case 4:
-          dispatch({
-            type: "move",
-            payload: -1
-          });
+        }
+        case 4: {
+          const time = new Date();
+          time.setMonth(month);
+          time.setFullYear(year);
+          time.setTime(time.getTime() - import_milliseconds.default.months(1));
+          import_preact_router2.route(getCalUrl({
+            group,
+            shiftModel,
+            isFullYear,
+            year: time.getFullYear(),
+            month: time.getMonth() + 1
+          }));
+          break;
+        }
+        default:
           break;
       }
     };
@@ -7267,7 +7332,7 @@ function useHammer(dispatch, isFullYear) {
     return () => {
       hammertime.off("swipe", handler);
     };
-  }, [isFullYear, container]);
+  }, [isFullYear, year, month, shiftModel, group, container]);
   return setContainer;
 }
 function processClick(event) {

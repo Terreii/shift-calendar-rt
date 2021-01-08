@@ -21,7 +21,11 @@ const { h } = require('preact')
 
 const Header = require('../../../../api_files/header').default
 const Main = require('../../../../api_files/main').default
-const { shiftModelNames, shift66Name } = require('../../../../src/lib/constants')
+const {
+  shiftModelNames,
+  shift66Name,
+  shiftModelNumberOfGroups
+} = require('../../../../src/lib/constants')
 
 const file = join(__dirname, '..', '..', '..', '..', 'public', 'app-shell.html')
 
@@ -32,6 +36,18 @@ module.exports = async (req, res) => {
     now.getUTCMonth(),
     now.getUTCDate()
   ]
+
+  if (Number.isNaN(req.query.year)) {
+    const month = String(now.getUTCMonth()).padStart(2, '0')
+    res.redirect(`../${now.getUTCFullYear()}/${month}`)
+    return
+  }
+
+  if (Number.isNaN(req.query.month)) {
+    const month = String(now.getUTCMonth()).padStart(2, '0')
+    res.redirect(`./${month}`)
+    return
+  }
 
   const htmlFileHandler = fs.promises.readFile(file, { encoding: 'utf-8' })
 
@@ -46,6 +62,10 @@ module.exports = async (req, res) => {
   const shiftModel = shiftModelNames.includes(req.query.model)
     ? req.query.model
     : shift66Name
+  const group = !Number.isNaN(req.query.group) &&
+    parseInt(req.query.group, 10) < shiftModelNumberOfGroups
+    ? parseInt(req.query.group, 10)
+    : 0
 
   const body = render(h(
     'div',
@@ -58,9 +78,8 @@ module.exports = async (req, res) => {
         url: `/${shiftModel}/${year}/${month}`,
         today,
         search: null,
-        group: 0,
-        shiftModel: shiftModel,
-        dispatch: () => {}
+        group,
+        shiftModel: shiftModel
       }),
 
       h(Main, {
@@ -70,8 +89,7 @@ module.exports = async (req, res) => {
         shiftModel: shiftModel,
         today,
         search: null,
-        group: 0,
-        dispatch: () => {}
+        group
       })
     )
   ))
