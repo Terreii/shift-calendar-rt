@@ -15,7 +15,7 @@ const initialState = {
 }
 
 export default function useStateReducer () {
-  const [state, dispatch] = useReducer(reducer, initialState)
+  const [state, dispatch] = useReducer(reducer, initialState, initState)
 
   useEffect(() => {
     window.localStorage.setItem('settings', JSON.stringify({
@@ -26,6 +26,20 @@ export default function useStateReducer () {
   }, [state.didSelectModel, state.group, state.shiftModel])
 
   return [state, dispatch]
+}
+
+function initState (state) {
+  try {
+    const settings = JSON.parse(window.localStorage.getItem('settings'))
+    return {
+      ...state,
+      didSelectModel: settings.didSelectModel,
+      group: settings.group,
+      shiftModel: settings.shiftModel
+    }
+  } catch (err) {
+    return state
+  }
 }
 
 function reducer (state, action) {
