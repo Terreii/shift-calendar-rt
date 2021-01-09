@@ -6324,9 +6324,9 @@ function Download({shiftModel}) {
     }, "F\xFCr dieses Schichtmodell sind die Kalender noch in Arbeit");
   }
   return /* @__PURE__ */ import_preact.h("div", {
-    class: "my-4 mx-auto px-1"
+    class: "px-1 mx-auto my-4"
   }, /* @__PURE__ */ import_preact.h("section", {
-    class: "p-4 pt-2 text-center bg-gray-300 text-gray-900 rounded"
+    class: "p-4 pt-2 text-center text-gray-900 bg-gray-300 rounded"
   }, /* @__PURE__ */ import_preact.h("h4", {
     class: "text-xl font-semibold"
   }, "Downloade einen ", shiftModelText[shiftModel], " Kalender"), /* @__PURE__ */ import_preact.h("p", {
@@ -6335,7 +6335,7 @@ function Download({shiftModel}) {
     const group = index + 1;
     return /* @__PURE__ */ import_preact.h("a", {
       key: shiftModel + group,
-      class: "inline-block text-blue-800 underline" + (index === 0 ? "" : " ml-2"),
+      class: "inline-block text-blue-800 underline py-3 px-1" + (index === 0 ? "" : " ml-2"),
       href,
       download: `${shiftModelText[shiftModel]} - Gruppe ${group}.ics`,
       target: "_blank",
