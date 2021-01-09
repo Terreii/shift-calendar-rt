@@ -35,7 +35,7 @@ export default function Footer () {
       <br />
       <Link
         class='inline-block text-blue-700 underline'
-        href='/impressum/'
+        href='/impressum'
         tabIndex='0'
         onClick={() => {
           window.scrollTo(0, 0)

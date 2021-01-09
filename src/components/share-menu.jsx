@@ -7,17 +7,20 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { h } from 'preact'
 import { useState, useEffect, useMemo } from 'preact/hooks'
-import qs from 'querystringify'
+
+import { isSSR, getCalUrl } from '../lib/utils'
 
 /**
  * Display the share menu.
  * @param {object}   params            - Preact props.
  * @param {number}   params.group      - Number of selected group. 0 = no group selected/all
- * @param {number[]} [params.search]   - Searched day. [year, month, day]
+ * @param {number}   [params.year]     - Searched day's year.
+ * @param {number}   [params.month]    - Searched day's month.
+ * @param {number}   [params.search]   - Searched day.
  * @param {string}   params.shiftModel - Name of the selected shift-model.
  * @param {function} hide              - Hide the share menu.
  */
-export default function ShareMenu ({ group, search, shiftModel, hide }) {
+export default function ShareMenu ({ group, year, month, search, shiftModel, hide }) {
   const [addGroup, setAddGroup] = useState(false)
   const [addSearch, setAddSearch] = useState(false)
   const [addShiftModel, setAddShiftModel] = useState(false)
@@ -43,46 +46,51 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
   useEffect(() => {
     document.getElementById('share_url').focus()
     return () => {
-      document.getElementById('hamburger_menu_toggle').focus()
+      const element = document.getElementById('menu_summary')
+      if (element) {
+        element.focus()
+      }
     }
   }, [])
 
   const url = useMemo(() => {
+    if (isSSR) {
+      return ''
+    }
     const url = new URL(window.location.href)
-
-    const props = {}
-
-    if (addGroup && group !== 0) {
-      props.group = group
-    }
-
-    if (addSearch && search != null) {
-      const [year, month, date] = search
-      props.search = `${year}-${month + 1}-${date}`
-    }
+    url.search = ''
+    url.hash = ''
 
     if (addShiftModel) {
-      props.schichtmodell = shiftModel
+      url.pathname = getCalUrl({
+        shiftModel,
+        isFullYear: false,
+        year: addSearch ? year : null,
+        month: addSearch ? month : null
+      })
+
+      if (addSearch && search != null) {
+        url.searchParams.set('search', search)
+      }
+      if (addGroup && group > 0) {
+        url.searchParams.set('group', group)
+      }
+    } else {
+      url.pathname = ''
     }
 
-    const hash = addGroup || addSearch || addShiftModel
-      ? qs.stringify(props, '#')
-      : ''
-    url.hash = hash
-
     return url
-  }, [addGroup, group, addSearch, search, addShiftModel, shiftModel])
+  }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
   return (
     <div
-      class={'flex flex-col content-center items-stretch absolute top-0 left-0 ' +
-      'mt-12 px-5 pt-3 pb-5 text-white bg-green-900 shadow-lg'}
+      class='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
     >
       <label class='flex flex-col'>
         Adresse zum teilen:
         <input
           id='share_url'
-          class='bg-transparent text-white pt-1 focus:ring focus:outline-none'
+          class='pt-1 text-white bg-transparent focus:ring focus:outline-none'
           type='url'
           readonly
           value={url.href}
@@ -92,11 +100,11 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         />
       </label>
 
-      <h6 class='mt-5 text-lg p-0 m-0 ml-4'>Füge hinzu:</h6>
+      <h6 class='p-0 m-0 mt-5 ml-4 text-lg'>Füge hinzu:</h6>
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -114,7 +122,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -135,7 +143,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
 
       <label class='mt-5 ml-2'>
         <input
-          class='h-4 w-4 mr-1 focus:ring focus:outline-none'
+          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addSearch}
           disabled={search == null}
@@ -154,20 +162,19 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
         )}
       </label>
 
-      <div class='mt-5 flex flex-row flex-wrap content-center'>
+      <div class='flex flex-row flex-wrap content-center mt-5'>
         <button
           type='button'
-          class='flex-auto mt-5 mx-3 w-32 form-item'
+          class='flex-auto w-32 mx-3 mt-5 form-item'
           onClick={hide}
         >
           Abbrechen
         </button>
-        {'share' in window.navigator
+        {!isSSR && ('share' in window.navigator)
           ? (
             <button
               type='button'
-              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
-              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               onClick={event => {
                 event.preventDefault()
 
@@ -184,8 +191,7 @@ export default function ShareMenu ({ group, search, shiftModel, hide }) {
           )
           : (
             <a
-              class={'flex-auto mt-5 mx-3 py-2 w-32 text-white bg-purple-700 ' +
-              'hover:bg-purple-500 active:bg-purple-500 form-item'}
+              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
                 url.toString().replace(/&/g, '%26')
               }`}

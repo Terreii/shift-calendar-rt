@@ -23,3 +23,7 @@ td, th {
 @tailwind components;
 
 @tailwind utilities;
+
+#menu_summary::-webkit-details-marker {
+  display: none;
+}

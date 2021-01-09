@@ -10,7 +10,7 @@ if ('serviceWorker' in navigator && (
       error => { console.error(error) }
     )
 } else if ('serviceWorker' in navigator) {
-  console.warn('development no service-worker will be registered.')
+  console.warn('Development, no service-worker will be registered.')
 } else {
   console.warn('This browser does not support service-workers!')
 }

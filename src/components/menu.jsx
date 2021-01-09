@@ -6,15 +6,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h } from 'preact'
+import { route, Link } from 'preact-router'
 
 import {
   monthNames,
   shiftModelNames,
   shiftModelText,
   shiftModelNumberOfGroups
-} from '../lib/constants.js'
+} from '../lib/constants'
+import { isSSR, getCalUrl } from '../lib/utils'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
+  if (isSSR) return false
+
   const parent = document.createElement('div')
   const input = document.createElement('input')
   input.type = type
@@ -30,16 +34,14 @@ export default function Menu ({
   search,
   group,
   shiftModel,
-  toggleFullYear,
-  gotoMonth,
-  dispatch,
+  setShowMenu,
   onShare
 }) {
   let searchValue = ''
   if (search != null) {
-    const searchMonth = String(search[1] + 1).padStart(2, '0')
-    const searchDay = String(search[2]).padStart(2, '0')
-    searchValue = `${search[0]}-${searchMonth}-${searchDay}`
+    const searchMonth = String(month).padStart(2, '0')
+    const searchDay = String(search).padStart(2, '0')
+    searchValue = `${year}-${searchMonth}-${searchDay}`
   }
 
   const groupOptions = []
@@ -48,176 +50,216 @@ export default function Menu ({
   }
 
   return (
-    <div
-      id='hamburger_menu'
-      aria-live='polite'
-      aria-label='Menü'
-      class={
-        (show ? 'flex' : 'hidden') + ' absolute top-0 right-0 mt-12 p-3 ' +
-      ' flex-col justify-center items-stretch bg-green-900 shadow-lg'
-      }
+    <details
+      open={show}
+      onToggle={event => {
+        setShowMenu(event.target.open)
+      }}
     >
-      {supportsMonthInput || isFullYear
-        ? null
-        : (
-          <select
-            class='form-item'
-            title='Gehe zum Monat'
-            value={month}
-            onChange={event => {
-              gotoMonth({ type: 'goto', month: +event.target.value, fullYear: false }, true)
-            }}
-            aria-controls='calendar_main_out'
-          >
-            {monthNames.map((name, index) => (
-              <option key={name} value={index}>{name}</option>
-            ))}
-          </select>
+      <summary
+        id='menu_summary'
+        class='flex items-center justify-center w-16 list-none bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
+      >
+        <img
+          src='/assets/icons/hamburger_icon.svg'
+          style={{ filter: 'invert(100%)' }}
+          height='45'
+          width='45'
+          alt='Menu'
+        />
+      </summary>
+      <div
+        id='hamburger_menu'
+        aria-live='polite'
+        aria-label='Menü'
+        class='absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg'
+      >
+        {supportsMonthInput || isFullYear
+          ? null
+          : (
+            <select
+              class='form-item'
+              title='Gehe zum Monat'
+              value={month}
+              onChange={event => {
+                route(getCalUrl({
+                  group,
+                  shiftModel,
+                  isFullYear: false,
+                  month: event.target.value,
+                  year
+                }))
+              }}
+              aria-controls='calendar_main_out'
+            >
+              {monthNames.map((name, index) => (
+                <option key={name} value={index + 1}>{name}</option>
+              ))}
+            </select>
+          )}
+
+        {(!supportsMonthInput || isFullYear) && (
+          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+            Jahr
+            <input
+              class='flex-auto w-full mt-1 form-item'
+              type='number'
+              min='2000'
+              aria-controls='calendar_main_out'
+              value={year}
+              onChange={event => {
+                route(getCalUrl({
+                  group,
+                  shiftModel,
+                  isFullYear,
+                  year: +event.target.value,
+                  month
+                }))
+              }}
+            />
+          </label>
         )}
 
-      {(!supportsMonthInput || isFullYear) && (
-        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
-          Jahr
-          <input
-            class='flex-auto mt-1 w-full form-item'
-            type='number'
-            min='2000'
-            aria-controls='calendar_main_out'
-            value={year}
-            onChange={event => {
-              const year = +event.target.value
+        {supportsMonthInput && !isFullYear && (
+          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+            Gehe zum Monat
+            <input
+              class='flex-auto w-full mt-1 form-item'
+              type='month'
+              aria-controls='calendar_main_out'
+              min='2000-01'
+              value={`${year}-${String(month + 1).padStart(2, '0')}`}
+              onChange={event => {
+                const value = event.target.value
+                if (value == null || value.length === 0) {
+                  return
+                }
 
-              if (Number.isNaN(year)) {
-                event.target.value = String(event.target.value).replace(/\D/g, '')
-                return
-              }
+                const [nextYear, nextMonth] = value.split('-')
 
-              gotoMonth({ type: 'goto', year, fullYear: isFullYear }, false)
-            }}
-          />
-        </label>
-      )}
+                if (!nextYear || !nextMonth) {
+                  return
+                }
 
-      {supportsMonthInput && !isFullYear && (
-        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
-          Gehe zum Monat
-          <input
-            class='flex-auto mt-1 w-full form-item'
-            type='month'
-            aria-controls='calendar_main_out'
-            min='2000-01'
-            value={`${year}-${String(month + 1).padStart(2, '0')}`}
-            onChange={event => {
-              const value = event.target.value
-              if (value == null || value.length === 0) {
-                gotoMonth({ type: 'goto', year, month })
-                return
-              }
+                route(getCalUrl({
+                  group,
+                  shiftModel,
+                  isFullYear,
+                  month: nextMonth,
+                  year: nextYear
+                }))
+              }}
+            />
+          </label>
+        )}
 
-              const [nextYear, nextMonth] = value.split('-').map(s => parseInt(s, 10))
+        {supportsDateInput && (
+          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+            Suche einen Tag
+            <input
+              class='flex-auto w-full mt-1 form-item'
+              type='date'
+              aria-controls='calendar_main_out'
+              min='2000-01-01'
+              value={searchValue}
+              onChange={event => {
+                const value = event.target.value
 
-              if (Number.isNaN(nextYear) || Number.isNaN(nextMonth)) {
-                gotoMonth({ type: 'goto', year, month })
-                return
-              }
+                if (value == null || value.length === 0) {
+                  route(getCalUrl({
+                    search: null,
+                    group,
+                    shiftModel,
+                    isFullYear,
+                    month,
+                    year
+                  }))
+                } else {
+                  const date = event.target.valueAsDate || new Date(value)
+                  route(getCalUrl({
+                    group,
+                    shiftModel,
+                    isFullYear: false,
+                    year: date.getFullYear(),
+                    month: date.getMonth() + 1,
+                    search: date.getDate()
+                  }))
+                }
+              }}
+            />
+          </label>
+        )}
 
-              gotoMonth({
-                type: 'goto',
-                year: nextYear,
-                month: nextMonth - 1,
-                fullYear: isFullYear
-              }, false)
-            }}
-          />
-        </label>
-      )}
-
-      {supportsDateInput && (
-        <label class='mt-5 flex flex-col items-stretch text-white text-center'>
-          Suche einen Tag
-          <input
-            class='flex-auto mt-1 w-full form-item'
-            type='date'
-            aria-controls='calendar_main_out'
-            min='2000-01-01'
-            value={searchValue}
-            onChange={event => {
-              const value = event.target.value
-
-              if (value == null || value.length === 0) {
-                dispatch({ type: 'clear_search' })
-              } else {
-                const date = new Date(value)
-                dispatch({
-                  type: 'search',
-                  year: date.getFullYear(),
-                  month: date.getMonth(),
-                  day: date.getDate()
-                })
-              }
-            }}
-          />
-        </label>
-      )}
-
-      <button
-        type='button'
-        class='mt-5 form-item'
-        onClick={toggleFullYear}
-        aria-controls='calendar_main_out'
-      >
-        Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
-      </button>
-
-      <label class='mt-5 flex flex-col items-stretch text-white text-center'>
-        Schichtmodell
-        <select
-          class={'flex-auto mt-1 h-10 w-full text-black text-center rounded bg-gray-100 shadow ' +
-          'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
+        <Link
+          key={isFullYear}
+          href={getCalUrl({
+            group,
+            shiftModel,
+            isFullYear: !isFullYear,
+            year,
+            month
+          })}
+          className='py-2 mt-5 form-item'
           aria-controls='calendar_main_out'
-          value={shiftModel}
-          onChange={event => {
-            dispatch({
-              type: 'model_change',
-              payload: event.target.value
-            })
+          onClick={() => {
+            setShowMenu(false)
           }}
         >
-          {shiftModelNames.map(model => (
-            <option key={model} value={model}>
-              {shiftModelText[model] || model}
-            </option>
-          ))}
+          Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
+        </Link>
+
+        <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+          Schichtmodell
+          <select
+            class='flex-auto w-full h-10 mt-1 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+            aria-controls='calendar_main_out'
+            value={shiftModel}
+            onChange={event => {
+              route(getCalUrl({
+                group: 0,
+                shiftModel: event.target.value,
+                isFullYear,
+                year,
+                month
+              }))
+            }}
+          >
+            {shiftModelNames.map(model => (
+              <option key={model} value={model}>
+                {shiftModelText[model] || model}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <select
+          class='h-10 mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          aria-controls='calendar_main_out'
+          aria-label='Schichtgruppen'
+          value={group}
+          onChange={event => {
+            route(getCalUrl({
+              group: +event.target.value,
+              shiftModel,
+              isFullYear,
+              year,
+              month
+            }))
+          }}
+        >
+          <option value='0'>Alle Gruppen</option>
+          {groupOptions}
         </select>
-      </label>
 
-      <select
-        class={'mt-5 h-10 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
-        aria-controls='calendar_main_out'
-        aria-label='Schichtgruppen'
-        value={group}
-        onChange={event => {
-          const group = +event.target.value
-          dispatch({
-            type: 'group_change',
-            payload: group
-          })
-        }}
-      >
-        <option value='0'>Alle Gruppen</option>
-        {groupOptions}
-      </select>
-
-      <button
-        type='button'
-        class={'mt-5 mx-auto py-2 px-4 h-12 text-black text-center rounded bg-gray-100 shadow ' +
-        'hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'}
-        onClick={onShare}
-        aria-label='Teile deine Schicht'
-      >
-        <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
-      </button>
-    </div>
+        <button
+          type='button'
+          class='h-12 px-4 py-2 mx-auto mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          onClick={onShare}
+          aria-label='Teile deine Schicht'
+        >
+          <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
+        </button>
+      </div>
+    </details>
   )
 }

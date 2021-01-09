@@ -17,6 +17,18 @@ export function getDaysInMonth (year, month) {
 }
 
 /**
+ * Is this running on the server (true) or in a browser (false).
+ */
+export const isSSR = (() => {
+  try {
+    const isBrowser = 'document' in window && 'navigator' in window
+    return !isBrowser
+  } catch (err) {
+    return true
+  }
+})()
+
+/**
  * Scroll to a day. But only if that day is displayed.
  * @param {number} year  The year of the day.
  * @param {number} month The month of the day.
@@ -30,5 +42,39 @@ export function scrollToADay (year, month, day) {
       behavior: 'smooth',
       block: 'center'
     })
+  }
+}
+
+export function getCalUrl ({
+  shiftModel,
+  isFullYear = false,
+  year,
+  month,
+  group = 0,
+  search = null
+} = {}) {
+  const params = new URLSearchParams()
+
+  if (search != null && !Number.isNaN(search)) {
+    params.set('search', search)
+  }
+  if (group > 0) {
+    params.set('group', group)
+  }
+  const paramsString = params.toString()
+  const paramsStr = paramsString.length > 0 ? '?' + paramsString : ''
+
+  if (year == null) {
+    return `/cal/${shiftModel}${paramsStr}`
+  }
+
+  if (isFullYear) {
+    return `/cal/${shiftModel}/${year}${paramsStr}`
+  } else {
+    const monthNum = month != null && month > 0 && month <= 12
+      ? month
+      : new Date().getMonth() + 1
+    const monthStr = String(monthNum).padStart(2, '0')
+    return `/cal/${shiftModel}/${year}/${monthStr}${paramsStr}`
   }
 }
