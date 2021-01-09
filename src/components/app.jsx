@@ -10,6 +10,7 @@ import { useState, useEffect } from 'preact/hooks'
 import { Router, route } from 'preact-router'
 import AsyncRoute from 'preact-async-route'
 
+import Main from './main'
 import FirstRunDialog from './first-run'
 import Header from './header'
 import InstallPrompt from './install-prompt'
@@ -105,15 +106,13 @@ export default function App () {
         <FirstRunDialog path='/' isFirstRender={isFirstRenderedPage} />
         <Redirect path='/cal' to='/' replace />
         <ModelRedirect path='/cal/:shiftModel' />
-        <AsyncRoute
+        <Main
           path='/cal/:shiftModel/:year'
-          getComponent={() => import('./main').then(m => m.default)}
           isFullYear
           today={today}
         />
-        <AsyncRoute
+        <Main
           path='/cal/:shiftModel/:year/:month'
-          getComponent={() => import('./main').then(m => m.default)}
           isFullYear={false}
           today={today}
         />
