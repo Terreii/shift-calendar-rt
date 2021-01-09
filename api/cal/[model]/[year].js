@@ -63,6 +63,9 @@ module.exports = async (req, res) => {
 
       h(Header, {
         url: `/${shiftModel}/${year}`,
+        isFullYear: true,
+        year,
+        month: today[1],
         today,
         search: null,
         group,

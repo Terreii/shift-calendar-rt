@@ -711,12 +711,20 @@ function getMonthUrl(time, isFullYear, shiftModel, group) {
 }
 
 // src/components/header.jsx
-function Header({url, today, search, group, shiftModel}) {
+function Header({
+  url,
+  today,
+  search,
+  group,
+  year,
+  month,
+  isFullYear,
+  shiftModel
+}) {
   const isSmallScreen = useIsSmallScreen();
   const [showMenu, setShowMenu] = useShowMenu();
   const [showShareMenu, setShowShareMenu] = useShowMenu();
   const hideMenu = () => setShowMenu(false);
-  const {year, month, isFullYear} = useParseURL(url);
   return /* @__PURE__ */ import_preact4.h("header", {
     class: "fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg"
   }, (!isSmallScreen || !url.startsWith("/cal")) && /* @__PURE__ */ import_preact4.h("h1", {
@@ -760,33 +768,6 @@ function Header({url, today, search, group, shiftModel}) {
       setShowShareMenu(false);
     }
   }));
-}
-function useParseURL(url) {
-  return import_hooks3.useMemo(() => {
-    if (!url.startsWith("/cal")) {
-      const now = new Date();
-      return {
-        isFullYear: false,
-        month: now.getMonth(),
-        year: now.getFullYear()
-      };
-    }
-    const parts = new URL(url, "https://test.es").pathname.split("/");
-    const year = Number.isNaN(parts[3]) ? new Date().getFullYear() : parseInt(parts[3]);
-    if (parts.length > 4 && !Number.isNaN(parts[4])) {
-      const month = parseInt(parts[4]);
-      return {
-        isFullYear: false,
-        month: Math.min(Math.max(month, 1), 12),
-        year
-      };
-    }
-    return {
-      isFullYear: true,
-      month: new Date().getMonth(),
-      year
-    };
-  }, [url]);
 }
 function useIsSmallScreen() {
   const [isSmallScreen, setIsSmallScreen] = import_hooks3.useState(() => !isSSR && window.innerWidth < 350);

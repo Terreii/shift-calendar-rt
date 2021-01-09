@@ -33,6 +33,9 @@ module.exports = async (req, res) => {
 
       h(Header, {
         url: '',
+        isFullYear: false,
+        year: today[0],
+        month: today[1],
         today,
         search: null,
         group: 0,

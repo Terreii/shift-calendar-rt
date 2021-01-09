@@ -6,7 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { h, Fragment } from 'preact'
-import { useState, useEffect, useMemo } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
 import { Link } from 'preact-router'
 
 import Menu from './menu'
@@ -22,17 +22,27 @@ import { scrollToADay, isSSR } from '../lib/utils'
  * @param {number[]} param.today      The current date.
  * @param {number[]} [param.search]   Result of the search. [year, month, day]
  * @param {number}   param.group      The shown group. 0 = all groups
+ * @param {number}   param.year       The shown year.
+ * @param {number}   param.month      The shown month.
+ * @param {boolean}  param.isFullYear Is the full year shown?
  * @param {string}   param.shiftModel The shown shift model. As in constants.shiftModelNames.
  * @returns {JSX.Element}
  */
-export default function Header ({ url, today, search, group, shiftModel }) {
+export default function Header ({
+  url,
+  today,
+  search,
+  group,
+  year,
+  month,
+  isFullYear,
+  shiftModel
+}) {
   const isSmallScreen = useIsSmallScreen()
   const [showMenu, setShowMenu] = useShowMenu()
   const [showShareMenu, setShowShareMenu] = useShowMenu()
 
   const hideMenu = () => setShowMenu(false)
-
-  const { year, month, isFullYear } = useParseURL(url)
 
   return (
     <header
@@ -94,42 +104,6 @@ export default function Header ({ url, today, search, group, shiftModel }) {
       )}
     </header>
   )
-}
-
-function useParseURL (url) {
-  return useMemo(() => {
-    // If we are not at the calendar, links should go to today.
-    if (!url.startsWith('/cal')) {
-      const now = new Date()
-      return {
-        isFullYear: false,
-        month: now.getMonth(),
-        year: now.getFullYear()
-      }
-    }
-
-    // get only the pathname. Host is only there for parsing.
-    const parts = new URL(url, 'https://test.es').pathname.split('/')
-    const year = Number.isNaN(parts[3]) ? new Date().getFullYear() : parseInt(parts[3])
-
-    // If there is the month part, then it is not a full year.
-    // /cal/:shiftModel/:year/:month
-    if (parts.length > 4 && !Number.isNaN(parts[4])) {
-      const month = parseInt(parts[4])
-      return {
-        isFullYear: false,
-        month: Math.min(Math.max(month, 1), 12),
-        year
-      }
-    }
-    // Full year
-    // /cal/:shiftModel/:year
-    return {
-      isFullYear: true,
-      month: new Date().getMonth(),
-      year
-    }
-  }, [url])
 }
 
 function useIsSmallScreen () {
