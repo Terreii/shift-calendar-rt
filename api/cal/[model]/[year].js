@@ -88,5 +88,6 @@ module.exports = async (req, res) => {
   const html = htmlFile.replace('<div id="root"></div>', body)
 
   res.setHeader('content-type', 'text/html')
+  res.setHeader('Cache-Control', 'max-age=0, s-maxage=3600')
   res.send(html)
 }
