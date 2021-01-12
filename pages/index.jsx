@@ -12,7 +12,7 @@ import { shiftModelNames, shiftModelText } from '../lib/constants'
 
 export default function Index () {
   return (
-    <main className='fixed top-0 w-screen h-screen pt-16 text-center bg-gray-100'>
+    <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
       <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
       <p>

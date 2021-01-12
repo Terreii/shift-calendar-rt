@@ -5,21 +5,24 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Fragment } from 'preact'
-import { useState, useEffect } from 'preact/hooks'
-import { Link } from 'preact-router'
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
 
-import Menu from './menu'
-import ShareMenu from './share-menu'
+// import Menu from './menu'
+// import ShareMenu from './share-menu'
 import NavLinks from './header-nav-links'
 
-import { scrollToADay, isSSR } from '../lib/utils'
+import { shift66Name } from '../lib/constants'
+import { isSSR } from '../lib/utils'
+
+function Menu () { return null }
+function ShareMenu () { return null }
 
 /**
  * Renders the Header.
  * @param {object}   param            Preact params.
  * @param {string}   param.url        The current url path.
- * @param {number[]} param.today      The current date.
  * @param {number[]} [param.search]   Result of the search. [year, month, day]
  * @param {number}   param.group      The shown group. 0 = all groups
  * @param {number}   param.year       The shown year.
@@ -28,16 +31,24 @@ import { scrollToADay, isSSR } from '../lib/utils'
  * @param {string}   param.shiftModel The shown shift model. As in constants.shiftModelNames.
  * @returns {JSX.Element}
  */
-export default function Header ({
-  url,
-  today,
-  search,
-  group,
-  year,
-  month,
-  isFullYear,
-  shiftModel
-}) {
+export default function Header () {
+  const router = useRouter()
+  const {
+    asPath: url,
+    query: {
+      shiftModel = shift66Name,
+      year: yearStr,
+      month: monthStr,
+      group: groupStr = '0',
+      search: searchStr
+    }
+  } = router
+  const year = parseInt(yearStr) || new Date().getFullYear()
+  const isFullYear = !monthStr
+  const month = isFullYear ? 1 : parseInt(monthStr)
+  const group = parseInt(groupStr)
+  const search = searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null
+
   const isSmallScreen = useIsSmallScreen()
   const [showMenu, setShowMenu] = useShowMenu()
   const [showShareMenu, setShowShareMenu] = useShowMenu()
@@ -46,31 +57,27 @@ export default function Header ({
 
   return (
     <header
-      class='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
+      className='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
     >
       {(!isSmallScreen || !url.startsWith('/cal')) && (
-        <h1 class='m-0 text-2xl font-normal align-baseline'>
-          <Link
-            href='/'
-            tabIndex='0'
-            class='pl-4 text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
-          >
-            Kalender
+        <h1 className='m-0 text-2xl font-normal align-baseline'>
+          <Link href='/'>
+            <a
+              className='pl-4 text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
+            >
+              Kalender
+            </a>
           </Link>
         </h1>
       )}
-      <nav class='h-full flex flex-row text-base items-stretch'>
+      <nav className='flex flex-row items-stretch h-full text-base'>
         {(!isSmallScreen || url.startsWith('/cal')) && (
           <NavLinks
-            today={today}
             isFullYear={isFullYear}
             month={month}
             year={year}
             group={group}
             shiftModel={shiftModel}
-            onClick={() => {
-              setTimeout(scrollToADay, 32, ...today)
-            }}
           />
         )}
 

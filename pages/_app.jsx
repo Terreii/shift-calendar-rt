@@ -5,8 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import Header from '../components/header'
 import '../styles/index.css'
 
 export default function MyApp ({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  return (
+    <>
+      <Header />
+      <Component {...pageProps} />
+    </>
+  )
 }
