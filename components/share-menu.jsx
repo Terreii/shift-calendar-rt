@@ -5,8 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { useState, useEffect, useMemo } from 'preact/hooks'
+import { useState, useEffect, useMemo } from 'react'
 
 import { isSSR, getCalUrl } from '../lib/utils'
 
@@ -84,15 +83,15 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
   return (
     <div
-      class='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
+      className='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
     >
-      <label class='flex flex-col'>
+      <label className='flex flex-col'>
         Adresse zum teilen:
         <input
           id='share_url'
-          class='pt-1 text-white bg-transparent focus:ring focus:outline-none'
+          className='pt-1 text-white bg-transparent focus:ring focus:outline-none'
           type='url'
-          readonly
+          readOnly
           value={url.href}
           onFocus={event => {
             event.target.select()
@@ -100,11 +99,11 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         />
       </label>
 
-      <h6 class='p-0 m-0 mt-5 ml-4 text-lg'>Füge hinzu:</h6>
+      <h6 className='p-0 m-0 mt-5 ml-4 text-lg'>Füge hinzu:</h6>
 
-      <label class='mt-5 ml-2'>
+      <label className='mt-5 ml-2'>
         <input
-          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -120,9 +119,9 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         Schichtmodell
       </label>
 
-      <label class='mt-5 ml-2'>
+      <label className='mt-5 ml-2'>
         <input
-          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -141,9 +140,9 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         )}
       </label>
 
-      <label class='mt-5 ml-2'>
+      <label className='mt-5 ml-2'>
         <input
-          class='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
           type='checkbox'
           checked={addSearch}
           disabled={search == null}
@@ -162,10 +161,10 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         )}
       </label>
 
-      <div class='flex flex-row flex-wrap content-center mt-5'>
+      <div className='flex flex-row flex-wrap content-center mt-5'>
         <button
           type='button'
-          class='flex-auto w-32 mx-3 mt-5 form-item'
+          className='flex-auto w-32 mx-3 mt-5 form-item'
           onClick={hide}
         >
           Abbrechen
@@ -174,7 +173,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           ? (
             <button
               type='button'
-              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
+              className='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               onClick={event => {
                 event.preventDefault()
 
@@ -191,7 +190,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           )
           : (
             <a
-              class='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
+              className='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
                 url.toString().replace(/&/g, '%26')
               }`}

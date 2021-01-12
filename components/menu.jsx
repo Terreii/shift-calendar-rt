@@ -5,8 +5,8 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { route, Link } from 'preact-router'
+import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import {
   monthNames,
@@ -37,6 +37,8 @@ export default function Menu ({
   setShowMenu,
   onShare
 }) {
+  const router = useRouter()
+
   let searchValue = ''
   if (search != null) {
     const searchMonth = String(month).padStart(2, '0')
@@ -58,7 +60,7 @@ export default function Menu ({
     >
       <summary
         id='menu_summary'
-        class='flex items-center justify-center w-16 list-none bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
+        className='flex items-center justify-center w-16 list-none bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
       >
         <img
           src='/assets/icons/hamburger_icon.svg'
@@ -72,17 +74,17 @@ export default function Menu ({
         id='hamburger_menu'
         aria-live='polite'
         aria-label='Menü'
-        class='absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg'
+        className='absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg'
       >
         {supportsMonthInput || isFullYear
           ? null
           : (
             <select
-              class='form-item'
+              className='form-item'
               title='Gehe zum Monat'
               value={month}
               onChange={event => {
-                route(getCalUrl({
+                router.push(getCalUrl({
                   group,
                   shiftModel,
                   isFullYear: false,
@@ -99,16 +101,16 @@ export default function Menu ({
           )}
 
         {(!supportsMonthInput || isFullYear) && (
-          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
             Jahr
             <input
-              class='flex-auto w-full mt-1 form-item'
+              className='flex-auto w-full mt-1 form-item'
               type='number'
               min='2000'
               aria-controls='calendar_main_out'
               value={year}
               onChange={event => {
-                route(getCalUrl({
+                router.push(getCalUrl({
                   group,
                   shiftModel,
                   isFullYear,
@@ -121,10 +123,10 @@ export default function Menu ({
         )}
 
         {supportsMonthInput && !isFullYear && (
-          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
             Gehe zum Monat
             <input
-              class='flex-auto w-full mt-1 form-item'
+              className='flex-auto w-full mt-1 form-item'
               type='month'
               aria-controls='calendar_main_out'
               min='2000-01'
@@ -141,7 +143,7 @@ export default function Menu ({
                   return
                 }
 
-                route(getCalUrl({
+                router.push(getCalUrl({
                   group,
                   shiftModel,
                   isFullYear,
@@ -154,10 +156,10 @@ export default function Menu ({
         )}
 
         {supportsDateInput && (
-          <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
             Suche einen Tag
             <input
-              class='flex-auto w-full mt-1 form-item'
+              className='flex-auto w-full mt-1 form-item'
               type='date'
               aria-controls='calendar_main_out'
               min='2000-01-01'
@@ -166,7 +168,7 @@ export default function Menu ({
                 const value = event.target.value
 
                 if (value == null || value.length === 0) {
-                  route(getCalUrl({
+                  router.push(getCalUrl({
                     search: null,
                     group,
                     shiftModel,
@@ -176,7 +178,7 @@ export default function Menu ({
                   }))
                 } else {
                   const date = event.target.valueAsDate || new Date(value)
-                  route(getCalUrl({
+                  router.push(getCalUrl({
                     group,
                     shiftModel,
                     isFullYear: false,
@@ -199,23 +201,26 @@ export default function Menu ({
             year,
             month
           })}
-          className='py-2 mt-5 form-item'
-          aria-controls='calendar_main_out'
-          onClick={() => {
-            setShowMenu(false)
-          }}
         >
-          Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
+          <a
+            className='py-2 mt-5 form-item'
+            aria-controls='calendar_main_out'
+            onClick={() => {
+              setShowMenu(false)
+            }}
+          >
+            Zeige {isFullYear ? 'Monate' : 'ganzes Jahr'}
+          </a>
         </Link>
 
-        <label class='flex flex-col items-stretch mt-5 text-center text-white'>
+        <label className='flex flex-col items-stretch mt-5 text-center text-white'>
           Schichtmodell
           <select
-            class='flex-auto w-full h-10 mt-1 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+            className='flex-auto w-full h-10 mt-1 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
             aria-controls='calendar_main_out'
             value={shiftModel}
             onChange={event => {
-              route(getCalUrl({
+              router.push(getCalUrl({
                 group: 0,
                 shiftModel: event.target.value,
                 isFullYear,
@@ -233,12 +238,12 @@ export default function Menu ({
         </label>
 
         <select
-          class='h-10 mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          className='h-10 mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
           aria-controls='calendar_main_out'
           aria-label='Schichtgruppen'
           value={group}
           onChange={event => {
-            route(getCalUrl({
+            router.push(getCalUrl({
               group: +event.target.value,
               shiftModel,
               isFullYear,
@@ -253,7 +258,7 @@ export default function Menu ({
 
         <button
           type='button'
-          class='h-12 px-4 py-2 mx-auto mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          className='h-12 px-4 py-2 mx-auto mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
           onClick={onShare}
           aria-label='Teile deine Schicht'
         >

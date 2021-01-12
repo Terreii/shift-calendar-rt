@@ -9,15 +9,12 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-// import Menu from './menu'
-// import ShareMenu from './share-menu'
+import Menu from './menu'
+import ShareMenu from './share-menu'
 import NavLinks from './header-nav-links'
 
 import { shift66Name } from '../lib/constants'
 import { isSSR } from '../lib/utils'
-
-function Menu () { return null }
-function ShareMenu () { return null }
 
 /**
  * Renders the Header.
