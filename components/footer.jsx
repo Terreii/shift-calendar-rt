@@ -5,12 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { Link } from 'preact-router'
+import Link from 'next/link'
 
 export default function Footer () {
   return (
-    <p class='mt-4 mb-3 text-center text-xs'>
+    <p className='mt-4 mb-3 text-xs text-center'>
       <b>Der inoffizielle Schichtkalender für Bosch Reutlingen.</b>
       <br />
       Made by Christopher Astfalk.
@@ -26,22 +25,17 @@ export default function Footer () {
       {'Lizenz: '}
       <a
         href='https://www.mozilla.org/en-US/MPL/2.0/'
-        class='inline-block text-blue-700 underline'
+        className='inline-block text-blue-700 underline'
         target='_blank'
         rel='noopener noreferrer'
       >
         Mozilla Public License 2.0
       </a>
       <br />
-      <Link
-        class='inline-block text-blue-700 underline'
-        href='/impressum'
-        tabIndex='0'
-        onClick={() => {
-          window.scrollTo(0, 0)
-        }}
-      >
-        Impressum
+      <Link href='/impressum'>
+        <a className='inline-block text-blue-700 underline'>
+          Impressum
+        </a>
       </Link>
     </p>
   )
