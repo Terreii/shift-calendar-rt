@@ -5,8 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-
 /**
  * Render the cell with the week day.
  * @param {object}   param                 Preact arguments.
@@ -23,8 +21,8 @@ export default function WeekDayCell ({ time, isToday, isSearchResult }) {
   }
 
   return (
-    <td class={border}>
-      <span class='sr-only'>{time.weekdayLong}</span>
+    <td className={border}>
+      <span className='sr-only'>{time.weekdayLong}</span>
       <span aria-hidden='true'>{time.weekdayShort}</span>
     </td>
   )

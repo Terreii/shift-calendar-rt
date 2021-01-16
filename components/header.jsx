@@ -13,7 +13,6 @@ import ShareMenu from './share-menu'
 import NavLinks from './header-nav-links'
 
 import { useQueryProps } from '../hooks/settings'
-import { isSSR } from '../lib/utils'
 
 /**
  * Renders the Header.
@@ -86,9 +85,13 @@ export default function Header () {
 }
 
 function useIsSmallScreen () {
-  const [isSmallScreen, setIsSmallScreen] = useState(() => (
-    !isSSR && window.innerWidth < 350
-  ))
+  const [isSmallScreen, setIsSmallScreen] = useState(() => {
+    try {
+      return window.innerWidth < 350
+    } catch (err) {
+      return true
+    }
+  })
 
   useEffect(() => {
     const onResize = () => {

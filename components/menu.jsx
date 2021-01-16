@@ -14,16 +14,18 @@ import {
   shiftModelText,
   shiftModelNumberOfGroups
 } from '../lib/constants'
-import { isSSR, getCalUrl } from '../lib/utils'
+import { getCalUrl } from '../lib/utils'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
-  if (isSSR) return false
-
-  const parent = document.createElement('div')
-  const input = document.createElement('input')
-  input.type = type
-  parent.appendChild(input)
-  return parent.firstChild.type === type
+  try {
+    const parent = document.createElement('div')
+    const input = document.createElement('input')
+    input.type = type
+    parent.appendChild(input)
+    return parent.firstChild.type === type
+  } catch (err) {
+    return false
+  }
 })
 
 export default function Menu ({

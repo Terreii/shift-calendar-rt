@@ -5,8 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h, Fragment } from 'preact'
-
 import { shiftTitle, workingLongName } from '../../lib/constants'
 
 /**
@@ -38,12 +36,12 @@ export default function GroupShiftCell ({ group, shift, isToday, isSearchResult 
 
   return (
     <td
-      class={`text-black ${border} ${workStyle}`}
+      className={`text-black ${border} ${workStyle}`}
       title={title}
     >
       {shift !== 'K' && (
         <>
-          <span class='sr-only'>{workingLongName[shift]}</span>
+          <span className='sr-only'>{workingLongName[shift]}</span>
           <span aria-hidden='true'>{shift}</span>
         </>
       )}

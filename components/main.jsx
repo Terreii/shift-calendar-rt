@@ -5,17 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { useState, useEffect } from 'preact/hooks'
-import { route } from 'preact-router'
-import Hammer from 'hammerjs'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import ms from 'milliseconds'
 
 import Downloader from './download'
 import Footer from './footer'
 import Month from './month'
 import selectMonthData from '../lib/select-month-data'
-import { isSSR, scrollToADay, getCalUrl } from '../lib/utils'
+import { scrollToADay, getCalUrl } from '../lib/utils'
 
 /**
  * Renders the main content.
@@ -109,10 +107,10 @@ export default function Main ({
   }, [search])
 
   return (
-    <main class='flex flex-col content-center'>
+    <main className='flex flex-col content-center'>
       <div
         id='calendar_main_out'
-        class='flex flex-row flex-wrap justify-around pt-16 px-5 pb-2'
+        className='flex flex-row flex-wrap justify-around px-5 pt-16 pb-2'
         onClick={processClick}
         ref={ref}
         aria-live='polite'
@@ -144,9 +142,13 @@ export default function Main ({
  * @returns {number} Number of months to display.
  */
 function useNumberOfMonths (group, displayFullYear) {
-  const [numberOfMonths, setNumberOfMonths] = useState(
-    () => isSSR || window.innerWidth < 1220 ? 1 : 4
-  )
+  const [numberOfMonths, setNumberOfMonths] = useState(() => {
+    try {
+      return window.innerWidth < 1220 ? 1 : 4
+    } catch (err) {
+      return 1
+    }
+  })
 
   useEffect(() => {
     const onResize = () => {
@@ -179,9 +181,11 @@ function useNumberOfMonths (group, displayFullYear) {
  */
 function useHammer (isFullYear, year, month, shiftModel, group) {
   const [container, setContainer] = useState(null)
+  const router = useRouter()
 
   useEffect(() => {
     if (isFullYear || container == null) return
+    let isActive = true
 
     const handler = event => {
       switch (event.direction) {
@@ -192,7 +196,7 @@ function useHammer (isFullYear, year, month, shiftModel, group) {
           time.setFullYear(year)
           time.setTime(time.getTime() + ms.months(1))
 
-          route(getCalUrl({
+          router.push(getCalUrl({
             group,
             shiftModel,
             isFullYear,
@@ -209,7 +213,7 @@ function useHammer (isFullYear, year, month, shiftModel, group) {
           time.setFullYear(year)
           time.setTime(time.getTime() - ms.months(1))
 
-          route(getCalUrl({
+          router.push(getCalUrl({
             group,
             shiftModel,
             isFullYear,
@@ -223,10 +227,18 @@ function useHammer (isFullYear, year, month, shiftModel, group) {
       }
     }
 
-    const hammertime = new Hammer(container)
-    hammertime.on('swipe', handler)
+    let hammertime
+    import('hammerjs').then(({ default: Hammer }) => {
+      if (isActive) {
+        hammertime = new Hammer(container)
+        hammertime.on('swipe', handler)
+      }
+    })
     return () => {
-      hammertime.off('swipe', handler)
+      isActive = false
+      if (hammertime) {
+        hammertime.off('swipe', handler)
+      }
     }
   }, [isFullYear, year, month, shiftModel, group, container])
 

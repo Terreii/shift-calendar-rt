@@ -5,8 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-
 import {
   shiftModelText,
   shift66Name,
@@ -49,25 +47,25 @@ const urls = {
 export default function Download ({ shiftModel }) {
   if (!(shiftModel in urls)) {
     return (
-      <div class='my-4 mx-auto p-4 text-center bg-gray-300 text-gray-900 rounded'>
+      <div className='p-4 mx-auto my-4 text-center text-gray-900 bg-gray-300 rounded'>
         Für dieses Schichtmodell sind die Kalender noch in Arbeit
       </div>
     )
   }
 
   return (
-    <div class='px-1 mx-auto my-4'>
-      <section class='p-4 pt-2 text-center text-gray-900 bg-gray-300 rounded'>
-        <h4 class='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
+    <div className='flex flex-col px-1 my-4'>
+      <section className='p-4 pt-2 mx-auto text-center text-gray-900 bg-gray-300 rounded'>
+        <h4 className='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
-        <p class='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+        <p className='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
         {urls[shiftModel].map((href, index) => {
           const group = index + 1
           return (
             <a
               key={shiftModel + group}
-              class={'inline-block text-blue-800 underline py-3 px-1' +
+              className={'inline-block text-blue-800 underline py-3 px-1' +
                 (index === 0 ? '' : ' ml-2')}
               href={href}
               download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}

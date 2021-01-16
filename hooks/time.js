@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 
 import { getToday } from '../lib/utils'
 
@@ -27,4 +27,18 @@ export function useToday () {
   }, [today])
 
   return today
+}
+
+/**
+ * Today, but the month is zero indexed.
+ */
+export function useTodayZeroIndex () {
+  const today = useToday()
+
+  // useMemo is more performant, because this hook is used in the month component.
+  return useMemo(() => {
+    const result = [...today]
+    result[1] -= 1
+    return result
+  }, [today])
 }

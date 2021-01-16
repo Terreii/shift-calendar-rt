@@ -7,9 +7,23 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useRouter } from 'next/router'
 
-export default function Year () {
+import Main from '../../../components/main'
+import { useTodayZeroIndex } from '../../../hooks/time'
+
+export default function Month () {
   const router = useRouter()
-  return <div className='pt-16 text-black'>
-    Year {router.query.year} with shift model {router.query.shiftModel}.
+  const today = useTodayZeroIndex()
+  const search = parseInt(router.query.search, 10)
+
+  return <div>
+    <Main
+      isFullYear
+      year={parseInt(router.query.year, 10)}
+      month={parseInt(router.query.month, 10)}
+      shiftModel={router.query.shiftModel}
+      today={today}
+      search={Number.isNaN(search) ? null : search}
+      group={router.query.group}
+    />
   </div>
 }

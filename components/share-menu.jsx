@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect, useMemo } from 'react'
 
-import { isSSR, getCalUrl } from '../lib/utils'
+import { getCalUrl } from '../lib/utils'
 
 /**
  * Display the share menu.
@@ -53,32 +53,33 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
   }, [])
 
   const url = useMemo(() => {
-    if (isSSR) {
+    try {
+      const url = new URL(window.location.href)
+      url.search = ''
+      url.hash = ''
+
+      if (addShiftModel) {
+        url.pathname = getCalUrl({
+          shiftModel,
+          isFullYear: false,
+          year: addSearch ? year : null,
+          month: addSearch ? month : null
+        })
+
+        if (addSearch && search != null) {
+          url.searchParams.set('search', search)
+        }
+        if (addGroup && group > 0) {
+          url.searchParams.set('group', group)
+        }
+      } else {
+        url.pathname = ''
+      }
+
+      return url
+    } catch (err) {
       return ''
     }
-    const url = new URL(window.location.href)
-    url.search = ''
-    url.hash = ''
-
-    if (addShiftModel) {
-      url.pathname = getCalUrl({
-        shiftModel,
-        isFullYear: false,
-        year: addSearch ? year : null,
-        month: addSearch ? month : null
-      })
-
-      if (addSearch && search != null) {
-        url.searchParams.set('search', search)
-      }
-      if (addGroup && group > 0) {
-        url.searchParams.set('group', group)
-      }
-    } else {
-      url.pathname = ''
-    }
-
-    return url
   }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
   return (
@@ -170,7 +171,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         >
           Abbrechen
         </button>
-        {!isSSR && ('share' in window.navigator)
+        {'navigator' in globalThis && ('share' in window.navigator)
           ? (
             <button
               type='button'

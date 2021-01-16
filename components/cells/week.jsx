@@ -5,8 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-
 /**
  * Render the weekday.
  * @param {object}   param       Preact arguments.
@@ -15,10 +13,10 @@ import { h } from 'preact'
 export default function WeekCell ({ time }) {
   return (
     <td
-      class='text-gray-800 bg-white border-r border-black border'
+      className='text-gray-800 bg-white border border-r border-black'
       rowSpan={Math.min(7 - time.weekday, time.daysInMonth - time.day) + 1}
     >
-      <span class='sr-only'>Woche {time.weekNumber}</span>
+      <span className='sr-only'>Woche {time.weekNumber}</span>
       <span aria-hidden='true'>{time.weekNumber}</span>
     </td>
   )

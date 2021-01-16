@@ -5,7 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
 import { DateTime } from 'luxon'
 
 import WeekCell from './cells/week'
@@ -71,7 +70,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
     return (
       <tr
         key={index}
-        class={`${border} ${background}`}
+        className={`${border} ${background}`}
         title={holidayData != null && holidayData.type === 'closing' ? holidayData.name : undefined}
       >
         {(weekDay === 1 || index === 0) && (
