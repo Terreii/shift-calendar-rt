@@ -7,48 +7,23 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import Menu from './menu'
 import ShareMenu from './share-menu'
 import NavLinks from './header-nav-links'
 
-import { shift66Name } from '../lib/constants'
+import { useQueryProps } from '../hooks/settings'
 import { isSSR } from '../lib/utils'
 
 /**
  * Renders the Header.
- * @param {object}   param            Preact params.
- * @param {string}   param.url        The current url path.
- * @param {number[]} [param.search]   Result of the search. [year, month, day]
- * @param {number}   param.group      The shown group. 0 = all groups
- * @param {number}   param.year       The shown year.
- * @param {number}   param.month      The shown month.
- * @param {boolean}  param.isFullYear Is the full year shown?
- * @param {string}   param.shiftModel The shown shift model. As in constants.shiftModelNames.
- * @returns {JSX.Element}
  */
 export default function Header () {
-  const router = useRouter()
-  const {
-    asPath: url,
-    query: {
-      shiftModel = shift66Name,
-      year: yearStr,
-      month: monthStr,
-      group: groupStr = '0',
-      search: searchStr
-    }
-  } = router
-  const year = parseInt(yearStr) || new Date().getFullYear()
-  const isFullYear = !monthStr
-  const month = isFullYear ? 1 : parseInt(monthStr)
-  const group = parseInt(groupStr)
-  const search = searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null
+  const { url, year, month, isFullYear, group, search, shiftModel } = useQueryProps()
 
   const isSmallScreen = useIsSmallScreen()
-  const [showMenu, setShowMenu] = useShowMenu()
-  const [showShareMenu, setShowShareMenu] = useShowMenu()
+  const [showMenu, setShowMenu] = useShowMenu('nav')
+  const [showShareMenu, setShowShareMenu] = useShowMenu('#share_menu')
 
   const hideMenu = () => setShowMenu(false)
 
@@ -129,29 +104,24 @@ function useIsSmallScreen () {
   return isSmallScreen
 }
 
-function useShowMenu () {
+/**
+ * Handle the show state of a menu.
+ * @param {string} insideSelector Selector for the container,
+ *                                clicking outside of which the menu will close the menu.
+ */
+function useShowMenu (insideSelector) {
   const [show, setShow] = useState(false)
 
-  // Hide on click main element
   useEffect(() => {
     if (show) {
-      const hide = () => {
-        setShow(false)
-      }
-      const element = document.getElementsByTagName('main')[0]
-
-      if (element) {
-        element.addEventListener('click', hide)
-        return () => {
-          element.removeEventListener('click', hide)
+      // Hide on click outside of insideSelector
+      const hide = event => {
+        if (event.target.closest(insideSelector) == null) {
+          setShow(false)
         }
       }
-    }
-  }, [show])
 
-  // Hide on hitting ESC
-  useEffect(() => {
-    if (show) {
+      // Hide on hitting ESC
       const keyEvent = event => {
         if (event.code === 'Escape' || event.keyCode === 27) {
           setShow(false)
@@ -164,12 +134,14 @@ function useShowMenu () {
         }
       }
 
-      document.body.addEventListener('keyup', keyEvent)
+      window.addEventListener('click', hide)
+      window.addEventListener('keyup', keyEvent)
       return () => {
-        document.body.removeEventListener('keyup', keyEvent)
+        window.removeEventListener('click', hide)
+        window.removeEventListener('keyup', keyEvent)
       }
     }
-  }, [show])
+  }, [show, insideSelector])
 
   return [show, setShow]
 }

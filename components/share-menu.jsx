@@ -83,6 +83,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
   return (
     <div
+      id='share_menu'
       className='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
     >
       <label className='flex flex-col'>
