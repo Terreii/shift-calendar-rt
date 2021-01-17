@@ -21,7 +21,7 @@ import { monthNames } from '../lib/constants'
  * @param {number}   arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
-function Month ({ year, month, data, today, search, group }) {
+function Month ({ className = '', year, month, data, today, search, group }) {
   const groups = []
 
   if (group === 0) { // if 0 display all groups
@@ -37,7 +37,7 @@ function Month ({ year, month, data, today, search, group }) {
   return (
     <table
       id={`month_${year}-${month + 1}`}
-      className='mt-8 text-center border border-collapse border-black xl:mt-0'
+      className={'mt-8 text-center border border-collapse border-black xl:mt-0 ' + className}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
     >
       <caption

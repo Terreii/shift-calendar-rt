@@ -7,27 +7,61 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useRouter } from 'next/router'
 
-import Main from '../../../components/main'
+import Month from '../../../components/month'
+import Downloader from '../../../components/download'
+import Footer from '../../../components/footer'
 import { useTodayZeroIndex } from '../../../hooks/time'
 import { shiftModelNames, shiftModelNumberOfGroups } from '../../../lib/constants'
-import { getIsSSR } from '../../../lib/utils'
+import selectMonthData from '../../../lib/select-month-data'
+import { getIsSSR, parseNumber } from '../../../lib/utils'
 
-export default function Month () {
+export default function Year () {
   const router = useRouter()
-  const today = useTodayZeroIndex()
-  const search = parseInt(router.query.search, 10)
+  const todayAr = useTodayZeroIndex()
+  const today = getIsSSR() ? [1999, 0, 1, 0] : todayAr
+  const shiftModel = router.query.shiftModel
+  const year = parseNumber(router.query.year, null)
+  const group = parseNumber(router.query.group, 0)
 
-  return <div>
-    <Main
-      isFullYear
-      year={parseInt(router.query.year, 10)}
-      month={1}
-      shiftModel={router.query.shiftModel}
-      today={getIsSSR ? [1999, 0, 1, 0] : today}
-      search={Number.isNaN(search) ? null : search}
-      group={router.query.group}
-    />
-  </div>
+  if (year == null) {
+    return <h2>{router.query.year} is not a valid year.</h2>
+  }
+
+  const monthsData = []
+  for (let i = 0; i < 12; i++) {
+    monthsData.push([year, i])
+  }
+
+  return (
+    <main className='flex flex-col content-center'>
+      <div
+        id='calendar_main_out'
+        className='flex flex-col justify-around gap-6 px-5 pt-16 pb-2 mx-auto md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
+        onClick={event => {
+          const element = event.target.closest('[title]')
+          if ((element?.title?.length ?? 0) > 0) {
+            window.alert(element.title)
+          }
+        }}
+        aria-live='polite'
+      >
+        {monthsData.map(([year, month]) => (
+          <Month
+            key={`${year}-${month}-${shiftModel}-${group}`}
+            year={year}
+            month={month}
+            data={selectMonthData(year, month, shiftModel)}
+            today={today[0] === year && today[1] === month ? today : null}
+            group={group}
+          />
+        ))}
+      </div>
+
+      <Downloader shiftModel={shiftModel} />
+
+      <Footer />
+    </main>
+  )
 }
 
 export async function getStaticPaths () {
