@@ -74,7 +74,7 @@ export default function MonthPage (props) {
     <main className='flex flex-col content-center'>
       <div
         id='calendar_main_out'
-        className='flex flex-row flex-wrap justify-around px-5 pt-16 pb-2'
+        className='flex flex-col justify-around gap-6 px-5 pt-16 pb-2 mx-auto md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
         onClick={event => {
           const element = event.target.closest('[title]')
           if ((element?.title?.length ?? 0) > 0) {

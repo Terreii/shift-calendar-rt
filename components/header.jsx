@@ -18,9 +18,8 @@ import { useQueryProps } from '../hooks/settings'
  * Renders the Header.
  */
 export default function Header () {
-  const { url, year, month, isFullYear, group, search, shiftModel } = useQueryProps()
+  const { year, month, isFullYear, group, search, shiftModel } = useQueryProps()
 
-  const isSmallScreen = useIsSmallScreen()
   const [showMenu, setShowMenu] = useShowMenu('nav')
   const [showShareMenu, setShowShareMenu] = useShowMenu('#share_menu')
 
@@ -30,27 +29,41 @@ export default function Header () {
     <header
       className='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
     >
-      {(!isSmallScreen || !url.startsWith('/cal')) && (
-        <h1 className='m-0 text-2xl font-normal align-baseline'>
-          <Link href='/'>
-            <a
-              className='pl-4 text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
+      <h1 className='m-0 text-2xl font-normal align-baseline'>
+        <Link href='/'>
+          <a
+            className='text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
+          >
+            <span className='pl-4 sm:hidden not-small-screen'>Kalender</span>
+            <span className='hidden pl-4 sm:inline not-small-screen'>
+              Kontischichtkalender Rt
+            </span>
+            <svg
+              title='Home. Gehe zur Auswahl der Schichtmodelle'
+              className='w-6 h-6 ml-2 small-screen-only'
+              fill='none'
+              stroke='currentColor'
+              viewBox='0 0 24 24'
+              xmlns='http://www.w3.org/2000/svg'
             >
-              Kalender
-            </a>
-          </Link>
-        </h1>
-      )}
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth={2}
+                d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'
+              />
+            </svg>
+          </a>
+        </Link>
+      </h1>
       <nav className='flex flex-row items-stretch h-full text-base'>
-        {(!isSmallScreen || url.startsWith('/cal')) && (
-          <NavLinks
-            isFullYear={isFullYear}
-            month={month}
-            year={year}
-            group={group}
-            shiftModel={shiftModel}
-          />
-        )}
+        <NavLinks
+          isFullYear={isFullYear}
+          month={month}
+          year={year}
+          group={group}
+          shiftModel={shiftModel}
+        />
 
         <Menu
           show={showMenu}
@@ -82,29 +95,6 @@ export default function Header () {
       )}
     </header>
   )
-}
-
-function useIsSmallScreen () {
-  const [isSmallScreen, setIsSmallScreen] = useState(() => {
-    try {
-      return window.innerWidth < 350
-    } catch (err) {
-      return true
-    }
-  })
-
-  useEffect(() => {
-    const onResize = () => {
-      setIsSmallScreen(window.innerWidth < 350)
-    }
-
-    window.addEventListener('resize', onResize)
-    return () => {
-      window.removeEventListener('resize', onResize)
-    }
-  }, [])
-
-  return isSmallScreen
 }
 
 /**

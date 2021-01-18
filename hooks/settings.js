@@ -13,7 +13,6 @@ import { shift66Name } from '../lib/constants'
 /**
  * Get the stored or current month.
  * @returns {{
- *   url: string,
  *   isFullYear: boolean,
  *   year: number,
  *   month: number,
@@ -65,7 +64,6 @@ export function useQueryProps () {
   }, [url])
 
   return {
-    url,
     isFullYear,
     year,
     month,
