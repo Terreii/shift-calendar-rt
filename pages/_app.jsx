@@ -6,6 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import Header from '../components/header'
+import InstallPrompt from '../components/install-prompt'
 import '../styles/index.css'
 
 export default function MyApp ({ Component, pageProps }) {
@@ -13,6 +14,7 @@ export default function MyApp ({ Component, pageProps }) {
     <>
       <Header />
       <Component {...pageProps} />
+      <InstallPrompt />
     </>
   )
 }

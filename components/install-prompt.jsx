@@ -5,8 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { h } from 'preact'
-import { useState, useEffect, useRef } from 'preact/hooks'
+import { useState, useEffect, useRef } from 'react'
 import ms from 'milliseconds'
 
 /**
@@ -33,7 +32,7 @@ export default function InstallButton () {
         deferredPrompt.current = event
 
         if (dismissedTime < (Date.now() - ms.days(12))) {
-          setTimeout(setShow, ms.seconds(15), 'button')
+          setTimeout(setShow, ms.seconds(15), 'popup')
         }
       }
 
@@ -74,30 +73,37 @@ export default function InstallButton () {
   }
 
   switch (show) {
-    case 'button':
+    case 'popup':
       return (
         <aside
-          class='fixed bottom-0 left-0 flex flex-row md:mb-2 md:ml-2 max-w-screen-sm md:max-w-sm bg-gray-200 text-base border rounded-t-lg md:rounded-lg border-gray-500 shadow pb-safe-area'
+          className='fixed bottom-0 left-0 flex flex-col w-full bg-gray-300 border-t border-gray-600 shadow-lg sm:border-t-0 sm:rounded sm:mb-2 sm:ml-2 sm:max-w-sm'
         >
           <p className='p-4'>
             Dieser Kalender kann wie eine <em>App installiert</em> werden!
-            <em> Ohne auf deine Daten zugreifen zu können!</em>
             <br />
-            Klicke auf installieren um ihn bei deinen Apps zu speichern.
+            <br />
+            Klicke auf <strong>Installieren</strong> um ihn bei deinen Apps zu speichern.
+            Mit <strong>Abbrechen</strong> wirst du für 12 Tage nicht mehr danach gefragt.
           </p>
-          <div className='flex flex-col border-l border-black'>
+          <div className='flex flex-row items-center justify-end m-3'>
             <button
-              className='flex flex-col items-center justify-center flex-grow px-2 py-1 text-black rounded-tr-lg hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
+              className='flex flex-row items-center justify-center w-32 px-2 py-1 mx-3 text-white bg-purple-700 shadow focus:ring focus:outline-none hover:bg-purple-600 focus:bg-purple-600 active:bg-purple-600 form-item'
               onClick={onClickInstallButton}
             >
-              <img src='/assets/icons/add-outline.svg' height='30' width='30' alt='' />
-              <span className='mt-1'>installieren</span>
+              <img
+                src='/assets/icons/add-outline.svg'
+                className='hue-invert'
+                height='25'
+                width='25'
+                alt=''
+              />
+              <span className='my-1 ml-2'>Installieren</span>
             </button>
             <button
               type='button'
               onClick={dismiss}
               title='Klicke um den Kalender nicht zu installieren'
-              className='flex flex-col items-center justify-center flex-grow px-2 py-1 border-t border-black rounded-br-lg hover:bg-gray-300 focus:bg-gray-400 focus:ring focus:outline-none'
+              className='flex flex-col items-center justify-center w-32 px-2 py-1 mx-3 border-black rounded-br-lg shadow hover:bg-gray-200 focus:bg-gray-200 focus:ring focus:outline-none form-item'
             >
               Abbrechen
             </button>
@@ -108,25 +114,25 @@ export default function InstallButton () {
     case 'ios':
       return (
         <div
-          class='fixed bottom-0 w-screen flex flex-col items-center bg-gray-200 border-t border-gray-500 shadow-lg pb-safe-area'
+          className='fixed bottom-0 flex flex-col items-center w-screen bg-gray-200 border-t border-gray-500 shadow-lg pb-safe-area'
         >
-          <span class='text-sm text-gray-900 text-center my-1'>
+          <span className='my-1 text-sm text-center text-gray-900'>
             Klicke auf Teilen &amp; dann "Zum Home-Bildschirm" um den Kalender zu installieren:
           </span>
-          <div class='flex flex-row items-stretch mb-1'>
+          <div className='flex flex-row items-stretch mb-1'>
             <img
               src='/assets/icons/ios-share.png'
               height='81'
               width='57'
-              class='bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border border-gray-500'
+              className='object-contain object-center w-16 h-16 p-1 bg-gray-300 border border-gray-500 rounded'
               alt='klicke Teilen'
             />
-            <span class='block my-auto mx-3'>➡︎</span>
+            <span className='block mx-3 my-auto'>➡︎</span>
             <img
               src='/assets/icons/ios-add-to-home-screen.png'
               height='283'
               width='190'
-              class='bg-gray-300 rounded object-contain object-center h-16 w-16 p-1 border border-gray-500'
+              className='object-contain object-center w-16 h-16 p-1 bg-gray-300 border border-gray-500 rounded'
               alt='klicke Zum Home-Bildschirm'
             />
           </div>
@@ -144,7 +150,7 @@ function CloseButton ({ onClick }) {
   return (
     <button
       type='button'
-      class='ml-1 absolute bottom-0 right-0 bg-transparent border-0'
+      className='absolute bottom-0 right-0 ml-1 bg-transparent border-0'
       onClick={onClick}
       aria-label='schließe Meldung'
     >

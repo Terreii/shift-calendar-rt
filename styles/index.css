@@ -24,6 +24,12 @@ td, th {
 
 @tailwind utilities;
 
+@layer components {
+  .hue-invert {
+    filter: invert(100%)
+  }
+}
+
 #menu_summary::-webkit-details-marker {
   display: none;
 }
@@ -34,7 +40,7 @@ td, th {
   }
 }
 
-@media (min-width: 350px) {
+@media (min-width: 351px) {
   .small-screen-only {
     display: none;
   }

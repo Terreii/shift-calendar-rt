@@ -66,7 +66,7 @@ export default function Menu ({
       >
         <img
           src='/assets/icons/hamburger_icon.svg'
-          style={{ filter: 'invert(100%)' }}
+          className='hue-invert'
           height='45'
           width='45'
           alt='Menu'
