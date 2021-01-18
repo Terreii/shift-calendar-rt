@@ -78,121 +78,129 @@ export default function Menu ({
         aria-label='Menü'
         className='absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg'
       >
-        {supportsMonthInput || isFullYear
-          ? null
-          : (
-            <select
-              className='form-item'
-              title='Gehe zum Monat'
-              value={month}
-              onChange={event => {
-                router.push(getCalUrl({
-                  group,
-                  shiftModel,
-                  isFullYear: false,
-                  month: event.target.value,
-                  year
-                }))
-              }}
-              aria-controls='calendar_main_out'
-            >
-              {monthNames.map((name, index) => (
-                <option key={name} value={index + 1}>{name}</option>
-              ))}
-            </select>
-          )}
-
-        {(!supportsMonthInput || isFullYear) && (
-          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
-            Jahr
-            <input
-              className='flex-auto w-full mt-1 form-item'
-              type='number'
-              min='2000'
-              aria-controls='calendar_main_out'
-              value={year}
-              onChange={event => {
-                router.push(getCalUrl({
-                  group,
-                  shiftModel,
-                  isFullYear,
-                  year: +event.target.value,
-                  month
-                }))
-              }}
-            />
-          </label>
-        )}
-
-        {supportsMonthInput && !isFullYear && (
-          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
-            Gehe zum Monat
-            <input
-              className='flex-auto w-full mt-1 form-item'
-              type='month'
-              aria-controls='calendar_main_out'
-              min='2000-01'
-              value={`${year}-${String(month + 1).padStart(2, '0')}`}
-              onChange={event => {
-                const value = event.target.value
-                if (value == null || value.length === 0) {
-                  return
-                }
-
-                const [nextYear, nextMonth] = value.split('-')
-
-                if (!nextYear || !nextMonth) {
-                  return
-                }
-
-                router.push(getCalUrl({
-                  group,
-                  shiftModel,
-                  isFullYear,
-                  month: nextMonth,
-                  year: nextYear
-                }))
-              }}
-            />
-          </label>
-        )}
-
-        {supportsDateInput && (
-          <label className='flex flex-col items-stretch mt-5 text-center text-white'>
-            Suche einen Tag
-            <input
-              className='flex-auto w-full mt-1 form-item'
-              type='date'
-              aria-controls='calendar_main_out'
-              min='2000-01-01'
-              value={searchValue}
-              onChange={event => {
-                const value = event.target.value
-
-                if (value == null || value.length === 0) {
-                  router.push(getCalUrl({
-                    search: null,
-                    group,
-                    shiftModel,
-                    isFullYear,
-                    month,
-                    year
-                  }))
-                } else {
-                  const date = event.target.valueAsDate || new Date(value)
+        <div className='flex flex-col'>
+          {supportsMonthInput || isFullYear
+            ? null
+            : (
+              <select
+                className='form-item'
+                title='Gehe zum Monat'
+                value={month}
+                onChange={event => {
                   router.push(getCalUrl({
                     group,
                     shiftModel,
                     isFullYear: false,
-                    year: date.getFullYear(),
-                    month: date.getMonth() + 1,
-                    search: date.getDate()
+                    month: event.target.value,
+                    year
                   }))
-                }
-              }}
-            />
-          </label>
-        )}
+                }}
+                aria-controls='calendar_main_out'
+              >
+                {monthNames.map((name, index) => (
+                  <option key={name} value={index + 1}>{name}</option>
+                ))}
+              </select>
+            )}
+        </div>
+
+        <div className='flex flex-col'>
+          {(!supportsMonthInput || isFullYear) && (
+            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+              Jahr
+              <input
+                className='flex-auto w-full mt-1 form-item'
+                type='number'
+                min='2000'
+                aria-controls='calendar_main_out'
+                value={year}
+                onChange={event => {
+                  router.push(getCalUrl({
+                    group,
+                    shiftModel,
+                    isFullYear,
+                    year: +event.target.value,
+                    month
+                  }))
+                }}
+              />
+            </label>
+          )}
+        </div>
+
+        <div className='flex flex-col'>
+          {supportsMonthInput && !isFullYear && (
+            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+              Gehe zum Monat
+              <input
+                className='flex-auto w-full mt-1 form-item'
+                type='month'
+                aria-controls='calendar_main_out'
+                min='2000-01'
+                value={`${year}-${String(month + 1).padStart(2, '0')}`}
+                onChange={event => {
+                  const value = event.target.value
+                  if (value == null || value.length === 0) {
+                    return
+                  }
+
+                  const [nextYear, nextMonth] = value.split('-')
+
+                  if (!nextYear || !nextMonth) {
+                    return
+                  }
+
+                  router.push(getCalUrl({
+                    group,
+                    shiftModel,
+                    isFullYear,
+                    month: nextMonth,
+                    year: nextYear
+                  }))
+                }}
+              />
+            </label>
+          )}
+        </div>
+
+        <div className='flex flex-col'>
+          {supportsDateInput && (
+            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+              Suche einen Tag
+              <input
+                className='flex-auto w-full mt-1 form-item'
+                type='date'
+                aria-controls='calendar_main_out'
+                min='2000-01-01'
+                value={searchValue}
+                onChange={event => {
+                  const value = event.target.value
+
+                  if (value == null || value.length === 0) {
+                    router.push(getCalUrl({
+                      search: null,
+                      group,
+                      shiftModel,
+                      isFullYear,
+                      month,
+                      year
+                    }))
+                  } else {
+                    const date = event.target.valueAsDate || new Date(value)
+                    router.push(getCalUrl({
+                      group,
+                      shiftModel,
+                      isFullYear: false,
+                      year: date.getFullYear(),
+                      month: date.getMonth() + 1,
+                      search: date.getDate()
+                    }))
+                  }
+                }}
+              />
+            </label>
+          )}
+        </div>
 
         <Link
           key={isFullYear}
