@@ -20,9 +20,19 @@ export function useToday () {
       }
     }
 
+    // timeout for updating in the background and if the page is in focus.
+    const now = new Date()
+    const time = now.getTime()
+    // The next hour
+    now.setHours(now.getHours() + 1)
+    now.setMinutes(0)
+    now.setSeconds(0)
+    const timeout = setTimeout(update, now.getTime() - time)
+
     window.addEventListener('focus', update)
     return () => {
       window.removeEventListener('focus', update)
+      clearTimeout(timeout)
     }
   }, [today])
 
