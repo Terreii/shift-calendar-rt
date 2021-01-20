@@ -8,11 +8,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import Link from 'next/link'
 
 import Footer from '../components/footer'
+import Head from '../components/head'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 
 export default function Index () {
   return (
     <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
+      <Head />
       <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
       <p>

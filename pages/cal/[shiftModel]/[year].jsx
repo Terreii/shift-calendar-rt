@@ -10,8 +10,9 @@ import { useRouter } from 'next/router'
 import Month from '../../../components/month'
 import Downloader from '../../../components/download'
 import Footer from '../../../components/footer'
+import Head from '../../../components/head'
 import { useTodayZeroIndex } from '../../../hooks/time'
-import { shiftModelNames, shiftModelNumberOfGroups } from '../../../lib/constants'
+import { shiftModelNames, shiftModelNumberOfGroups, shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
 import { getIsSSR, parseNumber } from '../../../lib/utils'
 
@@ -34,6 +35,7 @@ export default function Year () {
 
   return (
     <main className='flex flex-col content-center'>
+      <Head title={`Jahr ${year} - ${shiftModelText[shiftModel]}`} />
       <div
         id='calendar_main_out'
         className='flex flex-col justify-around gap-6 px-5 pt-16 pb-2 mx-auto md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
@@ -93,17 +95,10 @@ export async function getStaticPaths () {
 
   return {
     paths,
-    fallback: true
+    fallback: 'blocking'
   }
 }
 
 export async function getStaticProps (props) {
-  return {
-    props: {
-      ...props,
-      locales: null,
-      locale: null,
-      defaultLocale: null
-    }
-  }
+  return { props }
 }
