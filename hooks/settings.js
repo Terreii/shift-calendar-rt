@@ -8,11 +8,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
-import { shift66Name } from '../lib/constants'
+import { shift66Name, shiftModelNames, shiftModelNumberOfGroups } from '../lib/constants'
 
 /**
  * Get the stored or current month.
  * @returns {{
+ *   url: string,
  *   isFullYear: boolean,
  *   year: number,
  *   month: number,
@@ -64,6 +65,7 @@ export function useQueryProps () {
   }, [url])
 
   return {
+    url,
     isFullYear,
     year,
     month,
@@ -71,4 +73,28 @@ export function useQueryProps () {
     group: Number.isNaN(group) ? storedSettings.group : group,
     search
   }
+}
+
+/**
+ * Stores the last selected shiftModel and group.
+ * @param {string} url           Current active url-path.
+ * @param {string} [shiftModel]  Selected shift model.
+ * @param {number} group         Group to display.
+ */
+export function useSaveSettings (url, shiftModel, group) {
+  useEffect(() => {
+    if (!url.startsWith('/cal')) return
+
+    if (shiftModelNames.includes(shiftModel)) {
+      const isGroupValid = typeof group === 'number' &&
+        group <= shiftModelNumberOfGroups[shiftModel] &&
+        group >= 0
+
+      window.localStorage.setItem('settings', JSON.stringify({
+        didSelectModel: true,
+        shiftModel,
+        group: isGroupValid ? group : 0
+      }))
+    }
+  }, [url, shiftModel, group])
 }

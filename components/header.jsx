@@ -12,13 +12,14 @@ import Menu from './menu'
 import ShareMenu from './share-menu'
 import NavLinks from './header-nav-links'
 
-import { useQueryProps } from '../hooks/settings'
+import { useQueryProps, useSaveSettings } from '../hooks/settings'
 
 /**
  * Renders the Header.
  */
 export default function Header () {
-  const { year, month, isFullYear, group, search, shiftModel } = useQueryProps()
+  const { url, year, month, isFullYear, group, search, shiftModel } = useQueryProps()
+  useSaveSettings(url, shiftModel, group)
 
   const [showMenu, setShowMenu] = useShowMenu('nav')
   const [showShareMenu, setShowShareMenu] = useShowMenu('#share_menu')
