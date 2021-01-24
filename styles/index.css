@@ -20,6 +20,14 @@ td, th {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+[id] {
+  /*
+  Header is 3rem height.
+  Always scroll so that the element is not hidden by the header.
+  */
+  scroll-margin-top: 4rem;
+}
+
 @tailwind components;
 
 @tailwind utilities;

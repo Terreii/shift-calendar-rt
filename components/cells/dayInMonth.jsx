@@ -27,7 +27,7 @@ export default function DayInMonthCell ({
 
   const border = isToday || isSearchResult
     ? `${isWeekCellStart ? '' : 'border-l-4'} border-t-4 border-b-4`
-    : 'border-l'
+    : (isDayLightSaving ? '' : 'border-l')
   const borderColor = isSearchResult ? 'border-violet-400' : 'border-black'
 
   let holidayStyle = ''

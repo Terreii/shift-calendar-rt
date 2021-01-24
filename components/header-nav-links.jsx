@@ -10,7 +10,7 @@ import ms from 'milliseconds'
 import Link from 'next/link'
 
 import { useToday } from '../hooks/time'
-import { getCalUrl, scrollToADay } from '../lib/utils'
+import { getCalUrl } from '../lib/utils'
 
 /**
  * Display 3 links to move in the calendar.
@@ -53,15 +53,13 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
           group,
           shiftModel,
           year: today[0],
-          month: today[1]
+          month: today[1],
+          day: today[2]
         })}
       >
         <a
           className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
           title='zeige aktuellen Monat'
-          onClick={() => {
-            setTimeout(scrollToADay, 32, ...today)
-          }}
         >
           Heute
         </a>
