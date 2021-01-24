@@ -5,13 +5,45 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import Footer from '../components/footer'
 import Head from '../components/head'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
+import { getCalUrl } from '../lib/utils'
 
 export default function Index () {
+  const router = useRouter()
+
+  useEffect(() => {
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
+    const isFirstRun = 'pwa' in router.query || // with webmanifest
+      // iOS install
+      (isIos && window.navigator.standalone && window.sessionStorage.getItem('isFirstRun') == null)
+
+    if (isFirstRun) {
+      if (isIos) {
+        window.sessionStorage.setItem('isFirstRun', true)
+      }
+
+      const settings = JSON.parse(window.localStorage.getItem('settings')) ?? {}
+      if (settings.didSelectModel) {
+        const now = new Date()
+
+        router.replace(getCalUrl({
+          isFullYear: false,
+          year: now.getFullYear(),
+          month: now.getMonth() + 1,
+          day: now.getDate(),
+          shiftModel: settings.shiftModel,
+          group: settings.group
+        }))
+      }
+    }
+  }, [])
+
   return (
     <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
       <Head />
