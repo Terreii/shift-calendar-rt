@@ -1,4 +1,5 @@
 module.exports = {
+  reactStrictMode: true,
   i18n: {
     // These are all the supported locales
     locales: ['de'],

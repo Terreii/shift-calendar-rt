@@ -69,6 +69,7 @@ prompt.get(
 
     const ferienJSON = JSON.stringify(holidays, null, 2)
     writeFile(outPath, `
+    /* eslint-disable */
     export const lastUpdate = '${new Date().toJSON()}'
     export const ferien = ${ferienJSON}
     `)

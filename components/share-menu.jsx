@@ -171,7 +171,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         >
           Abbrechen
         </button>
-        {'navigator' in globalThis && ('share' in window.navigator)
+        {'navigator' in globalThis && ('share' in window.navigator) // eslint-disable-line
           ? (
             <button
               type='button'
