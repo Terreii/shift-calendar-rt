@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import qs from 'querystringify'
 
 import Footer from '../components/footer'
 import Head from '../components/head'
@@ -39,6 +40,21 @@ export default function Index () {
           day: now.getDate(),
           shiftModel: settings.shiftModel,
           group: settings.group
+        }))
+      } else if (window.location.hash.length > 1) { // parse the old share hash.
+        const hashSettings = qs.parse(window.location.hash.slice(1))
+
+        const date = hashSettings.search != null && hashSettings.search.length >= 8
+          ? new Date(hashSettings.search)
+          : new Date()
+
+        router.replace(getCalUrl({
+          isFullYear: false,
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+          shiftModel: hashSettings.shiftModel,
+          group: hashSettings.group
         }))
       }
     }
