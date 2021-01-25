@@ -24,8 +24,6 @@ export default function Header () {
   const [showMenu, setShowMenu] = useShowMenu('nav')
   const [showShareMenu, setShowShareMenu] = useShowMenu('#share_menu')
 
-  const hideMenu = () => setShowMenu(false)
-
   return (
     <header
       className='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
@@ -76,7 +74,7 @@ export default function Header () {
           shiftModel={shiftModel}
           setShowMenu={setShowMenu}
           onShare={() => {
-            hideMenu()
+            setShowMenu(false)
             setShowShareMenu(true)
           }}
         />
