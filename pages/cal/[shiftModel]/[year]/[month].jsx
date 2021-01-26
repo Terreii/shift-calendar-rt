@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import ms from 'milliseconds'
+import { DateTime, Info } from 'luxon'
 
 import Month from '../../../../components/month'
 import Downloader from '../../../../components/download'
@@ -20,7 +21,7 @@ import {
   shiftModelText
 } from '../../../../lib/constants'
 import selectMonthData from '../../../../lib/select-month-data'
-import { getIsSSR, getCalUrl, parseNumber, scrollToADay } from '../../../../lib/utils'
+import { getCalUrl, parseNumber, scrollToADay } from '../../../../lib/utils'
 
 const tableClassNames = [
   'hidden 2xl:table',
@@ -31,8 +32,7 @@ const tableClassNames = [
 
 export default function MonthPage (props) {
   const router = useRouter()
-  const todayAr = useTodayZeroIndex()
-  const today = getIsSSR() ? [1999, 0, 1, 0] : todayAr
+  const today = useTodayZeroIndex()
   const shiftModel = router.query.shiftModel
   const year = parseNumber(router.query.year, null)
   const monthQuery = parseNumber(router.query.month, null)
@@ -79,9 +79,9 @@ export default function MonthPage (props) {
     <main className='flex flex-col content-center'>
       <Head
         title={`Monat ${
-          todayAr[0]
+          today[0]
         }-${
-          String(todayAr[1] + 1).padStart(2, '0')
+          String(today[1] + 1).padStart(2, '0')
         } - ${
           shiftModelText[shiftModel]
         }`}
@@ -119,46 +119,56 @@ export default function MonthPage (props) {
   )
 }
 
-export async function getStaticPaths () {
-  const now = new Date()
-  const months = [
-    now,
-    new Date(now.getTime() - ms.months(1)), // last month
-    new Date(now.getTime() + ms.months(1)), // next month
-    new Date(now.getTime() + ms.months(2)), // after next month
-  ]
-    .map(date => ({
-      year: String(date.getFullYear()),
-      month: String(date.getMonth() + 1).padStart(2, '0')
-    }))
+/**
+ * Get the props for server side rendering.
+ * @param {import('next').GetServerSidePropsContext} context Next SSR context.
+ * @returns {import('next').GetServerSidePropsResult}
+ */
+export async function getServerSideProps (context) {
+  const { year, month } = context.query
 
-  const paths = []
+  const date = DateTime.fromObject({
+    year: parseInt(year),
+    month: parseInt(month, 10),
+    zone: 'Europe/Berlin'
+  })
 
-  for (const shiftModel of shiftModelNames) {
-    // renders 0 (all group) and each group (1 to max), thats why the <= is there.
-    for (let i = 0, max = shiftModelNumberOfGroups[shiftModel]; i <= max; i++) {
-      const group = String(i)
+  let maxAge = 60
 
-      for (const date of months) {
-        paths.push({
-          params: {
-            ...date,
-            shiftModel,
-            group
-          }
-        })
-      }
+  const monthsDiff = date.diffNow('months').toObject().months
+  if (monthsDiff > 1) { // if request is in the future and today is not displayed.
+    maxAge = 60 * 60 * 24 // cache for a day
+  } else if (monthsDiff < -3) { // if request is in the past and today is not displayed.
+    maxAge = 60 * 60 * 24 * 7 // cache for 7 days
+  } else if (Info.features().zones) {
+    // get the diff in seconds to the next shift start
+    const now = DateTime.local().setZone('Europe/Berlin')
+
+    let hour = 6 // get next shift start
+    if (now.hour >= 22) {
+      hour = 6
+    } else if (now.hour >= 14) {
+      hour = 22
+    } else if (now.hour >= 6) {
+      hour = 14
     }
+
+    let nextShift = now.set({
+      hour,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    })
+    if (nextShift.diff(now, 'minutes').toObject().minutes < 0) {
+      nextShift = nextShift.plus({ days: 1 })
+    }
+    maxAge = nextShift.diff(now, 'seconds').toObject().seconds
   }
 
+  context.res.setHeader('Cache-Control', 's-maxage=' + maxAge)
   return {
-    paths,
-    fallback: 'blocking'
+    props: context.query
   }
-}
-
-export async function getStaticProps (props) {
-  return { props }
 }
 
 /**

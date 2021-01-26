@@ -6,6 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useRouter } from 'next/router'
+import { DateTime, Info } from 'luxon'
 
 import Month from '../../../components/month'
 import Downloader from '../../../components/download'
@@ -14,12 +15,11 @@ import Head from '../../../components/head'
 import { useTodayZeroIndex } from '../../../hooks/time'
 import { shiftModelNames, shiftModelNumberOfGroups, shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
-import { getIsSSR, parseNumber } from '../../../lib/utils'
+import { parseNumber } from '../../../lib/utils'
 
 export default function Year () {
   const router = useRouter()
-  const todayAr = useTodayZeroIndex()
-  const today = getIsSSR() ? [1999, 0, 1, 0] : todayAr
+  const today = useTodayZeroIndex()
   const shiftModel = router.query.shiftModel
   const year = parseNumber(router.query.year, null)
   const group = parseNumber(router.query.group, 0)
@@ -66,39 +66,49 @@ export default function Year () {
   )
 }
 
-export async function getStaticPaths () {
-  const now = new Date().getFullYear()
-  const years = [
-    now,
-    now - 1,
-    now + 1
-  ].map(String)
+/**
+ * Get the props for server side rendering.
+ * @param {import('next').GetServerSidePropsContext} context Next SSR context.
+ * @returns {import('next').GetServerSidePropsResult}
+ */
+export async function getServerSideProps (context) {
+  const { year: yearStr } = context.query
+  const year = parseInt(yearStr)
 
-  const paths = []
+  let maxAge = 60
 
-  for (const shiftModel of shiftModelNames) {
-    // renders 0 (all group) and each group (1 to max), thats why the <= is there.
-    for (let i = 0, max = shiftModelNumberOfGroups[shiftModel]; i <= max; i++) {
-      const group = String(i)
+  const thisYear = new Date().getUTCFullYear()
+  if (year > thisYear) { // if request is in the future and today is not displayed.
+    maxAge = 60 * 60 * 24 // cache for a day
+  } else if (year < thisYear) { // if request is in the past and today is not displayed.
+    maxAge = 60 * 60 * 24 * 31 // cache for 7 days
+  } else if (Info.features().zones) {
+    // get the diff in seconds to the next shift start
+    const now = DateTime.local().setZone('Europe/Berlin')
 
-      for (const year of years) {
-        paths.push({
-          params: {
-            year,
-            shiftModel,
-            group
-          }
-        })
-      }
+    let hour = 6 // get next shift start
+    if (now.hour >= 22) {
+      hour = 6
+    } else if (now.hour >= 14) {
+      hour = 22
+    } else if (now.hour >= 6) {
+      hour = 14
     }
+
+    let nextShift = now.set({
+      hour,
+      minute: 0,
+      second: 0,
+      millisecond: 0
+    })
+    if (nextShift.diff(now, 'minutes').toObject().minutes < 0) {
+      nextShift = nextShift.plus({ days: 1 })
+    }
+    maxAge = nextShift.diff(now, 'seconds').toObject().seconds
   }
 
+  context.res.setHeader('Cache-Control', 's-maxage=' + maxAge)
   return {
-    paths,
-    fallback: 'blocking'
+    props: context.query
   }
-}
-
-export async function getStaticProps (props) {
-  return { props }
 }
