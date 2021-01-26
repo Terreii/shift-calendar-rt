@@ -13,7 +13,7 @@ import qs from 'querystringify'
 import Footer from '../components/footer'
 import Head from '../components/head'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
-import { getCalUrl } from '../lib/utils'
+import { getCalUrl, getTodayUrl } from '../lib/utils'
 
 export default function Index ({ isFirstRender = false }) {
   const router = useRouter()
@@ -21,18 +21,8 @@ export default function Index ({ isFirstRender = false }) {
   useEffect(() => {
     if (isFirstRender) {
       const settings = JSON.parse(window.localStorage.getItem('settings')) ?? {}
-      if (settings.didSelectModel) {
-        const now = new Date()
 
-        router.replace(getCalUrl({
-          isFullYear: false,
-          year: now.getFullYear(),
-          month: now.getMonth() + 1,
-          day: now.getDate(),
-          shiftModel: settings.shiftModel,
-          group: settings.group
-        }))
-      } else if (window.location.hash.length > 1) { // parse the old share hash.
+      if (window.location.hash.length > 1) { // parse the old share hash.
         const hashSettings = qs.parse(window.location.hash.slice(1))
 
         const date = hashSettings.search != null && hashSettings.search.length >= 8
@@ -46,6 +36,19 @@ export default function Index ({ isFirstRender = false }) {
           day: date.getDate(),
           shiftModel: hashSettings.shiftModel,
           group: hashSettings.group
+        }))
+      } else if (settings.didSelectModel) {
+        // If the user did select their shift model, then display it.
+        const now = new Date()
+
+        router.replace(getTodayUrl({
+          today: [
+            now.getFullYear(),
+            now.getMonth() + 1,
+            now.getDate()
+          ],
+          shiftModel: settings.shiftModel,
+          group: settings.group
         }))
       }
     }

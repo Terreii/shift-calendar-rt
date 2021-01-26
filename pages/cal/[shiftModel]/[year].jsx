@@ -13,7 +13,7 @@ import Downloader from '../../../components/download'
 import Footer from '../../../components/footer'
 import Head from '../../../components/head'
 import { useTodayZeroIndex } from '../../../hooks/time'
-import { shiftModelNames, shiftModelNumberOfGroups, shiftModelText } from '../../../lib/constants'
+import { shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
 import { parseNumber } from '../../../lib/utils'
 

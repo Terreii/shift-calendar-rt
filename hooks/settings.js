@@ -9,6 +9,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 
 import { shift66Name, shiftModelNames, shiftModelNumberOfGroups } from '../lib/constants'
+import { useToday } from './time'
 
 /**
  * Get the stored or current month.
@@ -36,9 +37,10 @@ export function useQueryProps () {
     }
   } = router
 
-  const year = parseInt(yearStr) || new Date().getFullYear()
-  const isFullYear = !monthStr
-  const month = isFullYear ? 1 : parseInt(monthStr)
+  const today = useToday()
+  const isFullYear = !monthStr && yearStr != null
+  const year = parseInt(yearStr) || today[0]
+  const month = isFullYear ? 1 : (parseInt(monthStr) || today[1])
   const group = parseInt(groupStr)
   const search = searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null
 
