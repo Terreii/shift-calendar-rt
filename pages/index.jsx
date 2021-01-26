@@ -15,20 +15,11 @@ import Head from '../components/head'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 import { getCalUrl } from '../lib/utils'
 
-export default function Index () {
+export default function Index ({ isFirstRender = false }) {
   const router = useRouter()
 
   useEffect(() => {
-    const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform)
-    const isFirstRun = 'pwa' in router.query || // with webmanifest
-      // iOS install
-      (isIos && window.navigator.standalone && window.sessionStorage.getItem('isFirstRun') == null)
-
-    if (isFirstRun) {
-      if (isIos) {
-        window.sessionStorage.setItem('isFirstRun', true)
-      }
-
+    if (isFirstRender) {
       const settings = JSON.parse(window.localStorage.getItem('settings')) ?? {}
       if (settings.didSelectModel) {
         const now = new Date()
@@ -58,7 +49,7 @@ export default function Index () {
         }))
       }
     }
-  }, [])
+  }, [isFirstRender])
 
   return (
     <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
