@@ -13,7 +13,7 @@ export default function HeadComponent ({ title, children }) {
       <title>{title ? title + ' - ' : ''}Schichtkalender für Bosch Reutlingen</title>
       <meta
         name='viewport'
-        content='width=device-width, initial-scale=1.0, minimal-ui, viewport-fit=cover'
+        content='width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover'
       />
       <meta
         name='description'
@@ -24,8 +24,8 @@ export default function HeadComponent ({ title, children }) {
       <meta name='apple-mobile-web-app-title' content='Schichtkalender' />
       <meta name='application-name' content='Inoffizieller Schichtkalender für Bosch Reutlingen' />
       <meta name='format-detection' content='telephone=no' />
-      <meta name='theme-color' content='#006249' />
-      <meta name='msapplication-TileColor' content='#006249' />
+      <meta name='theme-color' content='#064E3B' />
+      <meta name='msapplication-TileColor' content='#064E3B' />
       <meta name='msapplication-TileImage' content='/assets/icons/mstile-150x150.png' />
       <link rel='apple-touch-icon' sizes='180x180' href='/assets/icons/apple-touch-icon.png' />
       <link rel='icon' href='/favicon.ico' />

@@ -54,9 +54,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
   const url = useMemo(() => {
     try {
-      const url = new URL(window.location.href)
-      url.search = ''
-      url.hash = ''
+      const url = new URL('/', window.location.href)
 
       if (addShiftModel) {
         url.pathname = getCalUrl({
@@ -72,8 +70,6 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         if (addGroup && group > 0) {
           url.searchParams.set('group', group)
         }
-      } else {
-        url.pathname = ''
       }
 
       return url
@@ -85,7 +81,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
   return (
     <div
       id='share_menu'
-      className='absolute top-0 left-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
+      className='absolute top-0 right-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
     >
       <label className='flex flex-col'>
         Adresse zum teilen:

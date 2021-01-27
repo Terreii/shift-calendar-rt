@@ -1,6 +1,6 @@
 {
   "name": "schichtkalender-bosch-rt",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "description": "Listet alle Kontischichten von Bosch Reutlingen auf.",
   "homepage": "https://schichtkalender-rt.now.sh/",
   "private": true,
@@ -18,7 +18,11 @@
   },
   "keywords": [],
   "license": "MPL",
-  "author": "Christopher Astfalk",
+  "author": {
+    "name": "Christopher Astfalk",
+    "email": "christopher.astfalk@icloud.com",
+    "url": "http://christopher-astfalk.de/"
+  },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
