@@ -9,12 +9,9 @@
 
 const fs = require('fs')
 const path = require('path')
-const util = require('util')
 
 const iCal = require('node-ical')
 const prompt = require('prompt')
-
-const writeFile = util.promisify(fs.writeFile)
 
 prompt.get(
   [{
@@ -23,17 +20,14 @@ prompt.get(
     type: 'string',
     description: 'Please enter the path to the iCal'
   }],
-  (err, result) => {
+  async (err, result) => {
     if (err) {
       console.error(err)
       process.exit(1)
     }
 
-    const outPath = path.resolve('lib', 'ferien.js')
-    const allHolidays = JSON.parse(
-      fs.readFileSync(outPath, { encoding: 'utf8' })
-        .replace(/export default /i, '')
-    )
+    const outPath = path.resolve('lib', 'ferien.json')
+    const allHolidays = JSON.parse(await fs.promises.readFile(outPath, { encoding: 'utf8' }))
 
     const holidays = allHolidays.ferien.filter(event => event.year > 2018)
 
@@ -67,11 +61,10 @@ prompt.get(
       return 0
     })
 
-    const ferienJSON = JSON.stringify(holidays, null, 2)
-    writeFile(outPath, `
-    /* eslint-disable */
-    export const lastUpdate = '${new Date().toJSON()}'
-    export const ferien = ${ferienJSON}
-    `)
+    const ferienJSON = JSON.stringify({
+      lastUpdate: new Date().toJSON(),
+      ferien: holidays
+    }, null, 2) + '\n'
+    await fs.promises.writeFile(outPath, ferienJSON)
   }
 )
