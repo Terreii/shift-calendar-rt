@@ -8,8 +8,5 @@ module.exports = withPWA({
     // This is the default locale used when visiting
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: 'de'
-  },
-  pwa: {
-    disable: process.env.NODE_ENV === 'development'
   }
 })
