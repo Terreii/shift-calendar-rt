@@ -59,8 +59,16 @@ export default function InstallButton () {
         // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is
         // still waiting.
 
-        // Ask for reloading
-        setShow('update')
+        // Ask for reloading?
+        // The update process takes to long after hitting update.
+        // Deactivated for now.
+        // setShow('update')
+        wb.addEventListener('controlling', event => {
+          window.location.reload()
+        })
+
+        // Send a message to the waiting service worker, instructing it to activate.
+        wb.messageSW({ type: 'SKIP_WAITING' })
       }
 
       wb.addEventListener('waiting', promptNewVersionAvailable)
@@ -158,6 +166,8 @@ export default function InstallButton () {
       )
 
     case 'update':
+      // The update process takes to long after hitting update.
+      // Deactivated for now.
       return (
         <Confirm
           confirmText='Neu laden'
