@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Head from '../components/head'
+import Head from 'next/head'
 
 /**
  * Renders the Impressum.
@@ -15,7 +15,10 @@ import Head from '../components/head'
 export default function Impressum () {
   return (
     <div className='px-6 pt-16 pb-2'>
-      <Head title='Impressum' />
+      <Head>
+        <title>Impressum - Schichtkalender für Bosch Reutlingen</title>
+      </Head>
+
       <h2 className='text-2xl font-bold'>Datenschutzerklärung</h2>
       <h3 id='dsg-general-intro' />
       <p>

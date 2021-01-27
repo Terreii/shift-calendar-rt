@@ -5,13 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { DateTime, Info } from 'luxon'
 
 import ByMonths from '../../../../components/by-month'
 import Downloader from '../../../../components/download'
 import Footer from '../../../../components/footer'
-import Head from '../../../../components/head'
 import { useTodayZeroIndex } from '../../../../hooks/time'
 import { shiftModelText } from '../../../../lib/constants'
 import { parseNumber } from '../../../../lib/utils'
@@ -35,15 +35,18 @@ export default function MonthPage (props) {
 
   return (
     <main className='flex flex-col content-center'>
-      <Head
-        title={`Monat ${
-          today[0]
-        }-${
-          String(today[1] + 1).padStart(2, '0')
-        } - ${
-          shiftModelText[shiftModel]
-        }`}
-      />
+      <Head>
+        <title>
+          {`Monat ${
+            today[0]
+          }-${
+            String(today[1] + 1).padStart(2, '0')
+          } - ${
+            shiftModelText[shiftModel]
+          } - `}
+          Schichtkalender für Bosch Reutlingen
+        </title>
+      </Head>
 
       <ByMonths
         shiftModel={shiftModel}

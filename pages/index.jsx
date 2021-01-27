@@ -6,12 +6,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useEffect } from 'react'
+import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import qs from 'querystringify'
 
 import Footer from '../components/footer'
-import Head from '../components/head'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 import { getCalUrl, getTodayUrl } from '../lib/utils'
 
@@ -56,7 +56,10 @@ export default function Index ({ isFirstRender = false }) {
 
   return (
     <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
-      <Head />
+      <Head>
+        <title>Schichtkalender für Bosch Reutlingen</title>
+      </Head>
+
       <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
       <p>
