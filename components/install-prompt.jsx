@@ -8,6 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect, useRef } from 'react'
 import ms from 'milliseconds'
 
+import Confirm from './confirm'
+
 /**
  * Renders an install button for add-to-home-screen of PWA.
  */
@@ -46,7 +48,27 @@ export default function InstallButton () {
     }
   }, [])
 
-  const onClickInstallButton = event => {
+  useEffect(() => {
+    // Handling updates
+    if (typeof window !== 'undefined' && 'serviceWorker' in navigator && window.workbox != null) {
+      const wb = window.workbox
+
+      const promptNewVersionAvailable = event => {
+        // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated
+        // service worker is waiting.
+        // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is
+        // still waiting.
+
+        // Ask for reloading
+        setShow('update')
+      }
+
+      wb.addEventListener('waiting', promptNewVersionAvailable)
+      wb.addEventListener('externalwaiting', promptNewVersionAvailable)
+    }
+  }, [])
+
+  const onClickInstallButton = () => {
     setShow('none')
 
     if (deferredPrompt.current == null) return
@@ -67,7 +89,7 @@ export default function InstallButton () {
     })
   }
 
-  const dismiss = event => {
+  const dismiss = () => {
     window.localStorage.setItem('dismissedInstallMessage', new Date().toJSON())
     setShow('none')
   }
@@ -75,21 +97,9 @@ export default function InstallButton () {
   switch (show) {
     case 'popup':
       return (
-        <aside
-          className='fixed bottom-0 left-0 flex flex-col w-full bg-gray-300 border-t border-gray-600 shadow-lg sm:border-t-0 sm:rounded sm:mb-2 sm:ml-2 sm:max-w-sm'
-        >
-          <p className='p-4'>
-            Dieser Kalender kann wie eine <em>App installiert</em> werden!
-            <br />
-            <br />
-            Klicke auf <strong>Installieren</strong> um ihn bei deinen Apps zu speichern.
-            Mit <strong>Abbrechen</strong> wirst du für 12 Tage nicht mehr danach gefragt.
-          </p>
-          <div className='flex flex-row items-center justify-end m-3'>
-            <button
-              className='flex flex-row items-center justify-center w-32 px-2 py-1 mx-3 text-white bg-purple-700 shadow focus:ring focus:outline-none hover:bg-purple-600 focus:bg-purple-600 active:bg-purple-600 form-item'
-              onClick={onClickInstallButton}
-            >
+        <Confirm
+          confirmText={(
+            <>
               <img
                 src='/assets/icons/add-outline.svg'
                 className='hue-invert'
@@ -98,17 +108,24 @@ export default function InstallButton () {
                 alt=''
               />
               <span className='my-1 ml-2'>Installieren</span>
-            </button>
-            <button
-              type='button'
-              onClick={dismiss}
-              title='Klicke um den Kalender nicht zu installieren'
-              className='flex flex-col items-center justify-center w-32 px-2 py-1 mx-3 border-black rounded-br-lg shadow hover:bg-gray-200 focus:bg-gray-200 focus:ring focus:outline-none form-item'
-            >
-              Abbrechen
-            </button>
-          </div>
-        </aside>
+            </>
+          )}
+          onClick={confirmed => {
+            if (confirmed) {
+              onClickInstallButton()
+            } else {
+              dismiss()
+            }
+          }}
+        >
+          <p>
+            Dieser Kalender kann wie eine <em>App installiert</em> werden!
+            <br />
+            <br />
+            Klicke auf <strong>Installieren</strong> um ihn bei deinen Apps zu speichern.
+            Mit <strong>Abbrechen</strong> wirst du für 12 Tage nicht mehr danach gefragt.
+          </p>
+        </Confirm>
       )
 
     case 'ios':
@@ -138,6 +155,31 @@ export default function InstallButton () {
           </div>
           <CloseButton onClick={dismiss} />
         </div>
+      )
+
+    case 'update':
+      return (
+        <Confirm
+          confirmText='Neu laden'
+          onClick={confirmed => {
+            if (confirmed && window.workbox) {
+              const wb = window.workbox
+              wb.addEventListener('controlling', event => {
+                window.location.reload()
+              })
+
+              // Send a message to the waiting service worker, instructing it to activate.
+              wb.messageSW({ type: 'SKIP_WAITING' })
+            }
+            setShow('none')
+          }}
+        >
+          <p>
+            Eine neue Version der Kalender-App ist bereit.
+            <br />
+            Neu laden um das Update zu aktivieren?
+          </p>
+        </Confirm>
       )
 
     case 'none':
