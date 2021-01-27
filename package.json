@@ -1,59 +1,59 @@
 {
   "name": "schichtkalender-bosch-rt",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "description": "Listet alle Kontischichten von Bosch Reutlingen auf.",
   "homepage": "https://schichtkalender-rt.now.sh/",
   "private": true,
   "engines": {
     "node": ">=12.x"
   },
-  "browserslist": ">0.75%, not ie 11, not UCAndroid >0, not OperaMini all",
   "scripts": {
-    "start": "snowpack dev",
-    "vercel": "vercel dev",
-    "build": "cross-env NODE_ENV=production npm-run-all build:app build:sw",
-    "build:app": "snowpack build",
-    "build:sw": "workbox generateSW workbox-config.js",
-    "build:api": "esbuild src/components/main.jsx src/components/header.jsx src/components/first-run.jsx --bundle --platform=node --target=node12 --jsx-factory=h --jsx-fragment=Fragment --external:preact --banner='/* eslint-disable */' --outdir=api_files",
-    "prevercel": "npm run build:api",
-    "test": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --coverage",
-    "test:watch": "standard ./*.js src/*.js src/components/**/*.js src/lin/**/*.js && jest --watch",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "standard ./**/*.{js,jsx} && jest --watch",
+    "test:ci": "standard ./**/*.{js,jsx} && jest --coverage",
     "update:holidays": "node ./updateHolidays.js"
   },
   "keywords": [],
   "license": "MPL",
-  "author": "Christopher Astfalk",
+  "author": {
+    "name": "Christopher Astfalk",
+    "email": "christopher.astfalk@icloud.com",
+    "url": "http://christopher-astfalk.de/"
+  },
   "devDependencies": {
-    "@prefresh/snowpack": "^3.0.1",
-    "@snowpack/plugin-dotenv": "^2.0.5",
-    "@testing-library/jest-dom": "^5.11.8",
-    "@testing-library/preact": "^2.0.1",
-    "autoprefixer": "^10.2.1",
-    "cross-env": "^7.0.3",
-    "hammerjs": "^2.0.8",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/react-hooks": "^5.0.3",
+    "@testing-library/user-event": "^12.6.2",
+    "babel-jest": "^26.6.3",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
-    "luxon": "^1.25.0",
-    "milliseconds": "^1.0.3",
-    "node-ical": "^0.12.7",
-    "npm-run-all": "^4.1.5",
-    "postcss": "^8.2.3",
-    "postcss-cli": "^8.3.1",
-    "preact-async-route": "^2.2.1",
+    "jest-axe": "^4.1.0",
+    "node-ical": "^0.12.8",
     "prompt": "^1.1.0",
-    "querystringify": "^2.2.0",
-    "re-reselect": "^4.0.0",
-    "reselect": "^4.0.0",
-    "snowpack": "^2.18.5",
-    "standard": "^14.3.4",
-    "tailwindcss": "^2.0.2",
-    "vercel": "^21.0.1",
-    "workbox-cli": "^6.0.2"
+    "react-test-renderer": "^17.0.1",
+    "standard": "^14.3.4"
   },
   "dependencies": {
-    "esbuild": "^0.8.31",
-    "preact": "^10.5.8",
-    "preact-render-to-string": "^5.1.12",
-    "preact-router": "^3.2.1",
-    "serve": "^11.3.2"
+    "autoprefixer": "^10.2.3",
+    "hammerjs": "^2.0.8",
+    "luxon": "^1.25.0",
+    "milliseconds": "^1.0.3",
+    "next": "^10.0.5",
+    "next-pwa": "^5.0.4",
+    "querystringify": "^2.2.0",
+    "re-reselect": "^4.0.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "reselect": "^4.0.0",
+    "tailwindcss": "^2.0.2"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   }
 }

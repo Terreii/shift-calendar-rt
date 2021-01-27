@@ -29,7 +29,7 @@ prompt.get(
       process.exit(1)
     }
 
-    const outPath = path.resolve('src', 'lib', 'ferien.js')
+    const outPath = path.resolve('lib', 'ferien.js')
     const allHolidays = JSON.parse(
       fs.readFileSync(outPath, { encoding: 'utf8' })
         .replace(/export default /i, '')
@@ -69,6 +69,7 @@ prompt.get(
 
     const ferienJSON = JSON.stringify(holidays, null, 2)
     writeFile(outPath, `
+    /* eslint-disable */
     export const lastUpdate = '${new Date().toJSON()}'
     export const ferien = ${ferienJSON}
     `)
