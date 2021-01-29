@@ -29,6 +29,7 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
     const then = new Date()
     then.setFullYear(year)
     then.setMonth(month - 1)
+    then.setDate(3)
 
     return {
       lastMonth: getMonthUrl(then.getTime() - ms.months(1), isFullYear, shiftModel, group),
