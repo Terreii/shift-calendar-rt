@@ -43,7 +43,6 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
         <a
           className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
           title={isFullYear ? 'voriges Jahr' : 'vorigen Monat'}
-          aria-controls='calendar_main_out'
         >
           {'<'}
         </a>
@@ -62,7 +61,6 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
         <a
           className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
           title={isFullYear ? 'nächstes Jahr' : 'nächster Monat'}
-          aria-controls='calendar_main_out'
         >
           {'>'}
         </a>
