@@ -27,7 +27,7 @@ export default function MyApp ({ Component, pageProps }) {
         <title>Schichtkalender für Bosch Reutlingen</title>
         <meta
           name='viewport'
-          content='width=device-width, initial-scale=1.0, user-scalable=no, minimal-ui, viewport-fit=cover'
+          content='width=device-width, initial-scale=1.0, minimal-ui, viewport-fit=cover'
         />
         <meta
           name='description'
