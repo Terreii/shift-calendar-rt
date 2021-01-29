@@ -60,35 +60,39 @@ export default function Index ({ isFirstRender = false }) {
         <title>Schichtkalender für Bosch Reutlingen</title>
       </Head>
 
-      <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
+      <div id='calendar_main_out'>
+        <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
-      <p>
-        Welches Schichtmodell interessiert sie?
-        <br />
-        Sie können das Modell später jederzeit im Menü
-        <img
-          className='inline-block ml-1 mr-2'
-          src='/assets/icons/hamburger_icon.svg'
-          height='20'
-          width='20'
-          alt='das Menü ist oben rechts'
-        />
-        umändern.
-      </p>
+        <p>
+          Welches Schichtmodell interessiert sie?
+          <br />
+          Sie können das Modell später jederzeit im Menü
+          <img
+            className='inline-block ml-1 mr-2'
+            src='/assets/icons/hamburger_icon.svg'
+            height='20'
+            width='20'
+            alt='das Menü ist oben rechts'
+          />
+          umändern.
+        </p>
 
-      <ul className='flex flex-col justify-center w-64 p-0 mx-auto mt-2 mb-16 space-y-3 list-none'>
-        {shiftModelNames.map(name => (
-          <li key={name}>
-            <Link href={`/cal/${name}`}>
-              <a
-                className='inline-block w-full h-12 px-4 py-3 mx-3 text-center text-white bg-indigo-700 border-0 rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:ring focus:outline-none'
-              >
-                {shiftModelText[name]}
-              </a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+        <ul
+          className='flex flex-col justify-center w-64 p-0 mx-auto mt-2 mb-16 space-y-3 list-none'
+        >
+          {shiftModelNames.map(name => (
+            <li key={name}>
+              <Link href={`/cal/${name}`}>
+                <a
+                  className='inline-block w-full h-12 px-4 py-3 mx-3 text-center text-white bg-indigo-700 border-0 rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:ring focus:outline-none'
+                >
+                  {shiftModelText[name]}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
 
       <Footer />
     </main>
