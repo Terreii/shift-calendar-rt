@@ -112,6 +112,7 @@ function useHammer (year, month, shiftModel, group) {
         case 2: // right to left
         {
           const time = new Date()
+          time.setDate(1)
           time.setMonth(month)
           time.setFullYear(year)
           time.setTime(time.getTime() + ms.months(1))
@@ -129,6 +130,7 @@ function useHammer (year, month, shiftModel, group) {
         case 4: // left to right
         {
           const time = new Date()
+          time.setDate(1)
           time.setMonth(month)
           time.setFullYear(year)
           time.setTime(time.getTime() - ms.months(1))
