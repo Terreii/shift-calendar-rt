@@ -34,7 +34,7 @@ export default function MonthPage (props) {
   }
 
   return (
-    <main className='flex flex-col content-center'>
+    <main className='flex flex-col content-center pt-4'>
       <Head>
         <title>
           {`Monat ${

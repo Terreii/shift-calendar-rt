@@ -14,7 +14,7 @@ import Head from 'next/head'
  */
 export default function Impressum () {
   return (
-    <main className='px-6 pt-16 pb-2'>
+    <main className='px-6 pt-4 pb-2'>
       <Head>
         <title>Impressum - Schichtkalender für Bosch Reutlingen</title>
       </Head>
