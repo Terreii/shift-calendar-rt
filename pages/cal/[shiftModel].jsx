@@ -72,7 +72,7 @@ export async function getServerSideProps (context) {
 
     let hour = 6 // get next shift start
     if (now.hour >= 22) {
-      hour = 6
+      hour = 0 // fixes the jump to the next month and moving the border.
     } else if (now.hour >= 14) {
       hour = 22
     } else if (now.hour >= 6) {
