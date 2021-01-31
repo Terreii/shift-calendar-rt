@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -17,6 +17,7 @@ import { getCalUrl, getTodayUrl } from '../lib/utils'
 
 export default function Index ({ isFirstRender = false }) {
   const router = useRouter()
+  const [didCheckSettings, setDidCheckSettings] = useState(false)
 
   useEffect(() => {
     if (isFirstRender) {
@@ -50,9 +51,15 @@ export default function Index ({ isFirstRender = false }) {
           shiftModel: settings.shiftModel,
           group: settings.group
         }))
+      } else {
+        setDidCheckSettings(true)
       }
     }
   }, [isFirstRender])
+
+  if (!didCheckSettings && router.asPath.endsWith('?pwa')) {
+    return <main className='w-screen h-screen pt-16 text-center bg-gray-100' />
+  }
 
   return (
     <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
