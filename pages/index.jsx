@@ -58,11 +58,11 @@ export default function Index ({ isFirstRender = false }) {
   }, [isFirstRender])
 
   if (!didCheckSettings && router.asPath.endsWith('?pwa')) {
-    return <main className='w-screen h-screen pt-16 text-center bg-gray-100' />
+    return <main className='w-screen h-screen pt-4 text-center bg-gray-100' />
   }
 
   return (
-    <main className='w-screen h-screen pt-16 text-center bg-gray-100'>
+    <main className='w-screen h-screen pt-4 text-center bg-gray-100'>
       <Head>
         <title>Schichtkalender für Bosch Reutlingen</title>
       </Head>

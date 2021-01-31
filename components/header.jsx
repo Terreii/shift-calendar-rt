@@ -26,7 +26,7 @@ export default function Header () {
 
   return (
     <header
-      className='fixed top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
+      className='sticky top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
     >
       <h1 className='m-0 text-2xl font-normal align-baseline'>
         <Link href='/'>
