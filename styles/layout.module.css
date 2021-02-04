@@ -1,0 +1,61 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+.main {
+  min-width: 100vw;
+  min-height: 100vh;
+  min-height: calc(100vh - 3.3rem);
+  padding-top: 1rem;
+  text-align: center;
+  background-color: rgb(243, 244, 246);
+}
+
+.inline_menu_icon {
+  display: inline-block;
+  margin-left: 0.25rem;
+  margin-right: 0.5rem;
+}
+
+.shift_button_list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 16rem;
+  padding: 0px;
+  margin-top: 0.5rem;
+  margin-bottom: 4rem;
+  margin-left: auto;
+  margin-right: auto;
+  list-style-type: none;
+}
+.shift_button_list > * + * {
+  margin-top: 0.75rem;
+}
+
+.shift_button {
+  display: inline-block;
+  width: 100%;
+  height: 3rem;
+  padding: 0.75rem 1rem;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  text-align: center;
+  color: white;
+  background-color: rgb(67, 56, 202);
+  border: 0px;
+  border-radius: 0.25rem;
+}
+.shift_button:hover {
+  background-color: rgb(55, 48, 163);
+}
+.shift_button:focus {
+  background-color: rgb(55, 48, 163);
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.5);
+  box-shadow: 0 0 0 3px highlight;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}

@@ -5,6 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+body {
+  min-height: 100vh;
+}
+
 @tailwind base;
 
 .form-item {
@@ -25,7 +29,7 @@ td, th {
   Header is 3rem height.
   Always scroll so that the element is not hidden by the header.
   */
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 7rem;
 }
 
 @tailwind components;
