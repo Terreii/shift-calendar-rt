@@ -10,6 +10,7 @@ import Head from 'next/head'
 
 import Header from '../components/header'
 import InstallPrompt from '../components/install-prompt'
+import 'modern-css-reset'
 import '../styles/index.css'
 
 export default function MyApp ({ Component, pageProps }) {
