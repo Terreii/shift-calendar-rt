@@ -17,6 +17,8 @@ import { shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
 import { parseNumber } from '../../../lib/utils'
 
+import style from '../../../styles/calender.module.css'
+
 export default function Year () {
   const router = useRouter()
   const today = useTodayZeroIndex()
@@ -34,7 +36,7 @@ export default function Year () {
   }
 
   return (
-    <main className='flex flex-col content-center pt-4'>
+    <main className={style.main}>
       <Head>
         <title>
           {`Jahr ${year} - ${shiftModelText[shiftModel]} - `}
@@ -44,7 +46,7 @@ export default function Year () {
 
       <div
         id='calendar_main_out'
-        className='flex flex-col justify-around gap-6 px-5 pb-2 mx-auto md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
+        className={style.container}
         onClick={event => {
           const element = event.target.closest('[title]')
           if ((element?.title?.length ?? 0) > 0) {

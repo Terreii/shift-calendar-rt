@@ -13,12 +13,7 @@ import Month from './month'
 import selectMonthData from '../lib/select-month-data'
 import { getCalUrl, scrollToADay } from '../lib/utils'
 
-const tableClassNames = [
-  'hidden 2xl:table',
-  '',
-  'hidden md:table',
-  'hidden xl:table'
-]
+import style from '../styles/calender.module.css'
 
 /**
  * Display this month and the next 2 and the last one.
@@ -66,7 +61,7 @@ export default function ByMonths ({ shiftModel, group, search, year, month, toda
   return (
     <div
       id='calendar_main_out'
-      className='flex flex-col justify-around gap-6 px-5 pb-2 mx-auto md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'
+      className={style.container}
       onClick={event => {
         const element = event.target.closest('[title]')
         if (element && element.title.length > 0) {
@@ -79,7 +74,7 @@ export default function ByMonths ({ shiftModel, group, search, year, month, toda
       {monthsData.map(([year, month, search], index) => (
         <Month
           key={`${year}-${month}-${shiftModel}-${group}`}
-          className={tableClassNames[index]}
+          className={style.calender_table}
           year={year}
           month={month}
           data={selectMonthData(year, month, shiftModel)}

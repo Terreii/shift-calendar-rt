@@ -16,6 +16,8 @@ import { useTodayZeroIndex } from '../../hooks/time'
 import { shiftModelText } from '../../lib/constants'
 import { parseNumber } from '../../lib/utils'
 
+import style from '../../styles/calender.module.css'
+
 /**
  * Route that always displays today.
  */
@@ -28,7 +30,7 @@ export default function ShiftModel () {
   const month = today[1]
 
   return (
-    <main className='flex flex-col content-center pt-4'>
+    <main className={style.main}>
       <Head>
         <title>
           {`Monat ${
