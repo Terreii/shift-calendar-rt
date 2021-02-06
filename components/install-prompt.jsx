@@ -10,6 +10,8 @@ import ms from 'milliseconds'
 
 import Confirm from './confirm'
 
+import style from './prompts.module.css'
+
 /**
  * Renders an install button for add-to-home-screen of PWA.
  */
@@ -138,26 +140,25 @@ export default function InstallButton () {
 
     case 'ios':
       return (
-        <div
-          className='fixed bottom-0 flex flex-col items-center w-screen bg-gray-200 border-t border-gray-500 shadow-lg pb-safe-area'
-        >
-          <span className='my-1 text-sm text-center text-gray-900'>
-            Klicke auf Teilen &amp; dann "Zum Home-Bildschirm" um den Kalender zu installieren:
+        <div className={style.ios_install}>
+          <span className={style.ios_text}>
+            Klicke auf Teilen &amp; dann <strong>"Zum Home-Bildschirm" </strong>
+            um den Kalender wie eine App zu installieren:
           </span>
-          <div className='flex flex-row items-stretch mb-1'>
+          <div className={style.ios_icons_row}>
             <img
               src='/assets/icons/ios-share.png'
               height='81'
               width='57'
-              className='object-contain object-center w-16 h-16 p-1 bg-gray-300 border border-gray-500 rounded'
+              className={style.ios_icon}
               alt='klicke Teilen'
             />
-            <span className='block mx-3 my-auto'>➡︎</span>
+            <span className={style.ios_icon_space}>➡︎</span>
             <img
               src='/assets/icons/ios-add-to-home-screen.png'
               height='283'
               width='190'
-              className='object-contain object-center w-16 h-16 p-1 bg-gray-300 border border-gray-500 rounded'
+              className={style.ios_icon}
               alt='klicke Zum Home-Bildschirm'
             />
           </div>
@@ -202,11 +203,24 @@ function CloseButton ({ onClick }) {
   return (
     <button
       type='button'
-      className='absolute bottom-0 right-0 ml-1 bg-transparent border-0'
+      className={style.close_icon}
       onClick={onClick}
       aria-label='schließe Meldung'
     >
-      <img src='/assets/icons/close.svg' height='40' width='40' alt='' />
+      <svg
+        className={style.close_icon_svg}
+        fill='none'
+        stroke='currentColor'
+        viewBox='0 0 24 24'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z'
+        />
+      </svg>
     </button>
   )
 }
