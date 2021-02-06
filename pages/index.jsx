@@ -75,14 +75,17 @@ export default function Index ({ isFirstRender = false }) {
         <p>
           Welches Schichtmodell interessiert sie?
           <br />
-          Sie können das Modell später jederzeit im Menü
-          <img
-            className={style.inline_menu_icon}
-            src='/assets/icons/hamburger_icon.svg'
-            height='20'
-            width='20'
-            alt='das Menü ist oben rechts'
-          />
+          Sie können das Modell später jederzeit im{' '}
+          <span className={style.no_break}>
+            Menü
+            <img
+              className={style.inline_menu_icon}
+              src='/assets/icons/hamburger_icon.svg'
+              height='20'
+              width='20'
+              alt='das Menü ist oben rechts'
+            />
+          </span>
           umändern.
         </p>
 
