@@ -1,0 +1,112 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+.container {
+  position: absolute;
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  z-index: 50;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100vw;
+  height: 3rem;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  background-color: #064E3B;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.header {
+  margin: 0px;
+  padding-left: 1rem;
+  font-size: 1.5rem;
+  font-weight: 400;
+  vertical-align: baseline;
+}
+.header_link {
+  color: white;
+  text-decoration: none;
+  border-radius: 0.25rem;
+}
+.header_link:hover {
+  text-decoration: underline;
+}
+.header_link:focus {
+  text-decoration: underline;
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.text_as_icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.short_text {
+  display: none;
+}
+.long_text {
+  display: none;
+}
+@media (min-width: 350px) {
+  .text_as_icon {
+    display: none;
+  }
+
+  .short_text {
+    display: inline;
+  }
+}
+@media (min-width: 540px) {
+  .short_text {
+    display: none;
+  }
+
+  .long_text {
+    display: inline;
+  }
+}
+
+.navi {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  height: 100%;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.navi_link {
+  display: inline-block;
+  padding: 0.75rem 1rem;
+  color: white;
+}
+.navi_link:hover, .navi_link:active, .navi_link:focus {
+  background-color: rgb(5, 150, 105);
+}
+.navi_link:focus {
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}

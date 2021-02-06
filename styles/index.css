@@ -45,15 +45,3 @@ td, th {
 #menu_summary::-webkit-details-marker {
   display: none;
 }
-
-@media (max-width: 350px) {
-  .not-small-screen {
-    display: none;
-  }
-}
-
-@media (min-width: 351px) {
-  .small-screen-only {
-    display: none;
-  }
-}
