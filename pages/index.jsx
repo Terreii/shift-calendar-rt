@@ -11,7 +11,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import qs from 'querystringify'
 
-import Footer from '../components/footer'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 import { getCalUrl, getTodayUrl } from '../lib/utils'
 
@@ -101,8 +100,6 @@ export default function Index ({ isFirstRender = false }) {
           ))}
         </ul>
       </div>
-
-      <Footer />
     </main>
   )
 }

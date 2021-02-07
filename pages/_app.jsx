@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 
+import Footer from '../components/footer'
 import Header from '../components/header'
 import InstallPrompt from '../components/install-prompt'
 import 'modern-css-reset'
@@ -54,6 +55,7 @@ export default function MyApp ({ Component, pageProps }) {
 
       <Header />
       <Component isFirstRender={isFirstRender} {...pageProps} />
+      <Footer />
       <InstallPrompt />
     </>
   )

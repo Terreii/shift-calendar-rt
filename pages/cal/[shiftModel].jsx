@@ -11,7 +11,6 @@ import { DateTime, Info } from 'luxon'
 
 import ByMonths from '../../components/by-month'
 import Downloader from '../../components/download'
-import Footer from '../../components/footer'
 import { useTodayZeroIndex } from '../../hooks/time'
 import { shiftModelText } from '../../lib/constants'
 import { parseNumber } from '../../lib/utils'
@@ -54,8 +53,6 @@ export default function ShiftModel () {
       />
 
       <Downloader shiftModel={shiftModel} />
-
-      <Footer />
     </main>
   )
 }
