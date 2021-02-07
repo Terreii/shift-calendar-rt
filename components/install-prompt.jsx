@@ -112,12 +112,11 @@ export default function InstallButton () {
             <>
               <img
                 src='/assets/icons/add-outline.svg'
-                className='hue-invert'
                 height='25'
                 width='25'
                 alt=''
               />
-              <span className='my-1 ml-2'>Installieren</span>
+              <span>Installieren</span>
             </>
           )}
           onClick={confirmed => {
