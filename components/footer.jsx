@@ -28,7 +28,7 @@ export default function Footer () {
         {'Lizenz: '}
         <a
           href='https://www.mozilla.org/en-US/MPL/2.0/'
-          className={style.link}
+          className='link'
           target='_blank'
           rel='noopener noreferrer'
         >
@@ -36,7 +36,7 @@ export default function Footer () {
         </a>
         <br />
         <Link href='/impressum'>
-          <a className={style.link}>
+          <a className='link'>
             Impressum
           </a>
         </Link>

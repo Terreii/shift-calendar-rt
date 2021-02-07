@@ -13,6 +13,8 @@ import {
   shiftAddedNight
 } from '../lib/constants'
 
+import style from './download.module.css'
+
 const urls = {
   [shift66Name]: [
     '/assets/6-6_gruppe_1.ics',
@@ -47,35 +49,38 @@ const urls = {
 export default function Download ({ shiftModel }) {
   if (!(shiftModel in urls)) {
     return (
-      <div className='p-4 mx-auto my-4 text-center text-gray-900 bg-gray-300 rounded'>
-        Für dieses Schichtmodell sind die Kalender noch in Arbeit
+      <div className={style.container}>
+        <section className={style.section}>
+          Für dieses Schichtmodell sind die Kalender noch in Arbeit
+        </section>
       </div>
     )
   }
 
   return (
-    <div className='flex flex-col px-1 my-4'>
-      <section className='p-4 pt-2 mx-auto text-center text-gray-900 bg-gray-300 rounded'>
-        <h4 className='text-xl font-semibold'>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
+    <div className={style.container}>
+      <section className={style.section}>
+        <h4 className={style.header}>Downloade einen {shiftModelText[shiftModel]} Kalender</h4>
 
-        <p className='py-2'>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
+        <p className={style.text}>Füge deine Schichtgruppe zu deiner Kalender-App hinzu!</p>
 
-        {urls[shiftModel].map((href, index) => {
-          const group = index + 1
-          return (
-            <a
-              key={shiftModel + group}
-              className={'inline-block text-blue-800 underline py-3 px-1' +
-                (index === 0 ? '' : ' ml-2')}
-              href={href}
-              download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Gruppe {group}
-            </a>
-          )
-        })}
+        <div className={style.link_list}>
+          {urls[shiftModel].map((href, index) => {
+            const group = index + 1
+            return (
+              <a
+                key={shiftModel + group}
+                className='link'
+                href={href}
+                download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                Gruppe {group}
+              </a>
+            )
+          })}
+        </div>
       </section>
     </div>
   )
