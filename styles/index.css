@@ -7,17 +7,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 @tailwind base;
 
-.form-item {
-  @apply h-10 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 focus:ring focus:outline-none;
-}
-
 td, th {
   border: 1px solid black;
   padding: 0.1rem
-}
-
-.pb-safe-area {
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 [id] {

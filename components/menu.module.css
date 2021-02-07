@@ -46,7 +46,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   justify-content: center;
   padding: 0.75rem;
   margin-top: 3rem;
-  background-color: rgb(6, 78, 59);
+  color: white;
+  background-color: #064E3B;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
@@ -89,4 +90,68 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-top: 1.25rem;
   margin-left: auto;
   margin-right: auto;
+}
+
+.share_address {
+  padding: 0.25rem;
+  margin-left: -0.25rem;
+  background-color: transparent;
+  border-radius: 0.25rem;
+}
+.share_address:focus {
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.title {
+  padding: 0px;
+  margin: 0px;
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+}
+
+.share_label {
+  margin-top: 1.25rem;
+}
+
+.buttons_row {
+  display: flex;
+  flex-direction: row;
+  margin-top: 1.25rem;
+}
+
+.share_button {
+  composes: button from "../styles/form.module.css";
+  flex: 1 1 8rem;
+}
+
+.cancel_button {
+  composes: share_button;
+  color: #6D28D9;
+  border: 1px solid #6D28D9;
+}
+.cancel_button:hover, .cancel_button:focus {
+  color: #4C1D95;
+  border-color: #4C1D95;
+}
+
+.accept_button {
+  composes: share_button;
+  margin-left: 1.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  color: white;
+  background-color: #6D28D9;
+}
+.accept_button:hover, .accept_button:focus, .accept_button:active {
+  background-color: #7C3AED;
 }
