@@ -134,7 +134,7 @@ export default function Menu ({
                 type='month'
                 aria-controls='calendar_main_out'
                 min='2000-01'
-                value={`${year}-${String(month + 1).padStart(2, '0')}`}
+                value={`${year}-${String(month).padStart(2, '0')}`}
                 onChange={event => {
                   const value = event.target.value
                   if (value == null || value.length === 0) {

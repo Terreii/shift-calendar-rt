@@ -5,44 +5,32 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import style from '../../styles/calender.module.css'
+
 /**
  * Render the day in month cell.
- * @param {object}   param                  Preact arguments.
- * @param {DateTime} param.time             luxon DateTime object.
- * @param {object}   [param.holidayData]    Holiday data of that day.
- * @param {object}   [param.dayLightSaving] Data about the daylight saving switch.
- * @param {boolean}  param.isToday          Is that day today.
- * @param {boolean}  param.isSearchResult   Is that day searched for?
+ * @param {object}   param                       Preact arguments.
+ * @param {import('luxon').DateTime} param.time  luxon DateTime object.
+ * @param {object}   [param.holidayData]         Holiday data of that day.
+ * @param {object}   [param.dayLightSaving]      Data about the daylight saving switch.
  */
-export default function DayInMonthCell ({
-  time,
-  holidayData,
-  dayLightSaving,
-  isToday,
-  isSearchResult,
-  isWeekCellStart
-}) {
+export default function DayInMonthCell ({ time, holidayData, dayLightSaving }) {
   // is on this day the switch from or to day-light-saving.
   const isDayLightSaving = dayLightSaving != null && dayLightSaving.day === time.day
 
-  const border = isToday || isSearchResult
-    ? `${isWeekCellStart ? '' : 'border-l-4'} border-t-4 border-b-4`
-    : (isDayLightSaving ? '' : 'border-l')
-  const borderColor = isSearchResult ? 'border-violet-400' : 'border-black'
-
-  let holidayStyle = ''
+  let title
   if (isDayLightSaving) {
-    holidayStyle = 'bg-yellow-300 text-black cursor-help border-4 border-red-600'
-  } else if (holidayData != null && ['holiday', 'school'].includes(holidayData.type)) {
-    holidayStyle = 'bg-teal-400 text-black'
+    title = dayLightSaving.name
+  } else if (holidayData != null) {
+    title = holidayData.name
   }
 
   return (
     <td
-      className={`${borderColor} ${border} ${holidayStyle}`}
-      title={isDayLightSaving
-        ? dayLightSaving.name
-        : (holidayData != null ? holidayData.name : null)}
+      className={style.day_in_month}
+      title={title}
+      data-holiday={holidayData?.type}
+      data-daylight={isDayLightSaving ? true : null}
     >
       <time dateTime={time.toISODate()}>
         {time.day}

@@ -7,37 +7,23 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { shiftTitle, workingLongName } from '../../lib/constants'
 
+import style from '../../styles/calender.module.css'
+
 /**
  * Render a cell that displays if that shift group is working and what shift.
  * @param {object}          param                 Preact arguments.
  * @param {number}          param.group           Number of group. Group 1 is 0.
  * @param {"F"|"S"|"N"|"K"} param.shift           Shift data.
  * @param {boolean}         param.isToday         Is that cell of today?
- * @param {boolean}         param.isSearchResult  Is that day searched for?
  */
-export default function GroupShiftCell ({ group, shift, isToday, isSearchResult }) {
-  let border = ''
-  if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-violet-400'
-  } else if (isToday) {
-    border = 'border-t-4 border-b-4 border-black'
-  }
-
-  const groupColors = [
-    'bg-group-1',
-    'bg-group-2',
-    'bg-group-3',
-    'bg-group-4',
-    'bg-group-5',
-    'bg-group-6'
-  ]
-  const workStyle = shift !== 'K' ? groupColors[group] : ''
-  const title = isToday ? 'Heute ' + shiftTitle[shift] : shiftTitle[shift]
+export default function GroupShiftCell ({ group, shift, isToday }) {
+  const title = isToday ? 'Heute ' + (shiftTitle[shift] ?? '') : shiftTitle[shift]
 
   return (
     <td
-      className={`text-black ${border} ${workStyle}`}
+      className={style.group}
       title={title}
+      data-group={shift !== 'K' ? group + 1 : null}
     >
       {shift !== 'K' && (
         <>

@@ -5,23 +5,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import style from '../../styles/calender.module.css'
+
 /**
  * Render the cell with the week day.
- * @param {object}   param                 Preact arguments.
- * @param {DateTime} param.time            luxon DateTime object.
- * @param {boolean}  param.isToday         Is that cell of today?
- * @param {boolean}  param.isSearchResult  Is that cell part of a day that was searched for?
+ * @param {object}                   param                 Preact arguments.
+ * @param {import('luxon').DateTime} param.time            luxon DateTime object.
  */
-export default function WeekDayCell ({ time, isToday, isSearchResult }) {
-  let border = ''
-  if (isSearchResult) {
-    border = 'border-t-4 border-b-4 border-violet-400'
-  } else if (isToday) {
-    border = 'border-t-4 border-b-4 border-black'
-  }
-
+export default function WeekDayCell ({ time }) {
   return (
-    <td className={border}>
+    <td className={style.week_day}>
       <span className='sr-only'>{time.weekdayLong}</span>
       <span aria-hidden='true'>{time.weekdayShort}</span>
     </td>
