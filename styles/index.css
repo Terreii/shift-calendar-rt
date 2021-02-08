@@ -5,6 +5,33 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+:root {
+  --group-1: #ff69b4;
+  --group-2: #ff0;
+  --group-3: #f00;
+  --group-4: #0f0;
+  --group-5: #1e90ff;
+  --group-6: #cd853f;
+  --group-1-text: black;
+  --group-2-text: black;
+  --group-3-text: black;
+  --group-4-text: black;
+  --group-5-text: black;
+  --group-6-text: black;
+
+  --table-color: black;
+  --search-color: #A78BFA;
+  --weekend-bg-color: #D1D5DB;
+  --holiday-bg-color: #2DD4BF;
+  --closing-bg-color: #047857;
+  --closing-color: white;
+  --daylight-saving-bg-color: #FCD34D;
+  --daylight-saving-border-color: #DC2626;
+
+  --main-bg-color: white;
+  --main-color: black;
+}
+
 body {
   font-family:
     system-ui,
@@ -16,10 +43,13 @@ body {
     sans-serif,
     Apple Color Emoji,
     Segoe UI Emoji;
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
 }
 
 td, th {
   border: 1px solid black;
+  border: 1px solid var(--table-color);
   padding: 0.1rem
 }
 
