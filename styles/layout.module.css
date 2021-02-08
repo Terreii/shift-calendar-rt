@@ -7,8 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 .main {
   min-width: 100vw;
-  min-height: 100vh;
-  min-height: calc(100vh - 3.3rem);
   padding-top: 1rem;
   text-align: center;
 }
@@ -44,10 +42,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-left: 0.75rem;
   margin-right: 0.75rem;
   color: white;
-  background-color: rgb(67, 56, 202);
+  color: var(--form-accept-color);
+  background-color: #6D28D9;
+  background-color: var(--form-accept-bg-color);
 }
 .shift_button:hover, .shift_button:focus {
-  background-color: rgb(55, 48, 163);
+  background-color: #4C1D95;
+  background-color: var(--form-accept-interact-bg-color);
 }
 
 .no_break {
