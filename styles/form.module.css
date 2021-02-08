@@ -6,7 +6,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 .button {
-  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
   text-align: center;
   color: black;
   color: var(--form-color);
@@ -35,6 +39,44 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.accept_button {
+  composes: button;
+  color: white;
+  color: var(--form-accept-color);
+  background-color: #6D28D9;
+  background-color: var(--form-accept-bg-color);
+}
+.accept_button:hover, .accept_button:focus, .accept_button:active {
+  background-color: #7C3AED;
+  background-color: var(--form-accept-interact-bg-color);
+}
+
+.accept_button_with_img {
+  composes: accept_button;
+  padding: 0.25rem 0.75rem;
+  padding-left: 0.5rem;
+}
+.accept_button_with_img > img {
+  filter: invert(100%);
+  margin-right: 0.5rem;
+}
+
+.cancel_button {
+  composes: button;
+  color: #6D28D9;
+  color: var(--form-accept-bg-color);
+  border: 1px solid #6D28D9;
+  border: 1px solid var(--form-accept-bg-color);
+  background-color: var(--main-bg-color);
+}
+.cancel_button:hover, .cancel_button:focus {
+  color: #4C1D95;
+  color: var(--form-accept-interact-bg-color);
+  border-color: #4C1D95;
+  border-color: var(--form-accept-interact-bg-color);
+  background-color: var(--main-bg-color);
 }
 
 .checkbox {

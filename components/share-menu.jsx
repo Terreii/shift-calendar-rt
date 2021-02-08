@@ -162,7 +162,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
       <div className={style.buttons_row}>
         <button
           type='button'
-          className={style.cancel_button}
+          className={formStyle.cancel_button}
           onClick={hide}
         >
           Abbrechen
@@ -171,7 +171,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           ? (
             <button
               type='button'
-              className={style.accept_button}
+              className={formStyle.accept_button}
               onClick={event => {
                 event.preventDefault()
 
@@ -188,7 +188,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           )
           : (
             <a
-              className={style.accept_button}
+              className={formStyle.accept_button}
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
                 url.toString().replace(/&/g, '%26')
               }`}

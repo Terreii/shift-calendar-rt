@@ -135,37 +135,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   flex-direction: row;
   margin-top: 1.25rem;
 }
-
-.share_button {
-  composes: button from "../styles/form.module.css";
+.buttons_row > button, .buttons_row > a {
   flex: 1 1 8rem;
 }
-
-.cancel_button {
-  composes: share_button;
-  color: #6D28D9;
-  color: var(--form-accept-bg-color);
-  border: 1px solid #6D28D9;
-  border-color: var(--form-accept-bg-color);
-}
-.cancel_button:hover, .cancel_button:focus {
-  color: #4C1D95;
-  color: var(--form-accept-interact-bg-color);
-  border-color: #4C1D95;
-  border-color: var(--form-accept-interact-bg-color);
-}
-
-.accept_button {
-  composes: share_button;
+.buttons_row > *:last-child {
   margin-left: 1.5rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  color: white;
-  color: var(--form-accept-color);
-  background-color: #6D28D9;
-  background-color: var(--form-accept-bg-color);
-}
-.accept_button:hover, .accept_button:focus, .accept_button:active {
-  background-color: #7C3AED;
-  background-color: var(--form-accept-interact-bg-color);
 }

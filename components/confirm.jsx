@@ -6,6 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import style from './prompts.module.css'
+import formStyles from '../styles/form.module.css'
 
 export default function Confirm ({ children, confirmText, onClick }) {
   return (
@@ -17,7 +18,7 @@ export default function Confirm ({ children, confirmText, onClick }) {
       <div className={style.buttons_row}>
         <button
           type='button'
-          className={style.accept_button}
+          className={formStyles.accept_button_with_img}
           onClick={() => {
             onClick(true)
           }}
@@ -30,7 +31,7 @@ export default function Confirm ({ children, confirmText, onClick }) {
             onClick(false)
           }}
           title='Klicke um den Kalender nicht zu installieren'
-          className={style.cancel_button}
+          className={formStyles.cancel_button}
         >
           Abbrechen
         </button>
