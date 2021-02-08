@@ -94,6 +94,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   display: inline-block;
   padding: 0.75rem 1rem;
   color: white;
+  text-decoration: none;
 }
 .navi_link:hover, .navi_link:active, .navi_link:focus {
   background-color: rgb(5, 150, 105);

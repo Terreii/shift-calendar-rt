@@ -5,7 +5,18 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-@tailwind base;
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji;
+}
 
 td, th {
   border: 1px solid black;
@@ -32,11 +43,7 @@ td, th {
   border-width: 0;
 }
 
-@tailwind components;
-
-@tailwind utilities;
-
-a.link {
+a.link, .link {
   color: #1D4ED8;
   text-decoration: underline;
 }
