@@ -30,6 +30,22 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
   --main-bg-color: white;
   --main-color: black;
+  --soft-text-color: #111827;
+  --link-color: #1D4ED8;
+  --link-interact-color: #3B82F6;
+  --header-bg-color: #064E3B;
+  --header-hover-bg-color: #16A34A;
+  --header-color: white;
+
+  --form-bg-color: #F3F4F6;
+  --form-interact-bg-color: #D1D5DB;
+  --form-color: black;
+  --form-accept-bg-color: #6D28D9;
+  --form-accept-interact-bg-color: #4C1D95;
+  --form-accept-color: white;
+
+  --dialog-bg-color: #D1D5DB;
+  --dialog-border-color: #e5e8f4;
 }
 
 body {
@@ -75,10 +91,12 @@ td, th {
 
 a.link, .link {
   color: #1D4ED8;
+  color: var(--link-color);
   text-decoration: underline;
 }
 .link:hover, .link:focus, .link:active {
   color: #3B82F6;
+  color: var(--link-interact-color);
 }
 .link:focus {
   box-shadow:

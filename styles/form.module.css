@@ -9,7 +9,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   height: 2.5rem;
   text-align: center;
   color: black;
+  color: var(--form-color);
   background-color: #F3F4F6;
+  background-color: var(--form-bg-color);
   border-radius: 0.25rem;
   border: 0px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
@@ -18,9 +20,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 }
 .button:hover {
   background-color: #D1D5DB;
+  background-color: var(--form-interact-bg-color);
 }
 .button:focus {
   background-color: #D1D5DB;
+  background-color: var(--form-interact-bg-color);
   box-shadow:
     0 0 0 3px rgba(59,130,246,0.5),
     0 1px 3px 0 rgba(0, 0, 0, 0.1),
