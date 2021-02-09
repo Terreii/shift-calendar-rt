@@ -85,10 +85,16 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-top: 1.25rem;
 }
 
+.month_select {
+  composes: button from "../styles/form.module.css";
+  height: 2.5rem;
+}
+
 .form_item {
   composes: button from "../styles/form.module.css";
   flex: 1 1 auto;
   margin-top: 0.25rem;
+  height: 2.5rem;
 }
 
 .groups {

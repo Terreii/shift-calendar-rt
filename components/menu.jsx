@@ -17,7 +17,6 @@ import {
 import { getCalUrl } from '../lib/utils'
 
 import style from './menu.module.css'
-import formStyle from '../styles/form.module.css'
 
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   try {
@@ -81,7 +80,7 @@ export default function Menu ({
           <div className={style.element_container}>
             {!(supportsMonthInput || isFullYear) && (
               <select
-                className={formStyle.button}
+                className={style.month_select}
                 title='Gehe zum Monat'
                 value={month}
                 onChange={event => {
