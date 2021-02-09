@@ -39,19 +39,28 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .container {
   position: absolute;
   top: 0px;
+  top: env(safe-area-inset-top, 0px);
   right: 0px;
   right: env(safe-area-inset-right, 0px);
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: center;
-  padding: 0.75rem;
   margin-top: 3rem;
+  max-height: 90%;
+  max-height: calc(100vh - 3rem);
+  max-height: calc(100vh - 3rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  overflow-y: scroll;
+  overscroll-behavior-y: contain;
   color: white;
   color: var(--header-color);
   background-color: #064E3B;
   background-color: var(--header-bg-color);
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.scroll_container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  padding: 0.75rem;
 }
 
 .element_container {
@@ -76,10 +85,16 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-top: 1.25rem;
 }
 
+.month_select {
+  composes: button from "../styles/form.module.css";
+  height: 2.5rem;
+}
+
 .form_item {
   composes: button from "../styles/form.module.css";
   flex: 1 1 auto;
   margin-top: 0.25rem;
+  height: 2.5rem;
 }
 
 .groups {
