@@ -8,8 +8,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .container {
   margin-top: 1rem;
   margin-bottom: 0.75rem;
+  margin-bottom: max(0.75rem, calc(0.25rem + env(safe-area-inset-bottom, 0px)));
   margin-left: 0.25rem;
+  margin-left: max(0.25rem, env(safe-area-inset-left, 0px));
   margin-right: 0.25rem;
+  margin-right: max(0.25rem, env(safe-area-inset-right, 0px));
   font-size: 0.75rem;
   line-height: 1rem;
   text-align: center;
