@@ -28,14 +28,33 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
   const today = useToday()
 
   const { lastMonth, nextMonth } = useMemo(() => {
+    if (isFullYear) {
+      return {
+        lastMonth: getCalUrl({
+          group,
+          shiftModel,
+          isFullYear: true,
+          year: year - 1,
+          month: 1
+        }),
+        nextMonth: getCalUrl({
+          group,
+          shiftModel,
+          isFullYear: true,
+          year: year + 1,
+          month: 1
+        })
+      }
+    }
+
     const then = new Date()
     then.setFullYear(year)
     then.setMonth(month - 1)
     then.setDate(3)
 
     return {
-      lastMonth: getMonthUrl(then.getTime() - ms.months(1), isFullYear, shiftModel, group),
-      nextMonth: getMonthUrl(then.getTime() + ms.months(1), isFullYear, shiftModel, group)
+      lastMonth: getMonthUrl(then.getTime() - ms.months(1), shiftModel, group),
+      nextMonth: getMonthUrl(then.getTime() + ms.months(1), shiftModel, group)
     }
   }, [year, month, isFullYear, shiftModel, group])
 
@@ -71,12 +90,12 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
   )
 }
 
-function getMonthUrl (time, isFullYear, shiftModel, group) {
+function getMonthUrl (time, shiftModel, group) {
   const t = new Date(time)
   return getCalUrl({
     group,
     shiftModel,
-    isFullYear,
+    isFullYear: false,
     year: t.getFullYear(),
     month: t.getMonth() + 1
   })
