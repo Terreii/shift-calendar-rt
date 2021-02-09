@@ -83,122 +83,126 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
 
   return (
     <div id='share_menu' className={style.container}>
-      <label className={style.element_container}>
-        Adresse zum teilen:
-        <input
-          id='share_url'
-          className={style.share_address}
-          type='url'
-          readOnly
-          value={url.href}
-          onFocus={event => {
-            event.target.select()
-          }}
-        />
-      </label>
+      <div className={style.scroll_container}>
+        <label className={style.element_container}>
+          Adresse zum teilen:
+          <input
+            id='share_url'
+            className={style.share_address}
+            type='url'
+            readOnly
+            value={url.href}
+            onFocus={event => {
+              event.target.select()
+            }}
+          />
+        </label>
 
-      <h6 className={style.title}>Füge hinzu:</h6>
+        <h6 className={style.title}>Füge hinzu:</h6>
 
-      <label className={style.share_label}>
-        <input
-          className={formStyle.checkbox}
-          type='checkbox'
-          checked={addShiftModel}
-          onChange={event => {
-            setAddShiftModel(event.target.checked)
-            if (!event.target.checked && addGroup) {
-              setAddGroup(false)
-            }
-            if (!event.target.checked && addSearch) {
-              setAddSearch(false)
-            }
-          }}
-        />
-        Schichtmodell
-      </label>
+        <label className={style.share_label}>
+          <input
+            className={formStyle.checkbox}
+            type='checkbox'
+            checked={addShiftModel}
+            onChange={event => {
+              setAddShiftModel(event.target.checked)
+              if (!event.target.checked && addGroup) {
+                setAddGroup(false)
+              }
+              if (!event.target.checked && addSearch) {
+                setAddSearch(false)
+              }
+            }}
+          />
+          Schichtmodell
+        </label>
 
-      <label className={style.share_label}>
-        <input
-          className={formStyle.checkbox}
-          type='checkbox'
-          checked={addGroup}
-          disabled={group === 0}
-          onChange={event => {
-            if (group === 0 || group == null) return
+        <label className={style.share_label}>
+          <input
+            className={formStyle.checkbox}
+            type='checkbox'
+            checked={addGroup}
+            disabled={group === 0}
+            onChange={event => {
+              if (group === 0 || group == null) return
 
-            setAddGroup(event.target.checked)
-            if (event.target.checked && !addShiftModel) {
-              setAddShiftModel(true)
-            }
-          }}
-        />
-        Gruppe
-        {group === 0 && (
-          <small><br />Momentan sind alle Gruppen ausgewählt.</small>
-        )}
-      </label>
-
-      <label className={style.share_label}>
-        <input
-          className={formStyle.checkbox}
-          type='checkbox'
-          checked={addSearch}
-          disabled={search == null}
-          onChange={event => {
-            if (search == null) return
-
-            setAddSearch(event.target.checked)
-            if (event.target.checked && !addShiftModel) {
-              setAddShiftModel(true)
-            }
-          }}
-        />
-        Der gesuchte Tag
-        {search == null && (
-          <small><br />Momentan gibt es kein Suchergebnis.</small>
-        )}
-      </label>
-
-      <div className={style.buttons_row}>
-        <button
-          type='button'
-          className={formStyle.cancel_button}
-          onClick={hide}
-        >
-          Abbrechen
-        </button>
-        {'navigator' in globalThis && ('share' in window.navigator) // eslint-disable-line
-          ? (
-            <button
-              type='button'
-              className={formStyle.accept_button}
-              onClick={event => {
-                event.preventDefault()
-
-                window.navigator.share({
-                  url,
-                  title: 'Schichtkalender',
-                  text: 'Meine Schichten beim Bosch Reutlingen: ' + url
-                })
-                  .then(() => { hide() })
-              }}
-            >
-              Teilen
-            </button>
-          )
-          : (
-            <a
-              className={formStyle.accept_button}
-              href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
-                url.toString().replace(/&/g, '%26')
-              }`}
-              onClick={() => {
-                setTimeout(hide, 16)
-              }}
-            >
-              Teilen
-            </a>
+              setAddGroup(event.target.checked)
+              if (event.target.checked && !addShiftModel) {
+                setAddShiftModel(true)
+              }
+            }}
+          />
+          Gruppe
+          {group === 0 && (
+            <small><br />Momentan sind alle Gruppen ausgewählt.</small>
           )}
+        </label>
+
+        <label className={style.share_label}>
+          <input
+            className={formStyle.checkbox}
+            type='checkbox'
+            checked={addSearch}
+            disabled={search == null}
+            onChange={event => {
+              if (search == null) return
+
+              setAddSearch(event.target.checked)
+              if (event.target.checked && !addShiftModel) {
+                setAddShiftModel(true)
+              }
+            }}
+          />
+          Der gesuchte Tag
+          {search == null && (
+            <small><br />Momentan gibt es kein Suchergebnis.</small>
+          )}
+        </label>
+
+        <div className={style.buttons_row}>
+          <button
+            type='button'
+            className={formStyle.cancel_button}
+            onClick={hide}
+          >
+            Abbrechen
+          </button>
+          {'navigator' in globalThis && ('share' in window.navigator) // eslint-disable-line
+            ? (
+              <button
+                type='button'
+                className={formStyle.accept_button}
+                onClick={event => {
+                  event.preventDefault()
+
+                  window.navigator.share({
+                    url,
+                    title: 'Schichtkalender',
+                    text: 'Meine Schichten beim Bosch Reutlingen: ' + url
+                  })
+                    .then(() => { hide() })
+                }}
+              >
+                Teilen
+              </button>
+            )
+            : (
+              <a
+                className={formStyle.accept_button}
+                href={
+                  `mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
+                  url.toString().replace(/&/g, '%26')
+                }`
+                }
+                onClick={() => {
+                  setTimeout(hide, 16)
+                }}
+              >
+                Teilen
+              </a>
+            )}
+        </div>
       </div>
     </div>
   )
