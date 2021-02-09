@@ -16,6 +16,9 @@ import {
 } from '../lib/constants'
 import { getCalUrl } from '../lib/utils'
 
+import style from './menu.module.css'
+import formStyle from '../styles/form.module.css'
+
 const [supportsMonthInput, supportsDateInput] = ['month', 'date'].map(type => {
   try {
     const parent = document.createElement('div')
@@ -60,13 +63,9 @@ export default function Menu ({
         setShowMenu(event.target.open)
       }}
     >
-      <summary
-        id='menu_summary'
-        className='flex items-center justify-center w-16 list-none bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
-      >
+      <summary id='menu_summary' className={style.menu_button}>
         <img
           src='/assets/icons/hamburger_icon.svg'
-          className='hue-invert'
           height='45'
           width='45'
           alt='Menu'
@@ -76,42 +75,40 @@ export default function Menu ({
         id='hamburger_menu'
         aria-live='polite'
         aria-label='Menü'
-        className='absolute top-0 right-0 flex flex-col items-stretch justify-center p-3 mt-12 bg-green-900 shadow-lg'
+        className={style.container}
       >
-        <div className='flex flex-col'>
-          {supportsMonthInput || isFullYear
-            ? null
-            : (
-              <select
-                className='form-item'
-                title='Gehe zum Monat'
-                value={month}
-                onChange={event => {
-                  router.push(getCalUrl({
-                    group,
-                    shiftModel,
-                    isFullYear: false,
-                    month: event.target.value,
-                    year
-                  }))
-                }}
-                aria-controls='calendar_main_out'
-              >
-                {monthNames.map((name, index) => (
-                  <option key={name} value={index + 1}>{name}</option>
-                ))}
-              </select>
-            )}
+        <div className={style.element_container}>
+          {!(supportsMonthInput || isFullYear) && (
+            <select
+              className={formStyle.button}
+              title='Gehe zum Monat'
+              value={month}
+              onChange={event => {
+                router.push(getCalUrl({
+                  group,
+                  shiftModel,
+                  isFullYear: false,
+                  month: event.target.value,
+                  year
+                }))
+              }}
+              aria-controls='calendar_main_out'
+            >
+              {monthNames.map((name, index) => (
+                <option key={name} value={index + 1}>{name}</option>
+              ))}
+            </select>
+          )}
         </div>
 
-        <div className='flex flex-col'>
+        <div className={style.element_container}>
           {(!supportsMonthInput || isFullYear) && (
-            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+            <label className={style.label}>
               Jahr
               <input
-                className='flex-auto w-full mt-1 form-item'
+                className={style.form_item}
                 type='number'
-                min='2000'
+                min={2000}
                 aria-controls='calendar_main_out'
                 value={year}
                 onChange={event => {
@@ -128,16 +125,16 @@ export default function Menu ({
           )}
         </div>
 
-        <div className='flex flex-col'>
+        <div className={style.element_container}>
           {supportsMonthInput && !isFullYear && (
-            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+            <label className={style.label}>
               Gehe zum Monat
               <input
-                className='flex-auto w-full mt-1 form-item'
+                className={style.form_item}
                 type='month'
                 aria-controls='calendar_main_out'
                 min='2000-01'
-                value={`${year}-${String(month + 1).padStart(2, '0')}`}
+                value={`${year}-${String(month).padStart(2, '0')}`}
                 onChange={event => {
                   const value = event.target.value
                   if (value == null || value.length === 0) {
@@ -163,12 +160,12 @@ export default function Menu ({
           )}
         </div>
 
-        <div className='flex flex-col'>
+        <div className={style.element_container}>
           {supportsDateInput && (
-            <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+            <label className={style.label}>
               Suche einen Tag
               <input
-                className='flex-auto w-full mt-1 form-item'
+                className={style.form_item}
                 type='date'
                 aria-controls='calendar_main_out'
                 min='2000-01-01'
@@ -213,7 +210,7 @@ export default function Menu ({
           })}
         >
           <a
-            className='py-2 mt-5 form-item'
+            className={style.month_full_year_toggle}
             aria-controls='calendar_main_out'
             onClick={() => {
               setShowMenu(false)
@@ -223,10 +220,10 @@ export default function Menu ({
           </a>
         </Link>
 
-        <label className='flex flex-col items-stretch mt-5 text-center text-white'>
+        <label className={style.label}>
           Schichtmodell
           <select
-            className='flex-auto w-full h-10 mt-1 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+            className={style.form_item}
             aria-controls='calendar_main_out'
             value={shiftModel}
             onChange={event => {
@@ -248,7 +245,7 @@ export default function Menu ({
         </label>
 
         <select
-          className='h-10 mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          className={style.groups}
           aria-controls='calendar_main_out'
           aria-label='Schichtgruppen'
           value={group}
@@ -268,7 +265,7 @@ export default function Menu ({
 
         <button
           type='button'
-          className='h-12 px-4 py-2 mx-auto mt-5 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 active:bg-gray-300 focus:ring focus:outline-none'
+          className={style.small_button}
           onClick={onShare}
           aria-label='Teile deine Schicht'
         >

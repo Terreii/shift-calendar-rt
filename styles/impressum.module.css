@@ -1,0 +1,61 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+.container {
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  color: var(--soft-text-color);
+}
+
+.main {
+  max-width: 24cm;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.header {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+}
+
+.section_header {
+  margin-top: 1.5rem;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+a.link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #1D4ED8;
+  color: var(--link-color);
+  text-decoration: underline;
+  font-size: smaller;
+}
+.link:hover, .link:focus, .link:active {
+  color: #3B82F6;
+  color: var(--link-interact-color);
+}
+.link:focus {
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}

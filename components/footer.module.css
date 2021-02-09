@@ -1,0 +1,17 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+.container {
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  text-align: center;
+  color: var(--soft-text-color);
+}

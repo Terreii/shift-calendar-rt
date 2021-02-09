@@ -1,0 +1,249 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  padding-top: 1rem;
+  margin-left: env(safe-area-inset-left);
+  margin-right: env(safe-area-inset-right);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-bottom: 0.5rem;
+}
+
+/*
+Hide all calender except the current month.
+But then show the next month on small screen, then the next 2 months, then all on big screens.
+*/
+.calender_table {
+  display: none;
+}
+.calender_table:nth-child(2) {
+  display: table;
+}
+
+.table {
+  margin-top: 2rem;
+  text-align: center;
+  border: 1px solid black;
+  border: 1px solid var(--table-color);
+  border-collapse: collapse;
+  color: var(--table-color);
+}
+
+@media (min-width: 1280px) {
+  .table {
+    margin-top: 0px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .calender_table:nth-child(3) {
+    display: table;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .calender_table:nth-child(4) {
+    display: table;
+  }
+}
+
+@media (min-width: 1536px) {
+  .container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .calender_table {
+    display: table;
+  }
+}
+
+.title {
+  font-weight: 700;
+}
+.title[data-is-today="true"] {
+  border: 1px solid black;
+  border: 1px solid var(--table-color);
+  border-bottom-width: 0px;
+  background-color: #D1D5DB;
+  background-color: var(--weekend-bg-color);
+  color: black;
+  color: var(--table-color);
+}
+
+.footer {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 700;
+}
+.sum {
+  padding: 0.25rem;
+  border: 1px solid black;
+  border: 1px solid var(--table-color);
+  cursor: help;
+}
+
+.row[data-weekend="true"] {
+  background-color: #D1D5DB;
+  background-color: var(--weekend-bg-color);
+}
+.row[data-closing="closing"] {
+  background-color: #047857;
+  background-color: var(--closing-bg-color);
+  color: white;
+  color: var(--closing-color);
+}
+
+.row[data-interest="search"] > td:last-child {
+  border-right: 4px solid #A78BFA;
+  border-right: 4px solid var(--search-color);
+}
+.row[data-interest="today"] > td:last-child {
+  border-right: 4px solid black;
+  border-right: 4px solid var(--table-color);
+}
+
+.row[data-interest="search"] > .day_in_month {
+  border-left: 4px solid #A78BFA;
+  border-left: 4px solid var(--search-color);
+  border-top: 4px solid #A78BFA;
+  border-top: 4px solid var(--search-color);
+  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid var(--search-color);
+}
+.row[data-interest="today"] > .day_in_month {
+  border-left: 4px solid black;
+  border-left: 4px solid var(--table-color);
+  border-top: 4px solid black;
+  border-top: 4px solid var(--table-color);
+  border-bottom: 4px solid black;
+  border-bottom: 4px solid var(--table-color);
+}
+
+/*
+Chromium and Safari have a bug,
+where the thick border stretch the full length of the week cell down.
+The first child will be the week cell.
+
+Daylight-saving doesn't need this fix, because it is always on a sunday.
+*/
+.row[data-interest="search"] > .day_in_month:nth-child(2),
+.row[data-interest="today"] > .day_in_month:nth-child(2) {
+  border-left: 1px solid black;
+  border-left: 1px solid var(--table-color);
+}
+
+.row[data-interest="search"] > .week_day {
+  border-top: 4px solid #A78BFA;
+  border-top: 4px solid var(--search-color);
+  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid var(--search-color);
+}
+.row[data-interest="today"] > .week_day {
+  border-top: 4px solid black;
+  border-top: 4px solid var(--table-color);
+  border-bottom: 4px solid black;
+  border-bottom: 4px solid var(--table-color);
+}
+
+.day_in_month[data-holiday="holiday"], .day_in_month[data-holiday="school"] {
+  background-color: #2DD4BF;
+  background-color: var(--holiday-bg-color);
+  color: black;
+  color: var(--table-color);
+}
+
+.day_in_month[data-daylight] {
+  background-color: #FCD34D;
+  background-color: var(--daylight-saving-bg-color);
+  color: black;
+  color: var(--table-color);
+  cursor: help;
+  border: 4px solid #DC2626;
+  border: 4px solid var(--daylight-saving-border-color);
+}
+
+.week_cell {
+  color: #1F2937;
+  color: var(--table-color);
+  background-color: white;
+  background-color: var(--main-bg-color);
+  border-width: 1px;
+  border-color: black;
+  border-color: var(--table-color);
+}
+
+.group[data-group="1"] {
+  background-color: #ff69b4;
+  background-color: var(--group-1);
+  color: black;
+  color: var(--group-1-text);
+}
+.group[data-group="2"] {
+  background-color: #ff0;
+  background-color: var(--group-2);
+  color: black;
+  color: var(--group-2-text);
+}
+.group[data-group="3"] {
+  background-color: #f00;
+  background-color: var(--group-3);
+  color: black;
+  color: var(--group-3-text);
+}
+.group[data-group="4"] {
+  background-color: #0f0;
+  background-color: var(--group-4);
+  color: black;
+  color: var(--group-4-text);
+}
+.group[data-group="5"] {
+  background-color: #1e90ff;
+  background-color: var(--group-5);
+  color: black;
+  color: var(--group-5-text);
+}
+.group[data-group="6"] {
+  background-color: #cd853f;
+  background-color: var(--group-6);
+  color: black;
+  color: var(--group-6-text);
+}
+
+.row[data-interest="search"] > .group {
+  border-top: 4px solid #A78BFA;
+  border-top: 4px solid var(--search-color);
+  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid var(--search-color);
+}
+.row[data-interest="today"] > .group {
+  border-top: 4px solid black;
+  border-top: 4px solid var(--table-color);
+  border-bottom: 4px solid black;
+  border-bottom: 4px solid var(--table-color);
+}

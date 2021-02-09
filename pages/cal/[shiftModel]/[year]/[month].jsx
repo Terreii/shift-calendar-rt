@@ -11,10 +11,11 @@ import { DateTime, Info } from 'luxon'
 
 import ByMonths from '../../../../components/by-month'
 import Downloader from '../../../../components/download'
-import Footer from '../../../../components/footer'
 import { useTodayZeroIndex } from '../../../../hooks/time'
 import { shiftModelText } from '../../../../lib/constants'
 import { parseNumber } from '../../../../lib/utils'
+
+import style from '../../../../styles/calender.module.css'
 
 export default function MonthPage (props) {
   const router = useRouter()
@@ -34,7 +35,7 @@ export default function MonthPage (props) {
   }
 
   return (
-    <main className='flex flex-col content-center pt-4'>
+    <main className={style.main}>
       <Head>
         <title>
           {`Monat ${
@@ -58,8 +59,6 @@ export default function MonthPage (props) {
       />
 
       <Downloader shiftModel={shiftModel} />
-
-      <Footer />
     </main>
   )
 }

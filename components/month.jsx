@@ -10,6 +10,8 @@ import { memo } from 'react'
 import MonthBody from './month-body'
 import { monthNames } from '../lib/constants'
 
+import style from '../styles/calender.module.css'
+
 /**
  * Render a month
  * @param {Object}   arg0          React/Preact arguments.
@@ -37,14 +39,13 @@ function Month ({ className = '', year, month, data, today, search, group }) {
   return (
     <table
       id={`month_${year}-${month + 1}`}
-      className={'mt-8 text-center border border-collapse border-black xl:mt-0 ' + className}
+      className={style.table + ' ' + className}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
     >
       <caption
         id={`month_${year}-${month + 1}_caption`}
-        className={isToday
-          ? 'border border-b-0 border-black bg-gray-300 text-black font-bold'
-          : 'font-bold'}
+        data-is-today={isToday}
+        className={style.title}
       >
         {monthNames[month]} {year}{isToday ? ' (Jetzt)' : ''}
       </caption>
@@ -78,10 +79,10 @@ function Month ({ className = '', year, month, data, today, search, group }) {
         group={group}
       />
 
-      <tfoot className='text-sm font-bold'>
+      <tfoot className={style.footer}>
         <tr>
           <td
-            className='p-1 border border-black cursor-help'
+            className={style.sum}
             colSpan='3'
             title='Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet.'
           >

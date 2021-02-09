@@ -5,18 +5,22 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { DateTime } from 'luxon'
+import { DateTime, Info } from 'luxon'
 
 import WeekCell from './cells/week'
 import DayInMonthCell from './cells/dayInMonth'
 import WeekDayCell from './cells/weekDay'
 import GroupShiftCell from './cells/groupShift'
 
+import style from '../styles/calender.module.css'
+
 /**
  * @typedef {Object} MonthData
  * @property {("F"|"S"|"N"|"K")[][]} days      List of working days of every group
  * @property {object}                holidays  Object containing all holidays of that month.
  */
+
+const supportZones = Info.features().zones
 
 /**
  * Renders the body of a month.
@@ -35,7 +39,13 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
     const thatDay = index + 1
-    const time = DateTime.fromObject({ year, month: month + 1, day: thatDay, locale: 'de-DE' })
+    const time = DateTime.fromObject({
+      year,
+      month: month + 1,
+      day: thatDay,
+      locale: 'de-DE',
+      zone: supportZones ? 'Europe/Berlin' : undefined
+    })
     const weekDay = time.weekday
     const holidayData = data.holidays[thatDay]
 
@@ -50,29 +60,24 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
     )
     const isSearchResult = search === thatDay
 
-    let border = ''
-    if (isSearchResult) {
-      border = 'border-r-4 border-violet-400'
-    } else if (isToday) {
-      border = 'border-r-4 border-black'
-    }
-
-    const isWeekend = [0, 6, 7].includes(weekDay)
     const isClosingHoliday = holidayData != null && holidayData.type === 'closing'
 
-    let background = ''
-    if (isClosingHoliday) {
-      background = 'bg-green-700 text-white'
-    } else if (isWeekend) {
-      background = 'bg-gray-300'
+    let interesting
+    if (isSearchResult) {
+      interesting = 'search'
+    } else if (isToday) {
+      interesting = 'today'
     }
 
     return (
       <tr
         key={index}
         id={time.toISODate()}
-        className={`${border} ${background}`}
-        title={holidayData != null && holidayData.type === 'closing' ? holidayData.name : undefined}
+        className={style.row}
+        data-interest={interesting}
+        data-weekend={[0, 6, 7].includes(weekDay)}
+        data-closing={isClosingHoliday ? 'closing' : undefined}
+        title={isClosingHoliday ? holidayData.name : undefined}
       >
         {(weekDay === 1 || index === 0) && (
           <WeekCell time={time} />
@@ -81,15 +86,8 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
           time={time}
           holidayData={holidayData}
           dayLightSaving={data.holidays.daylightSavingSwitch}
-          isToday={isToday}
-          isSearchResult={isSearchResult}
-          isWeekCellStart={weekDay === 1 || index === 0}
         />
-        <WeekDayCell
-          time={time}
-          isToday={isToday}
-          isSearchResult={isSearchResult}
-        />
+        <WeekDayCell time={time} />
 
         {shifts.map((shift, index, all) => {
           const gr = group === 0 ? index : group - 1
@@ -99,7 +97,6 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
               group={gr}
               shift={shift}
               isToday={isToday}
-              isSearchResult={isSearchResult}
             />
           )
         })}

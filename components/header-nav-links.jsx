@@ -12,6 +12,8 @@ import Link from 'next/link'
 import { useToday } from '../hooks/time'
 import { getCalUrl, getTodayUrl } from '../lib/utils'
 
+import style from './header.module.css'
+
 /**
  * Display 3 links to move in the calendar.
  * One button is move to today. And the other once are to move to the next/previous month/year.
@@ -41,7 +43,7 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
     <>
       <Link key={`previous_${year}_${month}`} href={lastMonth}>
         <a
-          className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
+          className={style.navi_link}
           title={isFullYear ? 'voriges Jahr' : 'vorigen Monat'}
         >
           {'<'}
@@ -50,7 +52,7 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
 
       <Link href={getTodayUrl({ group, shiftModel, today })}>
         <a
-          className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
+          className={style.navi_link}
           title='zeige aktuellen Monat'
         >
           Heute
@@ -59,7 +61,7 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
 
       <Link key={`next_${year}_${month}`} href={nextMonth}>
         <a
-          className='inline-block px-4 py-3 text-white bg-transparent hover:bg-green-600 active:bg-green-600 focus:ring focus:outline-none'
+          className={style.navi_link}
           title={isFullYear ? 'nächstes Jahr' : 'nächster Monat'}
         >
           {'>'}

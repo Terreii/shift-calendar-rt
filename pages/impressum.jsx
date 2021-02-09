@@ -7,6 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import Head from 'next/head'
 
+import style from '../styles/impressum.module.css'
+
 /**
  * Renders the Impressum.
  * This is required by the German Low.
@@ -14,14 +16,13 @@ import Head from 'next/head'
  */
 export default function Impressum () {
   return (
-    <main className='px-6 pt-4 pb-2'>
+    <main className={style.container}>
       <Head>
         <title>Impressum - Schichtkalender für Bosch Reutlingen</title>
       </Head>
 
-      <div id='calendar_main_out'>
-        <h2 className='text-2xl font-bold'>Datenschutzerklärung</h2>
-        <h3 id='dsg-general-intro' />
+      <div id='calendar_main_out' className={style.main}>
+        <h2 id='dsg-general-intro' className={style.header}>Datenschutzerklärung</h2>
         <p>
           Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung
           von personenbezogenen Daten (nachfolgend kurz „Daten“) im Rahmen der Erbringung unserer
@@ -32,8 +33,7 @@ export default function Impressum () {
           wir auf die Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).
         </p>
         <br />
-        <br />
-        <h3 id='dsg-general-controller' className='text-xl font-semibold'>Verantwortlicher</h3>
+        <h3 id='dsg-general-controller' className={style.section_header}>Verantwortlicher</h3>
         <p>
           <span className='tsmcontroller'>
             Christopher Astfalk<br />
@@ -43,7 +43,7 @@ export default function Impressum () {
             work email: christopher.astfalk {'{dieses at Zeichen}'} de.bosch.com
           </span>
         </p>
-        <h3 id='dsg-general-datatype' className='text-xl font-semibold'>
+        <h3 id='dsg-general-datatype' className={style.section_header}>
           Arten der verarbeiteten Daten
         </h3>
         <p>
@@ -57,7 +57,7 @@ export default function Impressum () {
           <br />
           - Meta-/Kommunikationsdaten (z.B., Geräte-Informationen, IP-Adressen).
         </p>
-        <h3 id='dsg-general-datasubjects' className='text-xl font-semibold'>
+        <h3 id='dsg-general-datasubjects' className={style.section_header}>
           Kategorien betroffener Personen
         </h3>
         <p>
@@ -65,7 +65,7 @@ export default function Impressum () {
           Personen zusammenfassend auch als „Nutzer“).
           <br />
         </p>
-        <h3 id='dsg-general-purpose' className='text-xl font-semibold'>Zweck der Verarbeitung</h3>
+        <h3 id='dsg-general-purpose' className={style.section_header}>Zweck der Verarbeitung</h3>
         <p>
           - Zurverfügungstellung des Onlineangebotes, seiner Funktionen und  Inhalte.<br />
           - Beantwortung von Kontaktanfragen und Kommunikation mit Nutzern.<br />
@@ -73,7 +73,7 @@ export default function Impressum () {
           - Reichweitenmessung/Marketing<br />
           <span className='tsmcom' />
         </p>
-        <h3 id='dsg-general-terms' className='text-xl font-semibold'>
+        <h3 id='dsg-general-terms' className={style.section_header}>
           Verwendete Begrifflichkeiten
         </h3>
         <p>
@@ -116,7 +116,7 @@ export default function Impressum () {
           andere Stelle, die personenbezogene Daten im Auftrag des Verantwortlichen verarbeitet.
           <br />
         </p>
-        <h3 id='dsg-general-legalbasis' className='text-xl font-semibold'>
+        <h3 id='dsg-general-legalbasis' className={style.section_header}>
           Maßgebliche Rechtsgrundlagen
         </h3>
         <p>
@@ -152,7 +152,7 @@ export default function Impressum () {
           bestimmt sich nach den Vorgaben des Art. 9 Abs. 2 DSGVO.
           <br />
         </p>
-        <h3 id='dsg-general-securitymeasures' className='text-xl font-semibold'>
+        <h3 id='dsg-general-securitymeasures' className={style.section_header}>
           Sicherheitsmaßnahmen
         </h3>
         <p>
@@ -174,7 +174,7 @@ export default function Impressum () {
           Voreinstellungen.
           <br />
         </p>
-        <h3 id='dsg-general-coprocessing' className='text-xl font-semibold'>
+        <h3 id='dsg-general-coprocessing' className={style.section_header}>
           Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen und Dritten
         </h3>
         <p>
@@ -193,7 +193,7 @@ export default function Impressum () {
           Vorgaben entsprechenden Grundlage.
           <br />
         </p>
-        <h3 id='dsg-general-thirdparty' className='text-xl font-semibold'>
+        <h3 id='dsg-general-thirdparty' className={style.section_header}>
           Übermittlungen in Drittländer
         </h3>
         <p>
@@ -210,7 +210,7 @@ export default function Impressum () {
           entsprechenden Datenschutzniveaus (z.B. für die USA durch das „Privacy Shield“) oder
           Beachtung offiziell anerkannter spezieller vertraglicher Verpflichtungen.
         </p>
-        <h3 id='dsg-general-rightssubject' className='text-xl font-semibold'>
+        <h3 id='dsg-general-rightssubject' className={style.section_header}>
           Rechte der betroffenen Personen
         </h3>
         <p>
@@ -238,7 +238,7 @@ export default function Impressum () {
           zuständigen Aufsichtsbehörde einzureichen.
           <br />
         </p>
-        <h3 id='dsg-general-revokeconsent' className='text-xl font-semibold'>Widerrufsrecht</h3>
+        <h3 id='dsg-general-revokeconsent' className={style.section_header}>Widerrufsrecht</h3>
         <p>
           Sie haben das Recht, erteilte Einwilligungen mit Wirkung für die Zukunft zu widerrufen.
         </p>
@@ -250,7 +250,7 @@ export default function Impressum () {
             die Verarbeitung für Zwecke der Direktwerbung erfolgen.
           </strong>
         </p>
-        <h3 id='dsg-general-cookies' className='text-xl font-semibold'>
+        <h3 id='dsg-general-cookies' className={style.section_header}>
           Cookies und Widerspruchsrecht bei Direktwerbung
         </h3>
         <p>
@@ -295,7 +295,7 @@ export default function Impressum () {
           Abschaltung in den Einstellungen des Browsers erreicht werden. Bitte beachten Sie, dass
           dann gegebenenfalls nicht alle Funktionen dieses Onlineangebotes genutzt werden können.
         </p>
-        <h3 id='dsg-general-erasure' className='text-xl font-semibold'>Löschung von Daten</h3>
+        <h3 id='dsg-general-erasure' className={style.section_header}>Löschung von Daten</h3>
         <p>
           Die von uns verarbeiteten Daten werden nach Maßgabe der gesetzlichen Vorgaben gelöscht
           oder in ihrer Verarbeitung eingeschränkt. Sofern nicht im Rahmen dieser
@@ -309,7 +309,7 @@ export default function Impressum () {
           gesperrt und nicht für andere Zwecke verarbeitet. Das gilt z.B. für Daten, die aus
           handels- oder steuerrechtlichen Gründen aufbewahrt werden müssen.
         </p>
-        <h3 id='dsg-general-changes' className='text-xl font-semibold'>
+        <h3 id='dsg-general-changes' className={style.section_header}>
           Änderungen und Aktualisierungen der Datenschutzerklärung
         </h3>
         <p>
@@ -320,7 +320,7 @@ export default function Impressum () {
           sonstige individuelle Benachrichtigung erforderlich wird.
         </p>
         <p />
-        <h3 id='dsg-hostingprovider' className='text-xl font-semibold'>
+        <h3 id='dsg-hostingprovider' className={style.section_header}>
           Hosting und E-Mail-Versand
         </h3>
         <p />
@@ -341,7 +341,7 @@ export default function Impressum () {
           </span>
         </p>
         <p />
-        <h3 id='dsg-logfiles' className='text-xl font-semibold'>
+        <h3 id='dsg-logfiles' className={style.section_header}>
           Erhebung von Zugriffsdaten und Logfiles
         </h3>
         <p />
@@ -364,7 +364,7 @@ export default function Impressum () {
         </p>
         <a
           href='https://datenschutz-generator.de'
-          className='inline-block text-blue-700 underline dsg1-6'
+          className={style.link}
           rel='nofollow noopener noreferrer'
           target='_blank'
         >

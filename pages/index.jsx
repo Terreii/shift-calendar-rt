@@ -11,9 +11,10 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import qs from 'querystringify'
 
-import Footer from '../components/footer'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 import { getCalUrl, getTodayUrl } from '../lib/utils'
+
+import style from '../styles/layout.module.css'
 
 export default function Index ({ isFirstRender = false }) {
   const router = useRouter()
@@ -58,11 +59,11 @@ export default function Index ({ isFirstRender = false }) {
   }, [isFirstRender])
 
   if (!didCheckSettings && router.asPath.endsWith('?pwa')) {
-    return <main className='w-screen h-screen pt-4 text-center bg-gray-100' />
+    return <main className={style.main} />
   }
 
   return (
-    <main className='w-screen h-screen pt-4 text-center bg-gray-100'>
+    <main className={style.main}>
       <Head>
         <title>Schichtkalender für Bosch Reutlingen</title>
       </Head>
@@ -73,26 +74,25 @@ export default function Index ({ isFirstRender = false }) {
         <p>
           Welches Schichtmodell interessiert sie?
           <br />
-          Sie können das Modell später jederzeit im Menü
-          <img
-            className='inline-block ml-1 mr-2'
-            src='/assets/icons/hamburger_icon.svg'
-            height='20'
-            width='20'
-            alt='das Menü ist oben rechts'
-          />
+          Sie können das Modell später jederzeit im{' '}
+          <span className={style.no_break}>
+            Menü
+            <img
+              className={style.inline_menu_icon}
+              src='/assets/icons/hamburger_icon.svg'
+              height='20'
+              width='20'
+              alt='das Menü ist oben rechts'
+            />
+          </span>
           umändern.
         </p>
 
-        <ul
-          className='flex flex-col justify-center w-64 p-0 mx-auto mt-2 mb-16 space-y-3 list-none'
-        >
+        <ul className={style.shift_button_list}>
           {shiftModelNames.map(name => (
             <li key={name}>
               <Link href={`/cal/${name}`}>
-                <a
-                  className='inline-block w-full h-12 px-4 py-3 mx-3 text-center text-white bg-indigo-700 border-0 rounded shadow hover:bg-indigo-800 focus:bg-indigo-800 focus:ring focus:outline-none'
-                >
+                <a className={style.shift_button}>
                   {shiftModelText[name]}
                 </a>
               </Link>
@@ -100,8 +100,6 @@ export default function Index ({ isFirstRender = false }) {
           ))}
         </ul>
       </div>
-
-      <Footer />
     </main>
   )
 }

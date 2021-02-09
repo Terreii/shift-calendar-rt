@@ -14,6 +14,8 @@ import NavLinks from './header-nav-links'
 
 import { useQueryProps, useSaveSettings } from '../hooks/settings'
 
+import style from './header.module.css'
+
 /**
  * Renders the Header.
  */
@@ -25,21 +27,17 @@ export default function Header () {
   const [showShareMenu, setShowShareMenu] = useShowMenu('#share_menu')
 
   return (
-    <header
-      className='sticky top-0 left-0 z-50 flex flex-row items-center justify-between w-screen h-12 bg-green-900 shadow-lg'
-    >
-      <h1 className='m-0 text-2xl font-normal align-baseline'>
+    <header className={style.container}>
+      <h1 className={style.header}>
         <Link href='/'>
           <a
-            className='text-white no-underline hover:underline focus:underline focus:ring focus:outline-none'
+            className={style.header_link}
           >
-            <span className='pl-4 sm:hidden not-small-screen'>Kalender</span>
-            <span className='hidden pl-4 sm:inline not-small-screen'>
-              Kontischichtkalender Rt
-            </span>
+            <span className={style.short_text}>Kalender</span>
+            <span className={style.long_text}>Kontischichtkalender Rt</span>
             <svg
               title='Home. Gehe zur Auswahl der Schichtmodelle'
-              className='w-6 h-6 ml-2 small-screen-only'
+              className={style.text_as_icon}
               fill='none'
               stroke='currentColor'
               viewBox='0 0 24 24'
@@ -55,7 +53,7 @@ export default function Header () {
           </a>
         </Link>
       </h1>
-      <nav className='flex flex-row items-stretch h-full text-base'>
+      <nav className={style.navi}>
         <NavLinks
           isFullYear={isFullYear}
           month={month}

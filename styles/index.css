@@ -5,19 +5,69 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-@tailwind base;
+:root {
+  --group-1: #ff69b4;
+  --group-2: #ff0;
+  --group-3: #f00;
+  --group-4: #0f0;
+  --group-5: #1e90ff;
+  --group-6: #cd853f;
+  --group-1-text: black;
+  --group-2-text: black;
+  --group-3-text: black;
+  --group-4-text: black;
+  --group-5-text: black;
+  --group-6-text: black;
 
-.form-item {
-  @apply h-10 text-center text-black bg-gray-100 rounded shadow hover:bg-gray-300 focus:ring focus:outline-none;
+  --table-color: black;
+  --search-color: #A78BFA;
+  --weekend-bg-color: #D1D5DB;
+  --holiday-bg-color: #2DD4BF;
+  --closing-bg-color: #047857;
+  --closing-color: white;
+  --daylight-saving-bg-color: #FCD34D;
+  --daylight-saving-border-color: #DC2626;
+
+  --main-bg-color: white;
+  --main-color: black;
+  --soft-text-color: #111827;
+  --link-color: #1D4ED8;
+  --link-interact-color: #3B82F6;
+  --header-bg-color: #064E3B;
+  --header-hover-bg-color: #16A34A;
+  --header-color: white;
+
+  --form-bg-color: #F3F4F6;
+  --form-interact-bg-color: #D1D5DB;
+  --form-color: black;
+  --form-accept-bg-color: #6D28D9;
+  --form-accept-interact-bg-color: #4C1D95;
+  --form-accept-color: white;
+
+  --dialog-bg-color: #D1D5DB;
+  --dialog-border-color: #e5e8f4;
+  --dialog-shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji;
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
 }
 
 td, th {
   border: 1px solid black;
+  border: 1px solid var(--table-color);
   padding: 0.1rem
-}
-
-.pb-safe-area {
-  padding-bottom: env(safe-area-inset-bottom);
 }
 
 [id] {
@@ -25,31 +75,39 @@ td, th {
   Header is 3rem height.
   Always scroll so that the element is not hidden by the header.
   */
-  scroll-margin-top: 4rem;
+  scroll-margin-top: 7rem;
 }
 
-@tailwind components;
-
-@tailwind utilities;
-
-@layer components {
-  .hue-invert {
-    filter: invert(100%)
-  }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-#menu_summary::-webkit-details-marker {
-  display: none;
+a.link, .link {
+  color: #1D4ED8;
+  color: var(--link-color);
+  text-decoration: underline;
 }
-
-@media (max-width: 350px) {
-  .not-small-screen {
-    display: none;
-  }
+.link:hover, .link:focus, .link:active {
+  color: #3B82F6;
+  color: var(--link-interact-color);
 }
-
-@media (min-width: 351px) {
-  .small-screen-only {
-    display: none;
-  }
+.link:focus {
+  box-shadow:
+    0 0 0 3px rgba(59,130,246,0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
 }

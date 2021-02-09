@@ -9,6 +9,9 @@ import { useState, useEffect, useMemo } from 'react'
 
 import { getCalUrl } from '../lib/utils'
 
+import style from './menu.module.css'
+import formStyle from '../styles/form.module.css'
+
 /**
  * Display the share menu.
  * @param {object}   params            - Preact props.
@@ -79,15 +82,12 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
   }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel])
 
   return (
-    <div
-      id='share_menu'
-      className='absolute top-0 right-0 flex flex-col items-stretch content-center px-5 pt-3 pb-5 mt-12 text-white bg-green-900 shadow-lg'
-    >
-      <label className='flex flex-col'>
+    <div id='share_menu' className={style.container}>
+      <label className={style.element_container}>
         Adresse zum teilen:
         <input
           id='share_url'
-          className='pt-1 text-white bg-transparent focus:ring focus:outline-none'
+          className={style.share_address}
           type='url'
           readOnly
           value={url.href}
@@ -97,11 +97,11 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         />
       </label>
 
-      <h6 className='p-0 m-0 mt-5 ml-4 text-lg'>Füge hinzu:</h6>
+      <h6 className={style.title}>Füge hinzu:</h6>
 
-      <label className='mt-5 ml-2'>
+      <label className={style.share_label}>
         <input
-          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className={formStyle.checkbox}
           type='checkbox'
           checked={addShiftModel}
           onChange={event => {
@@ -117,9 +117,9 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         Schichtmodell
       </label>
 
-      <label className='mt-5 ml-2'>
+      <label className={style.share_label}>
         <input
-          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className={formStyle.checkbox}
           type='checkbox'
           checked={addGroup}
           disabled={group === 0}
@@ -138,9 +138,9 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         )}
       </label>
 
-      <label className='mt-5 ml-2'>
+      <label className={style.share_label}>
         <input
-          className='w-4 h-4 mr-1 focus:ring focus:outline-none'
+          className={formStyle.checkbox}
           type='checkbox'
           checked={addSearch}
           disabled={search == null}
@@ -159,10 +159,10 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         )}
       </label>
 
-      <div className='flex flex-row flex-wrap content-center mt-5'>
+      <div className={style.buttons_row}>
         <button
           type='button'
-          className='flex-auto w-32 mx-3 mt-5 form-item'
+          className={formStyle.cancel_button}
           onClick={hide}
         >
           Abbrechen
@@ -171,7 +171,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           ? (
             <button
               type='button'
-              className='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
+              className={formStyle.accept_button}
               onClick={event => {
                 event.preventDefault()
 
@@ -188,7 +188,7 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
           )
           : (
             <a
-              className='flex-auto w-32 py-2 mx-3 mt-5 text-white bg-purple-700 hover:bg-purple-500 active:bg-purple-500 form-item'
+              className={formStyle.accept_button}
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
                 url.toString().replace(/&/g, '%26')
               }`}
