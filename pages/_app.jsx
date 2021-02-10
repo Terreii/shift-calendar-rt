@@ -5,14 +5,19 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import PouchDB from 'pouchdb'
+import memoryAdapter from 'pouchdb-adapter-memory'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import { Provider } from 'use-pouchdb'
 
 import Footer from '../components/footer'
 import Header from '../components/header'
 import InstallPrompt from '../components/install-prompt'
 import 'modern-css-reset'
 import '../styles/index.css'
+
+PouchDB.plugin(memoryAdapter)
 
 export default function MyApp ({ Component, pageProps }) {
   // Index page uses this to redirect on the first render.
@@ -21,6 +26,23 @@ export default function MyApp ({ Component, pageProps }) {
   const [isFirstRender, setIsFirstRender] = useState(true)
   useEffect(() => {
     setIsFirstRender(false)
+  }, [])
+
+  const [db, setDB] = useState(createDB)
+
+  useEffect(() => {
+    // Create a new DB when the old one gets destroyed.
+    // A db will be destroyed when the user signs out.
+    const listener = dbName => {
+      if (dbName === 'local') {
+        setDB(createDB())
+      }
+    }
+
+    PouchDB.on('destroyed', listener)
+    return () => {
+      PouchDB.removeListener('destroyed', listener)
+    }
   }, [])
 
   return (
@@ -53,10 +75,30 @@ export default function MyApp ({ Component, pageProps }) {
         <link rel='manifest' href='/manifest.webmanifest' />
       </Head>
 
-      <Header />
-      <Component isFirstRender={isFirstRender} {...pageProps} />
-      <Footer />
-      <InstallPrompt />
+      <Provider pouchdb={db}>
+        <Header />
+        <Component isFirstRender={isFirstRender} {...pageProps} />
+        <Footer />
+        <InstallPrompt />
+      </Provider>
     </>
   )
+}
+
+/**
+ * Creates the local db.
+ */
+function createDB () {
+  try {
+    if ('IDBDatabase' in window || 'localStorage' in window) {
+      // in browser
+      return new PouchDB('local', { auto_compaction: true })
+    } else {
+      // on server/node
+      return new PouchDB('local', { adapter: 'memory' })
+    }
+  } catch (err) {
+    // on server/node
+    return new PouchDB('local', { adapter: 'memory' })
+  }
 }
