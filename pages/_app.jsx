@@ -8,18 +8,23 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import PouchDB from 'pouchdb'
 import memoryAdapter from 'pouchdb-adapter-memory'
 import { useState, useEffect } from 'react'
+import { Provider as ReduxProvider } from 'react-redux'
 import Head from 'next/head'
 import { Provider } from 'use-pouchdb'
 
 import Footer from '../components/footer'
 import Header from '../components/header'
 import InstallPrompt from '../components/install-prompt'
+import configureStore from '../lib/store'
+import { changed as dbChanged } from '../lib/reducers/db'
 import 'modern-css-reset'
 import '../styles/index.css'
 
 PouchDB.plugin(memoryAdapter)
 
-export default function MyApp ({ Component, pageProps }) {
+const store = configureStore()
+
+export default function App ({ Component, pageProps }) {
   // Index page uses this to redirect on the first render.
   // But on later visits not.
   // If the user did select a shift model or there is a share hash, then index will redirect.
@@ -29,7 +34,6 @@ export default function MyApp ({ Component, pageProps }) {
   }, [])
 
   const [db, setDB] = useState(createDB)
-
   useEffect(() => {
     // Create a new DB when the old one gets destroyed.
     // A db will be destroyed when the user signs out.
@@ -44,6 +48,16 @@ export default function MyApp ({ Component, pageProps }) {
       PouchDB.removeListener('destroyed', listener)
     }
   }, [])
+
+  useEffect(() => {
+    // update the db if it did change
+    store.dispatch((dispatch, getState, extraArg) => {
+      if (extraArg.db !== db) {
+        extraArg.db = db
+        dispatch(dbChanged())
+      }
+    })
+  }, [db])
 
   return (
     <>
@@ -76,10 +90,12 @@ export default function MyApp ({ Component, pageProps }) {
       </Head>
 
       <Provider pouchdb={db}>
-        <Header />
-        <Component isFirstRender={isFirstRender} {...pageProps} />
-        <Footer />
-        <InstallPrompt />
+        <ReduxProvider store={store}>
+          <Header />
+          <Component isFirstRender={isFirstRender} {...pageProps} />
+          <Footer />
+          <InstallPrompt />
+        </ReduxProvider>
       </Provider>
     </>
   )
