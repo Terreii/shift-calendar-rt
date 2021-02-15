@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -15,6 +16,7 @@ import {
   shiftModelNumberOfGroups
 } from '../lib/constants'
 import { getCalUrl } from '../lib/utils'
+import { startEdit, endEdit, selectIsEditing } from '../lib/reducers/vacation'
 
 import style from './menu.module.css'
 
@@ -42,6 +44,8 @@ export default function Menu ({
   onShare
 }) {
   const router = useRouter()
+  const dispatch = useDispatch()
+  const isEditingVacation = useSelector(selectIsEditing)
 
   let searchValue = ''
   if (search != null) {
@@ -78,26 +82,45 @@ export default function Menu ({
       >
         <div className={style.scroll_container}>
           <div className={style.element_container}>
+            <button
+              type='button'
+              className={style.form_item}
+              onClick={() => {
+                if (isEditingVacation) {
+                  dispatch(endEdit())
+                } else {
+                  dispatch(startEdit())
+                }
+              }}
+            >
+              Urlaubsplanung {isEditingVacation ? 'abbrechen' : 'starten'}
+            </button>
+          </div>
+
+          <div className={style.element_container}>
             {!(supportsMonthInput || isFullYear) && (
-              <select
-                className={style.month_select}
-                title='Gehe zum Monat'
-                value={month}
-                onChange={event => {
-                  router.push(getCalUrl({
-                    group,
-                    shiftModel,
-                    isFullYear: false,
-                    month: event.target.value,
-                    year
-                  }))
-                }}
-                aria-controls='calendar_main_out'
-              >
-                {monthNames.map((name, index) => (
-                  <option key={name} value={index + 1}>{name}</option>
-                ))}
-              </select>
+              <label className={style.label}>
+                Monat
+                <select
+                  className={style.form_item}
+                  title='Gehe zum Monat'
+                  value={month}
+                  onChange={event => {
+                    router.push(getCalUrl({
+                      group,
+                      shiftModel,
+                      isFullYear: false,
+                      month: event.target.value,
+                      year
+                    }))
+                  }}
+                  aria-controls='calendar_main_out'
+                >
+                  {monthNames.map((name, index) => (
+                    <option key={name} value={index + 1}>{name}</option>
+                  ))}
+                </select>
+              </label>
             )}
           </div>
 
