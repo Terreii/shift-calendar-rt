@@ -1,5 +1,7 @@
 import { render } from '@testing-library/react'
 
+import { Container, createTestStore } from '../tests/utils'
+
 import Header from './header'
 
 jest.mock('../hooks/settings')
@@ -7,7 +9,12 @@ jest.mock('../hooks/time')
 
 describe('components/Header', () => {
   it('should show the correct navigation links and buttons', () => {
-    const { queryByText } = render(<Header />)
+    const { store } = createTestStore()
+    const { queryByText } = render(
+      <Container store={store}>
+        <Header />
+      </Container>
+    )
 
     const link = queryByText('Kalender')
     expect(link).toBeTruthy()

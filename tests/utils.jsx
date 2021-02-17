@@ -6,6 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { diff } from 'deep-object-diff'
+import { Provider } from 'react-redux'
 import PouchDB from 'pouchdb'
 import memoryAdapter from 'pouchdb-adapter-memory'
 
@@ -90,4 +91,12 @@ export function createTestStore () {
     setMark,
     getDiff
   }
+}
+
+export function Container ({ store, children }) {
+  return (
+    <Provider store={store}>
+      {children}
+    </Provider>
+  )
 }
