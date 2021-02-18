@@ -16,6 +16,7 @@ import Footer from '../components/footer'
 import Header from '../components/header'
 import InstallPrompt from '../components/install-prompt'
 import configureStore from '../lib/store'
+import { useCreateViews } from '../lib/views'
 import { changed as dbChanged } from '../lib/reducers/db'
 import 'modern-css-reset'
 import '../styles/index.css'
@@ -50,6 +51,10 @@ export default function App ({ Component, pageProps }) {
   }, [])
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'production' && 'document' in window) {
+      window.db = db
+    }
+
     // update the db if it did change
     store.dispatch((dispatch, getState, extraArg) => {
       if (extraArg.db !== db) {
@@ -58,6 +63,8 @@ export default function App ({ Component, pageProps }) {
       }
     })
   }, [db])
+
+  useCreateViews(db)
 
   return (
     <>

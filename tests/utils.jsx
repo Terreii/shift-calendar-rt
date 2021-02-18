@@ -12,6 +12,7 @@ import memoryAdapter from 'pouchdb-adapter-memory'
 
 import configureStore from '../lib/store'
 import { changed } from '../lib/reducers/db'
+import { vacations, createView } from '../lib/views'
 
 PouchDB.plugin(memoryAdapter)
 
@@ -89,7 +90,10 @@ export function createTestStore () {
     db,
     dispatch: store.dispatch,
     setMark,
-    getDiff
+    getDiff,
+    addViews: async () => {
+      await createView(db, vacations)
+    }
   }
 }
 
