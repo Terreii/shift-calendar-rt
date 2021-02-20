@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 
 import MonthBody from './month-body'
 import { monthNames } from '../lib/constants'
-import { selectIsEditing } from '../lib/reducers/vacation'
+import { selectIsEditing, selectDaysByMonth } from '../lib/reducers/vacation'
 
 import style from '../styles/calender.module.css'
 
@@ -27,6 +27,7 @@ import style from '../styles/calender.module.css'
  */
 function Month ({ className = '', year, month, data, today, search, group }) {
   const isEditingVacations = useSelector(selectIsEditing)
+  const selectedVacationsDays = useSelector(selectDaysByMonth)[`${year}-${month + 1}`] ?? {}
   const groups = []
 
   if (group === 0) { // if 0 display all groups
@@ -86,6 +87,7 @@ function Month ({ className = '', year, month, data, today, search, group }) {
         today={today}
         search={search}
         group={group}
+        selectedVacationsDays={selectedVacationsDays}
         isEditingVacations={isEditingVacations}
       />
 

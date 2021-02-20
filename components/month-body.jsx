@@ -6,12 +6,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { DateTime, Info } from 'luxon'
+import { useDispatch } from 'react-redux'
 
 import WeekCell from './cells/week'
 import DayInMonthCell from './cells/dayInMonth'
 import WeekDayCell from './cells/weekDay'
 import GroupShiftCell from './cells/groupShift'
 import VacationCell from './cells/vacation'
+import { addDay, removeDay } from '../lib/reducers/vacation'
 
 import style from '../styles/calender.module.css'
 
@@ -32,6 +34,7 @@ const supportZones = Info.features().zones
  * @param {number[]}   [arg.today]  Array of numbers that contains todays date. [year, month, day].
  * @param {number}     [arg.search] Date of the search result. Or null.
  * @param {number}     arg.group    Group to display. 0 = All, 1 - 6 is group number
+ * @param {number[]}   arg.selectedVacationsDays  Selected vacation days. For editing.
  * @param {boolean}    arg.isEditingVacations   Is the user editing their vacations.
  * @returns {JSX.Element}
  */
@@ -42,8 +45,10 @@ export default function MonthBody ({
   today,
   search,
   group,
+  selectedVacationsDays,
   isEditingVacations
 }) {
+  const dispatch = useDispatch()
   const todayInThisMonth = today != null && today[0] === year && today[1] === month
 
   // Render every row/day.
@@ -113,6 +118,14 @@ export default function MonthBody ({
         {isEditingVacations && (
           <VacationCell
             isEditing={isEditingVacations}
+            isSelected={selectedVacationsDays[time.day]}
+            onChange={checked => {
+              if (checked) {
+                dispatch(addDay(time.year, time.month, time.day))
+              } else {
+                dispatch(removeDay(time.year, time.month, time.day))
+              }
+            }}
           />
         )}
       </tr>
