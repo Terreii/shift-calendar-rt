@@ -198,6 +198,24 @@ Daylight-saving doesn't need this fix, because it is always on a sunday.
   border-color: var(--table-color);
 }
 
+.vacation_cell {
+  background-color: white;
+  background-color: var(--main-bg-color);
+  padding: 0.1rem 0.3rem;
+}
+.row[data-interest="search"] > .vacation_cell {
+  border-top: 4px solid #A78BFA;
+  border-top: 4px solid var(--search-color);
+  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid var(--search-color);
+}
+.row[data-interest="today"] > .vacation_cell {
+  border-top: 4px solid black;
+  border-top: 4px solid var(--table-color);
+  border-bottom: 4px solid black;
+  border-bottom: 4px solid var(--table-color);
+}
+
 .group[data-group="1"] {
   background-color: #ff69b4;
   background-color: var(--group-1);

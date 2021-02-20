@@ -48,7 +48,7 @@ export default function Year () {
         className={style.container}
         onClick={event => {
           const element = event.target.closest('[title]')
-          if ((element?.title?.length ?? 0) > 0) {
+          if ((element?.title?.length ?? 0) > 0 && !(element?.dataset.noalert ?? false)) {
             window.alert(element.title)
           }
         }}

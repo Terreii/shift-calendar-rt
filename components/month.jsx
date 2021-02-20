@@ -6,9 +6,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { memo } from 'react'
+import { useSelector } from 'react-redux'
 
 import MonthBody from './month-body'
 import { monthNames } from '../lib/constants'
+import { selectIsEditing } from '../lib/reducers/vacation'
 
 import style from '../styles/calender.module.css'
 
@@ -24,6 +26,7 @@ import style from '../styles/calender.module.css'
  * @returns {JSX.Element}
  */
 function Month ({ className = '', year, month, data, today, search, group }) {
+  const isEditingVacations = useSelector(selectIsEditing)
   const groups = []
 
   if (group === 0) { // if 0 display all groups
@@ -67,6 +70,12 @@ function Month ({ className = '', year, month, data, today, search, group }) {
               </span>
             </th>
           ))}
+          {isEditingVacations && (
+            <td>
+              <span className='sr-only'>Urlaub</span>
+              <span aria-hidden='true' title='Urlaub'>🏖</span>
+            </td>
+          )}
         </tr>
       </thead>
 
@@ -77,6 +86,7 @@ function Month ({ className = '', year, month, data, today, search, group }) {
         today={today}
         search={search}
         group={group}
+        isEditingVacations={isEditingVacations}
       />
 
       <tfoot className={style.footer}>
@@ -93,6 +103,9 @@ function Month ({ className = '', year, month, data, today, search, group }) {
               {data.workingCount[gr]}
             </td>
           ))}
+          {isEditingVacations && (
+            <td />
+          )}
         </tr>
       </tfoot>
     </table>
