@@ -83,3 +83,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .buttons_row > button + button {
   margin-left: 1rem;
 }
+
+.days_count {
+  align-self: center;
+  margin-left: 0.75rem;
+  margin-right: auto;
+}

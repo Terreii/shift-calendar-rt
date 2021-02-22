@@ -13,6 +13,7 @@ import {
   selectId,
   selectName,
   selectNote,
+  selectDays,
   startEdit,
   setName,
   setNote,
@@ -57,6 +58,8 @@ export default function VacationInfo () {
             dispatch(startEdit())
           }}
         >
+          <DaysCount />
+
           <button type='submit' className={formStyle.accept_button}>
             Bearbeiten
           </button>
@@ -116,6 +119,8 @@ export default function VacationInfo () {
         </label>
 
         <div className={style.buttons_row}>
+          <DaysCount />
+
           <button type='submit' className={formStyle.accept_button}>
             Speichern
           </button>
@@ -133,5 +138,15 @@ export default function VacationInfo () {
         </div>
       </form>
     </aside>
+  )
+}
+
+function DaysCount () {
+  const days = useSelector(selectDays)
+  const count = days.length
+  return (
+    <div className={style.days_count}>
+      {count} {count === 1 ? 'Tag' : 'Tage'}
+    </div>
   )
 }
