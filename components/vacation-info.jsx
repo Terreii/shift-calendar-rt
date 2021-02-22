@@ -18,7 +18,9 @@ import {
   setName,
   setNote,
   endEdit,
-  doSave
+  doLoad,
+  doSave,
+  doDelete
 } from '../lib/reducers/vacation'
 
 import style from './vacation-info.module.css'
@@ -31,6 +33,8 @@ export default function VacationInfo () {
   const id = useSelector(selectId)
   const name = useSelector(selectName)
   const note = useSelector(selectNote)
+  const days = useSelector(selectDays)
+  const isNew = id === 'new'
 
   if (!isEditing && id == null) {
     return null
@@ -82,13 +86,15 @@ export default function VacationInfo () {
 
   return (
     <aside className={style.container}>
-      <h2 className={style.header}>Urlaub {id === 'new' ? 'hinzufügen' : 'bearbeiten'}</h2>
+      <h2 className={style.header}>Urlaub {isNew ? 'hinzufügen' : 'bearbeiten'}</h2>
 
       <form
         className={style.form}
         onSubmit={event => {
           event.preventDefault()
-          dispatch(doSave())
+          if (days.length > 0) {
+            dispatch(doSave())
+          }
         }}
       >
         <label className={style.item}>
@@ -118,10 +124,31 @@ export default function VacationInfo () {
           />
         </label>
 
-        <div className={style.buttons_row}>
-          <DaysCount />
+        <DaysCount />
 
-          <button type='submit' className={formStyle.accept_button}>
+        <div className={style.buttons_row}>
+          {!isNew && (
+            <button
+              type='button'
+              className={style.delete_button}
+              onClick={event => {
+                event.preventDefault()
+                event.stopPropagation()
+
+                if (window.confirm('Soll dieser Urlaub gelöscht werden?')) {
+                  dispatch(doDelete(id))
+                }
+              }}
+            >
+              Löschen
+            </button>
+          )}
+
+          <button
+            type='submit'
+            className={formStyle.accept_button}
+            disabled={days.length === 0}
+          >
             Speichern
           </button>
 
@@ -130,7 +157,11 @@ export default function VacationInfo () {
             className={formStyle.cancel_button}
             onClick={event => {
               event.preventDefault()
-              dispatch(endEdit())
+              if (isNew) {
+                dispatch(endEdit())
+              } else {
+                dispatch(doLoad(id))
+              }
             }}
           >
             Abbrechen

@@ -85,7 +85,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 }
 
 .days_count {
-  align-self: center;
+  align-self: flex-start;
   margin-left: 0.75rem;
   margin-right: auto;
+  margin-bottom: 0.75rem;
+}
+
+.delete_button {
+  composes: button from "../styles/form.module.css";
+  background-color: #EF4444;
+  justify-self: start;
+  margin-right: auto;
+  margin-left: 0.5rem;
+}
+.delete_button:hover, .delete_button:focus {
+  background-color: #F87171;
 }
