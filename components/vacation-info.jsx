@@ -117,7 +117,7 @@ export default function VacationInfo () {
             id='vacation_note_input'
             className={style.input}
             name='note'
-            rows='3'
+            rows='2'
             cols='20'
             value={note}
             onChange={event => {

@@ -94,10 +94,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .delete_button {
   composes: button from "../styles/form.module.css";
   background-color: #EF4444;
+  background-color: var(--form-danger-bg-color);
+  color: black;
+  color: var(--form-danger-color);
   justify-self: start;
   margin-right: auto;
   margin-left: 0.5rem;
 }
 .delete_button:hover, .delete_button:focus {
   background-color: #F87171;
+  background-color: var(--form-danger-interact-bg-color);
 }

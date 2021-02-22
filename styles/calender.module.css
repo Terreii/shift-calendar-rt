@@ -26,6 +26,18 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding-bottom: 0.5rem;
 }
 
+@media (max-width: 351px) {
+  .main {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .container {
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+  }
+}
+
 /*
 Hide all calender except the current month.
 But then show the next month on small screen, then the next 2 months, then all on big screens.
@@ -203,7 +215,6 @@ Daylight-saving doesn't need this fix, because it is always on a sunday.
   background-color: white;
   background-color: var(--main-bg-color);
   padding: 0.1rem 0.3rem;
-  width: 2.5rem;
 }
 .row[data-interest="search"] > .vacation_cell {
   border-top: 4px solid #A78BFA;
