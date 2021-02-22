@@ -100,6 +100,7 @@ export default function VacationInfo () {
         <label className={style.item}>
           <span className={style.label}>Name</span>
           <input
+            id='vacation_name_input'
             className={style.input}
             type='text'
             name='name'
@@ -113,6 +114,7 @@ export default function VacationInfo () {
         <label className={style.item}>
           <span className={style.label}>Notiz</span>
           <textarea
+            id='vacation_note_input'
             className={style.input}
             name='note'
             rows='3'

@@ -90,6 +90,14 @@ export default function Menu ({
                   dispatch(endEdit())
                 } else {
                   dispatch(addVacation())
+                  setShowMenu(false)
+
+                  setTimeout(() => {
+                    const element = document.getElementById('vacation_name_input')
+                    if (element) {
+                      element.focus()
+                    }
+                  }, 32)
                 }
               }}
             >
