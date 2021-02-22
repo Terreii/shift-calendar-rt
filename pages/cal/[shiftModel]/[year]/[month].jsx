@@ -11,6 +11,7 @@ import { DateTime, Info } from 'luxon'
 
 import ByMonths from '../../../../components/by-month'
 import Downloader from '../../../../components/download'
+import VacationInfo from '../../../../components/vacation-info'
 import { useTodayZeroIndex } from '../../../../hooks/time'
 import { shiftModelText } from '../../../../lib/constants'
 import { parseNumber } from '../../../../lib/utils'
@@ -59,6 +60,8 @@ export default function MonthPage (props) {
       />
 
       <Downloader shiftModel={shiftModel} />
+
+      <VacationInfo />
     </main>
   )
 }

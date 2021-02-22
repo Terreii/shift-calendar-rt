@@ -64,7 +64,7 @@ export default function ByMonths ({ shiftModel, group, search, year, month, toda
       className={style.container}
       onClick={event => {
         const element = event.target.closest('[title]')
-        if (element && element.title.length > 0) {
+        if (element && element.title.length > 0 && !(element?.dataset.noalert ?? false)) {
           window.alert(element.title)
         }
       }}

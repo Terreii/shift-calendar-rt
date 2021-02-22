@@ -11,6 +11,7 @@ import { DateTime, Info } from 'luxon'
 
 import Month from '../../../components/month'
 import Downloader from '../../../components/download'
+import VacationInfo from '../../../components/vacation-info'
 import { useTodayZeroIndex } from '../../../hooks/time'
 import { shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
@@ -48,7 +49,7 @@ export default function Year () {
         className={style.container}
         onClick={event => {
           const element = event.target.closest('[title]')
-          if ((element?.title?.length ?? 0) > 0) {
+          if ((element?.title?.length ?? 0) > 0 && !(element?.dataset.noalert ?? false)) {
             window.alert(element.title)
           }
         }}
@@ -67,6 +68,8 @@ export default function Year () {
       </div>
 
       <Downloader shiftModel={shiftModel} />
+
+      <VacationInfo />
     </main>
   )
 }

@@ -5,10 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { useView } from 'use-pouchdb'
 
 import MonthBody from './month-body'
 import { monthNames } from '../lib/constants'
+import { selectId, selectIsEditing, selectDaysByMonth } from '../lib/reducers/vacation'
 
 import style from '../styles/calender.module.css'
 
@@ -24,6 +27,28 @@ import style from '../styles/calender.module.css'
  * @returns {JSX.Element}
  */
 function Month ({ className = '', year, month, data, today, search, group }) {
+  const isEditingVacations = useSelector(selectIsEditing)
+  const editId = useSelector(selectId)
+  const selectedVacationsDays = useSelector(selectDaysByMonth)[`${year}-${month + 1}`] ?? {}
+  const vacViewResponse = useView('vacations', {
+    startkey: [year, month + 1],
+    endkey: [year, month + 1, {}],
+    reduce: false
+  })
+  const hasVacations = vacViewResponse.rows.length > 0
+  const vacationDays = useMemo(() => {
+    const result = {}
+    for (const { key, value, id } of vacViewResponse.rows) {
+      if (editId !== id || !isEditingVacations) {
+        result[key[2]] = {
+          id,
+          name: value
+        }
+      }
+    }
+    return result
+  }, [vacViewResponse, editId, selectedVacationsDays, isEditingVacations])
+
   const groups = []
 
   if (group === 0) { // if 0 display all groups
@@ -67,6 +92,12 @@ function Month ({ className = '', year, month, data, today, search, group }) {
               </span>
             </th>
           ))}
+          {(isEditingVacations || hasVacations) && (
+            <td>
+              <span className='sr-only'>Urlaub</span>
+              <span aria-hidden='true' title='Urlaub'>🏖</span>
+            </td>
+          )}
         </tr>
       </thead>
 
@@ -77,6 +108,10 @@ function Month ({ className = '', year, month, data, today, search, group }) {
         today={today}
         search={search}
         group={group}
+        hasVacations={hasVacations}
+        vacation={vacationDays}
+        selectedVacationsDays={selectedVacationsDays}
+        isEditingVacations={isEditingVacations}
       />
 
       <tfoot className={style.footer}>
@@ -93,6 +128,14 @@ function Month ({ className = '', year, month, data, today, search, group }) {
               {data.workingCount[gr]}
             </td>
           ))}
+          {(isEditingVacations || hasVacations) && (
+            <td title='Anzahl Urlaubs Tags'>
+              {Object.keys(vacationDays).length + (isEditingVacations
+                ? Object.keys(selectedVacationsDays).length
+                : 0
+              )}
+            </td>
+          )}
         </tr>
       </tfoot>
     </table>

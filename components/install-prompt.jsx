@@ -6,9 +6,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
 import ms from 'milliseconds'
 
 import Confirm from './confirm'
+import { selectIsEditing } from '../lib/reducers/vacation'
 
 import style from './prompts.module.css'
 
@@ -17,6 +19,7 @@ import style from './prompts.module.css'
  */
 export default function InstallButton () {
   const [show, setShow] = useState('none')
+  const isEditingVacations = useSelector(selectIsEditing)
   const deferredPrompt = useRef(null)
 
   useEffect(() => {
@@ -66,7 +69,9 @@ export default function InstallButton () {
         // Deactivated for now.
         // setShow('update')
         wb.addEventListener('controlling', event => {
-          window.location.reload()
+          if (!isEditingVacations) {
+            window.location.reload()
+          }
         })
 
         // Send a message to the waiting service worker, instructing it to activate.
@@ -75,8 +80,12 @@ export default function InstallButton () {
 
       wb.addEventListener('waiting', promptNewVersionAvailable)
       wb.addEventListener('externalwaiting', promptNewVersionAvailable)
+      return () => {
+        wb.removeEventListener('waiting', promptNewVersionAvailable)
+        wb.removeEventListener('externalwaiting', promptNewVersionAvailable)
+      }
     }
-  }, [])
+  }, [isEditingVacations])
 
   const onClickInstallButton = () => {
     setShow('none')

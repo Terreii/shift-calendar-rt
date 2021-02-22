@@ -43,6 +43,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   --form-accept-bg-color: #6D28D9;
   --form-accept-interact-bg-color: #4C1D95;
   --form-accept-color: white;
+  --form-danger-bg-color: #EF4444;
+  --form-danger-interact-bg-color: #F87171;
+  --form-danger-color: black;
 
   --dialog-bg-color: #D1D5DB;
   --dialog-border-color: #e5e8f4;
