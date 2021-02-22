@@ -9,6 +9,7 @@ import { diff } from 'deep-object-diff'
 import { Provider } from 'react-redux'
 import PouchDB from 'pouchdb'
 import memoryAdapter from 'pouchdb-adapter-memory'
+import { Provider as PouchDBProvider } from 'use-pouchdb'
 
 import configureStore from '../lib/store'
 import { changed } from '../lib/reducers/db'
@@ -97,10 +98,12 @@ export function createTestStore () {
   }
 }
 
-export function Container ({ store, children }) {
+export function Container ({ store, db, children }) {
   return (
-    <Provider store={store}>
-      {children}
-    </Provider>
+    <PouchDBProvider pouchdb={db}>
+      <Provider store={store}>
+        {children}
+      </Provider>
+    </PouchDBProvider>
   )
 }

@@ -15,8 +15,9 @@ import formStyle from '../../styles/form.module.css'
  * @param {boolean}  param.isEditing  Is the user editing their vacations?
  * @param {boolean}  param.isSelected Is this day selected on the current edit.
  * @param {function} param.onChange   Callback when the day is changed.
+ * @param {function} param.onClick   Callback when the day got clicked.
  */
-export default function VacationCell ({ vacation, isEditing, isSelected, onChange }) {
+export default function VacationCell ({ vacation, isEditing, isSelected, onChange, onClick }) {
   const isVacation = vacation != null
   return (
     <td className={style.vacation_cell}>
@@ -33,9 +34,19 @@ export default function VacationCell ({ vacation, isEditing, isSelected, onChang
         />
       )}
       {isVacation && (
-        <span title={vacation.name}>
+        <button
+          type='button'
+          title={vacation.name}
+          className={style.trans_button}
+          onClick={event => {
+            event.preventDefault()
+            event.stopPropagation()
+            onClick(vacation.id)
+          }}
+          data-noalert
+        >
           🏖
-        </span>
+        </button>
       )}
     </td>
   )

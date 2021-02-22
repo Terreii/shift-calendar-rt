@@ -56,6 +56,7 @@ But then show the next month on small screen, then the next 2 months, then all o
   .container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    justify-items: center;
   }
 
   .calender_table:nth-child(3) {
@@ -202,6 +203,7 @@ Daylight-saving doesn't need this fix, because it is always on a sunday.
   background-color: white;
   background-color: var(--main-bg-color);
   padding: 0.1rem 0.3rem;
+  width: 2.5rem;
 }
 .row[data-interest="search"] > .vacation_cell {
   border-top: 4px solid #A78BFA;
@@ -214,6 +216,14 @@ Daylight-saving doesn't need this fix, because it is always on a sunday.
   border-top: 4px solid var(--table-color);
   border-bottom: 4px solid black;
   border-bottom: 4px solid var(--table-color);
+}
+
+.trans_button {
+  border-width: 0px;
+  background-color: transparent;
+  cursor: pointer;
+  margin: 0px;
+  padding: 0px 0.25rem;
 }
 
 .group[data-group="1"] {

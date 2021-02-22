@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { Fragment } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import {
@@ -12,6 +13,7 @@ import {
   selectId,
   selectName,
   selectNote,
+  startEdit,
   setName,
   setNote,
   endEdit,
@@ -33,9 +35,51 @@ export default function VacationInfo () {
     return null
   }
 
+  if (!isEditing) {
+    return (
+      <aside className={style.container}>
+        <h2 className={style.header}>{name}</h2>
+
+        {note.length > 0 && (
+          <p className={style.text}>
+            {note.split('\n').map((line, index) => (
+              <Fragment key={index}>
+                {index > 0 && <br />}
+                {line}
+              </Fragment>
+            ))}
+          </p>
+        )}
+
+        <form
+          className={style.buttons_row}
+          onSubmit={event => {
+            dispatch(startEdit())
+          }}
+        >
+          <button type='submit' className={formStyle.accept_button}>
+            Bearbeiten
+          </button>
+
+          <button
+            type='reset'
+            className={formStyle.cancel_button}
+            onClick={event => {
+              event.preventDefault()
+              event.stopPropagation()
+              dispatch(endEdit())
+            }}
+          >
+            Schließen
+          </button>
+        </form>
+      </aside>
+    )
+  }
+
   return (
     <aside className={style.container}>
-      <h2 className={style.header}>Urlaub{id === 'new' ? ' hinzufügen' : ''}</h2>
+      <h2 className={style.header}>Urlaub {id === 'new' ? 'hinzufügen' : 'bearbeiten'}</h2>
 
       <form
         className={style.form}

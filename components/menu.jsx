@@ -16,7 +16,7 @@ import {
   shiftModelNumberOfGroups
 } from '../lib/constants'
 import { getCalUrl } from '../lib/utils'
-import { startEdit, endEdit, selectIsEditing } from '../lib/reducers/vacation'
+import { addVacation, endEdit, selectIsEditing } from '../lib/reducers/vacation'
 
 import style from './menu.module.css'
 
@@ -89,11 +89,11 @@ export default function Menu ({
                 if (isEditingVacation) {
                   dispatch(endEdit())
                 } else {
-                  dispatch(startEdit())
+                  dispatch(addVacation())
                 }
               }}
             >
-              Urlaubsplanung {isEditingVacation ? 'abbrechen' : 'starten'}
+              {isEditingVacation ? 'Urlaubsplanung beenden' : 'Urlaub hinzufügen'}
             </button>
           </div>
 

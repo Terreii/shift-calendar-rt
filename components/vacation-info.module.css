@@ -43,6 +43,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-left: 0.75rem;
 }
 
+.text {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
 .form {
   display: flex;
   flex-direction: column;

@@ -6,10 +6,11 @@ import selectMonthData from '../lib/select-month-data'
 import { Container, createTestStore } from '../tests/utils'
 
 describe('components/month', () => {
-  it('should display the correct month data', () => {
-    const { store } = createTestStore()
+  it('should display the correct month data', async () => {
+    const { store, db, addViews } = createTestStore()
+    await addViews()
     const { queryByText } = render(
-      <Container store={store}>
+      <Container store={store} db={db}>
         <Month
           year={2019}
           month={0}
@@ -26,9 +27,10 @@ describe('components/month', () => {
   })
 
   it('should pass aXe', async () => {
-    const { store } = createTestStore()
+    const { store, db, addViews } = createTestStore()
+    await addViews()
     const { container } = render(
-      <Container store={store}>
+      <Container store={store} db={db}>
         <Month
           year={2019}
           month={0}

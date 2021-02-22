@@ -39,7 +39,7 @@ function Month ({ className = '', year, month, data, today, search, group }) {
   const vacationDays = useMemo(() => {
     const result = {}
     for (const { key, value, id } of vacViewResponse.rows) {
-      if (editId !== id) {
+      if (editId !== id || !isEditingVacations) {
         result[key[2]] = {
           id,
           name: value
@@ -47,7 +47,7 @@ function Month ({ className = '', year, month, data, today, search, group }) {
       }
     }
     return result
-  }, [vacViewResponse, editId, selectedVacationsDays])
+  }, [vacViewResponse, editId, selectedVacationsDays, isEditingVacations])
 
   const groups = []
 
@@ -130,7 +130,7 @@ function Month ({ className = '', year, month, data, today, search, group }) {
           ))}
           {(isEditingVacations || hasVacations) && (
             <td title='Anzahl Urlaubs Tags'>
-              {vacViewResponse.rows.length + (isEditingVacations
+              {Object.keys(vacationDays).length + (isEditingVacations
                 ? Object.keys(selectedVacationsDays).length
                 : 0
               )}

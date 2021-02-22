@@ -9,9 +9,9 @@ jest.mock('../hooks/time')
 
 describe('components/Header', () => {
   it('should show the correct navigation links and buttons', () => {
-    const { store } = createTestStore()
+    const { store, db } = createTestStore()
     const { queryByText } = render(
-      <Container store={store}>
+      <Container store={store} db={db}>
         <Header />
       </Container>
     )

@@ -13,7 +13,7 @@ import DayInMonthCell from './cells/dayInMonth'
 import WeekDayCell from './cells/weekDay'
 import GroupShiftCell from './cells/groupShift'
 import VacationCell from './cells/vacation'
-import { addDay, removeDay } from '../lib/reducers/vacation'
+import { addDay, removeDay, doLoad } from '../lib/reducers/vacation'
 
 import style from '../styles/calender.module.css'
 
@@ -133,6 +133,9 @@ export default function MonthBody ({
               } else {
                 dispatch(removeDay(time.year, time.month, time.day))
               }
+            }}
+            onClick={id => {
+              dispatch(doLoad(id))
             }}
           />
         )}
