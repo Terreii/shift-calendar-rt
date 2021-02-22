@@ -23,7 +23,7 @@ export default function VacationCell ({ isEditing, isSelected, onChange }) {
           type='checkbox'
           className={formStyle.focus_outline}
           title='Ist an dem Tag Urlaub geplant?'
-          checked={isSelected}
+          checked={isSelected ?? false}
           onChange={event => {
             onChange(event.target.checked)
           }}
