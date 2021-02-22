@@ -11,14 +11,16 @@ import formStyle from '../../styles/form.module.css'
 /**
  * Show and edit vacations for a day.
  * @param {object}   param            React argument
+ * @param {{ name: string, id: string }} [param.vacation] That day is a vacation day. With data.
  * @param {boolean}  param.isEditing  Is the user editing their vacations?
  * @param {boolean}  param.isSelected Is this day selected on the current edit.
  * @param {function} param.onChange   Callback when the day is changed.
  */
-export default function VacationCell ({ isEditing, isSelected, onChange }) {
+export default function VacationCell ({ vacation, isEditing, isSelected, onChange }) {
+  const isVacation = vacation != null
   return (
     <td className={style.vacation_cell}>
-      {isEditing && (
+      {isEditing && !isVacation && (
         <input
           type='checkbox'
           className={formStyle.focus_outline}
@@ -29,6 +31,11 @@ export default function VacationCell ({ isEditing, isSelected, onChange }) {
           }}
           data-noalert
         />
+      )}
+      {isVacation && (
+        <span title={vacation.name}>
+          🏖
+        </span>
       )}
     </td>
   )

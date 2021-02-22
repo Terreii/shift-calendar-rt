@@ -34,6 +34,11 @@ const supportZones = Info.features().zones
  * @param {number[]}   [arg.today]  Array of numbers that contains todays date. [year, month, day].
  * @param {number}     [arg.search] Date of the search result. Or null.
  * @param {number}     arg.group    Group to display. 0 = All, 1 - 6 is group number
+ * @param {boolean}    arg.hasVacations Does that month have vacation days.
+ * @param {[boolean, {[key: string]: {
+ *   id: string,
+ *   name: string
+ * }}]}                arg.vacation Vacation days in this month.
  * @param {number[]}   arg.selectedVacationsDays  Selected vacation days. For editing.
  * @param {boolean}    arg.isEditingVacations   Is the user editing their vacations.
  * @returns {JSX.Element}
@@ -45,6 +50,8 @@ export default function MonthBody ({
   today,
   search,
   group,
+  hasVacations,
+  vacation,
   selectedVacationsDays,
   isEditingVacations
 }) {
@@ -115,8 +122,9 @@ export default function MonthBody ({
             />
           )
         })}
-        {isEditingVacations && (
+        {(isEditingVacations || hasVacations) && (
           <VacationCell
+            vacation={vacation[time.day]}
             isEditing={isEditingVacations}
             isSelected={selectedVacationsDays[time.day]}
             onChange={checked => {

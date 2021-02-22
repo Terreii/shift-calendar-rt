@@ -49,6 +49,7 @@ export default function VacationInfo () {
           <input
             className={style.input}
             type='text'
+            name='name'
             value={name}
             onChange={event => {
               dispatch(setName(event.target.value))
@@ -60,6 +61,7 @@ export default function VacationInfo () {
           <span className={style.label}>Notiz</span>
           <textarea
             className={style.input}
+            name='note'
             rows='3'
             cols='20'
             value={note}
