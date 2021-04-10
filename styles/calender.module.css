@@ -178,6 +178,13 @@ Daylight-saving doesn't need this fix, because it is always on a sunday.
   color: var(--table-color);
 }
 
+.day_in_month[data-holiday="ramadan"] {
+  background-color: #06B6D4;
+  background-color: var(--ramadan-bg-color);
+  color: black;
+  color: var(--table-color);
+}
+
 .day_in_month[data-daylight] {
   background-color: #FCD34D;
   background-color: var(--daylight-saving-bg-color);
