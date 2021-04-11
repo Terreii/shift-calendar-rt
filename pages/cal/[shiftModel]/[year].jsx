@@ -11,6 +11,7 @@ import { DateTime, Info } from 'luxon'
 
 import Month from '../../../components/month'
 import Downloader from '../../../components/download'
+import Legend from '../../../components/legend'
 import { useTodayZeroIndex } from '../../../hooks/time'
 import { shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
@@ -42,6 +43,8 @@ export default function Year () {
           Schichtkalender für Bosch Reutlingen
         </title>
       </Head>
+
+      <Legend />
 
       <div
         id='calendar_main_out'
