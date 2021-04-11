@@ -41,27 +41,30 @@ export default function Legend () {
 
       <dl className={style.column}>
         <Cell
-          className={style.holiday}
-          description='Schulferien / Feiertage in Baden-Württemberg'
-          screenReader='Zelle mit einem Blaugrün Hintergrund'
-        />
-
-        <Cell
           className={style.closing}
           description='Schließtage (Ostern und Weihnachten)'
           screenReader='Zelle mit einem Dunkelgrünen Hintergrund'
         />
 
         <Cell
+          className={style.holiday}
+          description='Schulferien / Feiertage in Baden-Württemberg'
+          screenReader='Zelle mit einem Blaugrün Hintergrund'
+          href='https://www.schulferien.org/Baden-Wurttemb_/baden-wurttemb_.html'
+        />
+
+        <Cell
           className={style.ramadan}
           description='Ramadan (erster oder letzter Fastentag)'
           screenReader='Zelle mit einem Cyan Hintergrund'
+          href='https://www.ramadan.de/wann-ist-ramadan/'
         />
 
         <Cell
           className={style.daylight_saving}
           description='Zeitumstellung'
           screenReader='Zelle mit einem Gelben Hintergrund und einem dicken Roten Rahmen'
+          href='https://www.zeitumstellung.de/termin-zeitumstellung.html'
         />
       </dl>
     </div>
@@ -74,10 +77,11 @@ export default function Legend () {
  * @param {string} [param.className]     ClassName of the example cell.
  * @param {string} param.description     Description of the cell shown.
  * @param {string} param.screenReader    Content for screen readers.
+ * @param {string} [param.href]          Info source URL.
  * @param {JSX.Element} [param.children] Content of the example cell.
  * @returns {JSX.Element}
  */
-function Cell ({ className, description, screenReader, children }) {
+function Cell ({ className, description, screenReader, href, children }) {
   return (
     <>
       <dt className={className ? `${style.cell} ${className}` : style.cell}>
@@ -86,7 +90,17 @@ function Cell ({ className, description, screenReader, children }) {
       </dt>
 
       <dd className={style.definition}>
-        {description}
+        {href
+          ? (
+            <a
+              href={href}
+              className={style.link}
+              rel='noopener noreferrer'
+            >
+              {description}
+            </a>
+          )
+          : description}
       </dd>
     </>
   )

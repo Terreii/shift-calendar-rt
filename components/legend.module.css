@@ -62,3 +62,16 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   color: #111827;
   color: var(--soft-text-color);
 }
+
+.link {
+  color: #111827;
+  color: var(--soft-text-color);
+  text-decoration: underline;
+  text-decoration-color: #1D4ED8;
+  text-decoration-color: var(--link-color);
+}
+.link:hover, .link:focus {
+  text-decoration-color: #3B82F6;
+  text-decoration-color: var(--link-interact-color);
+  text-decoration-thickness: 3px;
+}
