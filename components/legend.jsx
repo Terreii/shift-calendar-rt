@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { useMemo } from 'react'
 import { shiftTitle, workingLongName } from '../lib/constants'
 
 import style from './legend.module.css'
@@ -55,7 +56,7 @@ export default function Legend () {
 
         <Cell
           className={style.ramadan}
-          description='Ramadan (erster oder letzter Fastentag)'
+          description='Ramadan (erster / letzter Fastentag)'
           screenReader='Zelle mit einem Cyan Hintergrund'
           href='https://www.ramadan.de/wann-ist-ramadan/'
         />
@@ -82,6 +83,18 @@ export default function Legend () {
  * @returns {JSX.Element}
  */
 function Cell ({ className, description, screenReader, href, children }) {
+  const descriptionElement = useMemo(() => {
+    if (!description.includes('\n')) {
+      return description
+    }
+
+    return description.split(/\r?\n/)
+      .flatMap((line, index) => index === 0
+        ? [<span key={index}>{line}</span>]
+        : [<br key={index + '_br'} />, <span key={index}>{line}</span>]
+      )
+  }, [description])
+
   return (
     <>
       <dt className={className ? `${style.cell} ${className}` : style.cell}>
@@ -97,10 +110,10 @@ function Cell ({ className, description, screenReader, href, children }) {
               className={style.link}
               rel='noopener noreferrer'
             >
-              {description}
+              {descriptionElement}
             </a>
           )
-          : description}
+          : descriptionElement}
       </dd>
     </>
   )
