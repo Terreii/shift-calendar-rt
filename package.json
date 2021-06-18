@@ -111,6 +111,6 @@
     "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
     "serve": "^11.3.2",
-    "tailwindcss": "^1.4.6"
+    "tailwindcss": "^2.2.0"
   }
 }
