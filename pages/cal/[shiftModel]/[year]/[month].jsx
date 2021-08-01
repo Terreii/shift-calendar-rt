@@ -76,9 +76,8 @@ export async function getServerSideProps (context) {
 
   const date = DateTime.fromObject({
     year: parseInt(year),
-    month: parseInt(month, 10),
-    zone: 'Europe/Berlin'
-  })
+    month: parseInt(month, 10)
+  }, { zone: 'Europe/Berlin' })
 
   let maxAge = 60
 

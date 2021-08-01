@@ -40,13 +40,17 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
     const thatDay = index + 1
-    const time = DateTime.fromObject({
-      year,
-      month: month + 1,
-      day: thatDay,
-      locale: 'de-DE',
-      zone: supportZones ? 'Europe/Berlin' : undefined
-    })
+    const time = DateTime.fromObject(
+      {
+        year,
+        month: month + 1,
+        day: thatDay
+      },
+      {
+        locale: 'de-DE',
+        zone: supportZones ? 'Europe/Berlin' : undefined
+      }
+    )
     const weekDay = time.weekday
     const holidayData = data.holidays[thatDay]
 

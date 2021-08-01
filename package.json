@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
-    "luxon": "^1.25.0",
+    "luxon": "^2.0.1",
     "milliseconds": "^1.0.3",
     "modern-css-reset": "^1.4.0",
     "next": "^11.0.1",
