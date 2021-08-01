@@ -21,6 +21,7 @@ import style from '../styles/calender.module.css'
  */
 
 const supportZones = Info.features().zones
+const weekendDays = [0, 6, 7]
 
 /**
  * Renders the body of a month.
@@ -75,7 +76,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
         id={time.toISODate()}
         className={style.row}
         data-interest={interesting}
-        data-weekend={[0, 6, 7].includes(weekDay)}
+        data-weekend={weekendDays.includes(weekDay)}
         data-closing={isClosingHoliday ? 'closing' : undefined}
         title={isClosingHoliday ? holidayData.name : undefined}
       >
