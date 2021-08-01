@@ -7,10 +7,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect, useRef } from 'react'
 import ms from 'milliseconds'
+import Image from 'next/image'
 
 import Confirm from './confirm'
 
 import style from './prompts.module.css'
+import iOSShare from '../public/assets/icons/ios-share.png'
+import iOSAddToHome from '../public/assets/icons/ios-add-to-home-screen.png'
 
 /**
  * Renders an install button for add-to-home-screen of PWA.
@@ -110,7 +113,7 @@ export default function InstallButton () {
         <Confirm
           confirmText={(
             <>
-              <img
+              <Image
                 src='/assets/icons/add-outline.svg'
                 height='25'
                 width='25'
@@ -141,25 +144,17 @@ export default function InstallButton () {
       return (
         <div className={style.ios_install}>
           <span className={style.ios_text}>
-            Klicke auf Teilen &amp; dann <strong>"Zum Home-Bildschirm" </strong>
+            Klicke auf Teilen &amp; dann <strong>&quot;Zum Home-Bildschirm&quot; </strong>
             um den Kalender wie eine App zu installieren:
           </span>
           <div className={style.ios_icons_row}>
-            <img
-              src='/assets/icons/ios-share.png'
-              height='81'
-              width='57'
-              className={style.ios_icon}
-              alt='klicke Teilen'
-            />
+            <div className={style.ios_icon}>
+              <Image src={iOSShare} alt='klicke Teilen' />
+            </div>
             <span className={style.ios_icon_space}>➡︎</span>
-            <img
-              src='/assets/icons/ios-add-to-home-screen.png'
-              height='283'
-              width='190'
-              className={style.ios_icon}
-              alt='klicke Zum Home-Bildschirm'
-            />
+            <div className={style.ios_icon}>
+              <Image src={iOSAddToHome} alt='klicke Zum Home-Bildschirm' />
+            </div>
           </div>
           <CloseButton onClick={dismiss} />
         </div>

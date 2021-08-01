@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import qs from 'querystringify'
@@ -14,6 +15,7 @@ import qs from 'querystringify'
 import { shiftModelNames, shiftModelText } from '../lib/constants'
 import { getCalUrl, getTodayUrl } from '../lib/utils'
 
+import hamburgerIcon from '../public/assets/icons/hamburger_icon.svg'
 import style from '../styles/layout.module.css'
 
 export default function Index ({ isFirstRender = false }) {
@@ -56,7 +58,7 @@ export default function Index ({ isFirstRender = false }) {
         setDidCheckSettings(true)
       }
     }
-  }, [isFirstRender])
+  }, [isFirstRender, router])
 
   if (!didCheckSettings && router.asPath.endsWith('?pwa')) {
     return <main className={style.main} />
@@ -71,22 +73,22 @@ export default function Index ({ isFirstRender = false }) {
       <div id='calendar_main_out'>
         <h2>Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!</h2>
 
-        <p>
+        <div>
           Welches Schichtmodell interessiert sie?
           <br />
           Sie können das Modell später jederzeit im{' '}
           <span className={style.no_break}>
             Menü
-            <img
+            <Image
               className={style.inline_menu_icon}
-              src='/assets/icons/hamburger_icon.svg'
+              src={hamburgerIcon}
               height='20'
               width='20'
               alt='das Menü ist oben rechts'
             />
           </span>
           umändern.
-        </p>
+        </div>
 
         <ul className={style.shift_button_list}>
           {shiftModelNames.map(name => (
