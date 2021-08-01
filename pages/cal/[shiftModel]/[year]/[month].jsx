@@ -76,9 +76,8 @@ export async function getServerSideProps (context) {
 
   const date = DateTime.fromObject({
     year: parseInt(year),
-    month: parseInt(month, 10),
-    zone: 'Europe/Berlin'
-  })
+    month: parseInt(month, 10)
+  }, { zone: 'Europe/Berlin' })
 
   let maxAge = 60
 
@@ -89,7 +88,7 @@ export async function getServerSideProps (context) {
     maxAge = 60 * 60 * 24 * 7 // cache for 7 days
   } else if (Info.features().zones) {
     // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone('Europe/Berlin')
+    const now = DateTime.local({ zone: 'Europe/Berlin' })
 
     let hour = 6 // get next shift start
     if (now.hour >= 22) {

@@ -21,6 +21,7 @@ import style from '../styles/calender.module.css'
  */
 
 const supportZones = Info.features().zones
+const weekendDays = [0, 6, 7]
 
 /**
  * Renders the body of a month.
@@ -39,13 +40,17 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
     const thatDay = index + 1
-    const time = DateTime.fromObject({
-      year,
-      month: month + 1,
-      day: thatDay,
-      locale: 'de-DE',
-      zone: supportZones ? 'Europe/Berlin' : undefined
-    })
+    const time = DateTime.fromObject(
+      {
+        year,
+        month: month + 1,
+        day: thatDay
+      },
+      {
+        locale: 'de-DE',
+        zone: supportZones ? 'Europe/Berlin' : undefined
+      }
+    )
     const weekDay = time.weekday
     const holidayData = data.holidays[thatDay]
 
@@ -75,7 +80,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
         id={time.toISODate()}
         className={style.row}
         data-interest={interesting}
-        data-weekend={[0, 6, 7].includes(weekDay)}
+        data-weekend={weekendDays.includes(weekDay)}
         data-closing={isClosingHoliday ? 'closing' : undefined}
         title={isClosingHoliday ? holidayData.name : undefined}
       >

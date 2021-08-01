@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 
@@ -63,8 +64,9 @@ export default function Menu ({
       }}
     >
       <summary id='menu_summary' className={style.menu_button}>
-        <img
+        <Image
           src='/assets/icons/hamburger_icon.svg'
+          className={style.menu_button_img}
           height='45'
           width='45'
           alt='Menu'
@@ -269,7 +271,7 @@ export default function Menu ({
             onClick={onShare}
             aria-label='Teile deine Schicht'
           >
-            <img src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
+            <Image src='/assets/icons/share21.svg' height='32' width='32' alt='teilen' />
           </button>
         </div>
       </div>

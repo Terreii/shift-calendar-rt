@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import ms from 'milliseconds'
 import { useRouter } from 'next/router'
 
@@ -50,13 +50,15 @@ export default function ByMonths ({ shiftModel, group, search, year, month, toda
       monthsData.push([yearNr, monthNr])
     }
     return monthsData
-  }, [year, month])
+  }, [year, month, search])
 
+  const lastSearch = useRef(null)
   useEffect(() => {
-    if (search) {
+    if (search !== lastSearch.current) {
+      lastSearch.current = search
       scrollToADay(year, month, search)
     }
-  }, [search])
+  }, [year, month, search])
 
   return (
     <div
@@ -157,7 +159,7 @@ function useHammer (year, month, shiftModel, group) {
         hammertime.off('swipe', handler)
       }
     }
-  }, [year, month, shiftModel, group, container])
+  }, [year, month, shiftModel, group, container, router])
 
   return setContainer
 }

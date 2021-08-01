@@ -44,6 +44,7 @@ But then show the next month on small screen, then the next 2 months, then all o
   border: 1px solid var(--table-color);
   border-collapse: collapse;
   color: var(--table-color);
+  table-layout: fixed;
 }
 
 @media (min-width: 1280px) {
@@ -128,7 +129,7 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-right: 4px solid var(--table-color);
 }
 
-.row[data-interest="search"] > .day_in_month {
+.row[data-interest="search"] > .week_day {
   border-left: 4px solid #A78BFA;
   border-left: 4px solid var(--search-color);
   border-top: 4px solid #A78BFA;
@@ -136,26 +137,13 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-bottom: 4px solid #A78BFA;
   border-bottom: 4px solid var(--search-color);
 }
-.row[data-interest="today"] > .day_in_month {
+.row[data-interest="today"] > .week_day {
   border-left: 4px solid black;
   border-left: 4px solid var(--table-color);
   border-top: 4px solid black;
   border-top: 4px solid var(--table-color);
   border-bottom: 4px solid black;
   border-bottom: 4px solid var(--table-color);
-}
-
-/*
-Chromium and Safari have a bug,
-where the thick border stretch the full length of the week cell down.
-The first child will be the week cell.
-
-Daylight-saving doesn't need this fix, because it is always on a sunday.
-*/
-.row[data-interest="search"] > .day_in_month:nth-child(2),
-.row[data-interest="today"] > .day_in_month:nth-child(2) {
-  border-left: 1px solid black;
-  border-left: 1px solid var(--table-color);
 }
 
 .row[data-interest="search"] > .week_day {
