@@ -73,7 +73,7 @@ export default function ByMonths ({ shiftModel, group, search, year, month, toda
       ref={ref}
       aria-live='polite'
     >
-      {monthsData.map(([year, month, search], index) => (
+      {monthsData.map(([year, month, search]) => (
         <Month
           key={`${year}-${month}-${shiftModel}-${group}`}
           className={style.calender_table}
