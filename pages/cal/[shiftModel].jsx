@@ -70,7 +70,7 @@ export async function getServerSideProps (context) {
 
   if (Info.features().zones) {
     // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone('Europe/Berlin')
+    const now = DateTime.local({ zone: 'Europe/Berlin' })
 
     let hour = 6 // get next shift start
     if (now.hour >= 22) {
