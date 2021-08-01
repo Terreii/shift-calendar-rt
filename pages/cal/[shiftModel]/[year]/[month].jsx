@@ -18,7 +18,7 @@ import { parseNumber } from '../../../../lib/utils'
 
 import style from '../../../../styles/calender.module.css'
 
-export default function MonthPage (props) {
+export default function MonthPage () {
   const router = useRouter()
   const today = useTodayZeroIndex()
   const shiftModel = router.query.shiftModel

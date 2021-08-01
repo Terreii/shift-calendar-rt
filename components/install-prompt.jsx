@@ -58,7 +58,7 @@ export default function InstallButton () {
     if (typeof window !== 'undefined' && 'serviceWorker' in navigator && window.workbox != null) {
       const wb = window.workbox
 
-      const promptNewVersionAvailable = event => {
+      const promptNewVersionAvailable = () => {
         // `event.wasWaitingBeforeRegister` will be false if this is the first time the updated
         // service worker is waiting.
         // When `event.wasWaitingBeforeRegister` is true, a previously updated service worker is
@@ -68,7 +68,7 @@ export default function InstallButton () {
         // The update process takes to long after hitting update.
         // Deactivated for now.
         // setShow('update')
-        wb.addEventListener('controlling', event => {
+        wb.addEventListener('controlling', () => {
           window.location.reload()
         })
 
@@ -169,7 +169,7 @@ export default function InstallButton () {
           onClick={confirmed => {
             if (confirmed && window.workbox) {
               const wb = window.workbox
-              wb.addEventListener('controlling', event => {
+              wb.addEventListener('controlling', () => {
                 window.location.reload()
               })
 

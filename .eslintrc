@@ -1,3 +1,14 @@
 {
-  "extends": "next"
+  "env": {
+    "browser": true,
+    "jest": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "plugin:jest/recommended",
+    "next",
+    "next/core-web-vitals"
+  ]
 }

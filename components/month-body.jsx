@@ -94,7 +94,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
         />
         <WeekDayCell time={time} />
 
-        {shifts.map((shift, index, all) => {
+        {shifts.map((shift, index) => {
           const gr = group === 0 ? index : group - 1
           return (
             <GroupShiftCell
