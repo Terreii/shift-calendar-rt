@@ -15,7 +15,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 100vw;
   height: 3rem;
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);

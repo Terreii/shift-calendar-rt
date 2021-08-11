@@ -58,9 +58,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding: 0.25rem 0.75rem;
   padding-left: 0.5rem;
 }
-.accept_button_with_img > img {
+.accept_button_with_img > :first-child {
   filter: invert(100%);
-  margin-right: 0.5rem;
+  padding-right: 0.5rem;
+  transform: translateX(-3px);
 }
 
 .cancel_button {

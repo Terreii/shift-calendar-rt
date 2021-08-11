@@ -46,7 +46,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   max-height: 90%;
   max-height: calc(100vh - 3rem);
   max-height: calc(100vh - 3rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
-  overflow-y: scroll;
+  overflow-y: auto;
   overscroll-behavior-y: contain;
   color: white;
   color: var(--header-color);
