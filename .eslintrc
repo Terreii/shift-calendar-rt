@@ -6,7 +6,6 @@
   },
   "extends": [
     "eslint:recommended",
-    "standard",
     "plugin:jest/recommended",
     "next",
     "next/core-web-vitals"
