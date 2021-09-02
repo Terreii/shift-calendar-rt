@@ -9,8 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "standard ./**/*.{js,jsx} && jest --watch",
-    "test:ci": "standard ./**/*.{js,jsx} && jest --coverage",
+    "test": "jest --watch",
+    "test:ci": "jest --coverage",
     "update:holidays": "node ./updateHolidays.js"
   },
   "keywords": [],
@@ -34,12 +34,11 @@
     "jest-axe": "^5.0.1",
     "node-ical": "^0.13.0",
     "prompt": "^1.1.0",
-    "react-test-renderer": "^17.0.1",
-    "standard": "^14.3.4"
+    "react-test-renderer": "^17.0.1"
   },
   "dependencies": {
     "hammerjs": "^2.0.8",
-    "luxon": "^2.0.1",
+    "luxon": "^1.28.0",
     "milliseconds": "^1.0.3",
     "modern-css-reset": "^1.4.0",
     "next": "^11.0.1",

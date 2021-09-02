@@ -44,9 +44,7 @@ export default function MonthBody ({ year, month, data, today, search, group }) 
       {
         year,
         month: month + 1,
-        day: thatDay
-      },
-      {
+        day: thatDay,
         locale: 'de-DE',
         zone: supportZones ? 'Europe/Berlin' : undefined
       }
