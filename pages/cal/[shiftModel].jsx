@@ -5,7 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { DateTime, Info } from 'luxon'
