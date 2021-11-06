@@ -12,7 +12,7 @@ import { DateTime, Info } from 'luxon'
 import Month from '../../../components/month'
 import Downloader from '../../../components/download'
 import Legend from '../../../components/legend'
-import { useTodayZeroIndex } from '../../../hooks/time'
+import { useTodayZeroIndex, useUnloadedFix } from '../../../hooks/time'
 import { shiftModelText } from '../../../lib/constants'
 import selectMonthData from '../../../lib/select-month-data'
 import { parseNumber } from '../../../lib/utils'
@@ -25,6 +25,11 @@ export default function Year () {
   const shiftModel = router.query.shiftModel
   const year = parseNumber(router.query.year, null)
   const group = parseNumber(router.query.group, 0)
+
+  const shouldRemoveCalendar = useUnloadedFix()
+  if (shouldRemoveCalendar) {
+    return null
+  }
 
   if (year == null) {
     return <h2>{router.query.year} is not a valid year.</h2>

@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { useEffect } from 'react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { DateTime, Info } from 'luxon'
@@ -12,7 +13,7 @@ import { DateTime, Info } from 'luxon'
 import ByMonths from '../../components/by-month'
 import Downloader from '../../components/download'
 import Legend from '../../components/legend'
-import { useTodayZeroIndex } from '../../hooks/time'
+import { useTodayZeroIndex, useUnloadedFix } from '../../hooks/time'
 import { shiftModelText } from '../../lib/constants'
 import { parseNumber } from '../../lib/utils'
 
@@ -28,6 +29,11 @@ export default function ShiftModel () {
   const group = parseNumber(router.query.group, 0)
   const year = today[0]
   const month = today[1]
+
+  const shouldRemoveCalendar = useUnloadedFix()
+  if (shouldRemoveCalendar) {
+    return null
+  }
 
   return (
     <main className={style.main}>

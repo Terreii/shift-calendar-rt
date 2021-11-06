@@ -52,3 +52,50 @@ export function useTodayZeroIndex () {
     return result
   }, [today])
 }
+
+/**
+ * Fix to update the today border and switching of months in the [shiftModel] page,
+ * after a tab was unloaded and restored.
+ * 
+ * It does it by completely re-render the calendar's tables. By removing them and the add them back.
+ * 
+ * @returns {boolean}  If true, then the calendar should not be rendered.
+ */
+export function useUnloadedFix () {
+  const [shouldRemoveCalendar, setRemoveCalendar] = useState(false)
+
+  useEffect(() => {
+    const today = getToday()
+    const todayRows = Array.from(document.querySelectorAll('tr[data-interest="today"]'))
+
+    if (todayRows.length === 0) {
+      // there aren't any today rows visible, check if the current month is rendered,
+      // and reload the calendar if so.
+      const currentMonth = document.querySelector(`#month_${today[0]}-${today[1]}`)
+      if (currentMonth != null) {
+        setRemoveCalendar(true)
+        return
+      }
+    }
+
+    const dateStr = today.slice(0, 3).join('-')
+    if (!todayRows.some(row => row.id === dateStr)) {
+      // none of the today rows had the current date. So the calendar must be re-rendered.
+      setRemoveCalendar(true)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (shouldRemoveCalendar) {
+      // restore the calendar after it was removed
+      const cancel = requestAnimationFrame(() => {
+        setRemoveCalendar(false)
+      })
+      return () => {
+        cancelAnimationFrame(cancel)
+      }
+    }
+  }, [shouldRemoveCalendar])
+
+  return shouldRemoveCalendar
+}
