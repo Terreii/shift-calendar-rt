@@ -40,7 +40,7 @@ export default function MyApp ({ Component, pageProps }) {
         <meta name='apple-mobile-web-app-title' content='Schichtkalender' />
         <meta
           name='application-name'
-          content='Inoffizieller Schichtkalender für Bosch Reutlingen'
+          content='Schichtkalender Bosch RtP1'
         />
         <meta name='format-detection' content='telephone=no' />
         <meta name='theme-color' content='#064E3B' />
