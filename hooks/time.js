@@ -68,12 +68,21 @@ export function useUnloadedFix () {
     const today = getToday()
     const todayRows = Array.from(document.querySelectorAll('tr[data-interest="today"]'))
 
+    const update = () => {
+      if (window.navigator.onLine) {
+        // Reload, to get the newest version
+        window.location.reload()
+      } else {
+        setRemoveCalendar(true)
+      }
+    }
+
     if (todayRows.length === 0) {
       // there aren't any today rows visible, check if the current month is rendered,
       // and reload the calendar if so.
       const currentMonth = document.querySelector(`#month_${today[0]}-${today[1]}`)
       if (currentMonth != null) {
-        setRemoveCalendar(true)
+        update()
         return
       }
     }
@@ -81,7 +90,7 @@ export function useUnloadedFix () {
     const dateStr = today.slice(0, 3).join('-')
     if (!todayRows.some(row => row.id === dateStr)) {
       // none of the today rows had the current date. So the calendar must be re-rendered.
-      setRemoveCalendar(true)
+      update()
     }
   }, [])
 
