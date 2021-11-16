@@ -87,6 +87,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   accent-color: #6D28D9;
   accent-color: var(--form-accept-bg-color);
 }
+.checkbox:disabled {
+  opacity: 0.8;
+}
 .checkbox:focus {
   box-shadow:
     0 0 0 3px rgba(59,130,246,0.5),
