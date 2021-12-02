@@ -69,12 +69,7 @@ export function useUnloadedFix () {
     const todayRows = Array.from(document.querySelectorAll('tr[data-interest="today"]'))
 
     const update = () => {
-      if (window.navigator.onLine) {
-        // Reload, to get the newest version
-        window.location.reload()
-      } else {
-        setRemoveCalendar(true)
-      }
+      setRemoveCalendar(true)
     }
 
     if (todayRows.length === 0) {
