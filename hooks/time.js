@@ -87,7 +87,7 @@ export function useUnloadedFix () {
       }
     }
 
-    const dateStr = today.slice(0, 3).join('-')
+    const dateStr = today.slice(0, 3).map(n => n.toString().padStart(2, '0')).join('-')
     if (!todayRows.some(row => row.id === dateStr)) {
       // none of the today rows had the current date. So the calendar must be re-rendered.
       update()
