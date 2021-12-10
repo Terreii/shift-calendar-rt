@@ -19,18 +19,22 @@ import style from '../../styles/calender.module.css'
 export default function GroupShiftCell ({ group, shift, isToday }) {
   const title = isToday ? 'Heute ' + (shiftTitle[shift] ?? '') : shiftTitle[shift]
 
+  if (shift === 'K') {
+    return (
+      <td
+        className={style.group}
+        title={title}
+      />
+    )
+  }
+
   return (
     <td
       className={style.group}
       title={title}
-      data-group={shift !== 'K' ? group + 1 : null}
+      data-group={group + 1}
     >
-      {shift !== 'K' && (
-        <>
-          <span className='sr-only'>{workingLongName[shift]}</span>
-          <span aria-hidden='true'>{shift}</span>
-        </>
-      )}
+      {shift}
     </td>
   )
 }
