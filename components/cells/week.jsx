@@ -18,8 +18,7 @@ export default function WeekCell ({ time }) {
       className={style.week_cell}
       rowSpan={Math.min(7 - time.weekday, time.daysInMonth - time.day) + 1}
     >
-      <span className='sr-only'>Woche {time.weekNumber}</span>
-      <span aria-hidden='true'>{time.weekNumber}</span>
+      {time.weekNumber}
     </td>
   )
 }
