@@ -5,39 +5,39 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Head from 'next/head'
-import { useRouter } from 'next/router'
-import { DateTime, Info } from 'luxon'
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { DateTime, Info } from "luxon";
 
-import Month from '../../../components/month'
-import Downloader from '../../../components/download'
-import Legend from '../../../components/legend'
-import { useTodayZeroIndex, useUnloadedFix } from '../../../hooks/time'
-import { shiftModelText } from '../../../lib/constants'
-import selectMonthData from '../../../lib/select-month-data'
-import { parseNumber } from '../../../lib/utils'
+import Month from "../../../components/month";
+import Downloader from "../../../components/download";
+import Legend from "../../../components/legend";
+import { useTodayZeroIndex, useUnloadedFix } from "../../../hooks/time";
+import { shiftModelText } from "../../../lib/constants";
+import selectMonthData from "../../../lib/select-month-data";
+import { parseNumber } from "../../../lib/utils";
 
-import style from '../../../styles/calender.module.css'
+import style from "../../../styles/calender.module.css";
 
-export default function Year () {
-  const router = useRouter()
-  const today = useTodayZeroIndex()
-  const shiftModel = router.query.shiftModel
-  const year = parseNumber(router.query.year, null)
-  const group = parseNumber(router.query.group, 0)
+export default function Year() {
+  const router = useRouter();
+  const today = useTodayZeroIndex();
+  const shiftModel = router.query.shiftModel;
+  const year = parseNumber(router.query.year, null);
+  const group = parseNumber(router.query.group, 0);
 
-  const shouldRemoveCalendar = useUnloadedFix()
+  const shouldRemoveCalendar = useUnloadedFix();
   if (shouldRemoveCalendar) {
-    return null
+    return null;
   }
 
   if (year == null) {
-    return <h2>{router.query.year} is not a valid year.</h2>
+    return <h2>{router.query.year} is not a valid year.</h2>;
   }
 
-  const monthsData = []
+  const monthsData = [];
   for (let i = 0; i < 12; i++) {
-    monthsData.push([year, i])
+    monthsData.push([year, i]);
   }
 
   return (
@@ -52,15 +52,15 @@ export default function Year () {
       <Legend />
 
       <div
-        id='calendar_main_out'
+        id="calendar_main_out"
         className={style.container}
-        onClick={event => {
-          const element = event.target.closest('[title]')
+        onClick={(event) => {
+          const element = event.target.closest("[title]");
           if ((element?.title?.length ?? 0) > 0) {
-            window.alert(element.title)
+            window.alert(element.title);
           }
         }}
-        aria-live='polite'
+        aria-live="polite"
       >
         {monthsData.map(([year, month]) => (
           <Month
@@ -76,7 +76,7 @@ export default function Year () {
 
       <Downloader shiftModel={shiftModel} />
     </main>
-  )
+  );
 }
 
 /**
@@ -84,45 +84,47 @@ export default function Year () {
  * @param {import('next').GetServerSidePropsContext} context Next SSR context.
  * @returns {import('next').GetServerSidePropsResult}
  */
-export async function getServerSideProps (context) {
-  const { year: yearStr } = context.query
-  const year = parseInt(yearStr)
+export async function getServerSideProps(context) {
+  const { year: yearStr } = context.query;
+  const year = parseInt(yearStr);
 
-  let maxAge = 60
+  let maxAge = 60;
 
-  const thisYear = new Date().getUTCFullYear()
-  if (year > thisYear) { // if request is in the future and today is not displayed.
-    maxAge = 60 * 60 * 24 // cache for a day
-  } else if (year < thisYear) { // if request is in the past and today is not displayed.
-    maxAge = 60 * 60 * 24 * 31 // cache for 7 days
+  const thisYear = new Date().getUTCFullYear();
+  if (year > thisYear) {
+    // if request is in the future and today is not displayed.
+    maxAge = 60 * 60 * 24; // cache for a day
+  } else if (year < thisYear) {
+    // if request is in the past and today is not displayed.
+    maxAge = 60 * 60 * 24 * 31; // cache for 7 days
   } else if (Info.features().zones) {
     // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone('Europe/Berlin')
-    context.res.setHeader('X-Server-Luxon-Time', now.toFormat("HH':'mm"))
+    const now = DateTime.local().setZone("Europe/Berlin");
+    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
 
-    let hour = 6 // get next shift start
+    let hour = 6; // get next shift start
     if (now.hour >= 22) {
-      hour = 6
+      hour = 6;
     } else if (now.hour >= 14) {
-      hour = 22
+      hour = 22;
     } else if (now.hour >= 6) {
-      hour = 14
+      hour = 14;
     }
 
     let nextShift = now.set({
       hour,
       minute: 0,
       second: 0,
-      millisecond: 0
-    })
-    if (nextShift.diff(now, 'minutes').toObject().minutes < 0) {
-      nextShift = nextShift.plus({ days: 1 })
+      millisecond: 0,
+    });
+    if (nextShift.diff(now, "minutes").toObject().minutes < 0) {
+      nextShift = nextShift.plus({ days: 1 });
     }
-    maxAge = nextShift.diff(now, 'seconds').toObject().seconds
+    maxAge = nextShift.diff(now, "seconds").toObject().seconds;
   }
 
-  context.res.setHeader('Cache-Control', 's-maxage=' + maxAge)
+  context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
   return {
-    props: context.query
-  }
+    props: context.query,
+  };
 }

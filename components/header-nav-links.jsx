@@ -5,13 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useMemo } from 'react'
-import Link from 'next/link'
+import { useMemo } from "react";
+import Link from "next/link";
 
-import { useToday } from '../hooks/time'
-import { getCalUrl, getTodayUrl } from '../lib/utils'
+import { useToday } from "../hooks/time";
+import { getCalUrl, getTodayUrl } from "../lib/utils";
 
-import style from './header.module.css'
+import style from "./header.module.css";
 
 /**
  * Display 3 links to move in the calendar.
@@ -23,8 +23,14 @@ import style from './header.module.css'
  * @param {string}   param.shiftModel  The current shift model.
  * @param {number}   param.group       Selected group to display. 0 = all, >= 1 only one.
  */
-export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, group }) {
-  const today = useToday()
+export default function HeaderNavLinks({
+  year,
+  month,
+  isFullYear,
+  shiftModel,
+  group,
+}) {
+  const today = useToday();
 
   const { lastMonth, nextMonth } = useMemo(() => {
     if (isFullYear) {
@@ -34,45 +40,42 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
           shiftModel,
           isFullYear: true,
           year: year - 1,
-          month: 1
+          month: 1,
         }),
         nextMonth: getCalUrl({
           group,
           shiftModel,
           isFullYear: true,
           year: year + 1,
-          month: 1
-        })
-      }
+          month: 1,
+        }),
+      };
     }
 
-    const then = new Date()
-    then.setFullYear(year)
-    then.setMonth(month - 1)
-    then.setDate(3)
+    const then = new Date();
+    then.setFullYear(year);
+    then.setMonth(month - 1);
+    then.setDate(3);
 
     return {
       lastMonth: getMonthUrl(then, -1, shiftModel, group),
-      nextMonth: getMonthUrl(then, +1, shiftModel, group)
-    }
-  }, [year, month, isFullYear, shiftModel, group])
+      nextMonth: getMonthUrl(then, +1, shiftModel, group),
+    };
+  }, [year, month, isFullYear, shiftModel, group]);
 
   return (
     <>
       <Link key={`previous_${year}_${month}`} href={lastMonth}>
         <a
           className={style.navi_link}
-          title={isFullYear ? 'voriges Jahr' : 'vorigen Monat'}
+          title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
         >
-          {'<'}
+          {"<"}
         </a>
       </Link>
 
       <Link href={getTodayUrl({ group, shiftModel, today })}>
-        <a
-          className={style.navi_link}
-          title='zeige aktuellen Monat'
-        >
+        <a className={style.navi_link} title="zeige aktuellen Monat">
           Heute
         </a>
       </Link>
@@ -80,30 +83,30 @@ export default function HeaderNavLinks ({ year, month, isFullYear, shiftModel, g
       <Link key={`next_${year}_${month}`} href={nextMonth}>
         <a
           className={style.navi_link}
-          title={isFullYear ? 'nächstes Jahr' : 'nächster Monat'}
+          title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
         >
-          {'>'}
+          {">"}
         </a>
       </Link>
     </>
-  )
+  );
 }
 
-function getMonthUrl (time, change, shiftModel, group) {
-  let year = time.getFullYear()
-  let month = time.getMonth() + change
+function getMonthUrl(time, change, shiftModel, group) {
+  let year = time.getFullYear();
+  let month = time.getMonth() + change;
   if (month < 0) {
-    year--
-    month = 11
-  } else if (month >=12) {
-    year++
-    month = 0
+    year--;
+    month = 11;
+  } else if (month >= 12) {
+    year++;
+    month = 0;
   }
   return getCalUrl({
     group,
     shiftModel,
     isFullYear: false,
     year,
-    month: month + 1
-  })
+    month: month + 1,
+  });
 }

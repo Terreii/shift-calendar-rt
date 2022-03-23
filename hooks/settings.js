@@ -5,11 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 
-import { shift66Name, shiftModelNames, shiftModelNumberOfGroups } from '../lib/constants'
-import { useToday } from './time'
+import {
+  shift66Name,
+  shiftModelNames,
+  shiftModelNumberOfGroups,
+} from "../lib/constants";
+import { useToday } from "./time";
 
 /**
  * Get the stored or current month.
@@ -23,8 +27,8 @@ import { useToday } from './time'
  *   search: number | null
  * }}
  */
-export function useQueryProps () {
-  const router = useRouter()
+export function useQueryProps() {
+  const router = useRouter();
 
   const {
     asPath: url,
@@ -32,39 +36,41 @@ export function useQueryProps () {
       shiftModel,
       year: yearStr,
       month: monthStr,
-      group: groupStr = '0',
-      search: searchStr
-    }
-  } = router
+      group: groupStr = "0",
+      search: searchStr,
+    },
+  } = router;
 
-  const today = useToday()
-  const isFullYear = !monthStr && yearStr != null
-  const year = parseInt(yearStr) || today[0]
-  const month = isFullYear ? 1 : (parseInt(monthStr) || today[1])
-  const group = parseInt(groupStr)
-  const search = searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null
+  const today = useToday();
+  const isFullYear = !monthStr && yearStr != null;
+  const year = parseInt(yearStr) || today[0];
+  const month = isFullYear ? 1 : parseInt(monthStr) || today[1];
+  const group = parseInt(groupStr);
+  const search =
+    searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null;
 
   const [storedSettings, setStoredSettings] = useState({
     shiftModel: shiftModel ?? shift66Name,
-    group: Number.isNaN(group) ? 0 : group
-  })
+    group: Number.isNaN(group) ? 0 : group,
+  });
   useEffect(() => {
-    const settings = JSON.parse(window.localStorage.getItem('settings')) ?? {}
+    const settings = JSON.parse(window.localStorage.getItem("settings")) ?? {};
     if (settings.didSelectModel) {
-      setStoredSettings(old => {
+      setStoredSettings((old) => {
         if (
-          (settings.shiftModel != null && old.shiftModel !== settings.shiftModel) ||
+          (settings.shiftModel != null &&
+            old.shiftModel !== settings.shiftModel) ||
           (settings.group != null && old.group !== settings.group)
         ) {
           return {
             shiftModel: settings.shiftModel,
-            group: settings.group
-          }
+            group: settings.group,
+          };
         }
-        return old
-      })
+        return old;
+      });
     }
-  }, [url])
+  }, [url]);
 
   return {
     url,
@@ -73,8 +79,8 @@ export function useQueryProps () {
     month,
     shiftModel: shiftModel ?? storedSettings.shiftModel,
     group: Number.isNaN(group) ? storedSettings.group : group,
-    search
-  }
+    search,
+  };
 }
 
 /**
@@ -83,20 +89,24 @@ export function useQueryProps () {
  * @param {string} [shiftModel]  Selected shift model.
  * @param {number} group         Group to display.
  */
-export function useSaveSettings (url, shiftModel, group) {
+export function useSaveSettings(url, shiftModel, group) {
   useEffect(() => {
-    if (!url.startsWith('/cal')) return
+    if (!url.startsWith("/cal")) return;
 
     if (shiftModelNames.includes(shiftModel)) {
-      const isGroupValid = typeof group === 'number' &&
+      const isGroupValid =
+        typeof group === "number" &&
         group <= shiftModelNumberOfGroups[shiftModel] &&
-        group >= 0
+        group >= 0;
 
-      window.localStorage.setItem('settings', JSON.stringify({
-        didSelectModel: true,
-        shiftModel,
-        group: isGroupValid ? group : 0
-      }))
+      window.localStorage.setItem(
+        "settings",
+        JSON.stringify({
+          didSelectModel: true,
+          shiftModel,
+          group: isGroupValid ? group : 0,
+        })
+      );
     }
-  }, [url, shiftModel, group])
+  }, [url, shiftModel, group]);
 }

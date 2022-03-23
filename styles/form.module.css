@@ -14,7 +14,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   text-align: center;
   color: black;
   color: var(--form-color);
-  background-color: #F3F4F6;
+  background-color: #f3f4f6;
   background-color: var(--form-bg-color);
   border-radius: 0.25rem;
   border: 0px;
@@ -23,19 +23,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   text-decoration: none;
 }
 .button:hover {
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   background-color: var(--form-interact-bg-color);
 }
 .button:focus {
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   background-color: var(--form-interact-bg-color);
-  box-shadow:
-    0 0 0 3px rgba(59,130,246,0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -45,11 +41,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   composes: button;
   color: white;
   color: var(--form-accept-color);
-  background-color: #6D28D9;
+  background-color: #6d28d9;
   background-color: var(--form-accept-bg-color);
 }
-.accept_button:hover, .accept_button:focus, .accept_button:active {
-  background-color: #7C3AED;
+.accept_button:hover,
+.accept_button:focus,
+.accept_button:active {
+  background-color: #7c3aed;
   background-color: var(--form-accept-interact-bg-color);
 }
 
@@ -66,16 +64,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 .cancel_button {
   composes: button;
-  color: #6D28D9;
+  color: #6d28d9;
   color: var(--form-accept-bg-color);
-  border: 1px solid #6D28D9;
+  border: 1px solid #6d28d9;
   border: 1px solid var(--form-accept-bg-color);
   background-color: var(--main-bg-color);
 }
-.cancel_button:hover, .cancel_button:focus {
-  color: #4C1D95;
+.cancel_button:hover,
+.cancel_button:focus {
+  color: #4c1d95;
   color: var(--form-accept-interact-bg-color);
-  border-color: #4C1D95;
+  border-color: #4c1d95;
   border-color: var(--form-accept-interact-bg-color);
   background-color: var(--main-bg-color);
 }
@@ -84,20 +83,16 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   width: 1rem;
   height: 1rem;
   margin-right: 0.25rem;
-  accent-color: #6D28D9;
+  accent-color: #6d28d9;
   accent-color: var(--form-accept-bg-color);
 }
 .checkbox:disabled {
   opacity: 0.8;
 }
 .checkbox:focus {
-  box-shadow:
-    0 0 0 3px rgba(59,130,246,0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;

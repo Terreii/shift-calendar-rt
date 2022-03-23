@@ -5,37 +5,28 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useMemo } from 'react'
-import { shiftTitle, workingLongName } from '../lib/constants'
+import { useMemo } from "react";
+import { shiftTitle, workingLongName } from "../lib/constants";
 
-import style from './legend.module.css'
+import style from "./legend.module.css";
 
 /**
  * Renders a legend of definitions for the table.
  * @returns {JSX.Element}
  */
-export default function Legend () {
+export default function Legend() {
   return (
     <div className={style.container}>
       <dl className={style.column}>
-        <Cell
-          description={shiftTitle.F}
-          screenReader={workingLongName.F}
-        >
+        <Cell description={shiftTitle.F} screenReader={workingLongName.F}>
           F
         </Cell>
 
-        <Cell
-          description={shiftTitle.S}
-          screenReader={workingLongName.S}
-        >
+        <Cell description={shiftTitle.S} screenReader={workingLongName.S}>
           S
         </Cell>
 
-        <Cell
-          description={shiftTitle.N}
-          screenReader={workingLongName.N}
-        >
+        <Cell description={shiftTitle.N} screenReader={workingLongName.N}>
           N
         </Cell>
       </dl>
@@ -43,33 +34,33 @@ export default function Legend () {
       <dl className={style.column}>
         <Cell
           className={style.closing}
-          description='Schließtage (Ostern und Weihnachten)'
-          screenReader='Zelle mit einem Dunkelgrünen Hintergrund'
+          description="Schließtage (Ostern und Weihnachten)"
+          screenReader="Zelle mit einem Dunkelgrünen Hintergrund"
         />
 
         <Cell
           className={style.holiday}
-          description='Schulferien / Feiertage in Baden-Württemberg'
-          screenReader='Zelle mit einem Blaugrün Hintergrund'
-          href='https://www.schulferien.org/Baden-Wurttemb_/baden-wurttemb_.html'
+          description="Schulferien / Feiertage in Baden-Württemberg"
+          screenReader="Zelle mit einem Blaugrün Hintergrund"
+          href="https://www.schulferien.org/Baden-Wurttemb_/baden-wurttemb_.html"
         />
 
         <Cell
           className={style.ramadan}
-          description='Ramadan (erster / letzter Fastentag)'
-          screenReader='Zelle mit einem Cyan Hintergrund'
-          href='https://www.ramadan.de/wann-ist-ramadan/'
+          description="Ramadan (erster / letzter Fastentag)"
+          screenReader="Zelle mit einem Cyan Hintergrund"
+          href="https://www.ramadan.de/wann-ist-ramadan/"
         />
 
         <Cell
           className={style.daylight_saving}
-          description='Zeitumstellung'
-          screenReader='Zelle mit einem Gelben Hintergrund und einem dicken Roten Rahmen'
-          href='https://www.zeitumstellung.de/termin-zeitumstellung.html'
+          description="Zeitumstellung"
+          screenReader="Zelle mit einem Gelben Hintergrund und einem dicken Roten Rahmen"
+          href="https://www.zeitumstellung.de/termin-zeitumstellung.html"
         />
       </dl>
     </div>
-  )
+  );
 }
 
 /**
@@ -82,39 +73,37 @@ export default function Legend () {
  * @param {JSX.Element} [param.children] Content of the example cell.
  * @returns {JSX.Element}
  */
-function Cell ({ className, description, screenReader, href, children }) {
+function Cell({ className, description, screenReader, href, children }) {
   const descriptionElement = useMemo(() => {
-    if (!description.includes('\n')) {
-      return description
+    if (!description.includes("\n")) {
+      return description;
     }
 
-    return description.split(/\r?\n/)
-      .flatMap((line, index) => index === 0
-        ? [<span key={index}>{line}</span>]
-        : [<br key={index + '_br'} />, <span key={index}>{line}</span>]
-      )
-  }, [description])
+    return description
+      .split(/\r?\n/)
+      .flatMap((line, index) =>
+        index === 0
+          ? [<span key={index}>{line}</span>]
+          : [<br key={index + "_br"} />, <span key={index}>{line}</span>]
+      );
+  }, [description]);
 
   return (
     <>
       <dt className={className ? `${style.cell} ${className}` : style.cell}>
-        <span className='sr-only'>{screenReader}</span>
-        <span aria-hidden>{children || '1'}</span>
+        <span className="sr-only">{screenReader}</span>
+        <span aria-hidden>{children || "1"}</span>
       </dt>
 
       <dd className={style.definition}>
-        {href
-          ? (
-            <a
-              href={href}
-              className={style.link}
-              rel='noopener noreferrer'
-            >
-              {descriptionElement}
-            </a>
-          )
-          : descriptionElement}
+        {href ? (
+          <a href={href} className={style.link} rel="noopener noreferrer">
+            {descriptionElement}
+          </a>
+        ) : (
+          descriptionElement
+        )}
       </dd>
     </>
-  )
+  );
 }

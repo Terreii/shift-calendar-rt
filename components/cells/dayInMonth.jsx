@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import style from '../../styles/calender.module.css'
+import style from "../../styles/calender.module.css";
 
 /**
  * Render the day in month cell.
@@ -14,15 +14,16 @@ import style from '../../styles/calender.module.css'
  * @param {object}   [param.holidayData]         Holiday data of that day.
  * @param {object}   [param.dayLightSaving]      Data about the daylight saving switch.
  */
-export default function DayInMonthCell ({ time, holidayData, dayLightSaving }) {
+export default function DayInMonthCell({ time, holidayData, dayLightSaving }) {
   // is on this day the switch from or to day-light-saving.
-  const isDayLightSaving = dayLightSaving != null && dayLightSaving.day === time.day
+  const isDayLightSaving =
+    dayLightSaving != null && dayLightSaving.day === time.day;
 
-  let title
+  let title;
   if (isDayLightSaving) {
-    title = dayLightSaving.name
+    title = dayLightSaving.name;
   } else if (holidayData != null) {
-    title = holidayData.name
+    title = holidayData.name;
   }
 
   return (
@@ -32,9 +33,7 @@ export default function DayInMonthCell ({ time, holidayData, dayLightSaving }) {
       data-holiday={holidayData?.type}
       data-daylight={isDayLightSaving ? true : null}
     >
-      <time dateTime={time.toISODate()}>
-        {time.day}
-      </time>
+      <time dateTime={time.toISODate()}>{time.day}</time>
     </td>
-  )
+  );
 }

@@ -20,55 +20,48 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   --group-6-text: black;
 
   --table-color: black;
-  --search-color: #A78BFA;
-  --weekend-bg-color: #D1D5DB;
-  --holiday-bg-color: #2DD4BF;
-  --ramadan-bg-color: #06B6D4;
+  --search-color: #a78bfa;
+  --weekend-bg-color: #d1d5db;
+  --holiday-bg-color: #2dd4bf;
+  --ramadan-bg-color: #06b6d4;
   --closing-bg-color: #047857;
   --closing-color: white;
-  --daylight-saving-bg-color: #FCD34D;
-  --daylight-saving-border-color: #DC2626;
+  --daylight-saving-bg-color: #fcd34d;
+  --daylight-saving-border-color: #dc2626;
 
   --main-bg-color: white;
   --main-color: black;
   --soft-text-color: #111827;
-  --link-color: #1D4ED8;
-  --link-interact-color: #3B82F6;
-  --header-bg-color: #064E3B;
-  --header-hover-bg-color: #16A34A;
+  --link-color: #1d4ed8;
+  --link-interact-color: #3b82f6;
+  --header-bg-color: #064e3b;
+  --header-hover-bg-color: #16a34a;
   --header-color: white;
 
-  --form-bg-color: #F3F4F6;
-  --form-interact-bg-color: #D1D5DB;
+  --form-bg-color: #f3f4f6;
+  --form-interact-bg-color: #d1d5db;
   --form-color: black;
-  --form-accept-bg-color: #6D28D9;
-  --form-accept-interact-bg-color: #4C1D95;
+  --form-accept-bg-color: #6d28d9;
+  --form-accept-interact-bg-color: #4c1d95;
   --form-accept-color: white;
 
-  --dialog-bg-color: #D1D5DB;
+  --dialog-bg-color: #d1d5db;
   --dialog-border-color: #e5e8f4;
   --dialog-shadow-color: rgba(0, 0, 0, 0.25);
 }
 
 body {
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
   background-color: var(--main-bg-color);
   color: var(--main-color);
 }
 
-td, th {
+td,
+th {
   border: 1px solid black;
   border: 1px solid var(--table-color);
-  padding: 0.1rem
+  padding: 0.1rem;
 }
 
 [id] {
@@ -91,23 +84,22 @@ td, th {
   border-width: 0;
 }
 
-a.link, .link {
-  color: #1D4ED8;
+a.link,
+.link {
+  color: #1d4ed8;
   color: var(--link-color);
   text-decoration: underline;
 }
-.link:hover, .link:focus, .link:active {
-  color: #3B82F6;
+.link:hover,
+.link:focus,
+.link:active {
+  color: #3b82f6;
   color: var(--link-interact-color);
 }
 .link:focus {
-  box-shadow:
-    0 0 0 3px rgba(59,130,246,0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;

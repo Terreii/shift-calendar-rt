@@ -9,9 +9,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "prettier --write .",
     "test": "jest --watch",
     "test:ci": "jest --coverage",
-    "update:holidays": "node ./updateHolidays.js"
+    "update:holidays": "node ./updateHolidays.js",
+    "prepare": "husky install"
   },
   "keywords": [],
   "license": "MPL",
@@ -29,10 +31,13 @@
     "eslint": "^7.32.0",
     "eslint-config-next": "^12.0.3",
     "eslint-plugin-jest": "^24.4.0",
+    "husky": "^7.0.4",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^27.0.6",
     "jest-axe": "^5.0.1",
+    "lint-staged": "^12.3.7",
     "node-ical": "^0.13.0",
+    "prettier": "^2.6.0",
     "prompt": "^1.1.0",
     "react-test-renderer": "^17.0.1"
   },
@@ -53,5 +58,8 @@
     "env": [
       "jest"
     ]
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
   }
 }
