@@ -6,7 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useMemo } from "react";
-import { shiftTitle, workingLongName } from "../lib/constants";
+import { shiftTitle, workingDescriptionId } from "../lib/constants";
 
 import style from "./legend.module.css";
 
@@ -18,15 +18,15 @@ export default function Legend() {
   return (
     <div className={style.container}>
       <dl className={style.column}>
-        <Cell description={shiftTitle.F} screenReader={workingLongName.F}>
+        <Cell id={workingDescriptionId["F"]} description={shiftTitle.F}>
           F
         </Cell>
 
-        <Cell description={shiftTitle.S} screenReader={workingLongName.S}>
+        <Cell id={workingDescriptionId["S"]} description={shiftTitle.S}>
           S
         </Cell>
 
-        <Cell description={shiftTitle.N} screenReader={workingLongName.N}>
+        <Cell id={workingDescriptionId["N"]} description={shiftTitle.N}>
           N
         </Cell>
       </dl>
@@ -35,27 +35,23 @@ export default function Legend() {
         <Cell
           className={style.closing}
           description="Schließtage (Ostern und Weihnachten)"
-          screenReader="Zelle mit einem Dunkelgrünen Hintergrund"
         />
 
         <Cell
           className={style.holiday}
           description="Schulferien / Feiertage in Baden-Württemberg"
-          screenReader="Zelle mit einem Blaugrün Hintergrund"
           href="https://www.schulferien.org/Baden-Wurttemb_/baden-wurttemb_.html"
         />
 
         <Cell
           className={style.ramadan}
           description="Ramadan (erster / letzter Fastentag)"
-          screenReader="Zelle mit einem Cyan Hintergrund"
           href="https://www.ramadan.de/wann-ist-ramadan/"
         />
 
         <Cell
           className={style.daylight_saving}
           description="Zeitumstellung"
-          screenReader="Zelle mit einem Gelben Hintergrund und einem dicken Roten Rahmen"
           href="https://www.zeitumstellung.de/termin-zeitumstellung.html"
         />
       </dl>
@@ -68,12 +64,11 @@ export default function Legend() {
  * @param {Object} param  React params.
  * @param {string} [param.className]     ClassName of the example cell.
  * @param {string} param.description     Description of the cell shown.
- * @param {string} param.screenReader    Content for screen readers.
  * @param {string} [param.href]          Info source URL.
  * @param {JSX.Element} [param.children] Content of the example cell.
  * @returns {JSX.Element}
  */
-function Cell({ className, description, screenReader, href, children }) {
+function Cell({ id, className, description, href, children }) {
   const descriptionElement = useMemo(() => {
     if (!description.includes("\n")) {
       return description;
@@ -91,11 +86,10 @@ function Cell({ className, description, screenReader, href, children }) {
   return (
     <>
       <dt className={className ? `${style.cell} ${className}` : style.cell}>
-        <span className="sr-only">{screenReader}</span>
-        <span aria-hidden>{children || "1"}</span>
+        {children || "1"}
       </dt>
 
-      <dd className={style.definition}>
+      <dd id={id} className={style.definition}>
         {href ? (
           <a href={href} className={style.link} rel="noopener noreferrer">
             {descriptionElement}
