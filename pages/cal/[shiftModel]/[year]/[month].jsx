@@ -87,7 +87,7 @@ export async function getServerSideProps(context) {
   if (monthsDiff > 1) {
     // if request is in the future and today is not displayed.
     maxAge = 60 * 60 * 24; // cache for a day
-  } else if (monthsDiff < -3) {
+  } else if (monthsDiff < 0) {
     // if request is in the past and today is not displayed.
     maxAge = 60 * 60 * 24 * 7; // cache for 7 days
   } else if (Info.features().zones) {
