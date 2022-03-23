@@ -99,29 +99,29 @@ export default function ByMonths({
   );
 }
 
-let didCheckWidth = false;
 /**
  * Calcs which month should be rendered.
  * @param {number} width   The innerWidth of the window.
  * @returns {[boolean, boolean, boolean, boolean]} Which months should be rendered.
  */
-function calcWidth(width) {
+function calcMonthsToDisplay(width) {
   return [width >= 1536, true, width >= 768, width >= 1280];
 }
 
 function useMonthToRender() {
   const [monthsToRender, setMonthsToRender] = useState(() =>
-    didCheckWidth ? calcWidth(window.innerWidth) : [false, true, false, false]
+    typeof window === "undefined" // true on server
+      ? [false, true, false, false]
+      : calcMonthsToDisplay(window.innerWidth)
   );
 
   useEffect(() => {
-    didCheckWidth = true;
     let lastWidth = 0;
 
     const handler = () => {
       if (window.innerWidth !== lastWidth) {
         lastWidth = window.innerWidth;
-        const nextMonths = calcWidth(window.innerWidth);
+        const nextMonths = calcMonthsToDisplay(window.innerWidth);
         setMonthsToRender((lastMonths) =>
           nextMonths.every(
             (shouldRender, index) => shouldRender === lastMonths[index]
