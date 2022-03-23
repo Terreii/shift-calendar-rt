@@ -20,7 +20,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   text-align: center;
   color: #111827;
   color: var(--soft-text-color);
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   background-color: var(--dialog-bg-color);
   border-radius: 0.25rem;
 }
@@ -41,5 +41,5 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-bottom: 0.5rem;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem
+  gap: 1.5rem;
 }

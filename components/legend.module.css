@@ -44,12 +44,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 }
 
 .holiday {
-  background-color: #2DD4BF;
+  background-color: #2dd4bf;
   background-color: var(--holiday-bg-color);
 }
 
 .ramadan {
-  background-color: #06B6D4;
+  background-color: #06b6d4;
   background-color: var(--ramadan-bg-color);
 }
 
@@ -63,11 +63,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .daylight_saving {
   padding-top: 0px;
   padding-bottom: 0px;
-  background-color: #FCD34D;
+  background-color: #fcd34d;
   background-color: var(--daylight-saving-bg-color);
   color: black;
   color: var(--table-color);
-  border: 4px solid #DC2626;
+  border: 4px solid #dc2626;
   border: 4px solid var(--daylight-saving-border-color);
 }
 
@@ -80,11 +80,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   color: #111827;
   color: var(--soft-text-color);
   text-decoration: underline;
-  text-decoration-color: #1D4ED8;
+  text-decoration-color: #1d4ed8;
   text-decoration-color: var(--link-color);
 }
-.link:hover, .link:focus {
-  text-decoration-color: #3B82F6;
+.link:hover,
+.link:focus {
+  text-decoration-color: #3b82f6;
   text-decoration-color: var(--link-interact-color);
   text-decoration-thickness: 3px;
 }

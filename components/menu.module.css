@@ -16,18 +16,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .menu_button::-webkit-details-marker {
   display: none;
 }
-.menu_button:hover, .menu_button:active {
-  background-color: #16A34A;
+.menu_button:hover,
+.menu_button:active {
+  background-color: #16a34a;
   background-color: var(--header-hover-bg-color);
 }
 .menu_button:focus {
-  box-shadow:
-    0 0 0 3px rgba(59,130,246,0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -45,14 +42,18 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   margin-top: 3rem;
   max-height: 90%;
   max-height: calc(100vh - 3rem);
-  max-height: calc(100vh - 3rem - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px));
+  max-height: calc(
+    100vh - 3rem - env(safe-area-inset-top, 0px) -
+      env(safe-area-inset-bottom, 0px)
+  );
   overflow-y: auto;
   overscroll-behavior-y: contain;
   color: white;
   color: var(--header-color);
-  background-color: #064E3B;
+  background-color: #064e3b;
   background-color: var(--header-bg-color);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .scroll_container {
@@ -121,13 +122,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   color: var(--header-color);
 }
 .share_address:focus {
-  box-shadow:
-    0 0 0 3px rgba(59,130,246,0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -150,7 +147,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   flex-direction: row;
   margin-top: 1.25rem;
 }
-.buttons_row > button, .buttons_row > a {
+.buttons_row > button,
+.buttons_row > a {
   flex: 1 1 8rem;
 }
 .buttons_row > *:last-child {

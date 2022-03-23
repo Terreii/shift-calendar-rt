@@ -5,12 +5,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from "react";
 
-import { getCalUrl } from '../lib/utils'
+import { getCalUrl } from "../lib/utils";
 
-import style from './menu.module.css'
-import formStyle from '../styles/form.module.css'
+import style from "./menu.module.css";
+import formStyle from "../styles/form.module.css";
 
 /**
  * Display the share menu.
@@ -22,78 +22,88 @@ import formStyle from '../styles/form.module.css'
  * @param {string}   params.shiftModel - Name of the selected shift-model.
  * @param {function} hide              - Hide the share menu.
  */
-export default function ShareMenu ({ group, year, month, search, shiftModel, hide }) {
-  const [addGroup, setAddGroup] = useState(false)
-  const [addSearch, setAddSearch] = useState(false)
-  const [addShiftModel, setAddShiftModel] = useState(false)
-
-  useEffect(
-    () => {
-      if (group === 0 && addGroup) {
-        setAddGroup(false)
-      }
-    },
-    [group, addGroup]
-  )
-
-  useEffect(
-    () => {
-      if (search == null && addSearch) {
-        setAddSearch(false)
-      }
-    },
-    [search, addSearch]
-  )
+export default function ShareMenu({
+  group,
+  year,
+  month,
+  search,
+  shiftModel,
+  hide,
+}) {
+  const [addGroup, setAddGroup] = useState(false);
+  const [addSearch, setAddSearch] = useState(false);
+  const [addShiftModel, setAddShiftModel] = useState(false);
 
   useEffect(() => {
-    document.getElementById('share_url').focus()
-    return () => {
-      const element = document.getElementById('menu_summary')
-      if (element) {
-        element.focus()
-      }
+    if (group === 0 && addGroup) {
+      setAddGroup(false);
     }
-  }, [])
+  }, [group, addGroup]);
+
+  useEffect(() => {
+    if (search == null && addSearch) {
+      setAddSearch(false);
+    }
+  }, [search, addSearch]);
+
+  useEffect(() => {
+    document.getElementById("share_url").focus();
+    return () => {
+      const element = document.getElementById("menu_summary");
+      if (element) {
+        element.focus();
+      }
+    };
+  }, []);
 
   const url = useMemo(() => {
     try {
-      const url = new URL('/', window.location.href)
+      const url = new URL("/", window.location.href);
 
       if (addShiftModel) {
         url.pathname = getCalUrl({
           shiftModel,
           isFullYear: false,
           year: addSearch ? year : null,
-          month: addSearch ? month : null
-        })
+          month: addSearch ? month : null,
+        });
 
         if (addSearch && search != null) {
-          url.searchParams.set('search', search)
+          url.searchParams.set("search", search);
         }
         if (addGroup && group > 0) {
-          url.searchParams.set('group', group)
+          url.searchParams.set("group", group);
         }
       }
 
-      return url
+      return url;
     } catch (err) {
-      return ''
+      return "";
     }
-  }, [year, month, addGroup, group, addSearch, search, addShiftModel, shiftModel])
+  }, [
+    year,
+    month,
+    addGroup,
+    group,
+    addSearch,
+    search,
+    addShiftModel,
+    shiftModel,
+  ]);
 
   return (
-    <div id='share_menu' className={style.container}>
+    <div id="share_menu" className={style.container}>
       <div className={style.scroll_container}>
         <label className={style.element_container}>
           Adresse zum teilen:
           <input
-            id='share_url'
+            id="share_url"
             className={style.share_address}
-            type='url'
+            type="url"
             readOnly
             value={url.href}
-            onFocus={event => {
-              event.target.select()
+            onFocus={(event) => {
+              event.target.select();
             }}
           />
         </label>
@@ -103,15 +113,15 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         <label className={style.share_label}>
           <input
             className={formStyle.checkbox}
-            type='checkbox'
+            type="checkbox"
             checked={addShiftModel}
-            onChange={event => {
-              setAddShiftModel(event.target.checked)
+            onChange={(event) => {
+              setAddShiftModel(event.target.checked);
               if (!event.target.checked && addGroup) {
-                setAddGroup(false)
+                setAddGroup(false);
               }
               if (!event.target.checked && addSearch) {
-                setAddSearch(false)
+                setAddSearch(false);
               }
             }}
           />
@@ -121,89 +131,94 @@ export default function ShareMenu ({ group, year, month, search, shiftModel, hid
         <label className={style.share_label}>
           <input
             className={formStyle.checkbox}
-            type='checkbox'
+            type="checkbox"
             checked={addGroup}
             disabled={group === 0}
-            onChange={event => {
-              if (group === 0 || group == null) return
+            onChange={(event) => {
+              if (group === 0 || group == null) return;
 
-              setAddGroup(event.target.checked)
+              setAddGroup(event.target.checked);
               if (event.target.checked && !addShiftModel) {
-                setAddShiftModel(true)
+                setAddShiftModel(true);
               }
             }}
           />
           Gruppe
           {group === 0 && (
-            <small><br />Momentan sind alle Gruppen ausgewählt.</small>
+            <small>
+              <br />
+              Momentan sind alle Gruppen ausgewählt.
+            </small>
           )}
         </label>
 
         <label className={style.share_label}>
           <input
             className={formStyle.checkbox}
-            type='checkbox'
+            type="checkbox"
             checked={addSearch}
             disabled={search == null}
-            onChange={event => {
-              if (search == null) return
+            onChange={(event) => {
+              if (search == null) return;
 
-              setAddSearch(event.target.checked)
+              setAddSearch(event.target.checked);
               if (event.target.checked && !addShiftModel) {
-                setAddShiftModel(true)
+                setAddShiftModel(true);
               }
             }}
           />
           Der gesuchte Tag
           {search == null && (
-            <small><br />Momentan gibt es kein Suchergebnis.</small>
+            <small>
+              <br />
+              Momentan gibt es kein Suchergebnis.
+            </small>
           )}
         </label>
 
         <div className={style.buttons_row}>
           <button
-            type='button'
+            type="button"
             className={formStyle.cancel_button}
             onClick={hide}
           >
             Abbrechen
           </button>
-          {'navigator' in globalThis && ('share' in window.navigator) // eslint-disable-line
-            ? (
-              <button
-                type='button'
-                className={formStyle.accept_button}
-                onClick={event => {
-                  event.preventDefault()
+          {"navigator" in globalThis && "share" in window.navigator ? ( // eslint-disable-line
+            <button
+              type="button"
+              className={formStyle.accept_button}
+              onClick={(event) => {
+                event.preventDefault();
 
-                  window.navigator.share({
+                window.navigator
+                  .share({
                     url,
-                    title: 'Schichtkalender',
-                    text: 'Meine Schichten beim Bosch Reutlingen: ' + url
+                    title: "Schichtkalender",
+                    text: "Meine Schichten beim Bosch Reutlingen: " + url,
                   })
-                    .then(() => { hide() })
-                }}
-              >
-                Teilen
-              </button>
-            )
-            : (
-              <a
-                className={formStyle.accept_button}
-                href={
-                  `mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${
-                  url.toString().replace(/&/g, '%26')
-                }`
-                }
-                onClick={() => {
-                  setTimeout(hide, 16)
-                }}
-              >
-                Teilen
-              </a>
-            )}
+                  .then(() => {
+                    hide();
+                  });
+              }}
+            >
+              Teilen
+            </button>
+          ) : (
+            <a
+              className={formStyle.accept_button}
+              href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${url
+                .toString()
+                .replace(/&/g, "%26")}`}
+              onClick={() => {
+                setTimeout(hide, 16);
+              }}
+            >
+              Teilen
+            </a>
+          )}
         </div>
       </div>
     </div>
-  )
+  );
 }

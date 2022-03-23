@@ -26,17 +26,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding-bottom: 0.5rem;
 }
 
-/*
-Hide all calender except the current month.
-But then show the next month on small screen, then the next 2 months, then all on big screens.
-*/
-.calender_table {
-  display: none;
-}
-.calender_table:nth-child(2) {
-  display: table;
-}
-
 .table {
   margin-top: 2rem;
   text-align: center;
@@ -58,29 +47,17 @@ But then show the next month on small screen, then the next 2 months, then all o
     display: grid;
     grid-template-columns: repeat(2, 1fr);
   }
-
-  .calender_table:nth-child(3) {
-    display: table;
-  }
 }
 
 @media (min-width: 1280px) {
   .container {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .calender_table:nth-child(4) {
-    display: table;
-  }
 }
 
 @media (min-width: 1536px) {
   .container {
     grid-template-columns: repeat(4, 1fr);
-  }
-
-  .calender_table {
-    display: table;
   }
 }
 
@@ -91,7 +68,7 @@ But then show the next month on small screen, then the next 2 months, then all o
   border: 1px solid black;
   border: 1px solid var(--table-color);
   border-bottom-width: 0px;
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   background-color: var(--weekend-bg-color);
   color: black;
   color: var(--table-color);
@@ -110,7 +87,7 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .row[data-weekend="true"] {
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   background-color: var(--weekend-bg-color);
 }
 .row[data-closing="closing"] {
@@ -121,7 +98,7 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .row[data-interest="search"] > td:last-child {
-  border-right: 4px solid #A78BFA;
+  border-right: 4px solid #a78bfa;
   border-right: 4px solid var(--search-color);
 }
 .row[data-interest="today"] > td:last-child {
@@ -130,11 +107,11 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .row[data-interest="search"] > .week_day {
-  border-left: 4px solid #A78BFA;
+  border-left: 4px solid #a78bfa;
   border-left: 4px solid var(--search-color);
-  border-top: 4px solid #A78BFA;
+  border-top: 4px solid #a78bfa;
   border-top: 4px solid var(--search-color);
-  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid #a78bfa;
   border-bottom: 4px solid var(--search-color);
 }
 .row[data-interest="today"] > .week_day {
@@ -147,9 +124,9 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .row[data-interest="search"] > .week_day {
-  border-top: 4px solid #A78BFA;
+  border-top: 4px solid #a78bfa;
   border-top: 4px solid var(--search-color);
-  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid #a78bfa;
   border-bottom: 4px solid var(--search-color);
 }
 .row[data-interest="today"] > .week_day {
@@ -159,32 +136,33 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-bottom: 4px solid var(--table-color);
 }
 
-.day_in_month[data-holiday="holiday"], .day_in_month[data-holiday="school"] {
-  background-color: #2DD4BF;
+.day_in_month[data-holiday="holiday"],
+.day_in_month[data-holiday="school"] {
+  background-color: #2dd4bf;
   background-color: var(--holiday-bg-color);
   color: black;
   color: var(--table-color);
 }
 
 .day_in_month[data-holiday="ramadan"] {
-  background-color: #06B6D4;
+  background-color: #06b6d4;
   background-color: var(--ramadan-bg-color);
   color: black;
   color: var(--table-color);
 }
 
 .day_in_month[data-daylight] {
-  background-color: #FCD34D;
+  background-color: #fcd34d;
   background-color: var(--daylight-saving-bg-color);
   color: black;
   color: var(--table-color);
   cursor: help;
-  border: 4px solid #DC2626;
+  border: 4px solid #dc2626;
   border: 4px solid var(--daylight-saving-border-color);
 }
 
 .week_cell {
-  color: #1F2937;
+  color: #1f2937;
   color: var(--table-color);
   background-color: white;
   background-color: var(--main-bg-color);
@@ -231,9 +209,9 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .row[data-interest="search"] > .group {
-  border-top: 4px solid #A78BFA;
+  border-top: 4px solid #a78bfa;
   border-top: 4px solid var(--search-color);
-  border-bottom: 4px solid #A78BFA;
+  border-bottom: 4px solid #a78bfa;
   border-bottom: 4px solid var(--search-color);
 }
 .row[data-interest="today"] > .group {
