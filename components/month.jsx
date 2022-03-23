@@ -23,7 +23,7 @@ import style from "../styles/calender.module.css";
  * @param {number}   arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
-function Month({ className = "", year, month, data, today, search, group }) {
+function Month({ year, month, data, today, search, group }) {
   const groups = [];
 
   if (group === 0) {
@@ -41,7 +41,7 @@ function Month({ className = "", year, month, data, today, search, group }) {
   return (
     <table
       id={`month_${year}-${month + 1}`}
-      className={style.table + " " + className}
+      className={style.table}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
     >
       <caption

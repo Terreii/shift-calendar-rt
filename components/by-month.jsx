@@ -67,6 +67,8 @@ export default function ByMonths({
     }
   }, [year, month, search]);
 
+  const monthsToRender = useMonthToRender();
+
   return (
     <div
       id="calendar_main_out"
@@ -80,20 +82,63 @@ export default function ByMonths({
       ref={ref}
       aria-live="polite"
     >
-      {monthsData.map(([year, month, search]) => (
-        <Month
-          key={`${year}-${month}-${shiftModel}-${group}`}
-          className={style.calender_table}
-          year={year}
-          month={month}
-          data={selectMonthData(year, month, shiftModel)}
-          today={today[0] === year && today[1] === month ? today : null}
-          search={search != null ? +search : null}
-          group={group}
-        />
-      ))}
+      {monthsData.map(([year, month, search], index) =>
+        monthsToRender[index] ? (
+          <Month
+            key={`${year}-${month}-${shiftModel}-${group}`}
+            year={year}
+            month={month}
+            data={selectMonthData(year, month, shiftModel)}
+            today={today[0] === year && today[1] === month ? today : null}
+            search={search != null ? +search : null}
+            group={group}
+          />
+        ) : null
+      )}
     </div>
   );
+}
+
+let didCheckWidth = false;
+/**
+ * Calcs which month should be rendered.
+ * @param {number} width   The innerWidth of the window.
+ * @returns {[boolean, boolean, boolean, boolean]} Which months should be rendered.
+ */
+function calcWidth(width) {
+  return [width >= 1536, true, width >= 768, width >= 1280];
+}
+
+function useMonthToRender() {
+  const [monthsToRender, setMonthsToRender] = useState(() =>
+    didCheckWidth ? calcWidth(window.innerWidth) : [false, true, false, false]
+  );
+
+  useEffect(() => {
+    didCheckWidth = true;
+    let lastWidth = 0;
+
+    const handler = () => {
+      if (window.innerWidth !== lastWidth) {
+        lastWidth = window.innerWidth;
+        const nextMonths = calcWidth(window.innerWidth);
+        setMonthsToRender((lastMonths) =>
+          nextMonths.every(
+            (shouldRender, index) => shouldRender === lastMonths[index]
+          )
+            ? lastMonths
+            : nextMonths
+        );
+      }
+    };
+
+    window.addEventListener("resize", handler);
+    return () => {
+      window.removeEventListener("resize", handler);
+    };
+  }, []);
+
+  return monthsToRender;
 }
 
 /**
