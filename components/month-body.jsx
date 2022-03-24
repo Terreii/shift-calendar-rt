@@ -81,9 +81,13 @@ export default function MonthBody({ year, month, data, today, search, group }) {
         data-interest={interesting}
         data-weekend={weekendDays.includes(weekDay)}
         data-closing={isClosingHoliday ? "closing" : undefined}
-        title={`${isToday ? "Heute" : ""} ${
-          isClosingHoliday ? holidayData.name : ""
-        }`}
+        title={
+          isToday || isClosingHoliday
+            ? `${isToday ? "Heute" : ""} ${
+                isClosingHoliday ? holidayData.name : ""
+              }`.trim()
+            : null
+        }
       >
         {(weekDay === 1 || index === 0) && <WeekCell time={time} />}
         <DayInMonthCell

@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
 import { getCalUrl, scrollToADay } from "../lib/utils";
+import { useTitleAlert } from "../hooks/utils";
 
 import style from "../styles/calender.module.css";
 
@@ -68,17 +69,13 @@ export default function ByMonths({
   }, [year, month, search]);
 
   const monthsToRender = useMonthToRender();
+  const clickHandler = useTitleAlert();
 
   return (
     <div
       id="calendar_main_out"
       className={style.container}
-      onClick={(event) => {
-        const element = event.target.closest("[title]");
-        if (element && element.title.length > 0) {
-          window.alert(element.title);
-        }
-      }}
+      onClick={clickHandler}
       ref={ref}
       aria-live="polite"
     >

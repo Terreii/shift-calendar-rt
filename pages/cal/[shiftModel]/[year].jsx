@@ -13,6 +13,7 @@ import Month from "../../../components/month";
 import Downloader from "../../../components/download";
 import Legend from "../../../components/legend";
 import { useTodayZeroIndex, useUnloadedFix } from "../../../hooks/time";
+import { useTitleAlert } from "../../../hooks/utils";
 import { shiftModelText } from "../../../lib/constants";
 import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber } from "../../../lib/utils";
@@ -40,6 +41,8 @@ export default function Year() {
     monthsData.push([year, i]);
   }
 
+  const clickHandler = useTitleAlert();
+
   return (
     <main className={style.main}>
       <Head>
@@ -54,12 +57,7 @@ export default function Year() {
       <div
         id="calendar_main_out"
         className={style.container}
-        onClick={(event) => {
-          const element = event.target.closest("[title]");
-          if ((element?.title?.length ?? 0) > 0) {
-            window.alert(element.title);
-          }
-        }}
+        onClick={clickHandler}
         aria-live="polite"
       >
         {monthsData.map(([year, month]) => (
