@@ -26,6 +26,7 @@ export default function Year() {
   const shiftModel = router.query.shiftModel;
   const year = parseNumber(router.query.year, null);
   const group = parseNumber(router.query.group, 0);
+  const clickHandler = useTitleAlert();
 
   const shouldRemoveCalendar = useUnloadedFix();
   if (shouldRemoveCalendar) {
@@ -40,8 +41,6 @@ export default function Year() {
   for (let i = 0; i < 12; i++) {
     monthsData.push([year, i]);
   }
-
-  const clickHandler = useTitleAlert();
 
   return (
     <main className={style.main}>

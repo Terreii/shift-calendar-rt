@@ -35,6 +35,8 @@ export default function ByMonths({
   today,
 }) {
   const ref = useHammer(year, month, shiftModel, group);
+  const monthsToRender = useMonthToRender();
+  const clickHandler = useTitleAlert();
 
   const monthsData = useMemo(() => {
     const monthsData = [];
@@ -67,9 +69,6 @@ export default function ByMonths({
       scrollToADay(year, month, search);
     }
   }, [year, month, search]);
-
-  const monthsToRender = useMonthToRender();
-  const clickHandler = useTitleAlert();
 
   return (
     <div
