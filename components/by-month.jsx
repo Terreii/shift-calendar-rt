@@ -86,6 +86,7 @@ export default function ByMonths({
         monthsToRender[index] ? (
           <Month
             key={`${year}-${month}-${shiftModel}-${group}`}
+            className={style.calender_table}
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
@@ -93,7 +94,14 @@ export default function ByMonths({
             search={search != null ? +search : null}
             group={group}
           />
-        ) : null
+        ) : (
+          <table
+            key={`${year}-${month}-${shiftModel}-${group}`}
+            id={`month_${year}-${month + 1}`}
+            className={`${style.table} ${style.calender_table}`}
+            aria-hidden
+          />
+        )
       )}
     </div>
   );
