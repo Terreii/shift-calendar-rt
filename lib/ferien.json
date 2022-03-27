@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2021-01-27T23:33:11.742Z",
+  "lastUpdate": "2022-03-27T18:02:24.386Z",
   "ferien": [
     {
       "start": "2019-04-15T00:00",
@@ -192,6 +192,54 @@
       "stateCode": "BW",
       "name": "Weihnachtsferien",
       "slug": "Weihnachtsferien 2022 Baden-Württemberg"
+    },
+    {
+      "start": "2023-04-05T22:00:00.000Z",
+      "end": "2023-04-06T22:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Osterferien",
+      "slug": "Osterferien 2023 Baden-Württemberg"
+    },
+    {
+      "start": "2023-04-10T22:00:00.000Z",
+      "end": "2023-04-15T22:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Osterferien",
+      "slug": "Osterferien 2023 Baden-Württemberg"
+    },
+    {
+      "start": "2023-05-29T22:00:00.000Z",
+      "end": "2023-06-09T22:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Pfingstferien",
+      "slug": "Pfingstferien 2023 Baden-Württemberg"
+    },
+    {
+      "start": "2023-07-26T22:00:00.000Z",
+      "end": "2023-09-09T22:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Sommerferien",
+      "slug": "Sommerferien 2023 Baden-Württemberg"
+    },
+    {
+      "start": "2023-10-29T23:00:00.000Z",
+      "end": "2023-11-03T23:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Herbstferien",
+      "slug": "Herbstferien 2023 Baden-Württemberg"
+    },
+    {
+      "start": "2023-12-22T23:00:00.000Z",
+      "end": "2024-01-05T23:00:00.000Z",
+      "year": 2023,
+      "stateCode": "BW",
+      "name": "Weihnachtsferien",
+      "slug": "Weihnachtsferien 2023 Baden-Württemberg"
     }
   ]
 }
