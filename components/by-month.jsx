@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import ms from "milliseconds";
 import { useRouter } from "next/router";
 
@@ -120,7 +120,7 @@ function useMonthToRender() {
       : calcMonthsToDisplay(window.innerWidth)
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let lastWidth = 0;
     isFirstRender = false;
 
