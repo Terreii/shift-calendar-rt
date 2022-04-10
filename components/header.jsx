@@ -70,7 +70,8 @@ export default function Header() {
           group={group}
           shiftModel={shiftModel}
           setShowMenu={setShowMenu}
-          onShare={() => {
+          onShare={(event) => {
+            event.stopPropagation();
             setShowMenu(false);
             setShowShareMenu(true);
           }}

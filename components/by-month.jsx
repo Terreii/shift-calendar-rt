@@ -111,28 +111,35 @@ export default function ByMonths({
 function calcMonthsToDisplay(width) {
   return [width >= 1536, true, width >= 768, width >= 1280];
 }
+let isFirstRender = true;
 
 function useMonthToRender() {
   const [monthsToRender, setMonthsToRender] = useState(() =>
-    typeof window === "undefined" // true on server
+    isFirstRender // true on server and on first render
       ? [false, true, false, false]
       : calcMonthsToDisplay(window.innerWidth)
   );
 
   useEffect(() => {
     let lastWidth = 0;
+    isFirstRender = false;
+
+    const updateMonths = () => {
+      const nextMonths = calcMonthsToDisplay(window.innerWidth);
+      setMonthsToRender((lastMonths) =>
+        nextMonths.every(
+          (shouldRender, index) => shouldRender === lastMonths[index]
+        )
+          ? lastMonths
+          : nextMonths
+      );
+    };
+    updateMonths();
 
     const handler = () => {
       if (window.innerWidth !== lastWidth) {
         lastWidth = window.innerWidth;
-        const nextMonths = calcMonthsToDisplay(window.innerWidth);
-        setMonthsToRender((lastMonths) =>
-          nextMonths.every(
-            (shouldRender, index) => shouldRender === lastMonths[index]
-          )
-            ? lastMonths
-            : nextMonths
-        );
+        updateMonths();
       }
     };
 

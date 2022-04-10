@@ -16,22 +16,9 @@ import {
   shiftModelNumberOfGroups,
 } from "../lib/constants";
 import { getCalUrl } from "../lib/utils";
+import { useSupportsInputType } from "../hooks/utils";
 
 import style from "./menu.module.css";
-
-const [supportsMonthInput, supportsDateInput] = ["month", "date"].map(
-  (type) => {
-    try {
-      const parent = document.createElement("div");
-      const input = document.createElement("input");
-      input.type = type;
-      parent.appendChild(input);
-      return parent.firstChild.type === type;
-    } catch (err) {
-      return false;
-    }
-  }
-);
 
 export default function Menu({
   show,
@@ -45,6 +32,8 @@ export default function Menu({
   onShare,
 }) {
   const router = useRouter();
+  const supportsMonthInput = useSupportsInputType("month");
+  const supportsDateInput = useSupportsInputType("date");
 
   let searchValue = "";
   if (search != null) {
