@@ -7,7 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { DateTime, Info } from "luxon";
 
 import Month from "../../../components/month";
 import Downloader from "../../../components/download";
