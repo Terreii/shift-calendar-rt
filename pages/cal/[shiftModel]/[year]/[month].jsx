@@ -13,7 +13,7 @@ import ByMonths from "../../../../components/by-month";
 import Downloader from "../../../../components/download";
 import Legend from "../../../../components/legend";
 import { useTodayZeroIndex, useUnloadedFix } from "../../../../hooks/time";
-import { shiftModelText } from "../../../../lib/constants";
+import { shiftModelNames, shiftModelText } from "../../../../lib/constants";
 import { parseNumber } from "../../../../lib/utils";
 
 import style from "../../../../styles/calender.module.css";
@@ -68,56 +68,59 @@ export default function MonthPage() {
 }
 
 /**
- * Get the props for server side rendering.
- * @param {import('next').GetServerSidePropsContext} context Next SSR context.
- * @returns {import('next').GetServerSidePropsResult}
+ * Get the paths that should to prerender.
+ * @returns {import('next').GetStaticPathsResult}
  */
-export async function getServerSideProps(context) {
-  const { year, month } = context.query;
-
-  const date = DateTime.fromObject({
-    year: parseInt(year),
-    month: parseInt(month, 10),
-    zone: "Europe/Berlin",
-  });
-
-  let maxAge = 60;
-
-  const monthsDiff = date.diffNow("months").toObject().months;
-  if (monthsDiff > 1) {
-    // if request is in the future and today is not displayed.
-    maxAge = 60 * 60 * 24; // cache for a day
-  } else if (monthsDiff < 0) {
-    // if request is in the past and today is not displayed.
-    maxAge = 60 * 60 * 24 * 7; // cache for 7 days
-  } else if (Info.features().zones) {
-    // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone("Europe/Berlin");
-    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
-
-    let hour = 6; // get next shift start
-    if (now.hour >= 22) {
-      hour = 6;
-    } else if (now.hour >= 14) {
-      hour = 22;
-    } else if (now.hour >= 6) {
-      hour = 14;
-    }
-
-    let nextShift = now.set({
-      hour,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
+export async function getStaticPaths() {
+  const paths = [];
+  const add = (shiftModel, date) => {
+    paths.push({
+      params: {
+        shiftModel,
+        year: date.getUTCFullYear().toString(),
+        month: date.getUTCMonth().toString().padStart(2, "0"),
+      },
     });
-    if (nextShift.diff(now, "minutes").toObject().minutes < 0) {
-      nextShift = nextShift.plus({ days: 1 });
+  };
+
+  const year = new Date().getUTCFullYear();
+  const month = new Date().getUTCMonth();
+
+  for (const model of shiftModelNames) {
+    for (const monthDiff of [-1, 0, 1, 2, 3]) {
+      const date = new Date(year, month + monthDiff, 1, 3, 0, 0, 0);
+      add(model, date);
     }
-    maxAge = nextShift.diff(now, "seconds").toObject().seconds;
   }
 
-  context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
   return {
-    props: context.query,
+    paths,
+    fallback: "blocking",
   };
+}
+
+/**
+ * Get the paths data.
+ * @param {import('next').GetStaticPropsContext} context  Data.
+ * @returns {import('next').GetStaticPropsResult}
+ */
+export function getStaticProps(context) {
+  if (Number.isNaN(parseInt(context.params?.year))) {
+    return {
+      notFound: true,
+    };
+  }
+  const month = parseInt(context.params?.month);
+  if (Number.isNaN(month) || month <= 0 || month > 12) {
+    return {
+      notFound: true,
+    };
+  }
+  if (!(context.params?.shiftModel in shiftModelText)) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return { props: {} };
 }
