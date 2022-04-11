@@ -9,8 +9,21 @@ import { useState, useEffect, useMemo } from "react";
 
 import { getToday } from "../lib/utils";
 
-export function useToday() {
-  const [today, setToday] = useState(getToday);
+/**
+ * Returns Today. Auto updates.
+ * @param {boolean} defer  Return on first render a default value.
+ * @returns {[number, number, number, number]}   Array with [yyyy,mm,dd,hh]
+ */
+export function useToday(defer = false) {
+  const [today, setToday] = useState(() =>
+    defer ? [1971, 2, 1, 0] : getToday()
+  );
+
+  useEffect(() => {
+    if (defer) {
+      setToday(getToday());
+    }
+  }, [defer]);
 
   useEffect(() => {
     const update = () => {
@@ -41,9 +54,11 @@ export function useToday() {
 
 /**
  * Today, but the month is zero indexed.
+ * @param {boolean} defer  Return on first render a default value.
+ * @returns {[number, number, number, number]}   Array with [yyyy,mm,dd,hh]
  */
-export function useTodayZeroIndex() {
-  const today = useToday();
+export function useTodayZeroIndex(defer = false) {
+  const today = useToday(defer);
 
   // useMemo is more performant, because this hook is used in the month component.
   return useMemo(() => {

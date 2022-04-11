@@ -22,7 +22,7 @@ import style from "../../../styles/calender.module.css";
 
 export default function Year() {
   const router = useRouter();
-  const today = useTodayZeroIndex();
+  const today = useTodayZeroIndex(true);
   const shiftModel = router.query.shiftModel;
   const year = parseNumber(router.query.year, null);
   const group = parseNumber(router.query.group, 0);

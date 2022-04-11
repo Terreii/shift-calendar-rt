@@ -20,7 +20,7 @@ import style from "../../../../styles/calender.module.css";
 
 export default function MonthPage() {
   const router = useRouter();
-  const today = useTodayZeroIndex();
+  const today = useTodayZeroIndex(true);
   const shiftModel = router.query.shiftModel;
   const year = parseNumber(router.query.year, null);
   const monthQuery = parseNumber(router.query.month, null);
