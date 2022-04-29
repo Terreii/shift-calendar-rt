@@ -107,7 +107,7 @@
   "dependencies": {
     "htm": "^3.0.4",
     "preact": "^10.4.4",
-    "preact-render-to-string": "^5.1.9",
+    "preact-render-to-string": "^5.1.21",
     "preact-router": "^3.2.1",
     "proptypes": "^1.0.0",
     "serve": "^11.3.2",
