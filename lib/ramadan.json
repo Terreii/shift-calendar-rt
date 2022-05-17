@@ -1,107 +1,86 @@
 {
   "2010": {
-    "start": [8, 11],
-    "end": [9, 10],
-    "idul-fitr": [9, 11]
+    "month": 8,
+    "day": 11
   },
   "2011": {
-    "start": [8, 1],
-    "end": [8, 30],
-    "idul-fitr": [8, 31]
+    "month": 8,
+    "day": 1
   },
   "2012": {
-    "start": [7, 20],
-    "end": [8, 19],
-    "idul-fitr": [8, 20]
+    "month": 7,
+    "day": 20
   },
   "2013": {
-    "start": [7, 9],
-    "end": [8, 8],
-    "idul-fitr": [8, 9]
+    "month": 7,
+    "day": 9
   },
   "2014": {
-    "start": [6, 29],
-    "end": [7, 8],
-    "idul-fitr": [7, 9]
+    "month": 6,
+    "day": 29
   },
   "2015": {
-    "start": [6, 18],
-    "end": [7, 17],
-    "idul-fitr": [7, 18]
+    "month": 6,
+    "day": 18
   },
   "2016": {
-    "start": [6, 6],
-    "end": [7, 6],
-    "idul-fitr": [7, 7]
+    "month": 6,
+    "day": 6
   },
   "2017": {
-    "start": [5, 27],
-    "end": [6, 25],
-    "idul-fitr": [6, 26]
+    "month": 5,
+    "day": 27
   },
   "2018": {
-    "start": [5, 16],
-    "end": [6, 15],
-    "idul-fitr": [6, 16]
+    "month": 5,
+    "day": 16
   },
   "2019": {
-    "start": [5, 6],
-    "end": [6, 4],
-    "idul-fitr": [6, 5]
+    "month": 5,
+    "day": 6
   },
   "2020": {
-    "start": [4, 24],
-    "end": [5, 24],
-    "idul-fitr": [5, 25]
+    "month": 4,
+    "day": 24
   },
   "2021": {
-    "start": [4, 13],
-    "end": [5, 12],
-    "idul-fitr": [5, 13]
+    "month": 4,
+    "day": 13
   },
   "2022": {
-    "start": [4, 2],
-    "end": [5, 3],
-    "idul-fitr": [5, 4]
+    "month": 4,
+    "day": 2
   },
   "2023": {
-    "start": [3, 23],
-    "end": [4, 22],
-    "idul-fitr": [4, 23]
+    "month": 3,
+    "day": 23
   },
   "2024": {
-    "start": [3, 11],
-    "end": [4, 11],
-    "idul-fitr": [4, 12]
+    "month": 3,
+    "day": 11
   },
   "2025": {
-    "start": [3, 1],
-    "end": [3, 31],
-    "idul-fitr": [4, 1]
+    "month": 3,
+    "day": 1
   },
   "2026": {
-    "start": [2, 18],
-    "end": [3, 21],
-    "idul-fitr": [3, 22]
+    "month": 2,
+    "day": 18
   },
   "2027": {
-    "start": [2, 8],
-    "end": [3, 10],
-    "idul-fitr": [3, 11]
+    "month": 2,
+    "day": 8
   },
   "2028": {
-    "start": [1, 29],
-    "end": [2, 27],
-    "idul-fitr": [2, 28]
+    "month": 1,
+    "day": 29
   },
   "2029": {
-    "start": [1, 16],
-    "end": [2, 15],
-    "idul-fitr": [2, 16]
+    "month": 1,
+    "day": 16
   },
   "2030": {
-    "start": [1, 5],
-    "end": [2, 5],
-    "idul-fitr": [2, 6]
+    "month": 1,
+    "day": 5
   }
 }
