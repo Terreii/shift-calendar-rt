@@ -94,7 +94,7 @@ export default function ByMonths({
           <table
             key={`${year}-${month}-${shiftModel}-${group}`}
             id={`month_${year}-${month + 1}`}
-            className={`${style.table} ${style.calender_table}`}
+            className={`${style.table} ${style.calender_table} ${style.calender_table_placeholder}`}
             aria-hidden
           />
         )
