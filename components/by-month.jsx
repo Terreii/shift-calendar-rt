@@ -109,7 +109,7 @@ export default function ByMonths({
  * @returns {[boolean, boolean, boolean, boolean]} Which months should be rendered.
  */
 function calcMonthsToDisplay(width) {
-  return [width >= 1536, true, width >= 768, width >= 1280];
+  return [width >= 1530, true, width >= 760, width >= 1274];
 }
 let isFirstRender = true;
 
