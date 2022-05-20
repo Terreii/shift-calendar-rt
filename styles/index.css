@@ -66,10 +66,10 @@ th {
 
 [id] {
   /*
-  Header is 3rem height.
+  Header is 3rem height + 3rem of table headers.
   Always scroll so that the element is not hidden by the header.
   */
-  scroll-margin-top: 7rem;
+  scroll-margin-top: 10rem;
 }
 
 .sr-only {
