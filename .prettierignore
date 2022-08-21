@@ -1,6 +1,0 @@
-# Ignore artifacts:
-.next
-.vscode
-coverage
-public/sw.js
-public/workbox-*.js

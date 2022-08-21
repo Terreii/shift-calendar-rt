@@ -1,13 +1,24 @@
-# shift-cal-bosch-rt
+# README
 
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-Published at https://schichtkalender-rt.now.sh/.
+Things you may want to cover:
 
-6-6 und 6-4 Tage Kontischichtkalender Bosch Reutlingen! (inoffiziell)
+* Ruby version
 
-Robert Bosch GmbH (TM) does NOT support this calendar or is in any legal contact/connection with it!
-This is a third-party calendar!
-Robert Bosch GmbH (TM) is a trademark of the Robert Bosch GmbH
+* System dependencies
 
-It is written in a mix of German and English!
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
