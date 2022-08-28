@@ -1,4 +1,6 @@
 class Shifts::Bosch66
+  include Enumerable
+
   attr_reader :year, :month
 
   @@start_date = Date.new(2010, 4, 4)
@@ -34,6 +36,14 @@ class Shifts::Bosch66
       # days are devided by 2 because there are always 2 days of same shifts
       @@shifts[days_offsetted / 2]
     end
+  end
+
+  def each
+    numbers_of_days = Time.days_in_month @month, @year
+    numbers_of_days.times do |day_in_month|
+      yield at(day_in_month + 1)
+    end
+    self
   end
 
   private
