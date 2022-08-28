@@ -1,8 +1,4 @@
-class Shifts::Bosch66
-  include Enumerable
-
-  attr_reader :year, :month
-
+class Shifts::Bosch66 < Shifts::Base
   @@start_date = Date.new(2010, 4, 4)
   @@group_offsets = {
     1 => 8,
@@ -23,11 +19,6 @@ class Shifts::Bosch66
   @@groups = 6
   @@shift_cycle_length = 12
 
-  def initialize(year:, month:)
-    @year = year.to_i
-    @month = month.to_i
-  end
-
   def at(day)
     days = days_in_cycle(day)
     Array.new @@groups do |index|
@@ -36,14 +27,6 @@ class Shifts::Bosch66
       # days are devided by 2 because there are always 2 days of same shifts
       @@shifts[days_offsetted / 2]
     end
-  end
-
-  def each
-    numbers_of_days = Time.days_in_month @month, @year
-    numbers_of_days.times do |day_in_month|
-      yield at(day_in_month + 1)
-    end
-    self
   end
 
   private
