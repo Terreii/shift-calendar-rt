@@ -11,6 +11,22 @@
   </head>
 
   <body>
-    <%= yield %>
+    <nav class="navbar navbar-expand-md bg-success bg-gradient sticky-top">
+      <div class="container-fluid">
+        <%= nav_link_to "Schichtkalender", root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav">
+            <li>Test</li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="container">
+      <%= yield %>
+    </main>
   </body>
 </html>
