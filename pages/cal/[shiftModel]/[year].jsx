@@ -46,8 +46,7 @@ export default function Year() {
     <main className={style.main}>
       <Head>
         <title>
-          {`Jahr ${year} - ${shiftModelText[shiftModel]} - `}
-          Schichtkalender für Bosch Reutlingen
+          {`Jahr ${year} - ${shiftModelText[shiftModel]} - Schichtkalender für Bosch Reutlingen`}
         </title>
       </Head>
 

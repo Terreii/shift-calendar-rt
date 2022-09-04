@@ -44,10 +44,9 @@ export default function MonthPage() {
     <main className={style.main}>
       <Head>
         <title>
-          {`Monat ${today[0]}-${String(today[1] + 1).padStart(2, "0")} - ${
+          {`Monat ${year}-${String(month + 1).padStart(2, "0")} - ${
             shiftModelText[shiftModel]
-          } - `}
-          Schichtkalender für Bosch Reutlingen
+          } - Schichtkalender für Bosch Reutlingen`}
         </title>
       </Head>
 
