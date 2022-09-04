@@ -19,4 +19,8 @@ class Shifts::Base
     end
     self
   end
+
+  def groups
+    0
+  end
 end

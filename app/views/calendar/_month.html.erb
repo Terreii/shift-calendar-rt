@@ -1,0 +1,31 @@
+<%= turbo_frame_tag "month_#{shift.year}-#{shift.month}" do %>
+  <table>
+    <caption>
+      <%= t("date.month_names")[shift.month] %> - <%= shift.year %>
+      <%= current_month?(shift.year, shift.month) ? "(#{t "calendar.now"})" : "" %>
+    </caption>
+
+    <thead>
+      <tr>
+        <th>Wo</th>
+        <th>Tag</th>
+        <th></th>
+        <% shift.groups.times do |i| %>
+          <th><%= t "calendar.group_short", group: i + 1 %></th>
+        <% end %>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% shift.each_with_index do |data, index| %>
+        <%= day_row Date.new(shift.year, shift.month, index + 1), data %>
+      <% end %>
+    </tbody>
+
+    <tfoot>
+      <tr>
+        <td colspan="3" title="<%= t "calendar.sum_info"%>"><%= t "calendar.sum" %></td>
+      </tr>
+    </tfoot>
+  </table>
+<% end %>

@@ -29,6 +29,10 @@ class Shifts::Bosch66 < Shifts::Base
     end
   end
 
+  def groups
+    @@groups
+  end
+
   private
 
   def days_in_cycle(day)
