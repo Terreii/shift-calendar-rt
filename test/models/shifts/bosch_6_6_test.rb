@@ -20,4 +20,12 @@ class Shifts::Bosch66Test < ActiveSupport::TestCase
     result = month.each { |day| }
     assert_equal month, result
   end
+
+  test "should have an each_with_date method" do
+    month = Shifts::Bosch66.new year: 2022, month: 9
+    month.each_with_date do |day, date|
+      assert_equal month.at(date.day), day
+      assert_instance_of Date, date
+    end
+  end
 end

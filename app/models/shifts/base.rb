@@ -9,7 +9,7 @@ class Shifts::Base
   end
 
   def at(day)
-    :free
+    []
   end
 
   def each
@@ -18,6 +18,12 @@ class Shifts::Base
       yield at(index + 1)
     end
     self
+  end
+
+  def each_with_date
+    each_with_index do |data, index|
+      yield data, Date.new(@year, @month, index + 1)
+    end
   end
 
   def groups

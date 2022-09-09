@@ -17,14 +17,23 @@
     </thead>
 
     <tbody>
-      <% shift.each_with_index do |data, index| %>
-        <%= day_row Date.new(shift.year, shift.month, index + 1), data %>
+      <% shift.each_with_date do |data, date| %>
+        <tr id="<%= date.iso8601 %>">
+          <% if date.day == 1 || date.wday == 1 %>
+            <td rowspan="<%= week_cell_length date %>"><%= date.cweek %></td>
+          <% end %>
+          <td><time datetime="<%= date.iso8601 %>"><%= date.day %></time></td>
+          <td><%= screen_reader_long_text date.strftime("%a"), date.strftime("%A") %></td>
+        </tr>
       <% end %>
     </tbody>
 
     <tfoot>
       <tr>
         <td colspan="3" title="<%= t "calendar.sum_info"%>"><%= t "calendar.sum" %></td>
+        <% shift.groups.times do |i| %>
+          <td><%= i %></td>
+        <% end %>
       </tr>
     </tfoot>
   </table>
