@@ -31,8 +31,15 @@
 
 en:
   calendar:
+    week: "We"
+    week_long: "Week"
+    day: "Day"
     now: "now"
     sum: "Sum"
     sum_info: "Sum of days on which a group did work in this month"
     group: "Group %{group}"
     group_short: "Gr. %{group}"
+    shifts:
+      morning: "M"
+      evening: "E"
+      night: "N"
