@@ -1,6 +1,17 @@
 class Shifts::Base
   include Enumerable
 
+  def self.create(key, options)
+    case key
+    when "bosch-6-6", :bosch66
+      Shifts::Bosch66
+    when "bosch-6-4", :bosch64
+      Shifts::Bosch64
+    else
+      return nil
+    end.new(**options)
+  end
+
   attr_reader :year, :month
 
   def initialize(year:, month:)

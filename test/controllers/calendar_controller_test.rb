@@ -20,4 +20,15 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
     get month_calendar_path(id: "bosch-6-6", year: 2023, month: 2)
     assert_response :success
   end
+
+  test "should select shift model" do
+    get month_calendar_path(id: "bosch-6-6", year: 2022, month: 6)
+    assert_response :success
+  end
+
+  test "should error if shift model doesn't exist" do
+    assert_raises(ActionController::RoutingError) do 
+      get month_calendar_path(id: "some-other", year: 2022, month: 6)
+    end
+  end
 end

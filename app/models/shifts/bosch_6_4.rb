@@ -1,4 +1,6 @@
 class Shifts::Bosch64 < Shifts::Base
+  mattr_reader :groups
+
   @@start_date = Date.new(2010, 1, 1)
   @@group_offsets = {
     1 => 3,
@@ -18,10 +20,6 @@ class Shifts::Bosch64 < Shifts::Base
       days_offsetted -= @@shift_cycle_length if days_offsetted >= @@shift_cycle_length
       shift group, days_offsetted
     end
-  end
-
-  def groups
-    @@groups
   end
 
   private

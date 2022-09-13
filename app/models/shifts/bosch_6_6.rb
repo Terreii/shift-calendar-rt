@@ -1,4 +1,6 @@
 class Shifts::Bosch66 < Shifts::Base
+  mattr_reader :groups
+
   @@start_date = Date.new(2010, 4, 4)
   @@group_offsets = {
     1 => 8,
@@ -27,10 +29,6 @@ class Shifts::Bosch66 < Shifts::Base
       # days are devided by 2 because there are always 2 days of same shifts
       @@shifts[days_offsetted / 2]
     end
-  end
-
-  def groups
-    @@groups
   end
 
   private
