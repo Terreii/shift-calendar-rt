@@ -1,2 +1,7 @@
+$enable-grid-classes: false;
+$enable-cssgrid: true;
+
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+@import './month_table';

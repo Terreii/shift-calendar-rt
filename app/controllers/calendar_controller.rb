@@ -10,16 +10,27 @@ class CalendarController < ApplicationController
     if @shift.nil?
       not_found
     end
+    month_date = Date.new(year_param, month, 1)
+    @previous_month = month_date.prev_month
+    @next_month = month_date.next_month
   end
 
   # GET /calendar/1/2023
   def year
+    year = year_param
+    not_found if Shifts::Base.create(params[:id], year:, month: 1).nil?
+
+    @months = []
+    12.times do |index|
+      shift = Shifts::Base.create params[:id], year:, month: index + 1
+      @months << shift
+    end
   end
 
   private
 
     def year_param
-      params[:year].to_i if params.has_key? :year
+      return params[:year].to_i if params.has_key? :year
       Date.today.year
     end
 end

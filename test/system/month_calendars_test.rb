@@ -32,4 +32,13 @@ class MonthCalendarsTest < ApplicationSystemTestCase
        assert_selector "#day_2022-08-13 > :nth-child(#{index + 3})", text:
      end
    end
+
+   test "month calendar url loads last and next two months" do
+     visit month_calendar_path(id: "bosch-6-4", year: 2021, month: 4)
+
+     assert_selector "#month_2021-3 caption", text: "March - 2021"
+     assert_selector "#month_2021-4 caption", text: "April - 2021"
+     assert_selector "#month_2021-5 caption", text: "May - 2021"
+     assert_selector "#month_2021-6 caption", text: "June - 2021"
+   end
 end

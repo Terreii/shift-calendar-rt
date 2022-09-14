@@ -1,11 +1,11 @@
-<%= turbo_frame_tag "month_#{shift.year}-#{shift.month}" do %>
-  <table>
+<%= turbo_frame_tag "month_#{shift.year}-#{shift.month}", class: "g-col-12 g-col-md-6 g-col-lg-4 g-col-xl-3" do %>
+  <table class="table table-sm table-bordered caption-top border-dark text-center align-middle">
     <caption>
       <%= t("date.month_names")[shift.month] %> - <%= shift.year %>
       <%= current_month?(shift.year, shift.month) ? "(#{t "calendar.now"})" : "" %>
     </caption>
 
-    <thead>
+    <thead class="table-light">
       <tr>
         <th><%= screen_reader_long_text t("calendar.week"), t("calendar.week_long") %></th>
         <th><%= t("calendar.day") %></th>
@@ -16,14 +16,21 @@
       </tr>
     </thead>
 
-    <tbody>
+    <tbody class="table-group-divider">
       <% shift.each_with_date do |data, date| %>
-        <tr id="day_<%= date.iso8601 %>">
+        <%= tag.tr id: "day_#{date.iso8601}", class: { weekend: date.sunday? || date.saturday? } do %>
+          <%# Week column %>
           <% if date.day == 1 || date.wday == 1 %>
             <td rowspan="<%= week_cell_length date %>"><%= date.cweek %></td>
           <% end %>
+
+          <%# Day in month column %>
           <td><time datetime="<%= date.iso8601 %>"><%= date.day %></time></td>
+
+          <%# Week day column %>
           <td><%= screen_reader_long_text date.strftime("%a"), date.strftime("%A") %></td>
+
+          <%# shifts columns %>
           <% data.each do |shift| %>
             <% if shift == :free %>
               <td></td>
@@ -31,11 +38,11 @@
               <td><%= t "calendar.shifts.#{shift}" %></td>
             <% end %>
           <% end %>
-        </tr>
+        <% end %>
       <% end %>
     </tbody>
 
-    <tfoot>
+    <tfoot class="table-group-divider">
       <tr>
         <td colspan="3" title="<%= t "calendar.sum_info"%>"><%= t "calendar.sum" %></td>
         <% shift.groups.times do |i| %>
