@@ -1,8 +1,5 @@
 <h1>Calendar#year</h1>
-<p>Find me in app/views/calendar/year.html.erb</p>
 
 <div class="grid">
-  <% @months.each do |shift| %>
-    <%= render "month", shift: %>
-  <% end %>
+  <%= render partial: "month", collection: @months %>
 </div>

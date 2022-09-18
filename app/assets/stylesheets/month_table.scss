@@ -1,6 +1,79 @@
 // Styles for the month view of a shift
 
+// Those styles make the table header sticky
+.shift_calendar {
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-width: 1px;
+  border-style: solid;
+  border-top-width: 0px;
+
+  th, td {
+    border-width: 1px;
+    border-style: solid;
+  }
+
+  th {
+    border-left-width: 0px;
+    &:last-child {
+      border-right-width: 0px;
+    }
+  }
+
+  td {
+    border-top-width: 0px;
+    border-left-width: 0px;
+    &:last-child {
+      border-right-width: 0px;
+    }
+  }
+  tbody tr:first-child td {
+    border-top-width: 1px;
+  }
+}
+
+.shift_calendar__caption {
+  position: sticky;
+  top: 3rem;
+  background-color: var(--bs-body-bg);
+  border-bottom: 1px solid;
+}
+.shift_calendar__head {
+  position: sticky;
+  top: 5.55rem;
+}
+.shift_calendar_footer {
+  td {
+    border-bottom-width: 0px;
+  }
+}
+
+// Styling for the cells
 .weekend {
   background-color: #d1d5db;
+}
+
+.group_1 {
+  --bs-table-bg: #ff69b4;
+}
+
+.group_2 {
+  --bs-table-bg: #ff0;
+}
+
+.group_3 {
+  --bs-table-bg: #f00;
+}
+
+.group_4 {
+  --bs-table-bg: #0f0;
+}
+
+.group_5 {
+  --bs-table-bg: #1e90ff;
+}
+
+.group_6 {
+  --bs-table-bg: #cd853f;
 }
 

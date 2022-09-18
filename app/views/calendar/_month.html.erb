@@ -1,23 +1,28 @@
-<%= turbo_frame_tag "month_#{shift.year}-#{shift.month}", class: "g-col-12 g-col-md-6 g-col-lg-4 g-col-xl-3" do %>
-  <table class="table table-sm table-bordered caption-top border-dark text-center align-middle">
-    <caption>
-      <%= t("date.month_names")[shift.month] %> - <%= shift.year %>
-      <%= current_month?(shift.year, shift.month) ? "(#{t "calendar.now"})" : "" %>
+<%# locals: (month:) -%>
+<%# month is an instance of a Shift::Base sub class. %>
+<%= turbo_frame_tag "month_#{month.year}-#{month.month}", class: "g-col-12 g-col-md-6 g-col-lg-4 g-col-xl-3" do %>
+  <table class="table table-sm caption-top border-dark text-center align-middle shift_calendar">
+    <caption class="shift_calendar__caption">
+      <%= t("date.month_names")[month.month] %> - <%= month.year %>
+      <%= current_month?(month.year, month.month) ? "(#{t "calendar.now"})" : "" %>
     </caption>
 
-    <thead class="table-light">
+    <thead class="table-light align-middle shift_calendar__head">
       <tr>
-        <th><%= screen_reader_long_text t("calendar.week"), t("calendar.week_long") %></th>
-        <th><%= t("calendar.day") %></th>
-        <th></th>
-        <% shift.groups.times do |i| %>
-          <th><%= screen_reader_long_text t("calendar.group_short", group: i + 1), t("calendar.group", group: i + 1) %></th>
+        <th rowspan="2"><%= screen_reader_long_text t("calendar.week"), t("calendar.week_long") %></th>
+        <th rowspan="2"><%= t("calendar.day") %></th>
+        <th rowspan="2"></th>
+        <%= tag.th t("calendar.groups"), colspan: month.groups %>
+      </tr>
+      <tr>
+        <% month.groups.times do |i| %>
+          <th><%= i + 1 %></th>
         <% end %>
       </tr>
     </thead>
 
-    <tbody class="table-group-divider">
-      <% shift.each_with_date do |data, date| %>
+    <tbody>
+      <% month.each_with_date do |data, date| %>
         <%= tag.tr id: "day_#{date.iso8601}", class: { weekend: date.sunday? || date.saturday? } do %>
           <%# Week column %>
           <% if date.day == 1 || date.wday == 1 %>
@@ -31,21 +36,21 @@
           <td><%= screen_reader_long_text date.strftime("%a"), date.strftime("%A") %></td>
 
           <%# shifts columns %>
-          <% data.each do |shift| %>
+          <% data.each_with_index do |shift, index| %>
             <% if shift == :free %>
               <td></td>
             <% else %>
-              <td><%= t "calendar.shifts.#{shift}" %></td>
+              <%= tag.td t("calendar.shifts.#{shift}"), class: "group_#{index + 1}" %>
             <% end %>
           <% end %>
         <% end %>
       <% end %>
     </tbody>
 
-    <tfoot class="table-group-divider">
+    <tfoot class="shift_calendar_footer">
       <tr>
         <td colspan="3" title="<%= t "calendar.sum_info"%>"><%= t "calendar.sum" %></td>
-        <% shift.groups.times do |i| %>
+        <% month.groups.times do |i| %>
           <td><%= i %></td>
         <% end %>
       </tr>
