@@ -14,12 +14,25 @@
     <nav class="navbar navbar-expand-md bg-success bg-gradient sticky-top">
       <div class="container-fluid">
         <%= nav_link_to "Schichtkalender", root_path, class: "navbar-brand" %>
+        <%= yield(:cal_nav) if content_for?(:cal_nav) %>
+
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav">
-            <li>Test</li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <%= t "nav.shifts" %>
+              </a>
+              <ul class="dropdown-menu">
+                <% ["bosch-6-6", "bosch-6-4"].each do |shift| %>
+                  <li>
+                    <%= link_to t(shift, scope: "shift_model"), calendar_path(shift), class: "dropdown-item" %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>

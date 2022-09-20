@@ -7,6 +7,17 @@
   border-width: 1px;
   border-style: solid;
   border-top-width: 0px;
+  text-align: center;
+  vertical-align: middle;
+  caption-side: top;
+
+  [id] {
+    /*
+    Header height + table headers height
+    Always scroll so that the element is not hidden by the header.
+    */
+    scroll-margin-top: 12rem;
+  }
 
   th, td {
     border-width: 1px;
@@ -37,10 +48,12 @@
   top: 3rem;
   background-color: var(--bs-body-bg);
   border-bottom: 1px solid;
+  z-index: 1;
 }
 .shift_calendar__head {
   position: sticky;
   top: 5.55rem;
+  z-index: 1;
 }
 .shift_calendar_footer {
   td {
@@ -50,7 +63,18 @@
 
 // Styling for the cells
 .weekend {
-  background-color: #d1d5db;
+  --bs-table-bg: #d1d5db;
+}
+
+.week-cell {
+  --bs-table-bg: var(--bs-body-bg);
+
+  & > span {
+    position: sticky;
+    bottom: 0.25rem;
+    bottom: calc(0.25rem + env(safe-area-inset-bottom, 0px));
+    top: 10rem; // under nav + caption + thead
+  }
 }
 
 .group_1 {

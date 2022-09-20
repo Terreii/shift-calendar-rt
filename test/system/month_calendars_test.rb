@@ -14,7 +14,10 @@ class MonthCalendarsTest < ApplicationSystemTestCase
    end
 
    test "visiting the calendar url shows the current month" do
-     visit calendar_url(id: "bosch-6-6")
+     visit root_path
+     click_on "Shifts"
+     click_on "Bosch 6 - 6"
+
      today = Date.today
 
      table = find("#month_#{today.year}-#{today.month}").native.attribute('outerHTML')
@@ -26,10 +29,23 @@ class MonthCalendarsTest < ApplicationSystemTestCase
 
    test "visiting a month calendar url shows the selected shift" do
      visit month_calendar_path(id: "bosch-6-4", year: 2022, month: 8)
-     today = Date.today
 
      ['E', 'M', 'N', '', ''].each_with_index do |text, index|
        assert_selector "#day_2022-08-13 > :nth-child(#{index + 3})", text:
+     end
+   end
+
+   test "visiting a calendar url shows the selected shift" do
+     visit root_path
+     click_on "Shifts"
+     click_on "Bosch 6 - 4"
+     today = Date.today
+     shift = Shifts::Bosch64.new(year: today.year, month: today.month)
+
+     shift.at(today.day).each_with_index do |shift, index|
+       unless shift == :free
+         assert_selector "#day_#{today.iso8601} > :nth-child(#{index + 3})", text: I18n.t(shift, scope: "calendar.shifts")
+       end
      end
    end
 

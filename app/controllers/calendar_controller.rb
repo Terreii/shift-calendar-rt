@@ -17,12 +17,12 @@ class CalendarController < ApplicationController
 
   # GET /calendar/1/2023
   def year
-    year = year_param
-    not_found if Shifts::Base.create(params[:id], year:, month: 1).nil?
+    @year = year_param
+    not_found if Shifts::Base.create(params[:id], year: @year, month: 1).nil?
 
     @months = []
     12.times do |index|
-      shift = Shifts::Base.create params[:id], year:, month: index + 1
+      shift = Shifts::Base.create params[:id], year: @year, month: index + 1
       @months << shift
     end
   end

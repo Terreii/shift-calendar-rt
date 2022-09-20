@@ -30,7 +30,20 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
+  nav:
+    shifts: "Shifts"
+
+  shift_model:
+    bosch-6-6: "Bosch 6 - 6"
+    bosch-6-4: "Bosch 6 - 4"
+
   calendar:
+    nav:
+      next_month: "Next Month"
+      last_month: "Last Month"
+      next_year: "Next Year"
+      last_year: "Last Year"
+    today: "Today"
     week: "We"
     week_long: "Week"
     day: "Day"

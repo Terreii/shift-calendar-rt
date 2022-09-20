@@ -1,5 +1,27 @@
 <h1>Calendar#year</h1>
 
+<% content_for :cal_nav do %>
+  <div class="d-flex mx-md-2">
+    <%= link_to(
+      "<",
+      year_calendar_path(year: @year - 1),
+      title: t("calendar.nav.last_year"),
+      class: "nav-link"
+    ) %>
+    <%= link_to(
+      t("calendar.today"),
+      calendar_path(anchor: "day_#{Date.today.iso8601}"),
+      class: "nav-link mx-3"
+    ) %>
+    <%= link_to(
+      ">",
+      year_calendar_path(year: @year + 1),
+      title: t("calendar.nav.next_year"),
+      class: "nav-link"
+    ) %>
+  </div>
+<% end %>
+
 <div class="grid">
   <%= render partial: "month", collection: @months %>
 </div>

@@ -1,5 +1,33 @@
 <h1>Calendar#show</h1>
 
+<% content_for :cal_nav do %>
+  <div class="d-flex mx-md-2">
+    <%= link_to(
+      "<",
+      month_calendar_path(
+        year: @previous_month.year,
+        month: @previous_month.month
+      ),
+      title: t("calendar.nav.last_month"),
+      class: "nav-link"
+    ) %>
+    <%= link_to(
+      t("calendar.today"),
+      calendar_path(anchor: "day_#{Date.today.iso8601}"),
+      class: "nav-link mx-3"
+    ) %>
+    <%= link_to(
+      ">",
+      month_calendar_path(
+        year: @next_month.year,
+        month: @next_month.month
+      ),
+      title: t("calendar.nav.next_month"),
+      class: "nav-link"
+    ) %>
+  </div>
+<% end %>
+
 <div class="grid">
   <%= turbo_frame_tag(
     "month_#{@previous_month.year}-#{@previous_month.month}",
