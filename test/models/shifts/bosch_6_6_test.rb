@@ -8,6 +8,12 @@ class Shifts::Bosch66Test < ActiveSupport::TestCase
     assert_equal [:morning, :free, :free, :night, :free, :evening], month2.at(8)
   end
 
+  test "should have a [] method" do
+    month = Shifts::Bosch66.new year: 2022, month: rand(1..12)
+    day = rand(1..month.size)
+    assert_equal month.at(day), month[day]
+  end
+
   test "it iterates through all days in a month" do
     month = Shifts::Bosch66.new year: 2022, month: 9
     month.each_with_index do |day, index|

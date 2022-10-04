@@ -19,14 +19,26 @@ class Shifts::Base
     @month = month.to_i
   end
 
+  def groups
+    0
+  end
+
   def at(day)
     []
   end
 
+  def [](day)
+    at(day)
+  end
+
+  def size
+    Time.days_in_month(@month, @year)
+  end
+  alias_method :length, :size
+
   def each
-    numbers_of_days = Time.days_in_month @month, @year
-    numbers_of_days.times do |index|
-      yield at(index + 1)
+    month_data.each do |data|
+      yield data
     end
     self
   end
@@ -37,17 +49,23 @@ class Shifts::Base
     end
   end
 
-  def groups
-    0
-  end
-
   def work_days_count
-    word_days = Array.new(groups, 0)
-    each do |data|
+    return @work_data unless @work_data.nil?
+    work_data = Array.new(groups, 0)
+    month_data.each_with_index do |data, index|
       data.each_with_index do |shift, index|
-        word_days[index] += 1 unless shift == :free
+        work_data[index] += 1 unless shift == :free
       end
     end
-    word_days
+    @work_data = work_data.freeze
   end
+
+  private
+
+    def month_data
+      return @data unless @data.nil?
+      @data = Array.new size do |index|
+        at(index + 1).freeze
+      end.freeze
+    end
 end

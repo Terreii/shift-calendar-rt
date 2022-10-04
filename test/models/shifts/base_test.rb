@@ -23,4 +23,14 @@ class Shifts::BaseTest < ActiveSupport::TestCase
     month = Shifts::Base.new year: 2022, month: 10
     assert_equal [], month.work_days_count
   end
+
+  test "should have a size and length method" do
+    month = Shifts::Base.new year: 2022, month: 10
+    assert_equal 31, month.size
+    assert_equal 31, month.length
+
+    month = Shifts::Base.new year: 2022, month: 9
+    assert_equal 30, month.size
+    assert_equal 30, month.length
+  end
 end
