@@ -11,6 +11,12 @@ class MonthCalendarsTest < ApplicationSystemTestCase
      ['', 'N', '', 'E', '', 'M'].each_with_index do |text, index|
        assert_selector "#day_2022-08-13 > :nth-child(#{index + 3})", text:
      end
+
+     within "#month_2022-8 tfoot" do
+       [17, 14, 15, 16, 13, 18].each_with_index do |work_days, index|
+         assert_selector "td:nth-child(#{index + 2})", text: work_days
+       end
+     end
    end
 
    test "visiting the calendar url shows the current month" do

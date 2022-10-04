@@ -40,4 +40,14 @@ class Shifts::Base
   def groups
     0
   end
+
+  def work_days_count
+    word_days = Array.new(groups, 0)
+    each do |data|
+      data.each_with_index do |shift, index|
+        word_days[index] += 1 unless shift == :free
+      end
+    end
+    word_days
+  end
 end

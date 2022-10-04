@@ -54,7 +54,7 @@
     <tfoot class="shift_calendar_footer">
       <tr>
         <td colspan="3" title="<%= t "calendar.sum_info"%>"><%= t "calendar.sum" %></td>
-        <% month.groups.times do |i| %>
+        <% month.work_days_count.each do |i| %>
           <td><%= i %></td>
         <% end %>
       </tr>

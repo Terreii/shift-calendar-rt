@@ -18,4 +18,9 @@ class Shifts::BaseTest < ActiveSupport::TestCase
     shift = Shifts::Base.create :bosch64, year: 2022, month: 8
     assert_instance_of Shifts::Bosch64, shift
   end
+
+  test "should have a work_days_count method" do
+    month = Shifts::Base.new year: 2022, month: 10
+    assert_equal [], month.work_days_count
+  end
 end
