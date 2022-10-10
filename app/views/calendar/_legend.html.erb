@@ -1,0 +1,16 @@
+<section class="d-flex flex-column flex-md-row">
+  <dl class="legend_column">
+    <% shift.shifts_times.each do |key, times| %>
+      <%= tag.dt t(key, scope: "calendar.shifts"), class: "legend_cell" %>
+      <dd id="<%= key %>_shift_description">
+        <%= t(key, scope: "calendar.shifts_long") %>
+        <br>
+        <time>
+          <%= Time.new(2020, 1, 1, times[:start][0], times[:start][1]).to_fs(:time) %>
+          -
+          <%= Time.new(2020, 1, 1, times[:finish][0], times[:finish][1]).to_fs(:time) %>
+        </time>
+      </dd>
+    <% end %>
+  </dl>
+</section>

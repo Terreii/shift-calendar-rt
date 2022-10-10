@@ -55,3 +55,7 @@ en:
       morning: "M"
       evening: "E"
       night: "N"
+    shifts_long:
+      morning: "Morning Shift"
+      evening: "Evening Shift"
+      night: "Night Shift"

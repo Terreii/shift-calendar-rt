@@ -60,6 +60,39 @@ class Shifts::Base
     @work_data = work_data.freeze
   end
 
+  def current_working_shift
+    now = Time.now
+    date = now.to_date
+    case now.hour
+    when 0..5
+      # night shift of last day
+      return :night, date.yesterday
+    when 6..13
+      return :morning, date
+    when 14..21
+      return :evening, date
+    else
+      return :night, date
+    end
+  end
+
+  def shifts_times
+    {
+      morning: {
+        start: [6, 0],
+        finish: [14, 30]
+      },
+      evening: {
+        start: [14, 0],
+        finish: [22, 30]
+      },
+      night: {
+        start: [22, 0],
+        finish: [6, 30]
+      }
+    }
+  end
+
   private
 
     def month_data

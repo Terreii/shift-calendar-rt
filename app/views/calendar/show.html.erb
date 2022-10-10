@@ -28,6 +28,8 @@
   </div>
 <% end %>
 
+<%= render "legend", shift: @shift %>
+
 <div class="grid">
   <%= turbo_frame_tag(
     "month_#{@previous_month.year}-#{@previous_month.month}",

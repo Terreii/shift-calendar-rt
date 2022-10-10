@@ -82,6 +82,23 @@
   }
 }
 
+// Legend
+.legend_column {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: flex-start;
+  grid-gap: 0.5rem;
+  gap: 0.5rem;
+}
+
+.legend_cell {
+  width: 2rem;
+  padding: 0.1rem;
+  border: 1px solid #000;
+  border-color: var(--bs-table-color);
+  text-align: center;
+}
+
 // Styling for the cells
 .weekend {
   --bs-table-bg: #d1d5db;

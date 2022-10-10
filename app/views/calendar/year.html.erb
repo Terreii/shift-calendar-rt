@@ -22,6 +22,8 @@
   </div>
 <% end %>
 
+<%= render "legend", shift: @months[0] %>
+
 <div class="grid">
   <%= render partial: "month", collection: @months %>
 </div>

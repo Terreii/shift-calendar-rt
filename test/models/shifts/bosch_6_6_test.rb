@@ -39,4 +39,40 @@ class Shifts::Bosch66Test < ActiveSupport::TestCase
     month = Shifts::Bosch66.new year: 2022, month: 10
     assert_equal [18, 13, 16, 15, 14, 17], month.work_days_count
   end
+
+  test "should have a current_working_shift method" do
+    month = Shifts::Bosch66.new year: 2022, month: 10
+
+    travel_to Time.new(2022, 10, 10, rand(0..5), 0, 0)
+    assert_equal [:night, Date.yesterday], month.current_working_shift
+
+    travel_to Time.new(2022, 10, 8, rand(6..13), 0, 0)
+    assert_equal [:morning, Date.today], month.current_working_shift
+
+    travel_to Time.new(2023, 2, 14, rand(14..21), 0, 0)
+    assert_equal [:evening, Date.today], month.current_working_shift
+
+    travel_to Time.new(2023, 2, 14, rand(22..23), 0, 0)
+    assert_equal [:night, Date.today], month.current_working_shift
+  end
+
+  test "should have a shifts_times method" do
+    month = Shifts::Bosch66.new year: 2022, month: 10
+
+    shifts = {
+      morning: {
+        start: [6, 0],
+        finish: [14, 30]
+      },
+      evening: {
+        start: [14, 0],
+        finish: [22, 30]
+      },
+      night: {
+        start: [22, 0],
+        finish: [6, 30]
+      }
+    }
+    assert_equal shifts, month.shifts_times
+  end
 end
