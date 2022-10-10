@@ -23,7 +23,10 @@
 
     <tbody>
       <% month.each_with_date do |data, date| %>
-        <%= tag.tr id: "day_#{date.iso8601}", class: { weekend: date.sunday? || date.saturday? } do %>
+        <%= tag.tr id: "day_#{date.iso8601}", class: {
+          weekend: date.sunday? || date.saturday?,
+          today: date.today?
+        } do %>
           <%# Week column %>
           <% if date.day == 1 || date.wday == 1 %>
             <td rowspan="<%= week_cell_length date %>" class="week-cell">
@@ -42,9 +45,11 @@
           <%# shifts columns %>
           <% data.each_with_index do |shift, index| %>
             <% if shift == :free %>
-              <td></td>
+              <td class="shift_cell"></td>
             <% else %>
-              <%= tag.td t("calendar.shifts.#{shift}"), class: "group_#{index + 1}" %>
+              <%= tag.td t("calendar.shifts.#{shift}"), class: ["shift_cell", "group_#{index + 1}", {
+                current_shift: shift == @current_shift && !@current_shift_date.nil? && date == @current_shift_date
+              }] %>
             <% end %>
           <% end %>
         <% end %>

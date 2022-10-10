@@ -41,6 +41,27 @@
   tbody tr:first-child td {
     border-top-width: 1px;
   }
+
+  .today {
+    .day_in_month {
+      border-left-width: 3px;
+    }
+    td:last-child {
+      border-right-width: 3px;
+    }
+    .day_in_month, .weekday, .shift_cell {
+      border-top-width: 3px;
+      border-bottom-width: 3px;
+    }
+  }
+
+  .current_shift {
+    border-width: 3px;
+    
+    &:last-child {
+      border-right-width: 3px;
+    }
+  }
 }
 
 .shift_calendar__caption {
