@@ -15,4 +15,10 @@ module CalendarHelper
     days_to_month_end = Time.days_in_month(date.month, date.year) - date.day
     1 + [7 - date.wday, days_to_month_end].min
   end
+
+  def daylight_saving_text(date)
+    return t(:forward, scope: "calendar.dls") if date.month == 3
+    return t(:back, scope: "calendar.dls") if date.month == 10
+    nil
+  end
 end

@@ -44,4 +44,19 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
       assert_match month_calendar_path(id: "bosch-6-6", year: 2023, month:), @response.body
     end
   end
+
+  test "should have the daylight saving time switch" do
+    get month_calendar_path(id: "bosch-6-6", year: 2022, month: 3)
+    body = Nokogiri.parse @response.body
+    elements = body.css("td.daylight_saving")
+    assert_equal 1, elements.length
+    assert_equal "day_2022-03-27", elements.first.parent[:id]
+    assert_equal I18n.t("calendar.dls.forward"), elements.first[:title]
+
+    get month_calendar_path(id: "bosch-6-6", year: 2022, month: 10)
+    body = Nokogiri.parse @response.body
+    element = body.at_css("td.daylight_saving")
+    assert_equal "day_2022-10-30", element.parent[:id]
+    assert_equal I18n.t("calendar.dls.back"), element[:title]
+  end
 end
