@@ -24,7 +24,7 @@ class MonthCalendarsTest < ApplicationSystemTestCase
     click_on "Shifts"
     click_on "Bosch 6 - 6"
 
-    today = Date.today
+    today = Date.current
 
     table = find("#month_#{today.year}-#{today.month}").native.attribute('outerHTML')
     assert_not_empty table
@@ -45,7 +45,7 @@ class MonthCalendarsTest < ApplicationSystemTestCase
     visit root_path
     click_on "Shifts"
     click_on "Bosch 6 - 4"
-    today = Date.today
+    today = Date.current
     shift = Shifts::Bosch64.new(year: today.year, month: today.month)
 
     shift.at(today.day).each_with_index do |shift, index|
@@ -65,21 +65,21 @@ class MonthCalendarsTest < ApplicationSystemTestCase
   end
 
   test "should highlight today" do
-    travel_to Time.new(2022, 10, 10, 4, 0, 0)
+    travel_to Time.zone.parse("2022-10-10 04:00:00")
     visit calendar_path(id: "bosch-6-4")
 
     # Border for the row
-    assert_selector "tr#day_#{Date.today.iso8601}.today"
+    assert_selector "tr#day_#{Date.current.iso8601}.today"
     # highlight current working shift
     assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
   end
 
   test "should highlight today in year_calendar_path" do
-    travel_to Time.new(2022, 10, 10, 4, 0, 0)
+    travel_to Time.zone.parse("2022-10-10 04:00:00")
     visit year_calendar_path(id: "bosch-6-4", year: 2022)
 
     # Border for the row
-    assert_selector "tr#day_#{Date.today.iso8601}.today"
+    assert_selector "tr#day_#{Date.current.iso8601}.today"
     # highlight current working shift
     assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
   end

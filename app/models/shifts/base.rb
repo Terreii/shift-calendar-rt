@@ -61,7 +61,7 @@ class Shifts::Base
   end
 
   def current_working_shift
-    now = Time.now
+    now = Time.zone.now
     date = now.to_date
     case now.hour
     when 0..5

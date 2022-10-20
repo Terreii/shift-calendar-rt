@@ -1,6 +1,6 @@
 module CalendarHelper
   def current_month?(year, month)
-    today = Date.today
+    today = Date.current
     year == today.year && month == today.month
   end
 

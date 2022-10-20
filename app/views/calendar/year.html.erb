@@ -10,7 +10,7 @@
     ) %>
     <%= link_to(
       t("calendar.today"),
-      calendar_path(anchor: "day_#{Date.today.iso8601}"),
+      calendar_path(anchor: "day_#{Date.current.iso8601}"),
       class: "nav-link mx-3"
     ) %>
     <%= link_to(

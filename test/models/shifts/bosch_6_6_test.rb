@@ -47,13 +47,13 @@ class Shifts::Bosch66Test < ActiveSupport::TestCase
     assert_equal [:night, Date.yesterday], month.current_working_shift
 
     travel_to Time.new(2022, 10, 8, rand(6..13), 0, 0)
-    assert_equal [:morning, Date.today], month.current_working_shift
+    assert_equal [:morning, Date.current], month.current_working_shift
 
     travel_to Time.new(2023, 2, 14, rand(14..21), 0, 0)
-    assert_equal [:evening, Date.today], month.current_working_shift
+    assert_equal [:evening, Date.current], month.current_working_shift
 
     travel_to Time.new(2023, 2, 14, rand(22..23), 0, 0)
-    assert_equal [:night, Date.today], month.current_working_shift
+    assert_equal [:night, Date.current], month.current_working_shift
   end
 
   test "should have a shifts_times method" do

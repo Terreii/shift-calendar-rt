@@ -6,7 +6,7 @@ class CalendarController < ApplicationController
   # GET /calendar/1 or /calendar/1/2022/4
   def show
     year = year_param
-    month = params.has_key?(:month) ? params[:month].to_i : Date.today.month
+    month = params.has_key?(:month) ? params[:month].to_i : Date.current.month
     @shift = Shifts::Base.create params[:id], year: year, month: month
     if @shift.nil?
       not_found
@@ -15,7 +15,7 @@ class CalendarController < ApplicationController
     @previous_month = month_date.prev_month
     @next_month = month_date.next_month
 
-    today = Date.today
+    today = Date.current
     last_month = 1.month.ago
     if today.year == year && today.month == month || last_month.year == year && last_month.month == month
       @current_shift, @current_shift_date = @shift.current_working_shift
@@ -33,7 +33,7 @@ class CalendarController < ApplicationController
       @months << shift
     end
 
-    if Date.today.year == @year
+    if Date.current.year == @year
       @current_shift, @current_shift_date = @months[0].current_working_shift
     end
   end
@@ -42,6 +42,6 @@ class CalendarController < ApplicationController
 
     def year_param
       return params[:year].to_i if params.has_key? :year
-      Date.today.year
+      Date.current.year
     end
 end
