@@ -59,4 +59,26 @@ class CalendarControllerTest < ActionDispatch::IntegrationTest
     assert_equal "day_2022-10-30", element.parent[:id]
     assert_equal I18n.t("calendar.dls.back"), element[:title]
   end
+
+  test "should highlight today" do
+    travel_to Time.zone.parse("2022-10-10 04:00:00")
+    get calendar_path(id: "bosch-6-4")
+    body = Nokogiri.parse @response.body
+
+    # Border for the row
+    assert_not_nil body.at_css("tr#day_#{Date.current.iso8601}.today")
+    # highlight current working shift
+    assert_not_nil body.at_css("#day_#{Date.yesterday.iso8601} > .current_shift")
+  end
+
+  test "should highlight today in year_calendar_path" do
+    travel_to Time.zone.parse("2022-10-10 04:00:00")
+    get year_calendar_path(id: "bosch-6-4", year: 2022)
+    body = Nokogiri.parse @response.body
+
+    # Border for the row
+    assert_not_nil body.at_css("tr#day_#{Date.current.iso8601}.today")
+    # highlight current working shift
+    assert_not_nil body.at_css("#day_#{Date.yesterday.iso8601} > .current_shift")
+  end
 end

@@ -57,9 +57,17 @@
             <% if shift == :free %>
               <td class="shift_cell"></td>
             <% else %>
-              <%= tag.td t("calendar.shifts.#{shift}"), class: ["shift_cell", "group_#{index + 1}", {
-                current_shift: shift == @current_shift && !@current_shift_date.nil? && date == @current_shift_date
-              }] %>
+              <%= tag.td(
+                t("calendar.shifts.#{shift}"),
+                class: [
+                  "shift_cell",
+                  "group_#{index + 1}",
+                  {
+                    current_shift: shift == @current_shift && !@current_shift_date.nil? && date == @current_shift_date
+                  }
+                ],
+                data: { shift: shift.to_s }
+              ) %>
             <% end %>
           <% end %>
         <% end %>

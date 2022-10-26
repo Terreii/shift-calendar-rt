@@ -65,22 +65,28 @@ class MonthCalendarsTest < ApplicationSystemTestCase
   end
 
   test "should highlight today" do
-    travel_to Time.zone.parse("2022-10-10 04:00:00")
     visit calendar_path(id: "bosch-6-4")
 
     # Border for the row
     assert_selector "tr#day_#{Date.current.iso8601}.today"
     # highlight current working shift
-    assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
+    if Time.current.hour < 6
+      assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
+    else
+      assert_selector "#day_#{Date.current.iso8601} > .current_shift"
+    end
   end
 
   test "should highlight today in year_calendar_path" do
-    travel_to Time.zone.parse("2022-10-10 04:00:00")
     visit year_calendar_path(id: "bosch-6-4", year: 2022)
 
     # Border for the row
     assert_selector "tr#day_#{Date.current.iso8601}.today"
     # highlight current working shift
-    assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
+    if Time.current.hour < 6
+      assert_selector "#day_#{Date.yesterday.iso8601} > .current_shift"
+    else
+      assert_selector "#day_#{Date.current.iso8601} > .current_shift"
+    end
   end
 end
