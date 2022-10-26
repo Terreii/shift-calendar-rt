@@ -30,7 +30,11 @@
 
 <%= render "legend", shift: @shift %>
 
-<div class="grid">
+<%= tag.div class: "grid", data: {
+  controller: "shift-update",
+  shift_update_shifts_value: @shift.shifts_times.to_json,
+  shift_update_zone_offset_value: Time.current.utc_offset
+} do %>
   <%= turbo_frame_tag(
     "month_#{@previous_month.year}-#{@previous_month.month}",
     src: month_calendar_path(
@@ -59,4 +63,4 @@
     ),
     class: "d-none d-lg-block g-col-12 g-col-md-6 g-col-lg-4 g-col-xl-3"
   ) %>
-</div>
+<% end %>

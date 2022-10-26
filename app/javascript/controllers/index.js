@@ -4,5 +4,5 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import ShiftUpdateController from "./shift_update_controller"
+application.register("shift-update", ShiftUpdateController)
