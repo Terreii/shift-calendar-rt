@@ -17,6 +17,14 @@ export default class extends Controller {
     clearTimeout(this.#timeoutId)
   }
 
+  visibilityChange() {
+    if (document.visibilityState === 'visible') {
+      this.update()
+    } else {
+      clearTimeout(this.#timeoutId)
+    }
+  }
+
   update() {
     this.updateToday()
     this.updateShift()
