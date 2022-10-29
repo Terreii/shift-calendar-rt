@@ -54,9 +54,9 @@ export default class extends Controller {
     // Select the current working shift
     const current = Object.entries(this.shiftsValue).find(([key, value]) => {
       if (value.start[0] > value.finish[0]) { // night -> goes to next day
-        return value.start[0] < hour || value.finish[0] > hour
+        return value.start[0] <= hour || value.finish[0] > hour
       }
-      return value.start[0] < hour && value.finish[0] > hour
+      return value.start[0] <= hour && value.finish[0] > hour
     })
 
     if (current) {
