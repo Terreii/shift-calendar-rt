@@ -6,7 +6,8 @@ class CalendarController < ApplicationController
   # GET /calendar/1 or /calendar/1/2022/4
   def show
     year = year_param
-    month = params.has_key?(:month) ? params[:month].to_i : Date.current.month
+    @is_selected_month = params.has_key?(:month)
+    month = @is_selected_month ? params[:month].to_i : Date.current.month
     @shift = Shifts::Base.create params[:id], year: year, month: month
     if @shift.nil?
       not_found

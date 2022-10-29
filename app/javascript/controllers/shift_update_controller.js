@@ -3,10 +3,12 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="shift-update"
 export default class extends Controller {
   static values = {
+    reload: Boolean,
     shifts: Object,
     zoneOffset: Number
   }
 
+  #lastUpdateMonth = this.getEuropaZoneTime().getUTCMonth()
   #timeoutId = NaN
 
   connect() {
@@ -26,9 +28,15 @@ export default class extends Controller {
   }
 
   update() {
+    const currentMonth = this.getEuropaZoneTime().getUTCMonth()
+    if (this.reloadValue && this.#lastUpdateMonth !== currentMonth) {
+      Turbo.visit(location.pathname, { action: "replace" })
+    }
+    this.#lastUpdateMonth = currentMonth
+
     this.updateToday()
     this.updateShift()
-    this.nextHourTimeout()
+    this.nextTimeout()
   }
 
   // Update the today row indicator
@@ -81,7 +89,7 @@ export default class extends Controller {
     return new Date(Date.now() + this.zoneOffsetValue * 1000)
   }
 
-  nextHourTimeout() {
+  nextTimeout() {
     const now = Date.now()
     const nextInterval = new Date(now)
     const minutes = Math.floor(nextInterval.getMinutes() / 5 + 1) * 5

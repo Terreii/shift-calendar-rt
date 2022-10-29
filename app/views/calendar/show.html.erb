@@ -34,7 +34,8 @@
   controller: "shift-update",
   action: "visibilitychange@document->shift-update#visibilityChange",
   shift_update_shifts_value: @shift.shifts_times.to_json,
-  shift_update_zone_offset_value: Time.current.utc_offset
+  shift_update_zone_offset_value: Time.current.utc_offset,
+  shift_update_reload_value: !@is_selected_month
 } do %>
   <%= turbo_frame_tag(
     "month_#{@previous_month.year}-#{@previous_month.month}",
