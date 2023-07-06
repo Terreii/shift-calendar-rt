@@ -79,7 +79,7 @@ function Cell({ id, className, description, href, children }) {
       .flatMap((line, index) =>
         index === 0
           ? [<span key={index}>{line}</span>]
-          : [<br key={index + "_br"} />, <span key={index}>{line}</span>]
+          : [<br key={index + "_br"} />, <span key={index}>{line}</span>],
       );
   }, [description]);
 

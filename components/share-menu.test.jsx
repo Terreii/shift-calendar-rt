@@ -6,7 +6,7 @@ import ShareMenu from "./share-menu";
 describe("components/ShareMenu", () => {
   it("should render", () => {
     const { queryByLabelText, queryByText } = render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />
+      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />,
     );
 
     const address = queryByLabelText("Adresse zum teilen:");
@@ -33,7 +33,7 @@ describe("components/ShareMenu", () => {
 
   it("should allow to share the group if a group is selected", () => {
     const { queryByLabelText, queryByText } = render(
-      <ShareMenu group={5} search={null} shiftModel="6-6" hide={() => {}} />
+      <ShareMenu group={5} search={null} shiftModel="6-6" hide={() => {}} />,
     );
 
     const group = queryByLabelText("Gruppe");
@@ -52,7 +52,7 @@ describe("components/ShareMenu", () => {
         search={[2020, 4, 5]}
         shiftModel="6-6"
         hide={() => {}}
-      />
+      />,
     );
 
     const search = queryByLabelText("Der gesuchte Tag");
@@ -71,7 +71,7 @@ describe("components/ShareMenu", () => {
         search={[2020, 4, 5]}
         shiftModel="6-6"
         hide={() => {}}
-      />
+      />,
     );
 
     const address = queryByLabelText("Adresse zum teilen:");
@@ -83,7 +83,7 @@ describe("components/ShareMenu", () => {
     expect(shareButton).toBeEnabled();
     expect(shareButton.href).toBe(
       "mailto:?subject=Schichtkalender&" +
-        "body=Meine%20Schichten%20beim%20Bosch%20Reutlingen:%20http://localhost/"
+        "body=Meine%20Schichten%20beim%20Bosch%20Reutlingen:%20http://localhost/",
     );
 
     fireEvent.click(queryByLabelText("Schichtmodell"));
@@ -95,16 +95,16 @@ describe("components/ShareMenu", () => {
     expect(await findByLabelText("Gruppe")).toBeChecked();
     expect(address).toHaveValue("http://localhost/cal/6-6?group=5");
     expect(shareButton.href).toMatch(
-      /mailto.*http:\/\/localhost\/cal\/6-6\?group=5/
+      /mailto.*http:\/\/localhost\/cal\/6-6\?group=5/,
     );
 
     fireEvent.click(queryByLabelText("Der gesuchte Tag"));
     expect(await findByLabelText("Der gesuchte Tag")).toBeChecked();
     expect(address).toHaveValue(
-      "http://localhost/cal/6-6?search=2020%2C4%2C5&group=5"
+      "http://localhost/cal/6-6?search=2020%2C4%2C5&group=5",
     );
     expect(shareButton.href).toMatch(
-      /mailto.*http:\/\/localhost\/cal\/6-6\?search=2020%2C4%2C5%26group=5/
+      /mailto.*http:\/\/localhost\/cal\/6-6\?search=2020%2C4%2C5%26group=5/,
     );
   });
 
@@ -115,7 +115,7 @@ describe("components/ShareMenu", () => {
         search={[2020, 4, 5]}
         shiftModel="6-6"
         hide={() => {}}
-      />
+      />,
     );
 
     expect(queryByLabelText("Schichtmodell")).not.toBeChecked();
@@ -153,7 +153,7 @@ describe("components/ShareMenu", () => {
         search={[2020, 4, 5]}
         shiftModel="6-6"
         hide={() => {}}
-      />
+      />,
     );
 
     expect(queryByLabelText("Schichtmodell")).not.toBeChecked();
@@ -188,7 +188,12 @@ describe("components/ShareMenu", () => {
     const hideCallback = jest.fn();
 
     const { queryByText } = render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={hideCallback} />
+      <ShareMenu
+        group={0}
+        search={null}
+        shiftModel="6-6"
+        hide={hideCallback}
+      />,
     );
 
     const cancelButton = queryByText("Abbrechen");
@@ -205,7 +210,12 @@ describe("components/ShareMenu", () => {
     window.navigator.share = jest.fn(() => Promise.resolve());
 
     const { queryByText, findByText } = render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={hideCallback} />
+      <ShareMenu
+        group={0}
+        search={null}
+        shiftModel="6-6"
+        hide={hideCallback}
+      />,
     );
 
     const shareButton = queryByText("Teilen");
@@ -227,7 +237,7 @@ describe("components/ShareMenu", () => {
 
   it("should pass aXe", async () => {
     const { container } = render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />
+      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />,
     );
 
     expect(await axe(container)).toHaveNoViolations();

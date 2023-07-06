@@ -30,7 +30,7 @@ prompt.get(
 
     const outPath = path.resolve("lib", "ferien.json");
     const allHolidays = JSON.parse(
-      await fs.promises.readFile(outPath, { encoding: "utf8" })
+      await fs.promises.readFile(outPath, { encoding: "utf8" }),
     );
 
     const holidays = allHolidays.ferien.filter((event) => event.year > 2018);
@@ -72,8 +72,8 @@ prompt.get(
           ferien: holidays,
         },
         null,
-        2
+        2,
       ) + "\n";
     await fs.promises.writeFile(outPath, ferienJSON);
-  }
+  },
 );

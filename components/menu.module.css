@@ -22,9 +22,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   background-color: var(--header-hover-bg-color);
 }
 .menu_button:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -52,7 +56,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   color: var(--header-color);
   background-color: #064e3b;
   background-color: var(--header-bg-color);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
@@ -122,9 +127,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   color: var(--header-color);
 }
 .share_address:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;

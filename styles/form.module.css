@@ -18,7 +18,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   background-color: var(--form-bg-color);
   border-radius: 0.25rem;
   border: 0px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
   letter-spacing: 0.025em;
   text-decoration: none;
 }
@@ -29,9 +31,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .button:focus {
   background-color: #d1d5db;
   background-color: var(--form-interact-bg-color);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -90,9 +96,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   opacity: 0.8;
 }
 .checkbox:focus {
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5), 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow: 0 0 0 3px highlight, 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
     0 1px 2px 0 rgba(0, 0, 0, 0.06);
   outline: 2px solid transparent;
   outline-offset: 2px;

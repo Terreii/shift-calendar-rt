@@ -97,7 +97,7 @@ export default function ByMonths({
             className={`${style.table} ${style.calender_table} ${style.calender_table_placeholder}`}
             aria-hidden
           />
-        )
+        ),
       )}
     </div>
   );
@@ -117,7 +117,7 @@ function useMonthToRender() {
   const [monthsToRender, setMonthsToRender] = useState(() =>
     isFirstRender // true on server and on first render
       ? [false, true, false, false]
-      : calcMonthsToDisplay(window.innerWidth)
+      : calcMonthsToDisplay(window.innerWidth),
   );
 
   useLayoutEffect(() => {
@@ -128,10 +128,10 @@ function useMonthToRender() {
       const nextMonths = calcMonthsToDisplay(window.innerWidth);
       setMonthsToRender((lastMonths) =>
         nextMonths.every(
-          (shouldRender, index) => shouldRender === lastMonths[index]
+          (shouldRender, index) => shouldRender === lastMonths[index],
         )
           ? lastMonths
-          : nextMonths
+          : nextMonths,
       );
     };
     updateMonths();
@@ -184,7 +184,7 @@ function useHammer(year, month, shiftModel, group) {
               isFullYear: false,
               year: time.getFullYear(),
               month: time.getMonth() + 1,
-            })
+            }),
           );
           break;
         }
@@ -204,7 +204,7 @@ function useHammer(year, month, shiftModel, group) {
               isFullYear: false,
               year: time.getFullYear(),
               month: time.getMonth() + 1,
-            })
+            }),
           );
           break;
         }
