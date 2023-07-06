@@ -67,7 +67,7 @@ export function useUnloadedFix() {
   useEffect(() => {
     const today = getToday();
     const todayRows = Array.from(
-      document.querySelectorAll('tr[data-interest="today"]')
+      document.querySelectorAll('tr[data-interest="today"]'),
     );
 
     const update = () => {
@@ -78,7 +78,7 @@ export function useUnloadedFix() {
       // there aren't any today rows visible, check if the current month is rendered,
       // and reload the calendar if so.
       const currentMonth = document.querySelector(
-        `#month_${today[0]}-${today[1]}`
+        `#month_${today[0]}-${today[1]}`,
       );
       if (currentMonth != null) {
         update();

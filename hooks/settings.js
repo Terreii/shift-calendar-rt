@@ -105,7 +105,7 @@ export function useSaveSettings(url, shiftModel, group) {
           didSelectModel: true,
           shiftModel,
           group: isGroupValid ? group : 0,
-        })
+        }),
       );
     }
   }, [url, shiftModel, group]);

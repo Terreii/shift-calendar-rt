@@ -13,7 +13,7 @@ describe("components/month", () => {
         data={selectMonthData(2019, 0, false)}
         today={[2019, 0, 13]}
         group={0}
-      />
+      />,
     );
 
     const caption = queryByText("Januar 2019 (Jetzt)");
@@ -29,7 +29,7 @@ describe("components/month", () => {
         data={selectMonthData(2019, 0, false)}
         today={[2019, 0, 13]}
         group={0}
-      />
+      />,
     );
 
     expect(await axe(container)).toHaveNoViolations();

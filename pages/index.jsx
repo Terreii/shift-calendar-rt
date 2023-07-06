@@ -44,7 +44,7 @@ export default function Index({ isFirstRender = false }) {
             day: date.getDate(),
             shiftModel: hashSettings.shiftModel,
             group: hashSettings.group,
-          })
+          }),
         );
       } else if (settings.didSelectModel) {
         // If the user did select their shift model, then display it.
@@ -55,7 +55,7 @@ export default function Index({ isFirstRender = false }) {
             today: [now.getFullYear(), now.getMonth() + 1, now.getDate()],
             shiftModel: settings.shiftModel,
             group: settings.group,
-          })
+          }),
         );
       } else {
         setDidCheckSettings(true);

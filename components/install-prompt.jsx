@@ -27,7 +27,7 @@ export default function InstallButton() {
     const isInStandaloneMode =
       "standalone" in window.navigator && window.navigator.standalone;
     const dismissedTime = new Date(
-      window.localStorage.getItem("dismissedInstallMessage")
+      window.localStorage.getItem("dismissedInstallMessage"),
     ).getTime();
 
     if (

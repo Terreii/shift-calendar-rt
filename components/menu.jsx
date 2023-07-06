@@ -51,7 +51,7 @@ export default function Menu({
     groupOptions.push(
       <option key={"group_" + gr} value={gr}>
         Nur Gruppe {gr}
-      </option>
+      </option>,
     );
   }
 
@@ -92,7 +92,7 @@ export default function Menu({
                       isFullYear: false,
                       month: event.target.value,
                       year,
-                    })
+                    }),
                   );
                 }}
                 aria-controls="calendar_main_out"
@@ -124,7 +124,7 @@ export default function Menu({
                         isFullYear,
                         year: +event.target.value,
                         month,
-                      })
+                      }),
                     );
                   }}
                 />
@@ -161,7 +161,7 @@ export default function Menu({
                         isFullYear,
                         month: nextMonth,
                         year: nextYear,
-                      })
+                      }),
                     );
                   }}
                 />
@@ -191,7 +191,7 @@ export default function Menu({
                           isFullYear,
                           month,
                           year,
-                        })
+                        }),
                       );
                     } else {
                       const date = event.target.valueAsDate || new Date(value);
@@ -203,7 +203,7 @@ export default function Menu({
                           year: date.getFullYear(),
                           month: date.getMonth() + 1,
                           search: date.getDate(),
-                        })
+                        }),
                       );
                     }
                   }}
@@ -247,7 +247,7 @@ export default function Menu({
                     isFullYear,
                     year,
                     month,
-                  })
+                  }),
                 );
               }}
             >
@@ -272,7 +272,7 @@ export default function Menu({
                   isFullYear,
                   year,
                   month,
-                })
+                }),
               );
             }}
           >
