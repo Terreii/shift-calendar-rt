@@ -42,6 +42,7 @@
     "react-test-renderer": "^18.0.0"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.0.1",
     "hammerjs": "^2.0.8",
     "luxon": "^1.28.0",
     "milliseconds": "^1.0.3",
