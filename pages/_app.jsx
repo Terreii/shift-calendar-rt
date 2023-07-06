@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "../components/footer";
 import Header from "../components/header";
@@ -71,6 +72,7 @@ export default function MyApp({ Component, pageProps }) {
       <Component isFirstRender={isFirstRender} {...pageProps} />
       <Footer />
       <InstallPrompt />
+      <Analytics />
     </>
   );
 }
