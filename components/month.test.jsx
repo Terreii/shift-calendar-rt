@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { axe } from "jest-axe";
 
 import Month from "./month";
@@ -6,7 +6,7 @@ import selectMonthData from "../lib/select-month-data";
 
 describe("components/month", () => {
   it("should display the correct month data", () => {
-    const { queryByText } = render(
+    render(
       <Month
         year={2019}
         month={0}
@@ -16,7 +16,7 @@ describe("components/month", () => {
       />,
     );
 
-    const caption = queryByText("Januar 2019 (Jetzt)");
+    const caption = screen.queryByText("Januar 2019 (Jetzt)");
     expect(caption).toBeTruthy();
     expect(caption.nodeName).toBe("CAPTION");
   });

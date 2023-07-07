@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# vercel
+.vercel
+
 # production
 /build
 
@@ -24,7 +27,6 @@
 
 # misc
 .DS_Store
-/.vscode
 
 # debug
 npm-debug.log*
@@ -37,3 +39,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

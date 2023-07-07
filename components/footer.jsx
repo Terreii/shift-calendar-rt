@@ -39,8 +39,8 @@ export default function Footer() {
           Mozilla Public License 2.0
         </a>
         <br />
-        <Link href="/impressum">
-          <a className="link">Impressum</a>
+        <Link href="/impressum" className="link">
+          Impressum
         </Link>
       </p>
     </footer>

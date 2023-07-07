@@ -1,31 +1,32 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
 import Header from "./header";
 
 jest.mock("../hooks/settings");
 jest.mock("../hooks/time");
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe("components/Header", () => {
   it("should show the correct navigation links and buttons", () => {
-    const { queryByText } = render(<Header />);
+    render(<Header />);
 
-    const link = queryByText("Kalender");
+    const link = screen.queryByText("Kalender");
     expect(link).toBeTruthy();
     expect(link.nodeName).toBe("SPAN");
 
-    const todayButton = queryByText("Heute");
+    const todayButton = screen.queryByText("Heute");
     expect(todayButton).toBeTruthy();
     expect(todayButton.nodeName).toBe("A");
     expect(todayButton.href).toBe("http://localhost/cal/6-6#2021-01-25");
     expect(todayButton.title).toBe("zeige aktuellen Monat");
 
-    const yesterday = queryByText("<");
+    const yesterday = screen.queryByText("<");
     expect(yesterday).toBeTruthy();
     expect(yesterday.nodeName).toBe("A");
     expect(yesterday.href).toBe("http://localhost/cal/6-6/2020/12");
     expect(yesterday.title).toBe("vorigen Monat");
 
-    const tomorrow = queryByText(">");
+    const tomorrow = screen.queryByText(">");
     expect(tomorrow).toBeTruthy();
     expect(tomorrow.nodeName).toBe("A");
     expect(tomorrow.href).toBe("http://localhost/cal/6-6/2021/02");

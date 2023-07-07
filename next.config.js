@@ -2,7 +2,8 @@ const withPWA = require("next-pwa")({
   dest: "public",
 });
 
-module.exports = withPWA({
+/** @type {import('next').NextConfig} */
+const config = {
   reactStrictMode: true,
   i18n: {
     // These are all the supported locales
@@ -11,8 +12,14 @@ module.exports = withPWA({
     // a non-locale prefixed path e.g. `/hello`
     defaultLocale: "de",
   },
-  pwa: {
-    disable: process.env.NODE_ENV === "development",
-    dest: "public",
-  },
-});
+};
+
+module.exports = process.env.LINT_ENV
+  ? config
+  : withPWA({
+      ...config,
+      pwa: {
+        disable: process.env.NODE_ENV === "development",
+        dest: "public",
+      },
+    });
