@@ -157,7 +157,11 @@ function useMonthToRender() {
       () => {
         if (window.screen?.orientation?.type !== lastOrientation) {
           lastOrientation = screen?.orientation?.type;
-          updateMonths();
+          setTimeout(() => {
+            if (!abortController.signal.aborted) {
+              updateMonths();
+            }
+          }, 25);
         }
       },
       {
