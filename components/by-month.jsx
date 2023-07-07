@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import ms from "milliseconds";
 import { useRouter } from "next/router";
 
@@ -122,7 +122,7 @@ function useMonthToRender() {
     ),
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let lastWidth = 0;
     let lastOrientation = screen?.orientation?.type ?? "portrait-primary";
     isFirstRender = false;
@@ -139,24 +139,33 @@ function useMonthToRender() {
     };
     updateMonths();
 
-    const handler = () => {
-      if (window.innerWidth !== lastWidth) {
-        lastWidth = window.innerWidth;
-        updateMonths();
-      }
-    };
-    const handler2 = () => {
-      if (window.screen?.orientation?.type !== lastOrientation) {
-        lastOrientation = screen?.orientation?.type;
-        updateMonths();
-      }
-    };
-
-    window.addEventListener("resize", handler);
-    screen.orientation.addEventListener("change", handler2);
+    const abortController = new AbortController();
+    window.addEventListener(
+      "resize",
+      () => {
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          updateMonths();
+        }
+      },
+      {
+        signal: abortController.signal,
+      },
+    );
+    screen.orientation.addEventListener(
+      "change",
+      () => {
+        if (window.screen?.orientation?.type !== lastOrientation) {
+          lastOrientation = screen?.orientation?.type;
+          updateMonths();
+        }
+      },
+      {
+        signal: abortController.signal,
+      },
+    );
     return () => {
-      window.removeEventListener("resize", handler);
-      screen.orientation.removeEventListener("change", handler2);
+      abortController.abort();
     };
   }, []);
 
