@@ -221,16 +221,13 @@ export default function Menu({
               year,
               month,
             })}
+            className={style.month_full_year_toggle}
+            aria-controls="calendar_main_out"
+            onClick={() => {
+              setShowMenu(false);
+            }}
           >
-            <a
-              className={style.month_full_year_toggle}
-              aria-controls="calendar_main_out"
-              onClick={() => {
-                setShowMenu(false);
-              }}
-            >
-              Zeige {isFullYear ? "Monate" : "ganzes Jahr"}
-            </a>
+            Zeige {isFullYear ? "Monate" : "ganzes Jahr"}
           </Link>
 
           <label className={style.label}>

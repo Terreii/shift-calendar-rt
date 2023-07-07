@@ -98,8 +98,8 @@ export default function Index({ isFirstRender = false }) {
         <ul className={style.shift_button_list}>
           {shiftModelNames.map((name) => (
             <li key={name}>
-              <Link href={`/cal/${name}`}>
-                <a className={style.shift_button}>{shiftModelText[name]}</a>
+              <Link href={`/cal/${name}`} className={style.shift_button}>
+                {shiftModelText[name]}
               </Link>
             </li>
           ))}

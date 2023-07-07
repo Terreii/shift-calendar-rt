@@ -65,28 +65,30 @@ export default function HeaderNavLinks({
 
   return (
     <>
-      <Link key={`previous_${year}_${month}`} href={lastMonth}>
-        <a
-          className={style.navi_link}
-          title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
-        >
-          {"<"}
-        </a>
+      <Link
+        key={`previous_${year}_${month}`}
+        href={lastMonth}
+        className={style.navi_link}
+        title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
+      >
+        {"<"}
       </Link>
 
-      <Link href={getTodayUrl({ group, shiftModel, today })}>
-        <a className={style.navi_link} title="zeige aktuellen Monat">
-          Heute
-        </a>
+      <Link
+        href={getTodayUrl({ group, shiftModel, today })}
+        className={style.navi_link}
+        title="zeige aktuellen Monat"
+      >
+        Heute
       </Link>
 
-      <Link key={`next_${year}_${month}`} href={nextMonth}>
-        <a
-          className={style.navi_link}
-          title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
-        >
-          {">"}
-        </a>
+      <Link
+        key={`next_${year}_${month}`}
+        href={nextMonth}
+        className={style.navi_link}
+        title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
+      >
+        {">"}
       </Link>
     </>
   );
