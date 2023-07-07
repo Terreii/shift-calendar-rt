@@ -61,7 +61,9 @@ function Month({ className = "", year, month, data, today, search, group }) {
             </span>
           </th>
           <th>Tag</th>
-          <th />
+          <th>
+            <span className="sr-only">Wochentag</span>
+          </th>
           {groups.map((gr) => (
             <th key={gr}>
               <span className="sr-only">{"Gruppe " + (gr + 1)}</span>

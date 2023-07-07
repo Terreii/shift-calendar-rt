@@ -4,6 +4,7 @@ import Header from "./header";
 
 jest.mock("../hooks/settings");
 jest.mock("../hooks/time");
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe("components/Header", () => {
   it("should show the correct navigation links and buttons", () => {
