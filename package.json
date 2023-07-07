@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "LINT_ENV=true next lint",
     "format": "prettier --write .",
     "test": "jest --watch",
     "test:ci": "jest --coverage",
