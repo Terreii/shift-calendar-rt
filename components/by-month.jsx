@@ -115,13 +115,16 @@ let isFirstRender = true;
 
 function useMonthToRender() {
   const [monthsToRender, setMonthsToRender] = useState(() =>
-    isFirstRender // true on server and on first render
-      ? [false, true, false, false]
-      : calcMonthsToDisplay(window.innerWidth),
+    calcMonthsToDisplay(
+      isFirstRender // true on server and on first render
+        ? 512
+        : window.innerWidth,
+    ),
   );
 
   useLayoutEffect(() => {
     let lastWidth = 0;
+    let lastOrientation = screen?.orientation?.type ?? "portrait-primary";
     isFirstRender = false;
 
     const updateMonths = () => {
@@ -142,10 +145,18 @@ function useMonthToRender() {
         updateMonths();
       }
     };
+    const handler2 = () => {
+      if (window.screen?.orientation?.type !== lastOrientation) {
+        lastOrientation = screen?.orientation?.type;
+        updateMonths();
+      }
+    };
 
     window.addEventListener("resize", handler);
+    screen.orientation.addEventListener("change", handler2);
     return () => {
       window.removeEventListener("resize", handler);
+      screen.orientation.removeEventListener("change", handler2);
     };
   }, []);
 
