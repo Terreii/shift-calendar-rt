@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import ms from "milliseconds";
 import { useRouter } from "next/router";
 
@@ -115,13 +115,16 @@ let isFirstRender = true;
 
 function useMonthToRender() {
   const [monthsToRender, setMonthsToRender] = useState(() =>
-    isFirstRender // true on server and on first render
-      ? [false, true, false, false]
-      : calcMonthsToDisplay(window.innerWidth),
+    calcMonthsToDisplay(
+      isFirstRender // true on server and on first render
+        ? 512
+        : window.innerWidth,
+    ),
   );
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     let lastWidth = 0;
+    let lastOrientation = screen?.orientation?.type ?? "portrait-primary";
     isFirstRender = false;
 
     const updateMonths = () => {
@@ -136,16 +139,33 @@ function useMonthToRender() {
     };
     updateMonths();
 
-    const handler = () => {
-      if (window.innerWidth !== lastWidth) {
-        lastWidth = window.innerWidth;
-        updateMonths();
-      }
-    };
-
-    window.addEventListener("resize", handler);
+    const abortController = new AbortController();
+    window.addEventListener(
+      "resize",
+      () => {
+        if (window.innerWidth !== lastWidth) {
+          lastWidth = window.innerWidth;
+          updateMonths();
+        }
+      },
+      {
+        signal: abortController.signal,
+      },
+    );
+    screen.orientation.addEventListener(
+      "change",
+      () => {
+        if (window.screen?.orientation?.type !== lastOrientation) {
+          lastOrientation = screen?.orientation?.type;
+          updateMonths();
+        }
+      },
+      {
+        signal: abortController.signal,
+      },
+    );
     return () => {
-      window.removeEventListener("resize", handler);
+      abortController.abort();
     };
   }, []);
 
