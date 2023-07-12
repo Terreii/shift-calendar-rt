@@ -55,7 +55,7 @@ export default function ShiftModel() {
         today={today}
       />
 
-      <Downloader shiftModel={shiftModel} />
+      <Downloader shiftModel={shiftModel} year={year} month={month + 1} />
     </main>
   );
 }

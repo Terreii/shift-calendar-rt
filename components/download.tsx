@@ -10,10 +10,22 @@ import {
   shift66Name,
   shift64Name,
   shiftWfW,
+  rotatingShift,
   shiftAddedNight,
+  shiftAddedNight8,
+  weekend,
 } from "../lib/constants";
 
 import style from "./download.module.css";
+
+type Shifts =
+  | typeof shift66Name
+  | typeof shift64Name
+  | typeof shiftWfW
+  | typeof rotatingShift
+  | typeof shiftAddedNight
+  | typeof shiftAddedNight8
+  | typeof weekend;
 
 const urls = {
   [shift66Name]: [
@@ -46,7 +58,15 @@ const urls = {
   ],
 };
 
-export default function Download({ shiftModel }) {
+export default function Download({
+  shiftModel,
+  year,
+  month,
+}: {
+  shiftModel: Shifts;
+  year: number;
+  month: number;
+}) {
   if (!(shiftModel in urls)) {
     return (
       <div className={style.container}>
@@ -56,9 +76,6 @@ export default function Download({ shiftModel }) {
       </div>
     );
   }
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = today.getMonth();
 
   return (
     <div className={style.container}>
@@ -89,21 +106,23 @@ export default function Download({ shiftModel }) {
           })}
         </div>
 
-        <p className={style.text}>
-          Oder lade ihn als Excel/
-          <a href="https://de.libreoffice.org/" target="_blank">
-            LibreOffice
-          </a>{" "}
-          Tabelle runter:
-          <br />
-          <a
-            href={`/api/excel_export/${year}/${month}`}
-            target="_blank"
-            className="link"
-          >
-            {`Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`}
-          </a>
-        </p>
+        {year && month && (
+          <p className={style.text}>
+            Oder lade ihn als Excel/
+            <a href="https://de.libreoffice.org/" target="_blank">
+              LibreOffice
+            </a>{" "}
+            Tabelle runter:
+            <br />
+            <a
+              href={`/api/excel_export/${year}/${month}`}
+              target="_blank"
+              className="link"
+            >
+              {`Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`}
+            </a>
+          </p>
+        )}
       </section>
     </div>
   );
