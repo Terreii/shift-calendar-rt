@@ -56,6 +56,9 @@ export default function Download({ shiftModel }) {
       </div>
     );
   }
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = today.getMonth();
 
   return (
     <div className={style.container}>
@@ -85,6 +88,22 @@ export default function Download({ shiftModel }) {
             );
           })}
         </div>
+
+        <p className={style.text}>
+          Oder lade ihn als Excel/
+          <a href="https://de.libreoffice.org/" target="_blank">
+            LibreOffice
+          </a>{" "}
+          Tabelle runter:
+          <br />
+          <a
+            href={`/api/excel_export/${year}/${month}`}
+            target="_blank"
+            className="link"
+          >
+            {`Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`}
+          </a>
+        </p>
       </section>
     </div>
   );
