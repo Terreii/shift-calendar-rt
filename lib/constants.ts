@@ -35,7 +35,16 @@ export const shiftAddedNight = "added-night";
 export const shiftAddedNight8 = "added-night-8";
 export const weekend = "weekend";
 
-export const shiftModelNames = [
+export type ShiftModels =
+  | typeof shift66Name
+  | typeof shift64Name
+  | typeof shiftWfW
+  | typeof rotatingShift
+  | typeof shiftAddedNight
+  | typeof shiftAddedNight8
+  | typeof weekend;
+
+export const shiftModelNames: ShiftModels[] = [
   shift66Name,
   shift64Name,
   shiftWfW,
@@ -45,7 +54,7 @@ export const shiftModelNames = [
   weekend,
 ];
 
-export const shiftModelText = {
+export const shiftModelText: Record<ShiftModels, string> = {
   [shift66Name]: "6 - 6 Kontischicht",
   [shift64Name]: "6 - 4 Kontischicht",
   [shiftWfW]: "Werkfeuerwehr",
@@ -55,7 +64,7 @@ export const shiftModelText = {
   [weekend]: "Wochenend-Modell RtP2",
 };
 
-export const shiftModelNumberOfGroups = {
+export const shiftModelNumberOfGroups: Record<ShiftModels, number> = {
   [shift66Name]: 6,
   [shift64Name]: 5,
   [shiftWfW]: 6,

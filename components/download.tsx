@@ -10,22 +10,11 @@ import {
   shift66Name,
   shift64Name,
   shiftWfW,
-  rotatingShift,
   shiftAddedNight,
-  shiftAddedNight8,
-  weekend,
+  ShiftModels,
 } from "../lib/constants";
 
 import style from "./download.module.css";
-
-type Shifts =
-  | typeof shift66Name
-  | typeof shift64Name
-  | typeof shiftWfW
-  | typeof rotatingShift
-  | typeof shiftAddedNight
-  | typeof shiftAddedNight8
-  | typeof weekend;
 
 const urls = {
   [shift66Name]: [
@@ -63,7 +52,7 @@ export default function Download({
   year,
   month,
 }: {
-  shiftModel: Shifts;
+  shiftModel: ShiftModels;
   year: number;
   month: number;
 }) {
@@ -76,6 +65,10 @@ export default function Download({
       </div>
     );
   }
+
+  const exportName = `Shift_Export_${year}-${month
+    .toString()
+    .padStart(2, "0")}.xlsx`;
 
   return (
     <div className={style.container}>
@@ -117,9 +110,10 @@ export default function Download({
             <a
               href={`/api/excel_export/${year}/${month}`}
               target="_blank"
+              download={exportName}
               className="link"
             >
-              {`Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`}
+              {exportName}
             </a>
           </p>
         )}
