@@ -1,8 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import xl from "excel4node";
 
-import { shiftModelNames } from "../../../../lib/constants";
-import { createShiftSheet, createStyles } from "../../../../lib/excel_export";
+import {
+  shiftModelNames,
+  excelExportName,
+  shiftModelText,
+} from "../../../../../lib/constants";
+import {
+  createShiftSheet,
+  createStyles,
+} from "../../../../../lib/excel_export";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const wb = new xl.Workbook();
@@ -12,11 +19,14 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const styles = createStyles(wb);
 
   for (const model of shiftModelNames) {
-    createShiftSheet(wb, model, year, month, styles);
+    createShiftSheet(
+      wb.addWorksheet(shiftModelText[model]),
+      model,
+      year,
+      month,
+      styles,
+    );
   }
 
-  wb.write(
-    `Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`,
-    res,
-  );
+  wb.write(excelExportName(year, month), res);
 }

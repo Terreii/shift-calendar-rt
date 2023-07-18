@@ -12,6 +12,8 @@ import {
   shiftWfW,
   shiftAddedNight,
   ShiftModels,
+  excelExportName,
+  excelExportModelFullYearName,
 } from "../lib/constants";
 
 import style from "./download.module.css";
@@ -54,7 +56,7 @@ export default function Download({
 }: {
   shiftModel: ShiftModels;
   year: number;
-  month: number;
+  month?: number;
 }) {
   if (!(shiftModel in urls)) {
     return (
@@ -65,10 +67,6 @@ export default function Download({
       </div>
     );
   }
-
-  const exportName = `Shift_Export_${year}-${month
-    .toString()
-    .padStart(2, "0")}.xlsx`;
 
   return (
     <div className={style.container}>
@@ -99,25 +97,39 @@ export default function Download({
           })}
         </div>
 
-        {year && month && (
-          <p className={style.text}>
-            Oder lade ihn als Excel/
-            <a href="https://de.libreoffice.org/" target="_blank">
-              LibreOffice
-            </a>{" "}
-            Tabelle runter:
-            <br />
-            <a
-              href={`/api/excel_export/${year}/${month}`}
-              target="_blank"
-              download={exportName}
-              className="link"
-            >
-              {exportName}
-            </a>
-          </p>
-        )}
+        <SheetDownload shiftModel={shiftModel} year={year} month={month} />
       </section>
     </div>
+  );
+}
+
+function SheetDownload({
+  shiftModel,
+  year,
+  month,
+}: {
+  shiftModel?: ShiftModels;
+  year: number;
+  month?: number;
+}) {
+  const name = month
+    ? excelExportName(year, month)
+    : excelExportModelFullYearName(shiftModel, year);
+  const url = month
+    ? `/api/excel_export/all/${year}/${month}`
+    : `/api/excel_export/shift/${shiftModel}/${year}`;
+
+  return (
+    <p className={style.text}>
+      Oder lade ihn als Excel/
+      <a href="https://de.libreoffice.org/" target="_blank">
+        LibreOffice
+      </a>{" "}
+      Tabelle runter:
+      <br />
+      <a href={url} target="_blank" download={name} className="link">
+        {name}
+      </a>
+    </p>
   );
 }

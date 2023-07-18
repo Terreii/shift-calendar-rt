@@ -27,20 +27,19 @@ export function createDocument() {
 
 /**
  * Create a Month of a Workbook/document.
- * @param document  An Instance of a excel4node Workbook.
+ * @param sheet     An Instance of a excel4node Worksheet.
  * @param model     Shift Model used.
  * @param year      Full Year.
  * @param month     Month where January = 1
  * @param styles    Predefined Styles from createStyles
  */
 export function createShiftSheet(
-  document: any,
+  sheet: any,
   model: string,
   year: number,
   month: number,
   styles: Styles,
 ): void {
-  const sheet = document.addWorksheet(shiftModelText[model]);
   const headerWidth = 2 + shiftModelNumberOfGroups[model];
   sheet
     .cell(titleRow, 1, titleRow, Math.max(headerWidth, 6), true)

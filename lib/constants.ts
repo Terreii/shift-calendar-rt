@@ -89,3 +89,13 @@ export const workingDescriptionId = Object.fromEntries(
     value + "_description",
   ]),
 );
+
+export function excelExportName(year: number, month: number): string {
+  return `Shift_Export_${year}-${month.toString().padStart(2, "0")}.xlsx`;
+}
+export function excelExportModelFullYearName(
+  model: ShiftModels,
+  year: number,
+): string {
+  return `All_Shifts_Export_${year}_${model}.xlsx`;
+}
