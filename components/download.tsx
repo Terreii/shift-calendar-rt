@@ -122,7 +122,10 @@ function SheetDownload({
   return (
     <p className={style.text}>
       Oder lade ihn als Excel/
-      <a href="https://de.libreoffice.org/" target="_blank">
+      <a
+        href="https://de.libreoffice.org/discover/libreoffice/"
+        target="_blank"
+      >
         LibreOffice
       </a>{" "}
       Tabelle runter:
