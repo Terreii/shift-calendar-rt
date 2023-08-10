@@ -97,5 +97,5 @@ export function excelExportModelFullYearName(
   model: ShiftModels,
   year: number,
 ): string {
-  return `All_Shifts_Export_${year}_${model}.xlsx`;
+  return `Shifts_Export_${year}_${model}.xlsx`;
 }

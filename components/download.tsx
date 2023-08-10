@@ -133,6 +133,9 @@ function SheetDownload({
       <a href={url} target="_blank" download={name} className="link">
         {name}
       </a>
+      <br />
+      <br />
+      <a href="/download">Es gibt mehr Download-Optionen!</a>
     </p>
   );
 }
