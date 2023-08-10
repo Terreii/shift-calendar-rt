@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import Link from "next/link";
 import {
   shiftModelText,
   shift66Name,
@@ -135,7 +136,7 @@ function SheetDownload({
       </a>
       <br />
       <br />
-      <a href="/download">Es gibt mehr Download-Optionen!</a>
+      <Link href="/download">Es gibt mehr Download-Optionen!</Link>
     </p>
   );
 }

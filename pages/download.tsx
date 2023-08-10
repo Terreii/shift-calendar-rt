@@ -1,5 +1,10 @@
 import { useState, useId, ReactNode } from "react";
+import { DateTime, Info } from "luxon";
 import Image from "next/image";
+import type {
+  GetServerSidePropsContext,
+  GetServerSidePropsResult,
+} from "next/types";
 import downloadIcon from "bootstrap-icons/icons/download.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
 import sheetIcon from "bootstrap-icons/icons/file-spreadsheet.svg";
@@ -152,4 +157,28 @@ function MonthInput({
       </select>
     </span>
   );
+}
+
+export async function getServerSideProps(
+  context: GetServerSidePropsContext,
+): Promise<GetServerSidePropsResult<unknown>> {
+  if (Info.features().zones) {
+    const now = DateTime.local().setZone("Europe/Berlin");
+    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
+    const nextMonth = now
+      .set({
+        days: 1,
+        hour: 0,
+        minute: 0,
+        second: 0,
+        millisecond: 0,
+      })
+      .plus({ months: 1 });
+
+    const maxAge = nextMonth.diff(now, "seconds").toObject().seconds;
+    context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
+  } else {
+    context.res.setHeader("Cache-Control", "s-maxage=60");
+  }
+  return { props: context.query };
 }
