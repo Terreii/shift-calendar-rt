@@ -5,12 +5,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import Link from "next/link";
 import {
   shiftModelText,
   shift66Name,
   shift64Name,
   shiftWfW,
   shiftAddedNight,
+  ShiftModels,
+  excelExportName,
+  excelExportModelFullYearName,
 } from "../lib/constants";
 
 import style from "./download.module.css";
@@ -46,7 +50,15 @@ const urls = {
   ],
 };
 
-export default function Download({ shiftModel }) {
+export default function Download({
+  shiftModel,
+  year,
+  month,
+}: {
+  shiftModel: ShiftModels;
+  year: number;
+  month?: number;
+}) {
   if (!(shiftModel in urls)) {
     return (
       <div className={style.container}>
@@ -85,7 +97,46 @@ export default function Download({ shiftModel }) {
             );
           })}
         </div>
+
+        <SheetDownload shiftModel={shiftModel} year={year} month={month} />
       </section>
     </div>
+  );
+}
+
+function SheetDownload({
+  shiftModel,
+  year,
+  month,
+}: {
+  shiftModel?: ShiftModels;
+  year: number;
+  month?: number;
+}) {
+  const name = month
+    ? excelExportName(year, month)
+    : excelExportModelFullYearName(shiftModel, year);
+  const url = month
+    ? `/api/excel_export/all/${year}/${month}`
+    : `/api/excel_export/shift/${shiftModel}/${year}`;
+
+  return (
+    <p className={style.text}>
+      Oder lade ihn als Excel/
+      <a
+        href="https://de.libreoffice.org/discover/libreoffice/"
+        target="_blank"
+      >
+        LibreOffice
+      </a>{" "}
+      Tabelle runter:
+      <br />
+      <a href={url} target="_blank" download={name} className="link">
+        {name}
+      </a>
+      <br />
+      <br />
+      <Link href="/download">Es gibt mehr Download-Optionen!</Link>
+    </p>
   );
 }

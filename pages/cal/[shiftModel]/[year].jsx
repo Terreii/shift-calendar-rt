@@ -70,7 +70,7 @@ export default function Year() {
         ))}
       </div>
 
-      <Downloader shiftModel={shiftModel} />
+      <Downloader shiftModel={shiftModel} year={year} />
     </main>
   );
 }

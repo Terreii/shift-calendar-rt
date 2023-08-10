@@ -1,0 +1,82 @@
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: fit-content;
+  color: #111827;
+  color: var(--soft-text-color);
+  background-color: #d1d5db;
+  background-color: var(--dialog-bg-color);
+  padding: 1rem;
+  margin-top: 2rem;
+  border-radius: 0.25rem;
+}
+
+.header {
+  margin-bottom: 1.25rem;
+}
+
+.inline_img {
+  display: inline;
+}
+
+.download_img {
+  composes: inline_img;
+  filter: invert(0.5) sepia(1) saturate(5) hue-rotate(75deg);
+}
+
+.sheet_download_link {
+  position: relative;
+  margin-left: 1rem;
+}
+
+.download_arrow_img {
+  position: absolute;
+  bottom: 0px;
+  left: -4px;
+  height: 20px;
+  width: 20px;
+}
+
+.header_2 {
+  margin-top: 1.25rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+  border-bottom: 1px solid black;
+  border-bottom: 1px solid var(--dialog-shadow-color);
+}
+.section:last-of-type,
+.section:has(+ *:not(.section)) {
+  border-bottom: 0px;
+}
+
+.month_label {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.month_label_text {
+  margin-inline-end: 0.5rem;
+}
+
+.month_input {
+  display: inline-block;
+  margin-inline-start: 6em;
+}
+
+.own_month_input {
+  display: flex;
+  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem;
+  border: 1px solid var(--dialog-shadow-color);
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
