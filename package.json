@@ -56,7 +56,8 @@
     "re-reselect": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "use-view-transitions": "^1.0.16"
   },
   "standard": {
     "env": [
