@@ -7,6 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useNextRouterViewTransitions } from "use-view-transitions/next";
 
 import Footer from "../components/footer";
 import Header from "../components/header";
@@ -22,6 +24,9 @@ export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
     setIsFirstRender(false);
   }, []);
+
+  const router = useRouter();
+  useNextRouterViewTransitions({ events: router.events });
 
   return (
     <>
