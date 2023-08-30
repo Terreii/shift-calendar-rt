@@ -116,3 +116,11 @@ a.link,
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
+@media (prefers-reduced-motion) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
