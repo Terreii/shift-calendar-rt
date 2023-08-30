@@ -43,6 +43,7 @@ function Month({ className = "", year, month, data, today, search, group }) {
       id={`month_${year}-${month + 1}`}
       className={`${style.table} ${className}`}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
+      style={{ viewTransitionName: `month_table_${year}-${month + 1}` }}
     >
       <caption
         id={`month_${year}-${month + 1}_caption`}
