@@ -5,9 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import ms from "milliseconds";
 import Image from "next/image";
+import { useViewTransition } from "use-view-transitions/react";
 
 import Confirm from "./confirm";
 
@@ -19,8 +20,17 @@ import iOSAddToHome from "../public/assets/icons/ios-add-to-home-screen.png";
  * Renders an install button for add-to-home-screen of PWA.
  */
 export default function InstallButton() {
-  const [show, setShow] = useState("none");
+  const [show, setShowInternal] = useState("none");
   const deferredPrompt = useRef(null);
+  const { startViewTransition } = useViewTransition();
+  const setShow = useCallback(
+    (nextShow) => {
+      startViewTransition(() => {
+        setShowInternal(nextShow);
+      });
+    },
+    [startViewTransition],
+  );
 
   useEffect(() => {
     const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform);
@@ -57,7 +67,7 @@ export default function InstallButton() {
         window.removeEventListener("beforeinstallprompt", handler);
       };
     }
-  }, []);
+  }, [setShow]);
 
   useEffect(() => {
     // Handling updates

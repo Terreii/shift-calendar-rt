@@ -151,6 +151,32 @@ a.link,
   }
 }
 
+@keyframes slide-bottom-enter {
+  from {
+    scale: 0.99;
+    translate: 0 1rem;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+}
+
+@keyframes slide-bottom-exit {
+  from {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+  to {
+    scale: 0.99;
+    translate: 0 1rem;
+    opacity: 0;
+  }
+}
+
 ::view-transition-old(month-table),
 ::view-transition-new(month-table) {
   height: auto;
@@ -165,4 +191,11 @@ a.link,
 
 ::view-transition-new(month-table) {
   animation: 0.25s linear 0.2s both table-enter;
+}
+
+::view-transition-old(confirm-view) {
+  animation: 0.25s linear both slide-bottom-exit;
+}
+::view-transition-new(confirm-view) {
+  animation: 0.25s linear both slide-bottom-enter;
 }
