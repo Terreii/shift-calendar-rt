@@ -26,6 +26,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   box-shadow: 0 0 2rem var(--dialog-shadow-color);
 }
 
+.container_initial {
+  composes: container;
+  scale: 0.99;
+  translate: 0 1rem;
+  opacity: 0;
+}
+
 @media (min-width: 640px) {
   .container {
     bottom: 0.25rem;

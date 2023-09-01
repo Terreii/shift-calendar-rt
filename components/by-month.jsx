@@ -37,6 +37,7 @@ export default function ByMonths({
   const ref = useHammer(year, month, shiftModel, group);
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
+  const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
 
   const monthsData = useMemo(() => {
     const monthsData = [];
@@ -89,6 +90,7 @@ export default function ByMonths({
             today={today[0] === year && today[1] === month ? today : null}
             search={search != null ? +search : null}
             group={group}
+            shouldTranistionToNewPosition={multiMonthView}
           />
         ) : (
           <table

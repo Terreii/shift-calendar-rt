@@ -116,3 +116,66 @@ a.link,
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
+
+@media (prefers-reduced-motion) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+@keyframes table-enter {
+  from {
+    scale: 0.99;
+    translate: 1rem;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+}
+
+@keyframes table-exit {
+  from {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+  to {
+    scale: 0.99;
+    translate: -1rem;
+    opacity: 0;
+  }
+}
+
+@keyframes slide-bottom-enter {
+  from {
+    scale: 0.99;
+    translate: 0 1rem;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+}
+
+::view-transition-old(month-table),
+::view-transition-new(month-table) {
+  height: auto;
+  right: 0;
+  left: auto;
+  transform-origin: right center;
+}
+
+::view-transition-old(month-table) {
+  animation: 0.25s linear both table-exit;
+}
+
+::view-transition-new(month-table) {
+  animation: 0.25s linear 0.2s both table-enter;
+}
