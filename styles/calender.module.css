@@ -53,6 +53,7 @@ But then show the next month on small screen, then the next 2 months, then all o
   table-layout: fixed;
   border-spacing: 0px;
   --interest-width: 3px;
+  view-transition-name: month-table; /* animation is in index.css */
 }
 
 .table th {

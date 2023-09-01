@@ -14,16 +14,26 @@ import style from "../styles/calender.module.css";
 
 /**
  * Render a month
- * @param {Object}   arg0          React/Preact arguments.
- * @param {number}   arg0.year     Year of the month.
- * @param {number}   arg0.month    Month number in the year of this month.
- * @param {Object}   arg0.data     Month-data that contains all workdays and holidays of that month.
- * @param {number[]} arg0.today    Array of numbers that contains todays date. [year, month, day].
- * @param {?number}  arg0.search   Date of the search result. Or null.
- * @param {number}   arg0.group    Group to display. 0 = All, 1 - 6 is group number
+ * @param {Object}    arg0          React/Preact arguments.
+ * @param {number}    arg0.year     Year of the month.
+ * @param {number}    arg0.month    Month number in the year of this month.
+ * @param {Object}    arg0.data     Month-data that contains all workdays and holidays of that month.
+ * @param {number[]}  arg0.today    Array of numbers that contains todays date. [year, month, day].
+ * @param {?number}   arg0.search   Date of the search result. Or null.
+ * @param {number}    arg0.group    Group to display. 0 = All, 1 - 6 is group number
+ * @param {boolean?}  arg0.shouldTranistionToNewPosition  This is the only displayed month. This is for mobile.
  * @returns {JSX.Element}
  */
-function Month({ className = "", year, month, data, today, search, group }) {
+function Month({
+  className = "",
+  year,
+  month,
+  data,
+  today,
+  search,
+  group,
+  shouldTranistionToNewPosition = false,
+}) {
   const groups = [];
 
   if (group === 0) {
@@ -43,7 +53,10 @@ function Month({ className = "", year, month, data, today, search, group }) {
       id={`month_${year}-${month + 1}`}
       className={`${style.table} ${className}`}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
-      style={{ viewTransitionName: `month_table_${year}-${month + 1}` }}
+      style={{
+        viewTransitionName:
+          shouldTranistionToNewPosition && `month_table_${year}-${month + 1}`,
+      }}
     >
       <caption
         id={`month_${year}-${month + 1}_caption`}
