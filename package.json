@@ -23,7 +23,7 @@
     "url": "http://christopher-astfalk.de/"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.0.4",
     "babel-jest": "^29.6.4",
