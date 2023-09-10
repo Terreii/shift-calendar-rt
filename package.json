@@ -26,6 +26,7 @@
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.0.4",
+    "@types/react": "^18.2.21",
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.10.5",
     "eslint": "^8.48.0",
