@@ -28,6 +28,8 @@ export default function MyApp({ Component, pageProps }) {
 
   const router = useRouter();
   useNextRouterViewTransitions({ events: router.events });
+  const date = new Date().getDate();
+  const shouldCollectAnalytics = date === 11 || date === 12;
 
   return (
     <>
@@ -77,7 +79,7 @@ export default function MyApp({ Component, pageProps }) {
       <Component isFirstRender={isFirstRender} {...pageProps} />
       <Footer />
       <InstallPrompt />
-      <Analytics />
+      {shouldCollectAnalytics && <Analytics />}
     </>
   );
 }
