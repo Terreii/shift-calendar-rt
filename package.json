@@ -45,6 +45,7 @@
     "react-test-renderer": "^18.0.0"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.0.1",
     "excel4node": "^1.8.2",
     "hammerjs": "^2.0.8",
     "luxon": "^1.28.0",
