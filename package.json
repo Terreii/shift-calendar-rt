@@ -51,7 +51,7 @@
     "luxon": "^1.28.0",
     "milliseconds": "^1.0.3",
     "modern-css-reset": "^1.4.0",
-    "next": "^13.5.2",
+    "next": "^13.5.3",
     "next-pwa": "^5.0.4",
     "querystringify": "^2.2.0",
     "re-reselect": "^4.0.0",
