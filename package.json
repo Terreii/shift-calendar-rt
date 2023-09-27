@@ -29,7 +29,7 @@
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.11.1",
     "eslint": "^8.49.0",
-    "eslint-config-next": "^13.5.2",
+    "eslint-config-next": "^13.5.3",
     "eslint-plugin-jest": "^27.4.0",
     "eslint-plugin-testing-library": "^6.0.1",
     "husky": "^8.0.1",
