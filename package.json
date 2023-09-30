@@ -12,6 +12,10 @@
     "format": "prettier --write .",
     "test": "jest --watch",
     "test:ci": "jest --coverage",
+    "e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
+    "e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
+    "component": "cypress open --component",
+    "component:headless": "cypress run --component",
     "update:holidays": "node ./updateHolidays.js",
     "prepare": "husky install"
   },
@@ -28,8 +32,10 @@
     "@testing-library/user-event": "^14.5.1",
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.11.1",
+    "cypress": "^13.3.0",
     "eslint": "^8.50.0",
     "eslint-config-next": "^13.5.3",
+    "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-jest": "^27.4.0",
     "eslint-plugin-testing-library": "^6.0.2",
     "husky": "^8.0.1",
@@ -42,7 +48,8 @@
     "node-ical": "^0.16.1",
     "prettier": "^3.0.3",
     "prompt": "^1.1.0",
-    "react-test-renderer": "^18.0.0"
+    "react-test-renderer": "^18.0.0",
+    "start-server-and-test": "^2.0.1"
   },
   "dependencies": {
     "@vercel/analytics": "^1.0.2",
