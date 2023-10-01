@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { Analytics } from "@vercel/analytics/react";
 import { useNextRouterViewTransitions } from "use-view-transitions/next";
 
 import Footer from "../components/footer";
@@ -76,6 +77,7 @@ export default function MyApp({ Component, pageProps }) {
       <Component isFirstRender={isFirstRender} {...pageProps} />
       <Footer />
       <InstallPrompt />
+      {new Date().getDate() === 12 && <Analytics />}
     </>
   );
 }
