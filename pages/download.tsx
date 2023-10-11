@@ -57,7 +57,9 @@ export default function DownloadPage() {
         </strong>
       </DownloadSection>
 
-      <h2 className={styles.header_2}>Tabellen für das ganze Jahr</h2>
+      <h2 className={styles.header_2}>
+        Tabellen für das ganze Jahr <em>{year}</em>
+      </h2>
 
       {shiftModelNames.map((model) => (
         <DownloadSection

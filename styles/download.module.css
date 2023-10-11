@@ -4,8 +4,7 @@
   max-width: fit-content;
   color: #111827;
   color: var(--soft-text-color);
-  background-color: #d1d5db;
-  background-color: var(--dialog-bg-color);
+  margin-bottom: 5rem;
   padding: 1rem;
   margin-top: 2rem;
   border-radius: 0.25rem;
@@ -38,7 +37,7 @@
 }
 
 .header_2 {
-  margin-top: 1.25rem;
+  margin-top: 2rem;
 }
 
 .section {
@@ -50,8 +49,7 @@
   border-bottom: 1px solid black;
   border-bottom: 1px solid var(--dialog-shadow-color);
 }
-.section:last-of-type,
-.section:has(+ *:not(.section)) {
+.section:not(:has(+ *.section)) {
   border-bottom: 0px;
 }
 
