@@ -11,7 +11,7 @@ import style from "../../styles/calender.module.css";
 
 /**
  * Render the day in month cell.
- * @param {object}   param                    Preact arguments.
+ * @param {object}   param                    React arguments.
  * @param {Date}     param.time               Date object.
  * @param {object}   [param.holidayData]      Holiday data of that day.
  * @param {object}   [param.dayLightSaving]   Data about the daylight saving switch.
