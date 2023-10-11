@@ -8,7 +8,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
+import Footer from "../components/footer";
 import Header from "../components/header/core";
+import InstallPrompt from "../components/install-prompt";
 
 import "modern-css-reset";
 import "../styles/index.css";
@@ -57,6 +59,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <Header />
         {children}
+        <Footer />
+        <InstallPrompt />
       </body>
     </html>
   );
