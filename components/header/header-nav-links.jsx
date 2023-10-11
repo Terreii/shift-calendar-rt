@@ -8,8 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useMemo } from "react";
 import Link from "next/link";
 
-import { useToday } from "../hooks/time";
-import { getCalUrl, getTodayUrl } from "../lib/utils";
+import { useToday } from "../../hooks/time";
+import { getCalUrl, getTodayUrl } from "../../lib/utils";
 
 import style from "./header.module.css";
 

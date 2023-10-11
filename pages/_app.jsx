@@ -12,7 +12,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { useNextRouterViewTransitions } from "use-view-transitions/next";
 
 import Footer from "../components/footer";
-import Header from "../components/header";
+import Header from "../components/header/index";
 import InstallPrompt from "../components/install-prompt";
 import "modern-css-reset";
 import "../styles/index.css";
