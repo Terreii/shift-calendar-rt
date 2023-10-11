@@ -109,7 +109,7 @@ function SheetDownload({
   year,
   month,
 }: {
-  shiftModel?: ShiftModels;
+  shiftModel: ShiftModels;
   year: number;
   month?: number;
 }) {
