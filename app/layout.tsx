@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "../components/footer";
 import Header from "../components/header/core";
@@ -61,6 +62,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {children}
         <Footer />
         <InstallPrompt />
+        {new Date().getDate() === 12 && <Analytics />}
       </body>
     </html>
   );
