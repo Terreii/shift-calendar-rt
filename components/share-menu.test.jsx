@@ -231,7 +231,7 @@ describe("components/ShareMenu", () => {
 
     expect(hideCallback).toHaveBeenCalled();
     expect(window.navigator.share).toHaveBeenCalledWith({
-      url: new URL("http://localhost/"),
+      url: "http://localhost/",
       title: "Schichtkalender",
       text: "Meine Schichten beim Bosch Reutlingen: http://localhost/",
     });

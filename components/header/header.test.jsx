@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 
 import Header from ".";
 
-jest.mock("../hooks/settings");
-jest.mock("../hooks/time");
+jest.mock("../../hooks/settings");
+jest.mock("../../hooks/time");
 jest.mock("next/router", () => require("next-router-mock"));
 
 describe("components/Header", () => {
