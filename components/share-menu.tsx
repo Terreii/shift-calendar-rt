@@ -1,3 +1,5 @@
+"use client";
+
 /*
 License:
 
@@ -14,13 +16,13 @@ import formStyle from "../styles/form.module.css";
 
 /**
  * Display the share menu.
- * @param {object}   params            - Preact props.
- * @param {number}   params.group      - Number of selected group. 0 = no group selected/all
- * @param {number}   [params.year]     - Searched day's year.
- * @param {number}   [params.month]    - Searched day's month.
- * @param {number}   [params.search]   - Searched day.
- * @param {string}   params.shiftModel - Name of the selected shift-model.
- * @param {function} hide              - Hide the share menu.
+ * @param params             - Preact props.
+ * @param params.group       - Number of selected group. 0 = no group selected/all
+ * @param params.month       - Searched day's month.
+ * @param params.year        - Searched day's year.
+ * @param params.search      - Searched day.
+ * @param params.shiftModel  - Name of the selected shift-model.
+ * @param hide               - Hide the share menu.
  */
 export default function ShareMenu({
   group,
@@ -29,6 +31,13 @@ export default function ShareMenu({
   search,
   shiftModel,
   hide,
+}: {
+  group: number;
+  year?: number;
+  month?: number;
+  search?: number;
+  shiftModel: string;
+  hide: () => void;
 }) {
   const [addGroup, setAddGroup] = useState(false);
   const [addSearch, setAddSearch] = useState(false);
@@ -47,7 +56,7 @@ export default function ShareMenu({
   }, [search, addSearch]);
 
   useEffect(() => {
-    document.getElementById("share_url").focus();
+    document.getElementById("share_url")?.focus();
     return () => {
       const element = document.getElementById("menu_summary");
       if (element) {
@@ -69,10 +78,10 @@ export default function ShareMenu({
         });
 
         if (addSearch && search != null) {
-          url.searchParams.set("search", search);
+          url.searchParams.set("search", search.toString());
         }
         if (addGroup && group > 0) {
-          url.searchParams.set("group", group);
+          url.searchParams.set("group", group.toString());
         }
       }
 
@@ -101,7 +110,7 @@ export default function ShareMenu({
             className={style.share_address}
             type="url"
             readOnly
-            value={url.href}
+            value={url.toString()}
             onFocus={(event) => {
               event.target.select();
             }}
@@ -193,7 +202,7 @@ export default function ShareMenu({
 
                 window.navigator
                   .share({
-                    url,
+                    url: url.toString(),
                     title: "Schichtkalender",
                     text: "Meine Schichten beim Bosch Reutlingen: " + url,
                   })

@@ -8,6 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 
+import Header from "../components/header/core";
+
 import "modern-css-reset";
 import "../styles/index.css";
 
@@ -52,7 +54,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="de">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
