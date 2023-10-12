@@ -7,7 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { DateTime, Info } from "luxon";
+import differenceInSeconds from "date-fns/differenceInSeconds";
+import roundToNearestMinutes from "date-fns/roundToNearestMinutes";
 
 import Month from "../../../components/month";
 import Downloader from "../../../components/download";
@@ -81,45 +82,13 @@ export default function Year() {
  * @returns {import('next').GetServerSidePropsResult}
  */
 export async function getServerSideProps(context) {
-  const { year: yearStr } = context.query;
-  const year = parseInt(yearStr);
-
-  let maxAge = 60;
-
-  const thisYear = new Date().getUTCFullYear();
-  if (year > thisYear) {
-    // if request is in the future and today is not displayed.
-    maxAge = 60 * 60 * 24; // cache for a day
-  } else if (year < thisYear) {
-    // if request is in the past and today is not displayed.
-    maxAge = 60 * 60 * 24 * 31; // cache for 7 days
-  } else if (Info.features().zones) {
-    // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone("Europe/Berlin");
-    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
-
-    let hour = 6; // get next shift start
-    if (now.hour >= 22) {
-      hour = 6;
-    } else if (now.hour >= 14) {
-      hour = 22;
-    } else if (now.hour >= 6) {
-      hour = 14;
-    }
-
-    let nextShift = now.set({
-      hour,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-    });
-    if (nextShift.diff(now, "minutes").toObject().minutes < 0) {
-      nextShift = nextShift.plus({ days: 1 });
-    }
-    maxAge = nextShift.diff(now, "seconds").toObject().seconds;
-  }
-
-  context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
+  const now = new Date();
+  const cacheTill = roundToNearestMinutes(now, {
+    nearestTo: 30,
+    roundingMethod: "ceil",
+  });
+  const cacheSeconds = differenceInSeconds(cacheTill, now);
+  context.res.setHeader("Cache-Control", "s-maxage=" + cacheSeconds);
   return {
     props: context.query,
   };

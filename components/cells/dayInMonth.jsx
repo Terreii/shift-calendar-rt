@@ -5,19 +5,21 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import formatISO from "date-fns/formatISO";
+
 import style from "../../styles/calender.module.css";
 
 /**
  * Render the day in month cell.
- * @param {object}   param                       Preact arguments.
- * @param {import('luxon').DateTime} param.time  luxon DateTime object.
- * @param {object}   [param.holidayData]         Holiday data of that day.
- * @param {object}   [param.dayLightSaving]      Data about the daylight saving switch.
+ * @param {object}   param                    React arguments.
+ * @param {Date}     param.time               Date object.
+ * @param {object}   [param.holidayData]      Holiday data of that day.
+ * @param {object}   [param.dayLightSaving]   Data about the daylight saving switch.
  */
 export default function DayInMonthCell({ time, holidayData, dayLightSaving }) {
   // is on this day the switch from or to day-light-saving.
   const isDayLightSaving =
-    dayLightSaving != null && dayLightSaving.day === time.day;
+    dayLightSaving != null && dayLightSaving.day === time.getDate();
 
   let title;
   if (isDayLightSaving) {
@@ -33,7 +35,9 @@ export default function DayInMonthCell({ time, holidayData, dayLightSaving }) {
       data-holiday={holidayData?.type}
       data-daylight={isDayLightSaving ? true : null}
     >
-      <time dateTime={time.toISODate()}>{time.day}</time>
+      <time dateTime={formatISO(time, { representation: "date" })}>
+        {time.getDate()}
+      </time>
     </td>
   );
 }

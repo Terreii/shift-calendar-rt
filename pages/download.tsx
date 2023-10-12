@@ -1,5 +1,6 @@
 import { useState, useId, ReactNode } from "react";
-import { DateTime, Info } from "luxon";
+import differenceInSeconds from "date-fns/differenceInSeconds";
+import roundToNearestMinutes from "date-fns/roundToNearestMinutes";
 import Image from "next/image";
 import type {
   GetServerSidePropsContext,
@@ -162,23 +163,12 @@ function MonthInput({
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<unknown>> {
-  if (Info.features().zones) {
-    const now = DateTime.local().setZone("Europe/Berlin");
-    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
-    const nextMonth = now
-      .set({
-        days: 1,
-        hour: 0,
-        minute: 0,
-        second: 0,
-        millisecond: 0,
-      })
-      .plus({ months: 1 });
-
-    const maxAge = nextMonth.diff(now, "seconds").toObject().seconds;
-    context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
-  } else {
-    context.res.setHeader("Cache-Control", "s-maxage=60");
-  }
+  const now = new Date();
+  const cacheTill = roundToNearestMinutes(now, {
+    nearestTo: 30,
+    roundingMethod: "ceil",
+  });
+  const cacheSeconds = differenceInSeconds(cacheTill, now);
+  context.res.setHeader("Cache-Control", "s-maxage=" + cacheSeconds);
   return { props: context.query };
 }

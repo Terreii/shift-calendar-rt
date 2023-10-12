@@ -7,16 +7,19 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import style from "../../styles/calender.module.css";
 
+const longFormat = new Intl.DateTimeFormat("de-DE", { weekday: "long" });
+const shortFormat = new Intl.DateTimeFormat("de-DE", { weekday: "short" });
+
 /**
  * Render the cell with the week day.
- * @param {object}                   param                 Preact arguments.
- * @param {import('luxon').DateTime} param.time            luxon DateTime object.
+ * @param {object}  param         React arguments.
+ * @param {Date}    param.time    Date object.
  */
 export default function WeekDayCell({ time }) {
   return (
     <td className={style.week_day}>
-      <span className="sr-only">{time.weekdayLong}</span>
-      <span aria-hidden="true">{time.weekdayShort}</span>
+      <span className="sr-only">{longFormat.format(time)}</span>
+      <span aria-hidden="true">{shortFormat.format(time)}</span>
     </td>
   );
 }
