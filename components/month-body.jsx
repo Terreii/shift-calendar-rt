@@ -5,7 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { DateTime, Info } from "luxon";
+import formatISO from "date-fns/formatISO";
+import isWeekend from "date-fns/isWeekend";
+import isMonday from "date-fns/isMonday";
 
 import WeekCell from "./cells/week";
 import DayInMonthCell from "./cells/dayInMonth";
@@ -20,12 +22,9 @@ import style from "../styles/calender.module.css";
  * @property {object}                holidays  Object containing all holidays of that month.
  */
 
-const supportZones = Info.features().zones;
-const weekendDays = [0, 6, 7];
-
 /**
  * Renders the body of a month.
- * @param {Object}     arg          React/Preact arguments.
+ * @param {Object}     arg          React arguments.
  * @param {number}     arg.year     Year of the month.
  * @param {number}     arg.month    Month of this month.
  * @param {MonthData}  arg.data     Data of this month.
@@ -41,14 +40,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
     const thatDay = index + 1;
-    const time = DateTime.fromObject({
-      year,
-      month: month + 1,
-      day: thatDay,
-      locale: "de-DE",
-      zone: supportZones ? "Europe/Berlin" : undefined,
-    });
-    const weekDay = time.weekday;
+    const time = new Date(year, month, thatDay);
     const holidayData = data.holidays[thatDay];
 
     const shifts =
@@ -76,10 +68,10 @@ export default function MonthBody({ year, month, data, today, search, group }) {
     return (
       <tr
         key={index}
-        id={time.toISODate()}
+        id={formatISO(time, { representation: "date" })}
         className={style.row}
         data-interest={interesting}
-        data-weekend={weekendDays.includes(weekDay)}
+        data-weekend={isWeekend(time)}
         data-closing={isClosingHoliday ? "closing" : undefined}
         title={
           isToday || isClosingHoliday
@@ -89,7 +81,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
             : null
         }
       >
-        {(weekDay === 1 || index === 0) && <WeekCell time={time} />}
+        {(isMonday(time) || index === 0) && <WeekCell time={time} />}
         <DayInMonthCell
           time={time}
           holidayData={holidayData}

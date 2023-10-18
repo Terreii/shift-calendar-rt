@@ -7,7 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { DateTime, Info } from "luxon";
+import differenceInSeconds from "date-fns/differenceInSeconds";
+import roundToNearestMinutes from "date-fns/roundToNearestMinutes";
 
 import ByMonths from "../../components/by-month";
 import Downloader from "../../components/download";
@@ -66,37 +67,13 @@ export default function ShiftModel() {
  * @returns {import('next').GetServerSidePropsResult}
  */
 export async function getServerSideProps(context) {
-  let maxAge = 60;
-
-  if (Info.features().zones) {
-    // get the diff in seconds to the next shift start
-    const now = DateTime.local().setZone("Europe/Berlin");
-    context.res.setHeader("X-Server-Luxon-Time", now.toFormat("HH':'mm"));
-
-    let hour = 6; // get next shift start
-    if (now.hour >= 22) {
-      hour = 0; // fixes the jump to the next month and moving the border.
-    } else if (now.hour >= 14) {
-      hour = 22;
-    } else if (now.hour >= 6) {
-      hour = 14;
-    }
-
-    let nextShift = now.set({
-      hour,
-      minute: 0,
-      second: 0,
-      millisecond: 0,
-    });
-    if (nextShift.diff(now, "minutes").toObject().minutes < 0) {
-      nextShift = nextShift.plus({ days: 1 });
-    }
-    maxAge = nextShift.diff(now, "seconds").toObject().seconds;
-  } else {
-    context.res.setHeader("X-Server-Luxon-Time", "No zones supported.");
-  }
-
-  context.res.setHeader("Cache-Control", "s-maxage=" + maxAge);
+  const now = new Date();
+  const cacheTill = roundToNearestMinutes(now, {
+    nearestTo: 30,
+    roundingMethod: "ceil",
+  });
+  const cacheSeconds = differenceInSeconds(cacheTill, now);
+  context.res.setHeader("Cache-Control", "s-maxage=" + cacheSeconds);
   return {
     props: context.query,
   };
