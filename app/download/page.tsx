@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useId, ReactNode } from "react";
+import type { Metadata } from "next";
 import Image from "next/image";
 import downloadIcon from "bootstrap-icons/icons/download.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
@@ -22,6 +23,10 @@ import {
 import { useSupportsInputType } from "../../hooks/utils";
 
 import styles from "../../styles/download.module.css";
+
+export const metadata: Metadata = {
+  title: "Download",
+};
 
 export default function DownloadPage() {
   const [yearMonth, setYearMonth] = useState(() => {
