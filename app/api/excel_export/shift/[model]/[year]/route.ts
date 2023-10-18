@@ -9,8 +9,9 @@ import { type NextRequest, NextResponse } from "next/server";
 import xl from "excel4node";
 
 import {
+  monthNames,
   shiftModelNames,
-  shiftModelText,
+  ShiftModels,
 } from "../../../../../../lib/constants";
 import {
   createShiftSheet,
@@ -19,24 +20,30 @@ import {
 
 export async function GET(
   _request: NextRequest,
-  { params }: { params: { year: string; month: string } },
+  { params }: { params: { year: string; model: string } },
 ) {
   const year = parseInt(params.year as string, 10);
-  const month = parseInt(params.month as string, 10);
+  const model = params.model as ShiftModels;
 
-  if (
-    Number.isNaN(year) ||
-    year < 2010 ||
-    Number.isNaN(month) ||
-    month < 1 ||
-    month > 12
-  ) {
+  if (Number.isNaN(year) || year < 2010) {
     return NextResponse.json(
       {
         status: 404,
-        error: "Unknown year or month",
+        error: "Unknown year",
         describtion:
-          "This url must have a year and month! Example: /api/excel_export/all/2023/4",
+          "This url must have a year! Example: /api/excel_export/shift/6-6/2023",
+      },
+      { status: 404 },
+    );
+  }
+  if (!shiftModelNames.includes(model)) {
+    return NextResponse.json(
+      {
+        status: 404,
+        error: "Unknown shift model",
+        describtion:
+          "This url must have a valid shift model! Example: /api/excel_export/shift/6-6/2023",
+        shiftModelNames,
       },
       { status: 404 },
     );
@@ -45,12 +52,12 @@ export async function GET(
   const wb = new xl.Workbook();
   const styles = createStyles(wb);
 
-  for (const model of shiftModelNames) {
+  for (let i = 0; i < 12; i++) {
     createShiftSheet(
-      wb.addWorksheet(shiftModelText[model]),
+      wb.addWorksheet(monthNames[i]),
       model,
       year,
-      month,
+      i + 1,
       styles,
     );
   }
