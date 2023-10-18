@@ -52,6 +52,9 @@ describe("download", () => {
       .next()
       .should("have.attr", "href")
       .and("include", href);
+
+    cy.get("header h1").click();
+    cy.url().should("not.include", "/download");
   });
 
   it("should have a year calendar for every shift model", () => {
