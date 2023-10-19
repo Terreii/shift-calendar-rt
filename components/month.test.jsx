@@ -1,8 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, act } from "@testing-library/react";
 import { axe } from "jest-axe";
 
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
+
+jest.mock("next/router", () => require("next-router-mock"));
 
 describe("components/month", () => {
   it("should display the correct month data", () => {
@@ -32,6 +34,10 @@ describe("components/month", () => {
       />,
     );
 
-    expect(await axe(container)).toHaveNoViolations();
+    let axeResult;
+    await act(async () => {
+      axeResult = await axe(container);
+    });
+    expect(axeResult).toHaveNoViolations();
   });
 });
