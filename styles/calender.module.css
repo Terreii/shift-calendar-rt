@@ -204,22 +204,22 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-bottom: calc(var(--interest-width) + 1px) solid var(--table-color);
 }
 
-.day_in_month[data-holiday="holiday"],
-.day_in_month[data-holiday="school"] {
+.week_day[data-holiday="holiday"],
+.week_day[data-holiday="school"] {
   background-color: #2dd4bf;
   background-color: var(--holiday-bg-color);
   color: black;
   color: var(--table-color);
 }
 
-.day_in_month[data-holiday="ramadan"] {
+.week_day[data-holiday="ramadan"] {
   background-color: #06b6d4;
   background-color: var(--ramadan-bg-color);
   color: black;
   color: var(--table-color);
 }
 
-.day_in_month[data-daylight] {
+.week_day[data-daylight] {
   background-color: #fcd34d;
   background-color: var(--daylight-saving-bg-color);
   color: black;

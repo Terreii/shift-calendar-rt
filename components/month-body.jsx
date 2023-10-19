@@ -82,12 +82,12 @@ export default function MonthBody({ year, month, data, today, search, group }) {
         }
       >
         {(isMonday(time) || index === 0) && <WeekCell time={time} />}
-        <DayInMonthCell
+        <DayInMonthCell time={time} />
+        <WeekDayCell
           time={time}
           holidayData={holidayData}
           dayLightSaving={data.holidays.daylightSavingSwitch}
         />
-        <WeekDayCell time={time} />
 
         {shifts.map((shift, index) => {
           const gr = group === 0 ? index : group - 1;

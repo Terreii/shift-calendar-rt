@@ -12,12 +12,30 @@ const shortFormat = new Intl.DateTimeFormat("de-DE", { weekday: "short" });
 
 /**
  * Render the cell with the week day.
- * @param {object}  param         React arguments.
- * @param {Date}    param.time    Date object.
+ * @param {object}  param                    React arguments.
+ * @param {Date}    param.time               Date object.
+ * @param {object}  [param.holidayData]      Holiday data of that day.
+ * @param {object}  [param.dayLightSaving]   Data about the daylight saving switch.
  */
-export default function WeekDayCell({ time }) {
+export default function WeekDayCell({ time, holidayData, dayLightSaving }) {
+  // is on this day the switch from or to day-light-saving.
+  const isDayLightSaving =
+    dayLightSaving != null && dayLightSaving.day === time.getDate();
+
+  let title;
+  if (isDayLightSaving) {
+    title = dayLightSaving.name;
+  } else if (holidayData != null) {
+    title = holidayData.name;
+  }
+
   return (
-    <td className={style.week_day}>
+    <td
+      className={style.week_day}
+      title={title}
+      data-holiday={holidayData?.type}
+      data-daylight={isDayLightSaving ? true : null}
+    >
       <span className="sr-only">{longFormat.format(time)}</span>
       <span aria-hidden="true">{shortFormat.format(time)}</span>
     </td>

@@ -13,28 +13,10 @@ import style from "../../styles/calender.module.css";
  * Render the day in month cell.
  * @param {object}   param                    React arguments.
  * @param {Date}     param.time               Date object.
- * @param {object}   [param.holidayData]      Holiday data of that day.
- * @param {object}   [param.dayLightSaving]   Data about the daylight saving switch.
  */
-export default function DayInMonthCell({ time, holidayData, dayLightSaving }) {
-  // is on this day the switch from or to day-light-saving.
-  const isDayLightSaving =
-    dayLightSaving != null && dayLightSaving.day === time.getDate();
-
-  let title;
-  if (isDayLightSaving) {
-    title = dayLightSaving.name;
-  } else if (holidayData != null) {
-    title = holidayData.name;
-  }
-
+export default function DayInMonthCell({ time }) {
   return (
-    <td
-      className={style.day_in_month}
-      title={title}
-      data-holiday={holidayData?.type}
-      data-daylight={isDayLightSaving ? true : null}
-    >
+    <td className={style.day_in_month}>
       <time dateTime={formatISO(time, { representation: "date" })}>
         {time.getDate()}
       </time>
