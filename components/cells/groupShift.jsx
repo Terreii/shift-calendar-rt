@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { workingDescriptionId } from "../../lib/constants";
 
-import style from "../../styles/calender.module.css";
+import style from "../../styles/calendar.module.css";
 
 /**
  * Render a cell that displays if that shift group is working and what shift.

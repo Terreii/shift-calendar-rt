@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import formatISO from "date-fns/formatISO";
 
-import style from "../../styles/calender.module.css";
+import style from "../../styles/calendar.module.css";
 
 /**
  * Render the day in month cell.

@@ -10,7 +10,7 @@ import { memo } from "react";
 import MonthBody from "./month-body";
 import { monthNames } from "../lib/constants";
 
-import style from "../styles/calender.module.css";
+import style from "../styles/calendar.module.css";
 
 /**
  * Render a month

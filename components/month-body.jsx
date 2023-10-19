@@ -14,7 +14,7 @@ import DayInMonthCell from "./cells/dayInMonth";
 import WeekDayCell from "./cells/weekDay";
 import GroupShiftCell from "./cells/groupShift";
 
-import style from "../styles/calender.module.css";
+import style from "../styles/calendar.module.css";
 
 /**
  * @typedef {Object} MonthData
