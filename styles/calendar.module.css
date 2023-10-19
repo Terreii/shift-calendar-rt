@@ -240,6 +240,8 @@ But then show the next month on small screen, then the next 2 months, then all o
   position: sticky;
   top: 6.4rem;
   top: calc(3rem + 1.5rem + 1.9rem);
+  bottom: 0.2rem;
+  bottom: calc(0.2rem + env(safe-area-inset-bottom, 0px));
 }
 
 .group[data-group="1"] {
