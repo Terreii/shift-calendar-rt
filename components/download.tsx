@@ -64,6 +64,12 @@ export default function Download({
       <div className={style.container}>
         <section className={style.section}>
           Für dieses Schichtmodell sind die Kalender noch in Arbeit
+          <SheetDownload
+            shiftModel={shiftModel}
+            year={year}
+            month={month}
+            inWork
+          />
         </section>
       </div>
     );
@@ -108,10 +114,12 @@ function SheetDownload({
   shiftModel,
   year,
   month,
+  inWork = false,
 }: {
   shiftModel: ShiftModels;
   year: number;
   month?: number;
+  inWork?: boolean;
 }) {
   const name = month
     ? excelExportName(year, month)
@@ -122,7 +130,7 @@ function SheetDownload({
 
   return (
     <p className={style.text}>
-      Oder lade ihn als Excel/
+      Oder lade ihn {inWork && "schon"} als Excel/
       <a
         href="https://de.libreoffice.org/discover/libreoffice/"
         target="_blank"

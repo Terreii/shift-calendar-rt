@@ -1,11 +1,14 @@
+"use client";
+
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
 import { useState, useId, ReactNode } from "react";
-import differenceInSeconds from "date-fns/differenceInSeconds";
-import roundToNearestMinutes from "date-fns/roundToNearestMinutes";
 import Image from "next/image";
-import type {
-  GetServerSidePropsContext,
-  GetServerSidePropsResult,
-} from "next/types";
 import downloadIcon from "bootstrap-icons/icons/download.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
 import sheetIcon from "bootstrap-icons/icons/file-spreadsheet.svg";
@@ -16,10 +19,10 @@ import {
   shiftModelNames,
   shiftModelText,
   monthNames,
-} from "../lib/constants";
-import { useSupportsInputType } from "../hooks/utils";
+} from "../../lib/constants";
+import { useSupportsInputType } from "../../hooks/utils";
 
-import styles from "../styles/download.module.css";
+import styles from "../../styles/download.module.css";
 
 export default function DownloadPage() {
   const [yearMonth, setYearMonth] = useState(() => {
@@ -58,7 +61,9 @@ export default function DownloadPage() {
         </strong>
       </DownloadSection>
 
-      <h2 className={styles.header_2}>Tabellen für das ganze Jahr</h2>
+      <h2 className={styles.header_2}>
+        Tabellen für das ganze Jahr <em>{year}</em>
+      </h2>
 
       {shiftModelNames.map((model) => (
         <DownloadSection
@@ -158,17 +163,4 @@ function MonthInput({
       </select>
     </span>
   );
-}
-
-export async function getServerSideProps(
-  context: GetServerSidePropsContext,
-): Promise<GetServerSidePropsResult<unknown>> {
-  const now = new Date();
-  const cacheTill = roundToNearestMinutes(now, {
-    nearestTo: 30,
-    roundingMethod: "ceil",
-  });
-  const cacheSeconds = differenceInSeconds(cacheTill, now);
-  context.res.setHeader("Cache-Control", "s-maxage=" + cacheSeconds);
-  return { props: context.query };
 }
