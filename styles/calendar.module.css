@@ -165,47 +165,30 @@ But then show the next month on small screen, then the next 2 months, then all o
   color: var(--closing-color);
 }
 
-.row[data-interest="search"] > td:last-child {
-  border-right: var(--interest-width) solid #a78bfa;
-  border-right: var(--interest-width) solid var(--search-color);
+.row[data-interest="search"] {
+  --interest-border-color: var(--search-color);
 }
-.row[data-interest="today"] > td:last-child {
-  border-right: var(--interest-width) solid black;
-  border-right: var(--interest-width) solid var(--table-color);
+.row[data-interest="today"] {
+  --interest-border-color: var(--table-color);
 }
 
-.row[data-interest="search"] > .day_in_month {
-  border-left: var(--interest-width) solid #a78bfa;
-  border-left: var(--interest-width) solid var(--search-color);
-  border-top: var(--interest-width) solid #a78bfa;
-  border-top: var(--interest-width) solid var(--search-color);
-  border-bottom: var(--interest-width) solid #a78bfa;
-  border-bottom: var(--interest-width) solid var(--search-color);
-}
-.row[data-interest="today"] > .day_in_month {
-  border-left: var(--interest-width) solid black;
-  border-left: var(--interest-width) solid var(--table-color);
-  border-top: var(--interest-width) solid black;
-  border-top: var(--interest-width) solid var(--table-color);
-  border-bottom: var(--interest-width) solid black;
-  border-bottom: var(--interest-width) solid var(--table-color);
+.row:is([data-interest="search"], [data-interest="today"]) > td:last-child {
+  border-right: var(--interest-width) solid var(--interest-border-color);
 }
 
-.row[data-interest="search"] > .day_in_month {
-  border-top: 3px solid #a78bfa;
-  border-top: var(--interest-width) solid var(--search-color);
-  border-bottom: 4px solid #a78bfa;
-  border-bottom: calc(var(--interest-width) + 1px) solid var(--search-color);
-}
-.row[data-interest="today"] > .day_in_month {
-  border-top: 3px solid black;
-  border-top: var(--interest-width) solid var(--table-color);
-  border-bottom: 4px solid black;
-  border-bottom: calc(var(--interest-width) + 1px) solid var(--table-color);
+.row:is([data-interest="search"], [data-interest="today"]) > .day_in_month {
+  border-left: var(--interest-width) solid var(--interest-border-color);
+  border-top: var(--interest-width) solid var(--interest-border-color);
+  border-bottom: var(--interest-width) solid var(--interest-border-color);
 }
 
-.week_day[data-holiday="holiday"],
-.week_day[data-holiday="school"] {
+.row:is([data-interest="search"], [data-interest="today"]) > .day_in_month {
+  border-top: var(--interest-width) solid var(--interest-border-color);
+  border-bottom: calc(var(--interest-width) + 1px) solid
+    var(--interest-border-color);
+}
+
+.week_day:is([data-holiday="holiday"], [data-holiday="school"]) {
   background-color: #2dd4bf;
   background-color: var(--holiday-bg-color);
   color: black;
@@ -286,15 +269,9 @@ But then show the next month on small screen, then the next 2 months, then all o
   color: var(--group-6-text);
 }
 
-.row[data-interest="search"] > :is(.group, .week_day) {
-  border-top: 3px solid #a78bfa;
-  border-top: var(--interest-width) solid var(--search-color);
-  border-bottom: 4px solid #a78bfa;
-  border-bottom: calc(var(--interest-width) + 1px) solid var(--search-color);
-}
-.row[data-interest="today"] > :is(.group, .week_day) {
-  border-top: 3px solid black;
-  border-top: var(--interest-width) solid var(--table-color);
-  border-bottom: 4px solid black;
-  border-bottom: calc(var(--interest-width) + 1px) solid var(--table-color);
+.row:is([data-interest="search"], [data-interest="today"])
+  > :is(.group, .week_day) {
+  border-top: var(--interest-width) solid var(--interest-border-color);
+  border-bottom: calc(var(--interest-width) + 1px) solid
+    var(--interest-border-color);
 }

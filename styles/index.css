@@ -98,9 +98,7 @@ a.link,
   color: var(--link-color);
   text-decoration: underline;
 }
-.link:hover,
-.link:focus,
-.link:active {
+.link:is(:hover, :focus, :active) {
   color: #3b82f6;
   color: var(--link-interact-color);
 }

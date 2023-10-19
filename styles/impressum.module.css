@@ -43,9 +43,7 @@ a.link {
   text-decoration: underline;
   font-size: smaller;
 }
-.link:hover,
-.link:focus,
-.link:active {
+.link:is(:hover, :focus, :active) {
   color: #3b82f6;
   color: var(--link-interact-color);
 }
