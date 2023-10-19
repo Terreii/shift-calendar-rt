@@ -28,7 +28,7 @@ export default function WeekCell({ time }) {
         ) + 1
       }
     >
-      {getISOWeek(time)}
+      <span className={style.week_number}>{getISOWeek(time)}</span>
     </td>
   );
 }
