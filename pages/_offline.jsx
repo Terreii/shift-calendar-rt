@@ -6,7 +6,7 @@ import Legend from "../components/legend";
 import { useTodayZeroIndex } from "../hooks/time";
 import { shift66Name, shiftModelText } from "../lib/constants";
 
-import style from "../styles/calender.module.css";
+import style from "../styles/calendar.module.css";
 import offlineStyles from "../styles/offline.module.css";
 
 export default function Offline() {

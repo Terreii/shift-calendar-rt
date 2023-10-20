@@ -83,8 +83,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   text-decoration-color: #1d4ed8;
   text-decoration-color: var(--link-color);
 }
-.link:hover,
-.link:focus {
+.link:is(:hover, :focus) {
   text-decoration-color: #3b82f6;
   text-decoration-color: var(--link-interact-color);
   text-decoration-thickness: 3px;

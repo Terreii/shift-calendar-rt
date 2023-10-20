@@ -10,7 +10,7 @@ import endOfISOWeek from "date-fns/endOfISOWeek";
 import getDaysInMonth from "date-fns/getDaysInMonth";
 import getISOWeek from "date-fns/getISOWeek";
 
-import style from "../../styles/calender.module.css";
+import style from "../../styles/calendar.module.css";
 
 /**
  * Render the weekday.
@@ -28,7 +28,7 @@ export default function WeekCell({ time }) {
         ) + 1
       }
     >
-      {getISOWeek(time)}
+      <span className={style.week_number}>{getISOWeek(time)}</span>
     </td>
   );
 }

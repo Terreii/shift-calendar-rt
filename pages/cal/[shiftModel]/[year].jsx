@@ -19,7 +19,7 @@ import { shiftModelText } from "../../../lib/constants";
 import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber } from "../../../lib/utils";
 
-import style from "../../../styles/calender.module.css";
+import style from "../../../styles/calendar.module.css";
 
 export default function Year() {
   const router = useRouter();

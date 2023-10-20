@@ -16,8 +16,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .menu_button::-webkit-details-marker {
   display: none;
 }
-.menu_button:hover,
-.menu_button:active {
+.menu_button:is(:hover, :active) {
   background-color: #16a34a;
   background-color: var(--header-hover-bg-color);
 }
@@ -156,8 +155,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   flex-direction: row;
   margin-top: 1.25rem;
 }
-.buttons_row > button,
-.buttons_row > a {
+.buttons_row > :is(button, a) {
   flex: 1 1 8rem;
 }
 .buttons_row > *:last-child {

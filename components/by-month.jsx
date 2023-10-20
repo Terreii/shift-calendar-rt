@@ -14,7 +14,7 @@ import selectMonthData from "../lib/select-month-data";
 import { getCalUrl, scrollToADay } from "../lib/utils";
 import { useTitleAlert } from "../hooks/utils";
 
-import style from "../styles/calender.module.css";
+import style from "../styles/calendar.module.css";
 
 /**
  * Display this month and the next 2 and the last one.

@@ -8,13 +8,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import formatISO from "date-fns/formatISO";
 import isWeekend from "date-fns/isWeekend";
 import isMonday from "date-fns/isMonday";
+import { useRouter } from "next/router";
 
 import WeekCell from "./cells/week";
 import DayInMonthCell from "./cells/dayInMonth";
 import WeekDayCell from "./cells/weekDay";
 import GroupShiftCell from "./cells/groupShift";
 
-import style from "../styles/calender.module.css";
+import style from "../styles/calendar.module.css";
 
 /**
  * @typedef {Object} MonthData
@@ -36,6 +37,9 @@ import style from "../styles/calender.module.css";
 export default function MonthBody({ year, month, data, today, search, group }) {
   const todayInThisMonth =
     today != null && today[0] === year && today[1] === month;
+  const {
+    query: { shiftModel },
+  } = useRouter();
 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
@@ -82,12 +86,12 @@ export default function MonthBody({ year, month, data, today, search, group }) {
         }
       >
         {(isMonday(time) || index === 0) && <WeekCell time={time} />}
-        <DayInMonthCell
+        <DayInMonthCell time={time} shiftModel={shiftModel} />
+        <WeekDayCell
           time={time}
           holidayData={holidayData}
           dayLightSaving={data.holidays.daylightSavingSwitch}
         />
-        <WeekDayCell time={time} />
 
         {shifts.map((shift, index) => {
           const gr = group === 0 ? index : group - 1;
