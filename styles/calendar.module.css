@@ -189,13 +189,14 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .day_in_month {
-  display: flex;
   padding: 0;
 }
 .day_in_month__link {
+  display: inline-block;
   color: inherit;
   padding: 0.1rem;
-  flex: 1 1 auto;
+  height: 100%;
+  width: 100%;
 }
 
 .week_day:is([data-holiday="holiday"], [data-holiday="school"]) {
