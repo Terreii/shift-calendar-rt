@@ -72,7 +72,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
     return (
       <tr
         key={index}
-        id={formatISO(time, { representation: "date" })}
+        id={"day_" + formatISO(time, { representation: "date" })}
         className={style.row}
         data-interest={interesting}
         data-weekend={isWeekend(time)}
