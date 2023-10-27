@@ -1,5 +1,6 @@
 /* eslint-disable jest/expect-expect */
 
+import addMonths from "date-fns/addMonths";
 import formatISO from "date-fns/formatISO";
 import startOfMonth from "date-fns/startOfMonth";
 import {
@@ -7,6 +8,7 @@ import {
   shiftModelNames,
   monthNames,
   shiftModelNumberOfGroups,
+  shift66Name,
 } from "../../lib/constants";
 import getShiftData from "../../lib/workdata";
 
@@ -63,5 +65,62 @@ describe("shift calendar current view", () => {
         }
       });
     });
+
+    it("should have nav buttons", () => {
+      cy.visit("http://localhost:3000/cal/" + model);
+
+      const now = new Date();
+      const getMonthPath = (diff: number) => {
+        const month = addMonths(now, diff);
+        const monthString = (month.getMonth() + 1).toString().padStart(2, "0");
+        return `/cal/${model}/${month.getFullYear()}/${monthString}`;
+      };
+      cy.contains("nav a", "<").should("have.attr", "href", getMonthPath(-1));
+      cy.contains("nav a", ">").should("have.attr", "href", getMonthPath(1));
+    });
   }
+});
+
+describe("full year", () => {
+  it("should be accessible by the menu", () => {
+    cy.visit("http://localhost:3000/");
+
+    cy.contains("main a", shiftModelText[shift66Name]).click();
+
+    cy.get("#menu_summary").click();
+    cy.get("#hamburger_menu").contains("Zeige ganzes Jahr").click();
+
+    const now = new Date();
+    cy.url().should("include", `/cal/${shift66Name}/${now.getFullYear()}`);
+
+    for (let i = 1; i <= 12; i++) {
+      // i starts at 1!
+      cy.get(`#month_${now.getFullYear()}-${i}`);
+    }
+  });
+
+  it("today button should go back to current month view", () => {
+    cy.visit(`http://localhost:3000/cal/${shift66Name}/2022`);
+    const now = new Date();
+
+    cy.contains("nav a", "<").should(
+      "have.attr",
+      "href",
+      `/cal/${shift66Name}/2021`,
+    );
+    cy.contains("nav a", ">").should(
+      "have.attr",
+      "href",
+      `/cal/${shift66Name}/2023`,
+    );
+
+    cy.contains("Heute").click();
+
+    cy.url()
+      .should("not.include", `/cal/${shift66Name}/${now.getFullYear()}`)
+      .and(
+        "include",
+        `/cal/${shift66Name}#day_${formatISO(now, { representation: "date" })}`,
+      );
+  });
 });
