@@ -6,12 +6,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useEffect, useMemo, useRef } from "react";
-import ms from "milliseconds";
-import { useRouter } from "next/router";
 
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
-import { getCalUrl, scrollToADay } from "../lib/utils";
+import { scrollToADay } from "../lib/utils";
 import { useTitleAlert } from "../hooks/utils";
 
 import style from "../styles/calendar.module.css";
