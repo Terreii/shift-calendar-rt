@@ -34,7 +34,6 @@ export default function ByMonths({
   month,
   today,
 }) {
-  const ref = useHammer(year, month, shiftModel, group);
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
@@ -76,7 +75,6 @@ export default function ByMonths({
       id="calendar_main_out"
       className={style.container}
       onClick={clickHandler}
-      ref={ref}
       aria-live="polite"
     >
       {monthsData.map(([year, month, search], index) =>
@@ -176,84 +174,4 @@ function useMonthToRender() {
   }, []);
 
   return monthsToRender;
-}
-
-/**
- * Setup Hammer and handle swipes.
- * @param {number}   year        The current year.
- * @param {number}   month       The current month.
- * @param {string}   shiftModel  Selected shift-model.
- * @param {number}   group       Shift group.
- */
-function useHammer(year, month, shiftModel, group) {
-  const [container, setContainer] = useState(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (container == null) return;
-    let isActive = true;
-
-    const handler = (event) => {
-      switch (event.direction) {
-        case 2: {
-          // right to left
-          const time = new Date();
-          time.setDate(1);
-          time.setMonth(month);
-          time.setFullYear(year);
-          time.setTime(time.getTime() + ms.months(1));
-
-          router.push(
-            getCalUrl({
-              group,
-              shiftModel,
-              isFullYear: false,
-              year: time.getFullYear(),
-              month: time.getMonth() + 1,
-            }),
-          );
-          break;
-        }
-
-        case 4: {
-          // left to right
-          const time = new Date();
-          time.setDate(1);
-          time.setMonth(month);
-          time.setFullYear(year);
-          time.setTime(time.getTime() - ms.months(1));
-
-          router.push(
-            getCalUrl({
-              group,
-              shiftModel,
-              isFullYear: false,
-              year: time.getFullYear(),
-              month: time.getMonth() + 1,
-            }),
-          );
-          break;
-        }
-
-        default:
-          break;
-      }
-    };
-
-    let hammertime;
-    import("hammerjs").then(({ default: Hammer }) => {
-      if (isActive) {
-        hammertime = new Hammer(container);
-        hammertime.on("swipe", handler);
-      }
-    });
-    return () => {
-      isActive = false;
-      if (hammertime) {
-        hammertime.off("swipe", handler);
-      }
-    };
-  }, [year, month, shiftModel, group, container, router]);
-
-  return setContainer;
 }
