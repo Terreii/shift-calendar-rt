@@ -17,7 +17,7 @@ describe("components/Header", () => {
     const todayButton = screen.queryByText("Heute");
     expect(todayButton).toBeTruthy();
     expect(todayButton.nodeName).toBe("A");
-    expect(todayButton.href).toBe("http://localhost/cal/6-6#2021-01-25");
+    expect(todayButton.href).toBe("http://localhost/cal/6-6#day_2021-01-25");
     expect(todayButton.title).toBe("zeige aktuellen Monat");
 
     const yesterday = screen.queryByText("<");
