@@ -79,6 +79,18 @@ describe("shift calendar current view", () => {
       cy.contains("nav a", ">").should("have.attr", "href", getMonthPath(1));
     });
   }
+
+  it("should render holidays", () => {
+    // school breaks
+    cy.visit(`http://localhost:3000/cal/${shift66Name}/2023/07`);
+    cy.get('#day_2023-07-27 > td[title="Sommerferien"][data-holiday="school"]');
+
+    // holidays
+    cy.visit(`http://localhost:3000/cal/${shift66Name}/2023/10`);
+    cy.get(
+      '#day_2023-10-03 > td[title="Tag der deutschen Einheit"][data-holiday="holiday"]',
+    );
+  });
 });
 
 describe("full year", () => {
