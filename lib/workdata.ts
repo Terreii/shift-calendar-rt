@@ -16,7 +16,7 @@ import {
   shiftAddedNight,
   shiftAddedNight8,
   weekend,
-} from "./constants.js";
+} from "./constants.ts";
 import { getDaysInMonth } from "./utils.js";
 
 /**
