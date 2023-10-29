@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import ms from "milliseconds";
 
 import {
+  type ShiftModels,
   shift66Name,
   shift64Name,
   shiftWfW,
@@ -15,16 +16,16 @@ import {
   shiftAddedNight,
   shiftAddedNight8,
   weekend,
-} from "./constants.ts";
+} from "./constants.js";
 import { getDaysInMonth } from "./utils.js";
 
 /**
  * Get the UTC Unix time in milliseconds.
- * @param {number} year  Year
- * @param {number} month Month with a zero index.
- * @param {number} day   Day in month
+ * @param   year  Year
+ * @param   month Month with a zero index.
+ * @param   day   Day in month
  */
-function getTime(year, month, day) {
+function getTime(year: number, month: number, day: number): number {
   const monthStr = String(month + 1).padStart(2, "0");
   const dayStr = String(day).padStart(2, "0");
   // use JSON string, because if UTC is used on some days it calculates the wrong shift.
@@ -33,20 +34,25 @@ function getTime(year, month, day) {
   return time;
 }
 
-/**
- * @typedef {Object} MonthWorkData
- * @property {("F"|"S"|"N"|"Normal"|"K")[][]} days         List of working days of every group
- * @property {number[]}                       workingCount Count of working days of a group
- */
+export type Workdata = "F" | "S" | "N" | "Normal" | "K";
+type DayWorkdata = Workdata[];
+export type MonthWorkData = {
+  days: Workdata[][];
+  workingCount: number[];
+};
 
 /**
  * Calculate when groups will work.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @param {string} shiftModel Which shift-model is it.
- * @returns {MonthWorkData} Working data of a group.
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @param    shiftModel Which shift-model is it.
+ * @returns  Working data of a group.
  */
-export default function getMonthData(year, month, shiftModel) {
+export default function getMonthData(
+  year: number,
+  month: number,
+  shiftModel: ShiftModels,
+): MonthWorkData {
   switch (shiftModel) {
     case shiftAddedNight:
       return getAddedNightModel(year, month);
@@ -74,12 +80,12 @@ export default function getMonthData(year, month, shiftModel) {
 
 /**
  * Get the working data of the 6-6 Model or the old 4-4 model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of groups in the 6-6 and old 4-4 models
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of groups in the 6-6 and old 4-4 models
  */
-function get66Model(year, month) {
-  const daysData = [];
+function get66Model(year: number, month: number): MonthWorkData {
+  const daysData: DayWorkdata[] = [];
   const groupsWorkingDays = [0, 0, 0, 0, 0, 0];
   const isOldModel = year < 2010 || (year === 2010 && month < 3);
   const isOnSwitch = year === 2010 && month === 3;
@@ -107,12 +113,12 @@ function get66Model(year, month) {
 
 /**
  * Get the working data of the new 6-4 Model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups of the new 6-4 model
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups of the new 6-4 model
  */
-function get64Model(year, month) {
-  const daysData = [];
+function get64Model(year: number, month: number): MonthWorkData {
+  const daysData: DayWorkdata[] = [];
   const groupsWorkingDays = [0, 0, 0, 0, 0];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
@@ -135,12 +141,12 @@ function get64Model(year, month) {
 
 /**
  * Get the working data of the WfW (factory fire department) Model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups of the WfW model
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups of the WfW model
  */
-function getWfWModel(year, month) {
-  const daysData = [];
+function getWfWModel(year: number, month: number): MonthWorkData {
+  const daysData: DayWorkdata[] = [];
   const groupsWorkingDays = [0, 0, 0, 0, 0, 0];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
@@ -169,7 +175,12 @@ function getWfWModel(year, month) {
  * @param {number[]} groupOffsets Offsets for every group
  * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
  */
-function get12DayCycleModelDay(year, month, day, groupOffsets) {
+function get12DayCycleModelDay(
+  year: number,
+  month: number,
+  day: number,
+  groupOffsets: number[],
+): DayWorkdata {
   const time = getTime(year, month, day);
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
@@ -198,12 +209,12 @@ function get12DayCycleModelDay(year, month, day, groupOffsets) {
 
 /**
  * Calculates the data of a day for the new 6-4 shift model.
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ * @param    year Full Year
+ * @param    month Number of the month in the year
+ * @param    day Day in the month
+ * @returns  Working data of all groups on this day
  */
-function get64ModelDay(year, month, day) {
+function get64ModelDay(year: number, month: number, day: number): DayWorkdata {
   const time = getTime(year, month, day);
 
   // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
@@ -249,12 +260,12 @@ function get64ModelDay(year, month, day) {
 /**
  * Calculates the data of a day for the old 4-4 shift model.
  * It is NNNN-KKKK-SSSS-KKKK-FFFF-KKKK.
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ * @param    year Full Year
+ * @param    month Number of the month in the year
+ * @param    day Day in the month
+ * @returns  Working data of all groups on this day
  */
-function get44ModelDay(year, month, day) {
+function get44ModelDay(year: number, month: number, day: number): DayWorkdata {
   const time = getTime(year, month, day);
 
   // get days count since 1.1.1970
@@ -284,13 +295,13 @@ function get44ModelDay(year, month, day) {
 
 /**
  * Get the working data of the rotating shift model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups
  */
-function getRotatingShift(year, month) {
+function getRotatingShift(year: number, month: number): MonthWorkData {
   const workingCount = [0, 0];
-  const shifts = [];
+  const shifts: DayWorkdata[] = [];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
     const time = getTime(year, month, i + 1) + ms.days(1);
@@ -316,13 +327,13 @@ function getRotatingShift(year, month) {
 
 /**
  * Get the working data of the RtP2 Weekend model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups
  */
-function getRtP2WeekendShift(year, month) {
+function getRtP2WeekendShift(year: number, month: number): MonthWorkData {
   const groupsWorkingDays = [0, 0];
-  const daysData = [];
+  const daysData: DayWorkdata[] = [];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
     const aDay = getRtP2WeekendShiftDay(year, month, i + 1);
@@ -345,12 +356,16 @@ function getRtP2WeekendShift(year, month) {
 /**
  * Calculates the data of a day for the RtP2 Weekend model.
  * It is NN-K-NNNN-K-NNNN-KK
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @returns {("Normal"|"K")[]} Working data of all groups on this day
+ * @param    year Full Year
+ * @param    month Number of the month in the year
+ * @param    day Day in the month
+ * @returns  Working data of all groups on this day
  */
-function getRtP2WeekendShiftDay(year, month, day) {
+function getRtP2WeekendShiftDay(
+  year: number,
+  month: number,
+  day: number,
+): ("Normal" | "K")[] {
   const time = getTime(year, month, day);
   const cycleLength = 14;
 
@@ -378,12 +393,12 @@ function getRtP2WeekendShiftDay(year, month, day) {
 
 /**
  * Get the working data of the added night-shift-model.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups
  */
-function getAddedNightModel(year, month) {
-  const daysData = [];
+function getAddedNightModel(year: number, month: number): MonthWorkData {
+  const daysData: DayWorkdata[] = [];
   const groupsWorkingDays = [0, 0, 0];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
@@ -407,12 +422,16 @@ function getAddedNightModel(year, month) {
 /**
  * Calculates the data of a day for the added night-shift-model.
  * It is NNNN-K-NNNN-KKK-NN-KK-NN-KKK.
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ * @param    year Full Year
+ * @param    month Number of the month in the year
+ * @param    day Day in the month
+ * @returns  Working data of all groups on this day
  */
-function getAddedNightModelDay(year, month, day) {
+function getAddedNightModelDay(
+  year: number,
+  month: number,
+  day: number,
+): DayWorkdata {
   const time = getTime(year, month, day);
 
   // get days count since 1.1.1970
@@ -449,12 +468,12 @@ function getAddedNightModelDay(year, month, day) {
 /**
  * Get the working data of the added night-shift-model where they work for 8 week switch and
  * 8 weeks night.
- * @param {number} year Full Year of that month
- * @param {number} month Month number
- * @returns {MonthWorkData} Working data of the groups
+ * @param    year Full Year of that month
+ * @param    month Month number
+ * @returns  Working data of the groups
  */
-function getAddedNight8Model(year, month) {
-  const daysData = [];
+function getAddedNight8Model(year: number, month: number): MonthWorkData {
+  const daysData: DayWorkdata[] = [];
   const groupsWorkingDays = [0, 0, 0];
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
@@ -478,12 +497,16 @@ function getAddedNight8Model(year, month) {
 /**
  * Calculates the data of a day for the added night-shift-8-model.
  * It is 8 weeks F or S switch for one week. Then 8 weeks 4 nights a week.
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
+ * @param    year Full Year
+ * @param    month Number of the month in the year
+ * @param    day Day in the month
+ * @returns  Working data of all groups on this day
  */
-function getAddedNight8ModelDay(year, month, day) {
+function getAddedNight8ModelDay(
+  year: number,
+  month: number,
+  day: number,
+): DayWorkdata {
   const time = getTime(year, month, day) + ms.days(1);
   const weekDay = new Date(time).getDay();
 
