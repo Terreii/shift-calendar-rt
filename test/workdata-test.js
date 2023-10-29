@@ -35,7 +35,7 @@ test("work data", async (t) => {
           [shiftAddedNight8]: ["N", "K", "K"],
           [weekend]: ["Normal", "K"],
         };
-        assert.deepEqual(
+        assert.deepStrictEqual(
           getMonthData(2023, 10 - 1, model).days[0],
           firstDay[model],
         );
@@ -49,14 +49,14 @@ test("work data", async (t) => {
           [shiftAddedNight8]: ["N", "N", "K"],
           [weekend]: ["K", "Normal"],
         };
-        assert.deepEqual(
+        assert.deepStrictEqual(
           getMonthData(2023, 10 - 1, model).days[15],
           day16[model],
         );
       });
 
       await t.test("full month", () => {
-        assert.deepEqual(
+        assert.deepStrictEqual(
           getMonthData(2024, 6, model).days,
           fullMonthData[model],
         );
@@ -72,7 +72,7 @@ test("work data", async (t) => {
           [shiftAddedNight8]: [18, 18, 18],
           [weekend]: [22, 22],
         };
-        assert.deepEqual(
+        assert.deepStrictEqual(
           getMonthData(2023, 10 - 1, model).workingCount,
           first[model],
         );
@@ -86,7 +86,7 @@ test("work data", async (t) => {
           [shiftAddedNight8]: [17, 18, 19],
           [weekend]: [21, 21],
         };
-        assert.deepEqual(
+        assert.deepStrictEqual(
           getMonthData(2024, 2 - 1, model).workingCount,
           second[model],
         );
@@ -96,11 +96,9 @@ test("work data", async (t) => {
 
   await t.test(shift66Name + " switches to old model before 2010-04-04", () => {
     const shiftsBefore = "N K F K S K".split(" ");
-    assert.deepEqual(getMonthData(2010, 3, shift66Name).days.slice(0, 4), [
-      shiftsBefore,
-      shiftsBefore,
-      shiftsBefore,
-      "K S K F N K".split(" "),
-    ]);
+    assert.deepStrictEqual(
+      getMonthData(2010, 3, shift66Name).days.slice(0, 4),
+      [shiftsBefore, shiftsBefore, shiftsBefore, "K S K F N K".split(" ")],
+    );
   });
 });
