@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import { readFile } from "node:fs/promises";
 
-import getMonthData from "../lib/workdata.js";
+import { getMonthData } from "../lib/workdata.js";
 
 import {
   shiftModelNames,

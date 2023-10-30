@@ -48,7 +48,7 @@ export type MonthWorkData = {
  * @param    shiftModel Which shift-model is it.
  * @returns  Working data of a group.
  */
-export default function getMonthData(
+export function getMonthData(
   year: number,
   month: number,
   shiftModel: ShiftModels,

@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 /**
  * A shift type. It is part of a shift model.
+ *
  * It repesent a single shift type. Like morning shift.
  */
 export type Shift = {
@@ -25,7 +26,19 @@ export type Shift = {
 export type ShiftKey = string;
 
 /**
+ * Shift Cycle.
+ *
+ * It is a array of ShiftKey and null. Where null is a free shift (weekend).
+ * Example Bosch 6-4 model:
+ * ```json
+ * ["F", "F", "S", "S", "N", "N", null, null, null, null]
+ * ```
+ */
+export type Cycle = (ShiftKey | null)[];
+
+/**
  * A single shift group.
+ *
  * Can be a number, repesenting the start offset (Offset from Shiftmodel.startDate),
  * or an object with offset and own cycle.
  */
@@ -47,11 +60,12 @@ export type ShiftGroup =
        * ["F", "F", "S", "S", "N", "N", null, null, null, null]
        * ```
        */
-      cycle: (ShiftKey | null)[];
+      cycle: Cycle;
     };
 
 /**
  * A shift model. It is a collection of shifts.
+ *
  * It contains all needed information to calculate all shifts.
  */
 export type ShiftModel = {
@@ -60,12 +74,14 @@ export type ShiftModel = {
 
   /**
    * Shift types
+   *
    * The key is its short name. Used in the /cal/[model] routes.
    */
   shift: Record<ShiftKey, Shift>;
 
   /**
    * Start date.
+   *
    * When the shift model did start.
    * In ISO Date string.
    */
@@ -80,7 +96,7 @@ export type ShiftModel = {
    * ["F", "F", "S", "S", "N", "N", null, null, null, null]
    * ```
    */
-  cycle: (ShiftKey | null)[];
+  cycle: Cycle;
 
   /**
    * Every group of a model.
@@ -95,6 +111,7 @@ export type ShiftModel = {
 
 /**
  * Day where usually no shift works.
+ *
  * Can be absolute or relative to a holiday.
  */
 export type ClosingDay = {
@@ -102,29 +119,30 @@ export type ClosingDay = {
    * Name of the day.
    */
   name: string;
-} & (AbsoluteClosingDay | RelativeClosingDay);
+} & (
+  | {
+      /**
+       * Date (month, day) when the closing day is.
+       *
+       * Month is not zero indexed. January is 1.
+       */
+      date: [number, number];
+    }
+  | {
+      /**
+       * Days offset from `from`.
+       */
+      relative: number;
 
-export type AbsoluteClosingDay = {
-  /**
-   * Date (month, day) where the closing day is.
-   * Month is not zero indexed. January is 1.
-   */
-  date: [number, number];
-};
-
-export type RelativeClosingDay = {
-  /**
-   * Days offset from `from`.
-   */
-  relative: number;
-
-  /**
-   * Name of changing holiday.
-   * Currently only easter is supported.
-   * Ester is the easter sunday.
-   */
-  from: "easter";
-};
+      /**
+       * Name of changing holiday.
+       *
+       * Currently only easter is supported.
+       * Ester is the easter sunday.
+       */
+      from: "easter";
+    }
+);
 
 export const shift66Name = "6-6";
 export const shift64Name = "6-4";

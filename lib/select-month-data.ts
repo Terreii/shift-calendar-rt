@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { createCachedSelector } from "re-reselect";
 
 import type { ShiftModels } from "./constants";
-import getMonthData, { type MonthWorkData } from "./workdata.ts";
+import { getMonthData, type MonthWorkData } from "./workdata.ts";
 import getHolidayData from "./holiday-data.js";
 
 export type MonthData = MonthWorkData & {
