@@ -9,7 +9,7 @@ import {
   monthNames,
   shiftModelNumberOfGroups,
 } from "../../lib/constants";
-import getShiftData from "../../lib/workdata";
+import { getMonthData } from "../../lib/workdata";
 
 const model =
   shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
@@ -54,7 +54,7 @@ describe("shift calendar current view", () => {
     );
 
     // shifts
-    const data = getShiftData(now.getFullYear(), now.getMonth(), model);
+    const data = getMonthData(now.getFullYear(), now.getMonth(), model);
     const dataOfTheDay = data.days[0];
     dataOfTheDay.forEach((shift, index) => {
       if (shift === "K") {
