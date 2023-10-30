@@ -9,6 +9,7 @@ import {
   monthNames,
   shiftModelNumberOfGroups,
 } from "../../lib/constants";
+import { getToday } from "../../lib/utils";
 import getShiftData from "../../lib/workdata";
 
 const model =
@@ -22,7 +23,8 @@ describe("shift calendar current view", () => {
 
     cy.url().should("include", `/cal/${model}`);
 
-    const now = new Date();
+    const today = getToday();
+    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
     cy.contains(`${monthNames[now.getMonth()]} ${now.getFullYear()} (Jetzt)`);
     cy.get(`#day_${formatISO(now, { representation: "date" })}`).should(
       "have.attr",
@@ -34,7 +36,10 @@ describe("shift calendar current view", () => {
   it("renders the shifts of " + model, () => {
     cy.visit("http://localhost:3000/cal/" + model);
 
-    const now = startOfMonth(new Date());
+    const today = getToday();
+    const now = startOfMonth(
+      new Date(today[0], today[1] - 1, today[2], today[3]),
+    );
     const getDayRow = () =>
       cy.get(`#day_${formatISO(now, { representation: "date" })}`);
     const getChild = (index: number) =>
@@ -70,7 +75,8 @@ describe("shift calendar current view", () => {
   it("should have nav buttons", () => {
     cy.visit("http://localhost:3000/cal/" + model);
 
-    const now = new Date();
+    const today = getToday();
+    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
     const getMonthPath = (diff: number) => {
       const month = addMonths(now, diff);
       const monthString = (month.getMonth() + 1).toString().padStart(2, "0");
@@ -102,7 +108,8 @@ describe("full year", () => {
     cy.get("#menu_summary").click();
     cy.get("#hamburger_menu").contains("Zeige ganzes Jahr").click();
 
-    const now = new Date();
+    const today = getToday();
+    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
     cy.url().should("include", `/cal/${model}/${now.getFullYear()}`);
 
     for (let i = 1; i <= 12; i++) {
@@ -113,7 +120,8 @@ describe("full year", () => {
 
   it("today button should go back to current month view", () => {
     cy.visit(`http://localhost:3000/cal/${model}/2022`);
-    const now = new Date();
+    const today = getToday();
+    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
 
     cy.contains("nav a", "<").should("have.attr", "href", `/cal/${model}/2021`);
     cy.contains("nav a", ">").should("have.attr", "href", `/cal/${model}/2023`);
