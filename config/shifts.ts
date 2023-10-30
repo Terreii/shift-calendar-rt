@@ -26,25 +26,29 @@ export type ShiftKey = string;
 
 /**
  * A single shift group.
+ * Can be a number, repesenting the start offset (Offset from Shiftmodel.startDate),
+ * or an object with offset and own cycle.
  */
-export type ShiftGroup = {
-  /**
-   * Start offset from the ShiftModel.startDate.
-   * In days.
-   */
-  offset: number;
+export type ShiftGroup =
+  | number
+  | {
+      /**
+       * Start offset from the ShiftModel.startDate.
+       * In days.
+       */
+      offset: number;
 
-  /**
-   * If the shift group has a different cycle then the shift model. Else undefined.
-   *
-   * It is a array of ShiftKey and null. Where null is a free shift (weekend).
-   * Example Bosch 6-4 model:
-   * ```json
-   * ["F", "F", "S", "S", "N", "N", null, null, null, null]
-   * ```
-   */
-  cycle?: (ShiftKey | null)[];
-};
+      /**
+       * If the shift group has a different cycle then the shift model. Else undefined.
+       *
+       * It is a array of ShiftKey and null. Where null is a free shift (weekend).
+       * Example Bosch 6-4 model:
+       * ```json
+       * ["F", "F", "S", "S", "N", "N", null, null, null, null]
+       * ```
+       */
+      cycle: (ShiftKey | null)[];
+    };
 
 /**
  * A shift model. It is a collection of shifts.
@@ -117,6 +121,7 @@ export type RelativeClosingDay = {
   /**
    * Name of changing holiday.
    * Currently only easter is supported.
+   * Ester is the easter sunday.
    */
   from: "easter";
 };
@@ -138,8 +143,39 @@ export type ShiftModelKeys =
   | typeof shiftAddedNight8
   | typeof weekend;
 
-const shifts: Record<ShiftModelKeys, ShiftModel> = {
-  [shift66Name]: {},
+const shifts: Record<typeof shift66Name, ShiftModel> = {
+  [shift66Name]: {
+    name: "6 - 6 Kontischicht",
+    shift: {
+      F: {
+        name: "Frühschicht",
+        start: [6, 0],
+        end: [14, 30],
+      },
+      S: {
+        name: "Spätschicht",
+        start: [14, 0],
+        end: [22, 30],
+      },
+      N: {
+        name: "Nachtschicht",
+        start: [22, 0],
+        end: [6, 30],
+      },
+    },
+    startDate: "2010-04-04",
+    cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
+    groups: [4, -2, 6, 0, -4, 2],
+    closingDays: [
+      { name: "Ostern", relative: -2, from: "easter" },
+      { name: "Ostern", relative: -1, from: "easter" },
+      { name: "Ostern", relative: 0, from: "easter" },
+      { name: "Ostern", relative: 1, from: "easter" },
+      { name: "Weihnachten", date: [12, 24] },
+      { name: "Weihnachten", date: [12, 25] },
+      { name: "Weihnachten", date: [12, 26] },
+    ],
+  },
 };
 
 export default shifts;
