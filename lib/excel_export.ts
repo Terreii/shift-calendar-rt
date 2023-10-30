@@ -6,7 +6,7 @@ import {
   maxGroupCount,
   type ShiftModels,
 } from "./constants";
-import getMonthData from "./workdata";
+import { getMonthData } from "./workdata";
 
 export type Styles = Map<string | number, any>;
 
