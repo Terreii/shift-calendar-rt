@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import differenceInDays from "date-fns/differenceInDays/index.js";
 import ms from "milliseconds";
 
 import {
@@ -17,6 +18,7 @@ import {
   shiftAddedNight8,
   weekend,
 } from "./constants.ts";
+import shiftModels, { type ShiftModel } from "../config/shifts.ts";
 import { getDaysInMonth } from "./utils.js";
 
 /**
@@ -74,40 +76,53 @@ export function getMonthData(
 
     case shift66Name:
     default:
-      return get66Model(year, month);
+      return getAllGroupsMonthData(year, month, shiftModel);
   }
 }
 
 /**
- * Get the working data of the 6-6 Model or the old 4-4 model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of groups in the 6-6 and old 4-4 models
+ * Calculate when all groups will work in a month.
+ * @param year        Full Year of that month.
+ * @param month       Month number.
+ * @param shiftModel  Which shift model.
+ * @returns  Working data of the group.
  */
-function get66Model(year: number, month: number): MonthWorkData {
+function getAllGroupsMonthData(
+  year: number,
+  month: number,
+  shiftModel: ShiftModels,
+): MonthWorkData {
+  const config: ShiftModel = shiftModels[shiftModel];
+  const daysSinceModelStart =
+    differenceInDays(
+      new Date(year, month, 1), // Month start
+      new Date(config.startDate), // shift model start
+    ) + 1;
+  const groups = config.groups.map((data) =>
+    typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
+  );
+
   const daysData: DayWorkdata[] = [];
-  const groupsWorkingDays = [0, 0, 0, 0, 0, 0];
-  const isOldModel = year < 2010 || (year === 2010 && month < 3);
-  const isOnSwitch = year === 2010 && month === 3;
+  const workingCount = config.groups.map(() => 0);
 
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay =
-      isOldModel || (isOnSwitch && i < 3) // if it is before the 2010-04-03
-        ? get44ModelDay(year, month, i + 1) // get the old model
-        : get12DayCycleModelDay(year, month, i + 1, [3, 0, 2, 5, 1, 4]); // else get the 6-6 model
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; i++) {
+    const days = daysSinceModelStart + i;
+    const shifts: Workdata[] = groups.map(({ offset, cycle }, group) => {
+      const dayInCycle = (days - offset) % cycle.length;
+      const shift = cycle[dayInCycle] as Workdata | null;
+      if (shift == null) {
+        return "K";
       }
+      // Count how many days has been worked in that month
+      workingCount[group]++;
+      return shift;
     });
+    daysData.push(shifts);
   }
 
   return {
     days: daysData,
-    workingCount: groupsWorkingDays,
+    workingCount,
   };
 }
 
@@ -251,42 +266,6 @@ function get64ModelDay(year: number, month: number, day: number): DayWorkdata {
         return group === 1 ? "F" : "N";
       case 2:
         return group === 1 ? "S" : "N";
-      default:
-        return "K"; // No shift/free
-    }
-  });
-}
-
-/**
- * Calculates the data of a day for the old 4-4 shift model.
- * It is NNNN-KKKK-SSSS-KKKK-FFFF-KKKK.
- * @param    year Full Year
- * @param    month Number of the month in the year
- * @param    day Day in the month
- * @returns  Working data of all groups on this day
- */
-function get44ModelDay(year: number, month: number, day: number): DayWorkdata {
-  const time = getTime(year, month, day);
-
-  // get days count since 1.1.1970
-  // (4 working days + 4 free days) * 3 shifts = 24
-  const daysInCycle = (time / 1000 / 60 / 60 / 24) % 24;
-
-  // Offset is for every group. When does the shift-cycle start?
-  return [14, 10, 6, 2, 22, 18].map((offset) => {
-    let shiftDay = Math.floor((daysInCycle + offset) / 4);
-
-    if (shiftDay > 5) {
-      shiftDay -= 6;
-    }
-
-    switch (shiftDay) {
-      case 0:
-        return "N"; // Nacht/Night 22 -  6:30
-      case 2:
-        return "S"; // Spät/Late   14 - 22:30
-      case 4:
-        return "F"; // Früh/Early   6 - 14:30
       default:
         return "K"; // No shift/free
     }
