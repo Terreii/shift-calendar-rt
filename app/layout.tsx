@@ -62,7 +62,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {children}
         <Footer />
         <InstallPrompt />
-        {new Date().getDate() === 12 && <Analytics />}
+        {new Date().getDate() <= 2 && <Analytics />}
       </body>
     </html>
   );

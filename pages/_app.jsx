@@ -77,7 +77,7 @@ export default function MyApp({ Component, pageProps }) {
       <Component isFirstRender={isFirstRender} {...pageProps} />
       <Footer />
       <InstallPrompt />
-      {new Date().getDate() === 12 && <Analytics />}
+      {new Date().getDate() <= 2 && <Analytics />}
     </>
   );
 }
