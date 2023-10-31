@@ -106,6 +106,38 @@ function getAllGroupsMonthData(
     return getAllGroupsMonthData(year, month, config.fallback);
   }
 
+  if (year === modelStartYear && month === modelStartMonth) {
+    return modelSwitchingAllGroupsCalculation(
+      config,
+      modelStartDate,
+      year,
+      month,
+    );
+  }
+
+  return fullMonthAllGroupsShiftCalculation(
+    config,
+    modelStartDate,
+    year,
+    month,
+  );
+}
+
+/**
+ * Calculate when all groups will work in a month.
+ * For when the full month is in one shift model.
+ * @param config           The Configs of the Shift to calculate.
+ * @param modelStartDate   StartDate of the shift model.
+ * @param year             Year of the month to calculate.
+ * @param month            Month (zero indexed) to calculate.
+ * @returns                Working data of all groups.
+ */
+function fullMonthAllGroupsShiftCalculation(
+  config: ShiftModel,
+  modelStartDate: Date,
+  year: number,
+  month: number,
+): MonthWorkData {
   const daysSinceModelStart =
     differenceInDays(new Date(year, month, 1), modelStartDate) + 1;
   const groups = config.groups.map((data) =>
@@ -128,6 +160,80 @@ function getAllGroupsMonthData(
       return shift;
     });
     daysData.push(shifts);
+  }
+
+  return {
+    days: daysData,
+    workingCount,
+  };
+}
+
+/**
+ * Calculate the shifts of all groups in a month where there is a switch in the model.
+ * @param config           The Configs of the Shift to calculate.
+ * @param modelStartDate   StartDate of the shift model.
+ * @param year             Year of the month to calculate.
+ * @param month            Month (zero indexed) to calculate.
+ * @returns                Working data of all groups.
+ */
+function modelSwitchingAllGroupsCalculation(
+  config: ShiftModel,
+  modelStartDate: Date,
+  year: number,
+  month: number,
+): MonthWorkData {
+  const fallbackConfig = shiftModels[config.fallback];
+  const daysSinceFallbackModelStart =
+    differenceInDays(
+      new Date(year, month, 1),
+      new Date(fallbackConfig.startDate),
+    ) + 1;
+  const groups = config.groups.map((data) =>
+    typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
+  );
+  const fallbackGroups = fallbackConfig.groups.map((data) =>
+    typeof data === "number"
+      ? { offset: data, cycle: fallbackConfig.cycle }
+      : data,
+  );
+
+  const daysData: DayWorkdata[] = [];
+  const workingCount: number[] = new Array(
+    Math.max(config.groups.length, fallbackConfig.groups.length),
+  ).fill(0);
+
+  const newModelStartDay = modelStartDate.getDate() - 1;
+
+  for (let i = 0, days = getDaysInMonth(year, month); i < days; i++) {
+    if (i < newModelStartDay) {
+      const days = daysSinceFallbackModelStart + i;
+      const shifts: Workdata[] = fallbackGroups.map(
+        ({ offset, cycle }, group) => {
+          const dayInCycle = (days - offset) % cycle.length;
+          const shift = cycle[dayInCycle] as Workdata | null;
+          if (shift == null) {
+            return "K";
+          }
+          // Count how many days has been worked in that month
+          workingCount[group]++;
+          return shift;
+        },
+      );
+      daysData.push(shifts);
+    } else {
+      const days = i - newModelStartDay;
+      const shifts: Workdata[] = groups.map(({ offset, cycle }, group) => {
+        const dayInCycle = (days - offset) % cycle.length;
+        const shift = cycle[dayInCycle] as Workdata | null;
+        if (shift == null) {
+          return "K";
+        }
+        // Count how many days has been worked in that month
+        workingCount[group]++;
+        return shift;
+      });
+      daysData.push(shifts);
+    }
   }
 
   return {
