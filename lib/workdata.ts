@@ -18,7 +18,10 @@ import {
   shiftAddedNight8,
   weekend,
 } from "./constants.ts";
-import shiftModels, { type ShiftModel } from "../config/shifts.ts";
+import shiftModels, {
+  type ShiftModel,
+  type ShiftModelsWithFallbackKeys,
+} from "../config/shifts.ts";
 import { getDaysInMonth } from "./utils.js";
 
 /**
@@ -90,14 +93,21 @@ export function getMonthData(
 function getAllGroupsMonthData(
   year: number,
   month: number,
-  shiftModel: ShiftModels,
+  shiftModel: ShiftModelsWithFallbackKeys,
 ): MonthWorkData {
   const config: ShiftModel = shiftModels[shiftModel];
+  const modelStartDate = new Date(config.startDate);
+  const modelStartYear = modelStartDate.getFullYear();
+  const modelStartMonth = modelStartDate.getMonth();
+  if (
+    year < modelStartYear ||
+    (year === modelStartYear && month < modelStartMonth)
+  ) {
+    return getAllGroupsMonthData(year, month, config.fallback);
+  }
+
   const daysSinceModelStart =
-    differenceInDays(
-      new Date(year, month, 1), // Month start
-      new Date(config.startDate), // shift model start
-    ) + 1;
+    differenceInDays(new Date(year, month, 1), modelStartDate) + 1;
   const groups = config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );

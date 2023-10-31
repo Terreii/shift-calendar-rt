@@ -107,6 +107,11 @@ export type ShiftModel = {
    * List of closing days.
    */
   closingDays: ClosingDay[];
+
+  /**
+   * Fallback calendar for before startDate
+   */
+  fallback: ShiftModelsWithFallbackKeys;
 };
 
 /**
@@ -161,38 +166,58 @@ export type ShiftModelKeys =
   | typeof shiftAddedNight8
   | typeof weekend;
 
-const shifts: Record<typeof shift66Name, ShiftModel> = {
+export type ShiftModelsWithFallbackKeys = typeof shift66Name | "4-4";
+
+const boschKontiShifts: Record<ShiftKey, Shift> = {
+  F: {
+    name: "Frühschicht",
+    start: [6, 0],
+    end: [14, 30],
+  },
+  S: {
+    name: "Spätschicht",
+    start: [14, 0],
+    end: [22, 30],
+  },
+  N: {
+    name: "Nachtschicht",
+    start: [22, 0],
+    end: [6, 30],
+  },
+};
+const boschClosingDays: ClosingDay[] = [
+  { name: "Ostern", relative: -2, from: "easter" },
+  { name: "Ostern", relative: -1, from: "easter" },
+  { name: "Ostern", relative: 0, from: "easter" },
+  { name: "Ostern", relative: 1, from: "easter" },
+  { name: "Weihnachten", date: [12, 24] },
+  { name: "Weihnachten", date: [12, 25] },
+  { name: "Weihnachten", date: [12, 26] },
+];
+
+const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   [shift66Name]: {
     name: "6 - 6 Kontischicht",
-    shift: {
-      F: {
-        name: "Frühschicht",
-        start: [6, 0],
-        end: [14, 30],
-      },
-      S: {
-        name: "Spätschicht",
-        start: [14, 0],
-        end: [22, 30],
-      },
-      N: {
-        name: "Nachtschicht",
-        start: [22, 0],
-        end: [6, 30],
-      },
-    },
+    shift: boschKontiShifts,
     startDate: "2010-04-04",
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
     groups: [4, -2, 6, 0, -4, 2],
-    closingDays: [
-      { name: "Ostern", relative: -2, from: "easter" },
-      { name: "Ostern", relative: -1, from: "easter" },
-      { name: "Ostern", relative: 0, from: "easter" },
-      { name: "Ostern", relative: 1, from: "easter" },
-      { name: "Weihnachten", date: [12, 24] },
-      { name: "Weihnachten", date: [12, 25] },
-      { name: "Weihnachten", date: [12, 26] },
-    ],
+    closingDays: boschClosingDays,
+    fallback: "4-4",
+  },
+  "4-4": {
+    name: "4 - 4 Kontischicht",
+    shift: boschKontiShifts,
+    startDate: "1989-11-08",
+    cycle: ["F", null, "N", null, "S", null].flatMap((shift) => [
+      shift,
+      shift,
+      shift,
+      shift,
+    ]),
+    groups: [0, 4, 8, 12, 16, 20],
+    closingDays: boschClosingDays,
+    fallback: "4-4", // There is no fallback! Min date is 1990-01-01
   },
 };
 
