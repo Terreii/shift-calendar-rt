@@ -102,9 +102,9 @@ function getAllGroupsMonthData(
   shiftModel: ShiftModelsWithFallbackKeys,
 ): MonthWorkData {
   const config: ShiftModel = shiftModels[shiftModel];
-  const modelStartDate = new Date(config.startDate);
-  const modelStartYear = modelStartDate.getFullYear();
-  const modelStartMonth = modelStartDate.getMonth();
+  const modelStartDate = new Date(config.startDate + "T03:00:00.000Z");
+  const modelStartYear = modelStartDate.getUTCFullYear();
+  const modelStartMonth = modelStartDate.getUTCMonth();
   if (
     year < modelStartYear ||
     (year === modelStartYear && month < modelStartMonth)
@@ -182,8 +182,8 @@ function modelSwitchingAllGroupsCalculation(
   const fallbackConfig = shiftModels[config.fallback];
   const daysSinceFallbackModelStart =
     differenceInDays(
-      new Date(year, month, 1),
-      new Date(fallbackConfig.startDate),
+      getTime(year, month, 1),
+      new Date(fallbackConfig.startDate + "T03:00:00.000Z"),
     ) + 1;
   const groups = getGroupsConfig(config);
   const fallbackGroups = getGroupsConfig(fallbackConfig);
@@ -193,7 +193,7 @@ function modelSwitchingAllGroupsCalculation(
     Math.max(groups.length, fallbackGroups.length),
   ).fill(0);
 
-  const newModelStartDay = modelStartDate.getDate() - 1;
+  const newModelStartDay = modelStartDate.getUTCDate() - 1;
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; i++) {
     const [days, groupsConfig] =
