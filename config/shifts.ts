@@ -172,6 +172,7 @@ export type ShiftModelsWithFallbackKeys =
   | typeof shiftWfW
   | typeof rotatingShift
   | typeof shiftAddedNight
+  | typeof shiftAddedNight8
   | "4-4";
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
@@ -296,6 +297,52 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
       null,
     ],
     groups: [3, 10, -4],
+    closingDays: boschClosingDays,
+    fallback: "rotating",
+  },
+  [shiftAddedNight8]: {
+    name: "8 Wochen Nachtarbeit",
+    shift: boschKontiShifts,
+    startDate: "2000-01-03",
+    cycle: [],
+    groups: (() =>
+      [0, 1, 2].map((group) => {
+        // This is a shift model where they work 8 weeks in rotating shifts,
+        // and 8 weeks with night shift.
+        const cycle: ("F" | "S" | "N" | null)[] = [];
+        for (let i = 0; i < 8; i++) {
+          // 8 weeks of rotating (morning a week and evening the other week)
+          // Group 0 is in the oposit shift to the others.
+          const shift = (group === 0 ? i + 1 : i) % 2 === 0 ? "F" : "S";
+          const shifts = new Array(6).fill(shift, 0, 5).fill(null, 5);
+          cycle.push(...shifts);
+          if (i < 7) {
+            // only add sunday it it is not the last week.
+            // Because sunday will be the first night shift for group 0
+            cycle.push(null);
+          }
+        }
+        // add days till first night shift:
+        // group 0: 0 days (start at sunday)
+        // group 1: 1 day
+        // group 2: 2 days
+        cycle.push(...new Array(group).fill(null));
+        for (let i = 0; i < 8; i++) {
+          // add night shifts. They are 4 nights with 3 days off.
+          cycle.push(...new Array(4).fill("N"));
+          cycle.push(null);
+          cycle.push(null);
+          if (i < 7) {
+            cycle.push(null);
+          }
+        }
+        // add days till first night shift (- 2 days from last night shift):
+        // group 0: 4 - 2 = 2 days
+        // group 1: 3 - 2 = 1 day
+        // group 2: 4 - 2 = 0 days
+        cycle.push(...new Array(2 - group).fill(null));
+        return { offset: -35, cycle };
+      }))(),
     closingDays: boschClosingDays,
     fallback: "rotating",
   },

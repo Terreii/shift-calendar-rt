@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import differenceInDays from "date-fns/differenceInDays/index.js";
 import ms from "milliseconds";
 
-import { type ShiftModels, shiftAddedNight8, weekend } from "./constants.ts";
+import { type ShiftModels, weekend } from "./constants.ts";
 import shiftModels, {
   type Cycle,
   type ShiftModel,
@@ -51,9 +51,6 @@ export function getMonthData(
   shiftModel: ShiftModels,
 ): MonthWorkData {
   switch (shiftModel) {
-    case shiftAddedNight8:
-      return getAddedNight8Model(year, month);
-
     case weekend:
       return getRtP2WeekendShift(year, month);
 
@@ -293,91 +290,6 @@ function getRtP2WeekendShiftDay(
         return "K";
       default:
         return "Normal";
-    }
-  });
-}
-
-/**
- * Get the working data of the added night-shift-model where they work for 8 week switch and
- * 8 weeks night.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups
- */
-function getAddedNight8Model(year: number, month: number): MonthWorkData {
-  const daysData: DayWorkdata[] = [];
-  const groupsWorkingDays = [0, 0, 0];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = getAddedNight8ModelDay(year, month, i + 1);
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
-      }
-    });
-  }
-
-  return {
-    days: daysData,
-    workingCount: groupsWorkingDays,
-  };
-}
-
-/**
- * Calculates the data of a day for the added night-shift-8-model.
- * It is 8 weeks F or S switch for one week. Then 8 weeks 4 nights a week.
- * @param    year Full Year
- * @param    month Number of the month in the year
- * @param    day Day in the month
- * @returns  Working data of all groups on this day
- */
-function getAddedNight8ModelDay(
-  year: number,
-  month: number,
-  day: number,
-): DayWorkdata {
-  const time = getTime(year, month, day) + ms.days(1);
-  const weekDay = new Date(time).getDay();
-
-  // get days count since 1.1.1970
-  // 8 weeks switching, 8 weeks night
-  const weeksInCycle = Math.floor((time / 1000 / 60 / 60 / 24 + 54) / 7) % 16;
-
-  // Offset for every group. When does the night shift start?
-  // It is also the group
-  return [0, 1, 2].map((gr) => {
-    // Type of work week
-    switch (weeksInCycle) {
-      case 0:
-      case 2:
-      case 4:
-      case 6:
-        if (weekDay === 0 || weekDay === 6) {
-          return "K";
-        } else {
-          return gr === 0 ? "S" : "F";
-        }
-
-      case 1:
-      case 3:
-      case 5:
-      case 7:
-        if (weekDay === 0 || weekDay === 6) {
-          return "K";
-        } else {
-          return gr === 0 ? "F" : "S";
-        }
-
-      default: {
-        // night shift
-        // when does the night shift start?
-        const shiftDay = weekDay - gr;
-
-        return shiftDay < 4 && shiftDay >= 0 ? "N" : "K";
-      }
     }
   });
 }
