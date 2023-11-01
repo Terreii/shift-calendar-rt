@@ -10,9 +10,6 @@ import ms from "milliseconds";
 
 import {
   type ShiftModels,
-  shift66Name,
-  shift64Name,
-  shiftWfW,
   rotatingShift,
   shiftAddedNight,
   shiftAddedNight8,
@@ -66,17 +63,12 @@ export function getMonthData(
     case shiftAddedNight8:
       return getAddedNight8Model(year, month);
 
-    case shiftWfW:
-      return getWfWModel(year, month);
-
     case rotatingShift:
       return getRotatingShift(year, month);
 
     case weekend:
       return getRtP2WeekendShift(year, month);
 
-    case shift66Name:
-    case shift64Name:
     default:
       return getAllGroupsMonthData(year, month, shiftModel);
   }
@@ -249,74 +241,6 @@ function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
   return config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );
-}
-
-/**
- * Get the working data of the WfW (factory fire department) Model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups of the WfW model
- */
-function getWfWModel(year: number, month: number): MonthWorkData {
-  const daysData: DayWorkdata[] = [];
-  const groupsWorkingDays = [0, 0, 0, 0, 0, 0];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = get12DayCycleModelDay(year, month, i + 1, [3, 2, 1, 0, 5, 4]);
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
-      }
-    });
-  }
-
-  return {
-    days: daysData,
-    workingCount: groupsWorkingDays,
-  };
-}
-
-/**
- * Calculates the data of a day.
- * @param {number} year Full Year
- * @param {number} month Number of the month in the year
- * @param {number} day Day in the month
- * @param {number[]} groupOffsets Offsets for every group
- * @returns {("F"|"S"|"N"|"K")[]} Working data of all groups on this day
- */
-function get12DayCycleModelDay(
-  year: number,
-  month: number,
-  day: number,
-  groupOffsets: number[],
-): DayWorkdata {
-  const time = getTime(year, month, day);
-
-  // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
-  const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 6;
-
-  // Offset is for every group. When does the shift-cycle start?
-  return groupOffsets.map((offset) => {
-    let shiftDay = daysInCycle + offset;
-
-    if (shiftDay > 5) {
-      shiftDay -= 6;
-    }
-
-    switch (shiftDay) {
-      case 0:
-        return "F"; // Früh/Early   6 - 14:30
-      case 1:
-        return "S"; // Spät/Late   14 - 22:30
-      case 2:
-        return "N"; // Nacht/Night 22 -  6:30
-      default:
-        return "K"; // No shift/free
-    }
-  });
 }
 
 /**
