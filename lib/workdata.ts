@@ -10,7 +10,6 @@ import ms from "milliseconds";
 
 import {
   type ShiftModels,
-  rotatingShift,
   shiftAddedNight,
   shiftAddedNight8,
   weekend,
@@ -62,9 +61,6 @@ export function getMonthData(
 
     case shiftAddedNight8:
       return getAddedNight8Model(year, month);
-
-    case rotatingShift:
-      return getRotatingShift(year, month);
 
     case weekend:
       return getRtP2WeekendShift(year, month);
@@ -241,38 +237,6 @@ function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
   return config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );
-}
-
-/**
- * Get the working data of the rotating shift model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups
- */
-function getRotatingShift(year: number, month: number): MonthWorkData {
-  const workingCount = [0, 0];
-  const shifts: DayWorkdata[] = [];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const time = getTime(year, month, i + 1) + ms.days(1);
-    const weekDay = new Date(time).getUTCDay();
-    const isWeekend = weekDay === 0 || weekDay === 6;
-
-    if (isWeekend) {
-      shifts.push(["K", "K"]);
-    } else {
-      workingCount[0]++;
-      workingCount[1]++;
-
-      const week = Math.floor((time + ms.days(3)) / ms.weeks(1)) % 2;
-      shifts.push([week === 0 ? "F" : "S", week === 1 ? "F" : "S"]);
-    }
-  }
-
-  return {
-    days: shifts,
-    workingCount,
-  };
 }
 
 /**

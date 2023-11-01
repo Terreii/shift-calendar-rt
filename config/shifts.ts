@@ -170,6 +170,7 @@ export type ShiftModelsWithFallbackKeys =
   | typeof shift66Name
   | typeof shift64Name
   | typeof shiftWfW
+  | typeof rotatingShift
   | "4-4";
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
@@ -238,6 +239,33 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     groups: [4, 6, 8, 10, 0, 2],
     closingDays: boschClosingDays,
     fallback: "4-4",
+  },
+  [rotatingShift]: {
+    name: "Wechselschicht",
+    shift: {
+      F: {
+        name: "Frühschicht",
+        start: [6, 0],
+        end: [14, 0],
+      },
+      S: {
+        name: "Spätschicht",
+        start: [13, 0],
+        end: [22, 0],
+      },
+    },
+    startDate: "1989-11-06",
+    cycle: [
+      ...new Array(5).fill("F"),
+      null,
+      null,
+      ...new Array(5).fill("S"),
+      null,
+      null,
+    ],
+    groups: [0, 7],
+    closingDays: boschClosingDays,
+    fallback: "rotating",
   },
   "4-4": {
     name: "4 - 4 Kontischicht",
