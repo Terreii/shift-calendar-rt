@@ -171,6 +171,7 @@ export type ShiftModelsWithFallbackKeys =
   | typeof shift64Name
   | typeof shiftWfW
   | typeof rotatingShift
+  | typeof shiftAddedNight
   | "4-4";
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
@@ -264,6 +265,37 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
       null,
     ],
     groups: [0, 7],
+    closingDays: boschClosingDays,
+    fallback: "rotating",
+  },
+  [shiftAddedNight]: {
+    name: "aufgesetzte Nachtarbeit",
+    shift: { N: boschKontiShifts.N },
+    startDate: "2000-01-01",
+    cycle: [
+      "N",
+      "N",
+      "N",
+      "N",
+      null,
+      "N",
+      "N",
+      "N",
+      "N",
+      null,
+      null,
+      null,
+      "N",
+      "N",
+      null,
+      null,
+      "N",
+      "N",
+      null,
+      null,
+      null,
+    ],
+    groups: [3, 10, -4],
     closingDays: boschClosingDays,
     fallback: "rotating",
   },

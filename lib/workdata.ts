@@ -8,12 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import differenceInDays from "date-fns/differenceInDays/index.js";
 import ms from "milliseconds";
 
-import {
-  type ShiftModels,
-  shiftAddedNight,
-  shiftAddedNight8,
-  weekend,
-} from "./constants.ts";
+import { type ShiftModels, shiftAddedNight8, weekend } from "./constants.ts";
 import shiftModels, {
   type Cycle,
   type ShiftModel,
@@ -56,9 +51,6 @@ export function getMonthData(
   shiftModel: ShiftModels,
 ): MonthWorkData {
   switch (shiftModel) {
-    case shiftAddedNight:
-      return getAddedNightModel(year, month);
-
     case shiftAddedNight8:
       return getAddedNight8Model(year, month);
 
@@ -301,80 +293,6 @@ function getRtP2WeekendShiftDay(
         return "K";
       default:
         return "Normal";
-    }
-  });
-}
-
-/**
- * Get the working data of the added night-shift-model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups
- */
-function getAddedNightModel(year: number, month: number): MonthWorkData {
-  const daysData: DayWorkdata[] = [];
-  const groupsWorkingDays = [0, 0, 0];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = getAddedNightModelDay(year, month, i + 1);
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
-      }
-    });
-  }
-
-  return {
-    days: daysData,
-    workingCount: groupsWorkingDays,
-  };
-}
-
-/**
- * Calculates the data of a day for the added night-shift-model.
- * It is NNNN-K-NNNN-KKK-NN-KK-NN-KKK.
- * @param    year Full Year
- * @param    month Number of the month in the year
- * @param    day Day in the month
- * @returns  Working data of all groups on this day
- */
-function getAddedNightModelDay(
-  year: number,
-  month: number,
-  day: number,
-): DayWorkdata {
-  const time = getTime(year, month, day);
-
-  // get days count since 1.1.1970
-  const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24) % 21;
-
-  // Offset is for every group. When does the shift-cycle start?
-  return [3, 17, 10].map((offset) => {
-    let shiftDay = daysInCycle + offset;
-
-    if (shiftDay > 20) {
-      shiftDay -= 21;
-    }
-
-    switch (shiftDay) {
-      case 0:
-      case 1:
-      case 2:
-      case 3:
-      case 5: // free
-      case 6:
-      case 7:
-      case 8:
-      case 12: // 3 free
-      case 13:
-      case 16: // 2 free
-      case 17:
-        return "N"; // Nacht/Night 22 -  6:30
-      default:
-        return "K"; // No shift/free
     }
   });
 }
