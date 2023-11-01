@@ -8,7 +8,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import differenceInDays from "date-fns/differenceInDays/index.js";
 import ms from "milliseconds";
 
-import { type ShiftModels, weekend } from "./constants.ts";
 import shiftModels, {
   type Cycle,
   type ShiftModel,
@@ -39,27 +38,6 @@ export type MonthWorkData = {
 };
 
 /**
- * Calculate when groups will work.
- * @param    year Full Year of that month
- * @param    month Month number
- * @param    shiftModel Which shift-model is it.
- * @returns  Working data of a group.
- */
-export function getMonthData(
-  year: number,
-  month: number,
-  shiftModel: ShiftModels,
-): MonthWorkData {
-  switch (shiftModel) {
-    case weekend:
-      return getRtP2WeekendShift(year, month);
-
-    default:
-      return getAllGroupsMonthData(year, month, shiftModel);
-  }
-}
-
-/**
  * Calculate when all groups will work in a month.
  *
  * This function switches between:
@@ -71,7 +49,7 @@ export function getMonthData(
  * @param shiftModel  Which shift model.
  * @returns  Working data of the group.
  */
-function getAllGroupsMonthData(
+export function getMonthData(
   year: number,
   month: number,
   shiftModel: ShiftModelsWithFallbackKeys,
@@ -84,7 +62,7 @@ function getAllGroupsMonthData(
     year < modelStartYear ||
     (year === modelStartYear && month < modelStartMonth)
   ) {
-    return getAllGroupsMonthData(year, month, config.fallback);
+    return getMonthData(year, month, config.fallback);
   }
 
   if (
@@ -226,70 +204,4 @@ function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
   return config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );
-}
-
-/**
- * Get the working data of the RtP2 Weekend model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups
- */
-function getRtP2WeekendShift(year: number, month: number): MonthWorkData {
-  const groupsWorkingDays = [0, 0];
-  const daysData: DayWorkdata[] = [];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = getRtP2WeekendShiftDay(year, month, i + 1);
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
-      }
-    });
-  }
-
-  return {
-    days: daysData,
-    workingCount: groupsWorkingDays,
-  };
-}
-
-/**
- * Calculates the data of a day for the RtP2 Weekend model.
- * It is NN-K-NNNN-K-NNNN-KK
- * @param    year Full Year
- * @param    month Number of the month in the year
- * @param    day Day in the month
- * @returns  Working data of all groups on this day
- */
-function getRtP2WeekendShiftDay(
-  year: number,
-  month: number,
-  day: number,
-): ("Normal" | "K")[] {
-  const time = getTime(year, month, day);
-  const cycleLength = 14;
-
-  // get days count since 1.1.1970
-  const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24) % cycleLength;
-
-  return [4, 11].map((offset) => {
-    let shiftDay = daysInCycle + offset;
-
-    if (shiftDay >= cycleLength) {
-      shiftDay -= cycleLength;
-    }
-
-    switch (shiftDay) {
-      case 2:
-      case 7:
-      case 12:
-      case 13:
-        return "K";
-      default:
-        return "Normal";
-    }
-  });
 }

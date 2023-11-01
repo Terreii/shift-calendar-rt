@@ -166,14 +166,7 @@ export type ShiftModelKeys =
   | typeof shiftAddedNight8
   | typeof weekend;
 
-export type ShiftModelsWithFallbackKeys =
-  | typeof shift66Name
-  | typeof shift64Name
-  | typeof shiftWfW
-  | typeof rotatingShift
-  | typeof shiftAddedNight
-  | typeof shiftAddedNight8
-  | "4-4";
+export type ShiftModelsWithFallbackKeys = ShiftModelKeys | "4-4";
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
   F: {
@@ -231,7 +224,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
       2,
     ],
     closingDays: boschClosingDays,
-    fallback: "6-6",
+    fallback: shift64Name,
   },
   [shiftWfW]: {
     name: "Werkfeuerwehr",
@@ -267,7 +260,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     ],
     groups: [0, 7],
     closingDays: boschClosingDays,
-    fallback: "rotating",
+    fallback: rotatingShift,
   },
   [shiftAddedNight]: {
     name: "aufgesetzte Nachtarbeit",
@@ -298,7 +291,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     ],
     groups: [3, 10, -4],
     closingDays: boschClosingDays,
-    fallback: "rotating",
+    fallback: rotatingShift,
   },
   [shiftAddedNight8]: {
     name: "8 Wochen Nachtarbeit",
@@ -344,7 +337,37 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
         return { offset: -35, cycle };
       }))(),
     closingDays: boschClosingDays,
-    fallback: "rotating",
+    fallback: rotatingShift,
+  },
+  [weekend]: {
+    name: "Wochenend-Modell RtP2",
+    shift: {
+      Normal: {
+        name: "Schicht",
+        start: [7, 0],
+        end: [15, 0],
+      },
+    },
+    startDate: "1989-11-08",
+    cycle: [
+      "Normal",
+      "Normal",
+      null,
+      "Normal",
+      "Normal",
+      "Normal",
+      "Normal",
+      null,
+      "Normal",
+      "Normal",
+      "Normal",
+      "Normal",
+      null,
+      null,
+    ],
+    groups: [-2, 5],
+    closingDays: boschClosingDays,
+    fallback: weekend,
   },
   "4-4": {
     name: "4 - 4 Kontischicht",
