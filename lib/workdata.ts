@@ -75,10 +75,8 @@ export function getMonthData(
     case weekend:
       return getRtP2WeekendShift(year, month);
 
-    case shift64Name:
-      return get64Model(year, month);
-
     case shift66Name:
+    case shift64Name:
     default:
       return getAllGroupsMonthData(year, month, shiftModel);
   }
@@ -112,7 +110,13 @@ function getAllGroupsMonthData(
     return getAllGroupsMonthData(year, month, config.fallback);
   }
 
-  if (year === modelStartYear && month === modelStartMonth) {
+  if (
+    year === modelStartYear &&
+    month === modelStartMonth &&
+    modelStartDate.getUTCDate() > 1
+  ) {
+    // if all month is in new model use the new model.
+    // This prevents empty group column if new model has fever groups.
     return modelSwitchingAllGroupsCalculation(
       config,
       modelStartDate,
@@ -224,7 +228,8 @@ function calculateAllGroupsDay(
   workingCount: number[],
 ): Workdata[] {
   return groups.map(({ offset, cycle }, group) => {
-    const dayInCycle = (daysSinceModelStart - offset) % cycle.length;
+    const dayInCycle =
+      (daysSinceModelStart - offset + cycle.length) % cycle.length;
     const shift = cycle[dayInCycle] as Workdata | null;
     if (shift == null) {
       return "K";
@@ -244,34 +249,6 @@ function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
   return config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );
-}
-
-/**
- * Get the working data of the new 6-4 Model.
- * @param    year Full Year of that month
- * @param    month Month number
- * @returns  Working data of the groups of the new 6-4 model
- */
-function get64Model(year: number, month: number): MonthWorkData {
-  const daysData: DayWorkdata[] = [];
-  const groupsWorkingDays = [0, 0, 0, 0, 0];
-
-  for (let i = 0, days = getDaysInMonth(year, month); i < days; ++i) {
-    const aDay = get64ModelDay(year, month, i + 1);
-
-    daysData.push(aDay);
-
-    aDay.forEach((isWorking, gr) => {
-      if (isWorking !== "K") {
-        groupsWorkingDays[gr] += 1;
-      }
-    });
-  }
-
-  return {
-    days: daysData,
-    workingCount: groupsWorkingDays,
-  };
 }
 
 /**
@@ -336,56 +313,6 @@ function get12DayCycleModelDay(
         return "S"; // Spät/Late   14 - 22:30
       case 2:
         return "N"; // Nacht/Night 22 -  6:30
-      default:
-        return "K"; // No shift/free
-    }
-  });
-}
-
-/**
- * Calculates the data of a day for the new 6-4 shift model.
- * @param    year Full Year
- * @param    month Number of the month in the year
- * @param    day Day in the month
- * @returns  Working data of all groups on this day
- */
-function get64ModelDay(year: number, month: number, day: number): DayWorkdata {
-  const time = getTime(year, month, day);
-
-  // get days count since 1970-01-01 and divide them by 2 (because they are always 2 days of a type)
-  const daysInCycle = Math.floor(time / 1000 / 60 / 60 / 24 / 2) % 5;
-
-  // Offset is for every group.
-  return [2, 3, 4, 0, 1].map((offset, group) => {
-    let shiftDay = daysInCycle + offset;
-
-    if (shiftDay > 4) {
-      shiftDay -= 5;
-    }
-
-    // Groups 3 - 5 (index 2 - 4) are working FFSSNN
-    if (group >= 2) {
-      switch (shiftDay) {
-        case 0:
-          return "F"; // Früh/Early   6 - 14:30
-        case 1:
-          return "S"; // Spät/Late   14 - 22:30
-        case 2:
-          return "N"; // Nacht/Night 22 -  6:30
-        default:
-          return "K"; // No shift/free
-      }
-    }
-
-    // Group 1 (index 0) works SSNNNN
-    // Group 2 (index 1) works FFFFSS
-    switch (shiftDay) {
-      case 0:
-        return group === 1 ? "F" : "S";
-      case 1:
-        return group === 1 ? "F" : "N";
-      case 2:
-        return group === 1 ? "S" : "N";
       default:
         return "K"; // No shift/free
     }
