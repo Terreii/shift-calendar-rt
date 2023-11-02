@@ -156,6 +156,7 @@ export const rotatingShift = "rotating";
 export const shiftAddedNight = "added-night";
 export const shiftAddedNight8 = "added-night-8";
 export const weekend = "weekend";
+export const shift44Name = "4-4";
 
 export type ShiftModelKeys =
   | typeof shift66Name
@@ -166,7 +167,7 @@ export type ShiftModelKeys =
   | typeof shiftAddedNight8
   | typeof weekend;
 
-export type ShiftModelsWithFallbackKeys = ShiftModelKeys | "4-4";
+export type ShiftModelsWithFallbackKeys = ShiftModelKeys | typeof shift44Name;
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
   F: {
@@ -233,7 +234,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
     groups: [4, 6, 8, 10, 0, 2],
     closingDays: boschClosingDays,
-    fallback: "4-4",
+    fallback: shift44Name,
   },
   [rotatingShift]: {
     name: "Wechselschicht",
@@ -369,7 +370,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     closingDays: boschClosingDays,
     fallback: weekend,
   },
-  "4-4": {
+  [shift44Name]: {
     name: "4 - 4 Kontischicht",
     shift: boschKontiShifts,
     startDate: "1989-11-08",
@@ -381,7 +382,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     ]),
     groups: [0, 4, 8, 12, 16, 20],
     closingDays: boschClosingDays,
-    fallback: "4-4", // There is no fallback! Min date is 1990-01-01
+    fallback: shift44Name, // There is no fallback! Min date is 1990-01-01
   },
 };
 

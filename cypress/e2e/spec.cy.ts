@@ -5,16 +5,19 @@ import {
   shiftModelNames,
   monthNames,
 } from "../../lib/constants";
+import { shift44Name } from "../../config/shifts";
 
 describe("basic usage", () => {
   it("should have all shift models on index", () => {
     cy.visit("http://localhost:3000/");
 
     for (const [key, name] of Object.entries(shiftModelText)) {
+      if (key === shift44Name) continue;
       cy.contains("main a", name)
         .should("have.attr", "href")
         .and("include", key);
     }
+    cy.contains("main a", shift44Name).should("not.exist");
   });
 
   it("visit impressum", () => {
