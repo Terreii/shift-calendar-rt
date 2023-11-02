@@ -12,6 +12,7 @@ import {
   monthNames,
   shiftModelNames,
   ShiftModels,
+  excelExportModelFullYearName,
 } from "../../../../../../lib/constants";
 import {
   createShiftSheet,
@@ -63,5 +64,12 @@ export async function GET(
   }
 
   const buffer = await wb.writeToBuffer();
-  return new NextResponse(buffer);
+  return new NextResponse(buffer, {
+    headers: {
+      "Content-Disposition": `attachment; filename="${excelExportModelFullYearName(
+        model,
+        year,
+      )}"`,
+    },
+  });
 }
