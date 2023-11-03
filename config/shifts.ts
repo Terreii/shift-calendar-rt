@@ -77,7 +77,7 @@ export type ShiftModel = {
    *
    * The key is its short name. Used in the /cal/[model] routes.
    */
-  shift: Record<ShiftKey, Shift>;
+  shifts: Record<ShiftKey, Shift>;
 
   /**
    * Start date.
@@ -199,7 +199,7 @@ const boschClosingDays: ClosingDay[] = [
 const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   [shift66Name]: {
     name: "6 - 6 Kontischicht",
-    shift: boschKontiShifts,
+    shifts: boschKontiShifts,
     startDate: "2010-04-04",
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
     groups: [4, -2, 6, 0, -4, 2],
@@ -208,7 +208,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shift64Name]: {
     name: "6 - 4 Kontischicht",
-    shift: boschKontiShifts,
+    shifts: boschKontiShifts,
     startDate: "2019-01-01",
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null],
     groups: [
@@ -229,7 +229,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftWfW]: {
     name: "Werkfeuerwehr",
-    shift: boschKontiShifts,
+    shifts: boschKontiShifts,
     startDate: "2010-04-04",
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
     groups: [4, 6, 8, 10, 0, 2],
@@ -238,7 +238,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [rotatingShift]: {
     name: "Wechselschicht",
-    shift: {
+    shifts: {
       F: {
         name: "Frühschicht",
         start: [6, 0],
@@ -265,7 +265,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftAddedNight]: {
     name: "aufgesetzte Nachtarbeit",
-    shift: { N: boschKontiShifts.N },
+    shifts: { N: boschKontiShifts.N },
     startDate: "2000-01-01",
     cycle: [
       "N",
@@ -296,7 +296,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftAddedNight8]: {
     name: "8 Wochen Nachtarbeit",
-    shift: boschKontiShifts,
+    shifts: boschKontiShifts,
     startDate: "2000-01-03",
     cycle: [],
     groups: (() =>
@@ -342,7 +342,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [weekend]: {
     name: "Wochenend-Modell RtP2",
-    shift: {
+    shifts: {
       Normal: {
         name: "Schicht",
         start: [7, 0],
@@ -372,7 +372,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shift44Name]: {
     name: "4 - 4 Kontischicht",
-    shift: boschKontiShifts,
+    shifts: boschKontiShifts,
     startDate: "1989-11-08",
     cycle: ["F", null, "N", null, "S", null].flatMap((shift) => [
       shift,

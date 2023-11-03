@@ -77,9 +77,9 @@ describe("shift calendar current view", () => {
     cy.visit("http://localhost:3000/cal/" + model);
 
     const shift = shifts[model];
-    for (const key in shift.shift) {
+    for (const key in shift.shifts) {
       cy.contains("dt", key);
-      cy.contains("dd", shift.shift[key].name);
+      cy.contains("dd", shift.shifts[key].name);
     }
   });
 

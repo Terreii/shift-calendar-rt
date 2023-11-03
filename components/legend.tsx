@@ -18,7 +18,7 @@ export default function Legend({ shiftKey }: { shiftKey: ShiftModelKeys }) {
   return (
     <div className={style.container}>
       <dl className={style.column}>
-        {Object.entries(shift.shift).map(([key, data]) => (
+        {Object.entries(shift.shifts).map(([key, data]) => (
           <Cell key={shiftKey + key} id={key}>
             {data.name}
             <br />
