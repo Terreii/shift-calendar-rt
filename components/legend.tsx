@@ -12,7 +12,6 @@ import style from "./legend.module.css";
 
 /**
  * Renders a legend of definitions for the table.
- * @returns {JSX.Element}
  */
 export default function Legend({ shiftKey }: { shiftKey: ShiftModelKeys }) {
   const shift = shifts[shiftKey];

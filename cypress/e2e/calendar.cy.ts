@@ -3,6 +3,7 @@
 import addMonths from "date-fns/addMonths";
 import formatISO from "date-fns/formatISO";
 import startOfMonth from "date-fns/startOfMonth";
+import shifts from "../../config/shifts";
 import {
   shiftModelText,
   shiftModelNames,
@@ -70,6 +71,16 @@ describe("shift calendar current view", () => {
           .and("have.attr", "data-group", index + 1);
       }
     });
+  });
+
+  it("should render all shifts in legend", () => {
+    cy.visit("http://localhost:3000/cal/" + model);
+
+    const shift = shifts[model];
+    for (const key in shift.shift) {
+      cy.contains("dt", key);
+      cy.contains("dd", shift.shift[key].name);
+    }
   });
 
   it("should have nav buttons", () => {
