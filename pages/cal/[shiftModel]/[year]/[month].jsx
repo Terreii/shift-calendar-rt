@@ -51,7 +51,7 @@ export default function MonthPage() {
         </title>
       </Head>
 
-      <Legend />
+      <Legend shiftKey={shiftModel} />
 
       <ByMonths
         shiftModel={shiftModel}

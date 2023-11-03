@@ -45,7 +45,7 @@ export default function ShiftModel() {
         </title>
       </Head>
 
-      <Legend />
+      <Legend shiftKey={shiftModel} />
 
       <ByMonths
         shiftModel={shiftModel}
