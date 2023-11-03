@@ -25,7 +25,7 @@ export default function Offline() {
         </title>
       </Head>
 
-      <Legend />
+      <Legend shiftKey={model} />
 
       <div className={offlineStyles.container}>
         <string className={offlineStyles.header}>Du bist offline!</string>

@@ -51,7 +51,7 @@ export default function Year() {
         </title>
       </Head>
 
-      <Legend />
+      <Legend shiftKey={shiftModel} />
 
       <div
         id="calendar_main_out"

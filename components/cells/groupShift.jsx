@@ -5,8 +5,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { workingDescriptionId } from "../../lib/constants";
-
 import style from "../../styles/calendar.module.css";
 
 /**
@@ -24,7 +22,7 @@ export default function GroupShiftCell({ group, shift }) {
     <td
       className={style.group}
       data-group={group + 1}
-      aria-describedby={workingDescriptionId[shift]}
+      aria-describedby={shift + "_description"}
     >
       {shift}
     </td>

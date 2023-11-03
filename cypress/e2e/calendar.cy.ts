@@ -3,6 +3,7 @@
 import addMonths from "date-fns/addMonths";
 import formatISO from "date-fns/formatISO";
 import startOfMonth from "date-fns/startOfMonth";
+import shifts from "../../config/shifts";
 import {
   shiftModelText,
   shiftModelNames,
@@ -10,7 +11,7 @@ import {
   shiftModelNumberOfGroups,
 } from "../../lib/constants";
 import { getToday } from "../../lib/utils";
-import getShiftData from "../../lib/workdata";
+import { getMonthData } from "../../lib/workdata";
 
 const model =
   shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
@@ -59,7 +60,7 @@ describe("shift calendar current view", () => {
     );
 
     // shifts
-    const data = getShiftData(now.getFullYear(), now.getMonth(), model);
+    const data = getMonthData(now.getFullYear(), now.getMonth(), model);
     const dataOfTheDay = data.days[0];
     dataOfTheDay.forEach((shift, index) => {
       if (shift === "K") {
@@ -70,6 +71,16 @@ describe("shift calendar current view", () => {
           .and("have.attr", "data-group", index + 1);
       }
     });
+  });
+
+  it("should render all shifts in legend", () => {
+    cy.visit("http://localhost:3000/cal/" + model);
+
+    const shift = shifts[model];
+    for (const key in shift.shifts) {
+      cy.contains("dt", key);
+      cy.contains("dd", shift.shifts[key].name);
+    }
   });
 
   it("should have nav buttons", () => {
