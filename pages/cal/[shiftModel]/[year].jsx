@@ -15,7 +15,7 @@ import Downloader from "../../../components/download";
 import Legend from "../../../components/legend";
 import { useTodayZeroIndex, useUnloadedFix } from "../../../hooks/time";
 import { useTitleAlert } from "../../../hooks/utils";
-import { shiftModelText } from "../../../lib/constants";
+import { shiftModelNames, shiftModelText } from "../../../lib/constants";
 import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber } from "../../../lib/utils";
 
@@ -82,6 +82,14 @@ export default function Year() {
  * @returns {import('next').GetServerSidePropsResult}
  */
 export async function getServerSideProps(context) {
+  const shiftModel = context.query.shiftModel;
+  if (!shiftModelNames.includes(shiftModel)) {
+    context.res.writeHead(307, {
+      Location: "/",
+    });
+    return;
+  }
+
   const now = new Date();
   const cacheTill = roundToNearestMinutes(now, {
     nearestTo: 30,
@@ -89,6 +97,10 @@ export async function getServerSideProps(context) {
   });
   const cacheSeconds = differenceInSeconds(cacheTill, now);
   context.res.setHeader("Cache-Control", "s-maxage=" + cacheSeconds);
+  context.res.setHeader(
+    "Set-Cookie",
+    `shift_model=${shiftModel}; Max-Age=31536000; Path=/; Secure; HttpOnly; SameSite=Lax`,
+  );
   return {
     props: context.query,
   };
