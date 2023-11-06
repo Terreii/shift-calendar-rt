@@ -241,13 +241,13 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     shifts: {
       F: {
         name: "Frühschicht",
-        start: [6, 0],
-        end: [14, 0],
+        start: [6, 15],
+        end: [13, 45],
       },
       S: {
         name: "Spätschicht",
-        start: [13, 0],
-        end: [22, 0],
+        start: [13, 15],
+        end: [21, 45],
       },
     },
     startDate: "1989-11-06",
