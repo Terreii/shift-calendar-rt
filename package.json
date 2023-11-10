@@ -68,7 +68,7 @@
     "hammerjs": "^2.0.8",
     "milliseconds": "^1.0.3",
     "modern-css-reset": "^1.4.0",
-    "next": "^14.0.1",
+    "next": "^14.0.2",
     "next-pwa": "^5.0.4",
     "re-reselect": "^4.0.0",
     "react": "^18.2.0",
