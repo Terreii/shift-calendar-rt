@@ -33,7 +33,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.0",
     "@testing-library/user-event": "^14.5.1",
-    "@types/milliseconds": "^0.0.32",
+    "@types/milliseconds": "^0.0.33",
     "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
     "babel-jest": "^29.6.4",
