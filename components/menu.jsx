@@ -74,6 +74,7 @@ export default function Menu({
         />
       </summary>
       <div
+        key={show}
         id="hamburger_menu"
         aria-live="polite"
         aria-label="Menü"
@@ -92,7 +93,7 @@ export default function Menu({
                       group,
                       shiftModel,
                       isFullYear: false,
-                      month: event.target.value,
+                      month: +event.target.value,
                       year,
                     }),
                   );
@@ -115,16 +116,18 @@ export default function Menu({
                 <input
                   className={style.form_item}
                   type="number"
-                  min={2000}
+                  min={1990}
                   aria-controls="calendar_main_out"
-                  value={year}
+                  defaultValue={year}
                   onChange={(event) => {
+                    const year = event.target.valueAsNumber;
+                    if (Number.isNaN(year) || year < 1990) return;
                     router.push(
                       getCalUrl({
                         group,
                         shiftModel,
                         isFullYear,
-                        year: +event.target.value,
+                        year,
                         month,
                       }),
                     );
@@ -142,27 +145,19 @@ export default function Menu({
                   className={style.form_item}
                   type="month"
                   aria-controls="calendar_main_out"
-                  min="2000-01"
+                  min="1990-01"
                   value={`${year}-${String(month).padStart(2, "0")}`}
                   onChange={(event) => {
-                    const value = event.target.value;
-                    if (value == null || value.length === 0) {
-                      return;
-                    }
-
-                    const [nextYear, nextMonth] = value.split("-");
-
-                    if (!nextYear || !nextMonth) {
-                      return;
-                    }
+                    const value = event.target.valueAsDate;
+                    if (value == null) return;
 
                     router.push(
                       getCalUrl({
                         group,
                         shiftModel,
                         isFullYear,
-                        month: nextMonth,
-                        year: nextYear,
+                        month: value.getMonth() + 1,
+                        year: value.getFullYear(),
                       }),
                     );
                   }}
@@ -179,8 +174,8 @@ export default function Menu({
                   className={style.form_item}
                   type="date"
                   aria-controls="calendar_main_out"
-                  min="2000-01-01"
-                  value={searchValue}
+                  min="1990-01-01"
+                  defaultValue={searchValue}
                   onChange={(event) => {
                     const value = event.target.value;
 
