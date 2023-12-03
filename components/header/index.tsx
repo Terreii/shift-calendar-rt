@@ -14,7 +14,7 @@ import Menu from "../menu";
 import ShareMenu from "../share-menu";
 import NavLinks from "./header-nav-links";
 
-import { useQueryProps, useSaveSettings } from "../../hooks/settings";
+import { useQueryProps } from "../../hooks/settings";
 
 import style from "./header.module.css";
 
@@ -22,9 +22,8 @@ import style from "./header.module.css";
  * Renders the Header.
  */
 export default function Header() {
-  const { url, year, month, isFullYear, group, search, shiftModel } =
+  const { year, month, isFullYear, group, search, shiftModel } =
     useQueryProps();
-  useSaveSettings(url, shiftModel, group);
 
   const [showMenu, setShowMenu] = useShowMenu("nav");
   const [showShareMenu, setShowShareMenu] = useShowMenu("#share_menu");

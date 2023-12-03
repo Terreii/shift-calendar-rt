@@ -1,4 +1,5 @@
-const withPWA = require("next-pwa")({
+import nextPwa from "next-pwa";
+const withPWA = nextPwa({
   dest: "public",
 });
 
@@ -14,12 +15,11 @@ const config = {
   },
 };
 
-module.exports =
-  process.env.LINT_ENV || process.env.NODE_ENV === "development"
-    ? config
-    : withPWA({
-        ...config,
-        pwa: {
-          dest: "public",
-        },
-      });
+export default process.env.LINT_ENV || process.env.NODE_ENV === "development"
+  ? config
+  : withPWA({
+      ...config,
+      pwa: {
+        dest: "public",
+      },
+    });

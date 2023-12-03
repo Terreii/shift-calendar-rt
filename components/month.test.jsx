@@ -12,7 +12,7 @@ describe("components/month", () => {
       <Month
         year={2019}
         month={0}
-        data={selectMonthData(2019, 0, false)}
+        data={selectMonthData(2019, 0, "6-6")}
         today={[2019, 0, 13]}
         group={0}
       />,
@@ -28,7 +28,7 @@ describe("components/month", () => {
       <Month
         year={2019}
         month={0}
-        data={selectMonthData(2019, 0, false)}
+        data={selectMonthData(2019, 0, "6-6")}
         today={[2019, 0, 13]}
         group={0}
       />,

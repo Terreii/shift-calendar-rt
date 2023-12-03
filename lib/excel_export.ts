@@ -4,8 +4,9 @@ import {
   shiftModelNumberOfGroups,
   shiftModelText,
   maxGroupCount,
+  type ShiftModels,
 } from "./constants";
-import getMonthData from "./workdata";
+import { getMonthData } from "./workdata";
 
 export type Styles = Map<string | number, any>;
 
@@ -35,7 +36,7 @@ export function createDocument() {
  */
 export function createShiftSheet(
   sheet: any,
-  model: string,
+  model: ShiftModels,
   year: number,
   month: number,
   styles: Styles,
@@ -76,7 +77,7 @@ export function createShiftSheet(
  */
 function buildBody(
   sheet: any,
-  model: string,
+  model: ShiftModels,
   year: number,
   month: number,
   styles: Styles,

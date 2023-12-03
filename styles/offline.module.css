@@ -1,14 +1,10 @@
 /* For the offline warning. */
 
 .container {
-  background-color: #ef4444;
-  border: 1px solid #b91c1c;
-  border-radius: 0.5rem;
   width: fit-content;
   margin-left: 1rem;
   margin-right: 1rem;
   margin-bottom: 2rem;
-  padding: 1rem;
 }
 
 @media (min-width: 768px) {
@@ -16,6 +12,14 @@
     margin-left: auto;
     margin-right: auto;
   }
+}
+
+.border {
+  color: #ef4444;
+  border: 1px solid #b91c1c;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
 }
 
 .header {

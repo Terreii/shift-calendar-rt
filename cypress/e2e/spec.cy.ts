@@ -5,16 +5,29 @@ import {
   shiftModelNames,
   monthNames,
 } from "../../lib/constants";
+import { shift44Name } from "../../config/shifts";
 
 describe("basic usage", () => {
   it("should have all shift models on index", () => {
     cy.visit("http://localhost:3000/");
 
     for (const [key, name] of Object.entries(shiftModelText)) {
+      if (key === shift44Name) continue;
       cy.contains("main a", name)
         .should("have.attr", "href")
         .and("include", key);
     }
+    cy.contains("main a", shift44Name).should("not.exist");
+  });
+
+  it("should redirect a user to their last viewed shift model on /?pwa", () => {
+    const shiftModel =
+      shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
+    // Workaround: When visiting a /cal/[model] page, then the next visit would not finish.
+    cy.setCookie("shift_model", shiftModel);
+
+    cy.visit("/?pwa");
+    cy.url().should("include", "/cal/" + shiftModel);
   });
 
   it("visit impressum", () => {
