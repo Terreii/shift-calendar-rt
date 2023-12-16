@@ -108,6 +108,24 @@ describe("shift calendar current view", () => {
       '#day_2023-10-03 > td[title="Tag der deutschen Einheit"][data-holiday="holiday"]',
     );
   });
+
+  it("should navigate to next and previous month on swipe on mobile", () => {
+    cy.visitMobile("http://localhost:3000/cal/" + model);
+    const today = new Date();
+    const nextMonth = addMonths(today, 1);
+
+    cy.get("#calendar_main_out").swipe("right", "left");
+    cy.url().should(
+      "include",
+      `/cal/${model}/${nextMonth.getFullYear()}/${nextMonth.getMonth() + 1}`,
+    );
+
+    cy.get("#calendar_main_out").swipe("left", "right");
+    cy.url().should(
+      "include",
+      `/cal/${model}/${today.getFullYear()}/${today.getMonth() + 1}`,
+    );
+  });
 });
 
 describe("full year", () => {

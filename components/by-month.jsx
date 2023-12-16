@@ -6,11 +6,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useEffect, useMemo, useRef } from "react";
+import { useRouter } from "next/router";
+import addMonths from "date-fns/addMonths";
 
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
-import { scrollToADay } from "../lib/utils";
-import { useTitleAlert } from "../hooks/utils";
+import { getCalUrl, scrollToADay } from "../lib/utils";
+import { useTitleAlert, useSwipe } from "../hooks/utils";
 
 import style from "../styles/calendar.module.css";
 
@@ -32,6 +34,34 @@ export default function ByMonths({
   month,
   today,
 }) {
+  const router = useRouter();
+  const { ref } = useSwipe((direction) => {
+    if (direction === "left") {
+      const time = addMonths(new Date(year, month, 1), 1);
+
+      router.push(
+        getCalUrl({
+          group,
+          shiftModel,
+          isFullYear: false,
+          year: time.getFullYear(),
+          month: time.getMonth() + 1,
+        }),
+      );
+    } else if (direction === "right") {
+      const time = addMonths(new Date(year, month, 1), -1);
+
+      router.push(
+        getCalUrl({
+          group,
+          shiftModel,
+          isFullYear: false,
+          year: time.getFullYear(),
+          month: time.getMonth() + 1,
+        }),
+      );
+    }
+  });
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
@@ -73,6 +103,7 @@ export default function ByMonths({
       id="calendar_main_out"
       className={style.container}
       onClick={clickHandler}
+      ref={ref}
       aria-live="polite"
     >
       {monthsData.map(([year, month, search], index) =>
