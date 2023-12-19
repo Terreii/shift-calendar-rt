@@ -1,8 +1,8 @@
 /* eslint-disable jest/expect-expect */
 
-import addMonths from "date-fns/addMonths";
-import formatISO from "date-fns/formatISO";
-import startOfMonth from "date-fns/startOfMonth";
+import { addMonths } from "date-fns/addMonths";
+import { formatISO } from "date-fns/formatISO";
+import { startOfMonth } from "date-fns/startOfMonth";
 import shifts from "../../config/shifts";
 import {
   shiftModelText,

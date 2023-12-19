@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useMemo } from "react";
 import Link from "next/link";
-import addMonths from "date-fns/addMonths";
+import { addMonths } from "date-fns/addMonths";
 
 import { useToday } from "../../hooks/time";
 import { getCalUrl, getTodayUrl } from "../../lib/utils";
