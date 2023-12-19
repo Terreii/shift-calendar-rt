@@ -5,9 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import formatISO from "date-fns/formatISO";
-import isWeekend from "date-fns/isWeekend";
-import isMonday from "date-fns/isMonday";
+import { formatISO } from "date-fns/formatISO";
+import { isWeekend } from "date-fns/isWeekend";
+import { isMonday } from "date-fns/isMonday";
 import { useRouter } from "next/router";
 
 import WeekCell from "./cells/week";
