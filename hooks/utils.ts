@@ -60,9 +60,9 @@ const initialState: State = {
 };
 type Actions =
   | { type: "down"; id: number; x: number; y: number }
-  | { type: "cancel" }
-  | { type: "end" }
-  | { type: "move"; x: number; y: number };
+  | { type: "cancel"; id: number }
+  | { type: "end"; id: number }
+  | { type: "move"; id: number; x: number; y: number };
 
 // eslint-disable-next-line no-unused-vars
 export function useSwipe(callback: (direction: Direction) => void): {
@@ -83,7 +83,7 @@ export function useSwipe(callback: (direction: Direction) => void): {
   };
 
   useEffect(() => {
-    if (!ref || state.id) return;
+    if (!ref) return;
 
     const abortController = new AbortController();
     const signal = abortController.signal;
@@ -91,33 +91,24 @@ export function useSwipe(callback: (direction: Direction) => void): {
     ref.addEventListener(
       "pointerdown",
       (event) => {
-        if (event.pointerType === "touch" && !event.isPrimary) return;
-        ref.setPointerCapture(event.pointerId);
-        dispatch({
-          type: "down",
-          id: event.pointerId,
-          x: event.clientX,
-          y: event.clientY,
-        });
+        if (event.pointerType === "touch" && event.isPrimary) {
+          ref.setPointerCapture(event.pointerId);
+          dispatch({
+            type: "down",
+            id: event.pointerId,
+            x: event.clientX,
+            y: event.clientY,
+          });
+        }
       },
       { signal },
     );
 
-    return () => {
-      abortController.abort();
-    };
-  }, [ref, state.id]);
-
-  useEffect(() => {
-    if (!ref || !state.id) return;
-    const abortController = new AbortController();
-    const signal = abortController.signal;
-
     ref.addEventListener(
       "pointercancel",
       (event) => {
-        if (event.pointerId === state.id) {
-          dispatch({ type: "cancel" });
+        if (event.pointerType === "touch" && event.isPrimary) {
+          dispatch({ type: "cancel", id: event.pointerId });
         }
       },
       { signal },
@@ -126,8 +117,8 @@ export function useSwipe(callback: (direction: Direction) => void): {
     ref.addEventListener(
       "pointerup",
       (event) => {
-        if (event.pointerId === state.id) {
-          dispatch({ type: "end" });
+        if (event.pointerType === "touch" && event.isPrimary) {
+          dispatch({ type: "end", id: event.pointerId });
           callbackRef.current?.();
         }
       },
@@ -137,9 +128,10 @@ export function useSwipe(callback: (direction: Direction) => void): {
     ref.addEventListener(
       "pointermove",
       (event) => {
-        if (event.pointerId === state.id) {
+        if (event.pointerType === "touch" && event.isPrimary) {
           dispatch({
             type: "move",
+            id: event.pointerId,
             x: event.clientX,
             y: event.clientY,
           });
@@ -151,7 +143,7 @@ export function useSwipe(callback: (direction: Direction) => void): {
     return () => {
       abortController.abort();
     };
-  }, [ref, state.id]);
+  }, [ref]);
 
   return {
     ref: setRef,
@@ -173,13 +165,16 @@ function reducer(state: State, action: Actions) {
 
     case "end":
     case "cancel":
-      return initialState;
+      return state.id && state.id === action.id
+        ? { ...initialState, element: state.element }
+        : state;
 
     case "move": {
+      if (state.id == null || state.id !== action.id) return state;
       const x = action.x - state.startX;
       return {
         ...state,
-        isSwipping: Math.abs(Math.abs(action.x) - Math.abs(state.startX)) > 10,
+        isSwipping: Math.abs(action.x - state.startX) > 10,
         direction: x < 0 ? "left" : x > 0 ? "right" : null,
         x,
         y: action.y - state.startY,
