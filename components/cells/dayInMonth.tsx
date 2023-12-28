@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { ShiftModels } from "../../lib/constants";
 
-import formatISO from "date-fns/formatISO";
+import { formatISO } from "date-fns/formatISO";
 import Link from "next/link";
 
 import style from "../../styles/calendar.module.css";

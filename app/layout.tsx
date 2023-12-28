@@ -6,7 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import type { ReactNode } from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 
 import Footer from "../components/footer";
@@ -45,13 +45,14 @@ export const metadata: Metadata = {
   },
   creator: "Christopher Astfalk",
   publisher: "Christopher Astfalk",
+};
+
+export const viewport: Viewport = {
   colorScheme: "light",
   themeColor: "#064E3B",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    viewportFit: "cover",
-  },
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useMemo } from "react";
 import Link from "next/link";
+import { addMonths } from "date-fns/addMonths";
 
 import { useToday } from "../../hooks/time";
 import { getCalUrl, getTodayUrl } from "../../lib/utils";
@@ -52,10 +53,7 @@ export default function HeaderNavLinks({
       };
     }
 
-    const then = new Date();
-    then.setFullYear(year);
-    then.setMonth(month - 1);
-    then.setDate(3);
+    const then = new Date(year, month - 1, 1, 0, 0, 0);
 
     return {
       lastMonth: getMonthUrl(then, -1, shiftModel, group),
@@ -95,20 +93,12 @@ export default function HeaderNavLinks({
 }
 
 function getMonthUrl(time, change, shiftModel, group) {
-  let year = time.getFullYear();
-  let month = time.getMonth() + change;
-  if (month < 0) {
-    year--;
-    month = 11;
-  } else if (month >= 12) {
-    year++;
-    month = 0;
-  }
+  const month = addMonths(time, change);
   return getCalUrl({
     group,
     shiftModel,
     isFullYear: false,
-    year,
-    month: month + 1,
+    year: month.getFullYear(),
+    month: month.getMonth() + 1,
   });
 }

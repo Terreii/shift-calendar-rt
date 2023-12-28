@@ -7,8 +7,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import Head from "next/head";
 import { useRouter } from "next/router";
-import differenceInSeconds from "date-fns/differenceInSeconds";
-import roundToNearestMinutes from "date-fns/roundToNearestMinutes";
+import { differenceInSeconds } from "date-fns/differenceInSeconds";
+import { roundToNearestMinutes } from "date-fns/roundToNearestMinutes";
 
 import Month from "../../../components/month";
 import Downloader from "../../../components/download";

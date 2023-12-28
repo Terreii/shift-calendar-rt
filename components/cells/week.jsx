@@ -5,10 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import differenceInDays from "date-fns/differenceInDays";
-import endOfISOWeek from "date-fns/endOfISOWeek";
-import getDaysInMonth from "date-fns/getDaysInMonth";
-import getISOWeek from "date-fns/getISOWeek";
+import { differenceInDays } from "date-fns/differenceInDays";
+import { endOfISOWeek } from "date-fns/endOfISOWeek";
+import { getDaysInMonth } from "date-fns/getDaysInMonth";
+import { getISOWeek } from "date-fns/getISOWeek";
 
 import style from "../../styles/calendar.module.css";
 
