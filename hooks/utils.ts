@@ -165,9 +165,7 @@ function reducer(state: State, action: Actions) {
 
     case "end":
     case "cancel":
-      return state.id && state.id === action.id
-        ? { ...initialState, element: state.element }
-        : state;
+      return state.id && state.id === action.id ? initialState : state;
 
     case "move": {
       if (state.id == null || state.id !== action.id) return state;

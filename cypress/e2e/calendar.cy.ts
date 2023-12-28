@@ -110,17 +110,43 @@ describe("shift calendar current view", () => {
   });
 
   it("should navigate to next and previous month on swipe on mobile", () => {
-    cy.visitMobile("http://localhost:3000/cal/" + model);
+    cy.visit("http://localhost:3000/cal/" + model);
     const today = new Date();
     const nextMonth = addMonths(today, 1);
 
-    cy.get("#calendar_main_out").swipe("right", "left");
+    const triggerPointer = (
+      name: "pointerdown" | "pointermove" | "pointerup",
+      position: "topRight" | "topLeft",
+    ) => {
+      const clientX = position === "topLeft" ? 50 : 100;
+      cy.get("#calendar_main_out").trigger(name, position, {
+        pointerType: "touch",
+        pointerId: 1,
+        isPrimary: true,
+        clientX,
+        clientY: 100,
+        eventConstructor: "PointerEvent",
+      });
+    };
+
+    triggerPointer("pointerdown", "topRight");
+    triggerPointer("pointermove", "topLeft");
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1);
+    triggerPointer("pointerup", "topLeft");
+
     cy.url().should(
       "include",
-      `/cal/${model}/${nextMonth.getFullYear()}/${nextMonth.getMonth() + 1}`,
+      `/cal/${model}/${nextMonth.getFullYear()}/${String(
+        nextMonth.getMonth() + 1,
+      ).padStart(2, "0")}`,
     );
 
-    cy.get("#calendar_main_out").swipe("left", "right");
+    triggerPointer("pointerdown", "topLeft");
+    triggerPointer("pointermove", "topRight");
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1);
+    triggerPointer("pointerup", "topRight");
     cy.url().should(
       "include",
       `/cal/${model}/${today.getFullYear()}/${today.getMonth() + 1}`,
