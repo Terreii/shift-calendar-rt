@@ -92,7 +92,12 @@ export function useSwipe(callback: (direction: Direction) => void): {
       "pointerdown",
       (event) => {
         if (event.pointerType === "touch" && event.isPrimary) {
-          ref.setPointerCapture(event.pointerId);
+          try {
+            ref.setPointerCapture(event.pointerId);
+          } catch (error) {
+            // Only needed for testing
+            console.error(error);
+          }
           dispatch({
             type: "down",
             id: event.pointerId,

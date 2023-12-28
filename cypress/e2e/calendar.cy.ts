@@ -147,6 +147,8 @@ describe("shift calendar current view", () => {
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(1);
     triggerPointer("pointerup", "topRight");
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(1); // Needed for Firefox
     cy.url().should(
       "include",
       `/cal/${model}/${today.getFullYear()}/${today.getMonth() + 1}`,
