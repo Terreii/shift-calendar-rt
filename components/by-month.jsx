@@ -35,7 +35,7 @@ export default function ByMonths({
   today,
 }) {
   const router = useRouter();
-  const { ref } = useSwipe((direction) => {
+  const { ref, isSwiping } = useSwipe((direction) => {
     if (direction === "left") {
       const time = addMonths(new Date(year, month, 1), 1);
 
@@ -101,7 +101,7 @@ export default function ByMonths({
   return (
     <div
       id="calendar_main_out"
-      className={style.container}
+      className={isSwiping ? style.swiping_container : style.container}
       onClick={clickHandler}
       ref={ref}
       aria-live="polite"

@@ -41,7 +41,7 @@ export function useSupportsInputType(type: HTMLInputElement["type"]): boolean {
 
 type Direction = "left" | "right" | null;
 type State = {
-  isSwipping: boolean;
+  isSwiping: boolean;
   id: number | null;
   direction: Direction;
   startX: number;
@@ -50,7 +50,7 @@ type State = {
   y: number;
 };
 const initialState: State = {
-  isSwipping: false,
+  isSwiping: false,
   id: null,
   direction: null,
   startX: 0,
@@ -67,7 +67,7 @@ type Actions =
 // eslint-disable-next-line no-unused-vars
 export function useSwipe(callback: (direction: Direction) => void): {
   ref: RefCallback<HTMLElement>;
-  isSwipping: boolean;
+  isSwiping: boolean;
   direction: Direction;
   x: number;
 } {
@@ -77,7 +77,7 @@ export function useSwipe(callback: (direction: Direction) => void): {
   const callbackRef = useRef<() => void>();
   callbackRef.current = () => {
     if (Math.abs(state.y) > Math.abs(state.x)) return; // did move up or down
-    if (Math.abs(state.x) < 10 || !state.isSwipping) return; // didn't move
+    if (Math.abs(state.x) < 10 || !state.isSwiping) return; // didn't move
 
     callback(state.direction as Direction);
   };
@@ -152,13 +152,13 @@ export function useSwipe(callback: (direction: Direction) => void): {
 
   return {
     ref: setRef,
-    isSwipping: state.isSwipping,
+    isSwiping: state.isSwiping,
     direction: state.direction as Direction,
     x: state.x,
   };
 }
 
-function reducer(state: State, action: Actions) {
+function reducer(state: State, action: Actions): State {
   switch (action.type) {
     case "down":
       return {
@@ -177,7 +177,7 @@ function reducer(state: State, action: Actions) {
       const x = action.x - state.startX;
       return {
         ...state,
-        isSwipping: Math.abs(action.x - state.startX) > 10,
+        isSwiping: Math.abs(action.x - state.startX) > 10,
         direction: x < 0 ? "left" : x > 0 ? "right" : null,
         x,
         y: action.y - state.startY,
