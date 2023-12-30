@@ -35,36 +35,24 @@ export default function ByMonths({
   today,
 }) {
   const router = useRouter();
-  const { ref, isSwiping } = useSwipe((direction) => {
-    if (direction === "left") {
-      const time = addMonths(new Date(year, month, 1), 1);
-
+  const { ref, isSwiping, direction } = useSwipe((direction) => {
+    if (direction) {
       router.push(
-        getCalUrl({
-          group,
-          shiftModel,
-          isFullYear: false,
-          year: time.getFullYear(),
-          month: time.getMonth() + 1,
-        }),
-      );
-    } else if (direction === "right") {
-      const time = addMonths(new Date(year, month, 1), -1);
-
-      router.push(
-        getCalUrl({
-          group,
-          shiftModel,
-          isFullYear: false,
-          year: time.getFullYear(),
-          month: time.getMonth() + 1,
-        }),
+        getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
       );
     }
   });
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
+
+  useEffect(() => {
+    if (direction) {
+      router.prefetch(
+        getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
+      );
+    }
+  }, [direction, group, month, router, shiftModel, year]);
 
   const monthsData = useMemo(() => {
     const monthsData = [];
@@ -130,6 +118,27 @@ export default function ByMonths({
       )}
     </div>
   );
+}
+
+/**
+ * Get the next url of the next month on a swipe.
+ * @param {"right"|"left"} direction   Direction the swipe is going.
+ * @param {number}         year        Current Year.
+ * @param {number}         month       Current Month.
+ * @param {number}         group       Group to display 0 = all, >= 1 just one.
+ * @param {string}         shiftModel  Shift model to display.
+ * @returns {string}  Next URL.
+ */
+function getSwipeNextMonthUrl(direction, year, month, group, shiftModel) {
+  const swipeMonthChange = { left: 1, right: -1 };
+  const time = addMonths(new Date(year, month, 1), swipeMonthChange[direction]);
+  return getCalUrl({
+    group,
+    shiftModel,
+    isFullYear: false,
+    year: time.getFullYear(),
+    month: time.getMonth() + 1,
+  });
 }
 
 /**
