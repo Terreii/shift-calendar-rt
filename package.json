@@ -37,7 +37,7 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.46",
     "babel-jest": "^29.6.4",
-    "bootstrap-icons": "^1.11.2",
+    "bootstrap-icons": "^1.11.3",
     "cypress": "^13.6.2",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.0.4",
