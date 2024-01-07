@@ -54,6 +54,7 @@ export default function MonthPage() {
       <Legend shiftKey={shiftModel} />
 
       <ByMonths
+        key={`${year}-${month}`}
         shiftModel={shiftModel}
         group={group}
         search={search}

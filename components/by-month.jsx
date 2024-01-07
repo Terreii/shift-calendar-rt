@@ -6,13 +6,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useEffect, useMemo, useRef } from "react";
-import ms from "milliseconds";
 import { useRouter } from "next/router";
+import addMonths from "date-fns/addMonths";
+import { useViewTransition } from "use-view-transitions/react";
 
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
 import { getCalUrl, scrollToADay } from "../lib/utils";
-import { useTitleAlert } from "../hooks/utils";
+import { useTitleAlert, useSwipe } from "../hooks/utils";
 
 import style from "../styles/calendar.module.css";
 
@@ -34,10 +35,28 @@ export default function ByMonths({
   month,
   today,
 }) {
-  const ref = useHammer(year, month, shiftModel, group);
+  const router = useRouter();
+  const { startViewTransition } = useViewTransition();
+  const { ref, isSwiping, direction, x } = useSwipe((direction) => {
+    if (direction) {
+      startViewTransition(() => {
+        router.push(
+          getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
+        );
+      });
+    }
+  });
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
+
+  useEffect(() => {
+    if (direction) {
+      router.prefetch(
+        getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
+      );
+    }
+  }, [direction, group, month, router, shiftModel, year]);
 
   const monthsData = useMemo(() => {
     const monthsData = [];
@@ -74,7 +93,8 @@ export default function ByMonths({
   return (
     <div
       id="calendar_main_out"
-      className={style.container}
+      className={isSwiping ? style.swiping_container : style.container}
+      style={{ "--swipe-offset": `${x}px` }}
       onClick={clickHandler}
       ref={ref}
       aria-live="polite"
@@ -103,6 +123,27 @@ export default function ByMonths({
       )}
     </div>
   );
+}
+
+/**
+ * Get the next url of the next month on a swipe.
+ * @param {"right"|"left"} direction   Direction the swipe is going.
+ * @param {number}         year        Current Year.
+ * @param {number}         month       Current Month.
+ * @param {number}         group       Group to display 0 = all, >= 1 just one.
+ * @param {string}         shiftModel  Shift model to display.
+ * @returns {string}  Next URL.
+ */
+function getSwipeNextMonthUrl(direction, year, month, group, shiftModel) {
+  const swipeMonthChange = { left: 1, right: -1 };
+  const time = addMonths(new Date(year, month, 1), swipeMonthChange[direction]);
+  return getCalUrl({
+    group,
+    shiftModel,
+    isFullYear: false,
+    year: time.getFullYear(),
+    month: time.getMonth() + 1,
+  });
 }
 
 /**
@@ -176,84 +217,4 @@ function useMonthToRender() {
   }, []);
 
   return monthsToRender;
-}
-
-/**
- * Setup Hammer and handle swipes.
- * @param {number}   year        The current year.
- * @param {number}   month       The current month.
- * @param {string}   shiftModel  Selected shift-model.
- * @param {number}   group       Shift group.
- */
-function useHammer(year, month, shiftModel, group) {
-  const [container, setContainer] = useState(null);
-  const router = useRouter();
-
-  useEffect(() => {
-    if (container == null) return;
-    let isActive = true;
-
-    const handler = (event) => {
-      switch (event.direction) {
-        case 2: {
-          // right to left
-          const time = new Date();
-          time.setDate(1);
-          time.setMonth(month);
-          time.setFullYear(year);
-          time.setTime(time.getTime() + ms.months(1));
-
-          router.push(
-            getCalUrl({
-              group,
-              shiftModel,
-              isFullYear: false,
-              year: time.getFullYear(),
-              month: time.getMonth() + 1,
-            }),
-          );
-          break;
-        }
-
-        case 4: {
-          // left to right
-          const time = new Date();
-          time.setDate(1);
-          time.setMonth(month);
-          time.setFullYear(year);
-          time.setTime(time.getTime() - ms.months(1));
-
-          router.push(
-            getCalUrl({
-              group,
-              shiftModel,
-              isFullYear: false,
-              year: time.getFullYear(),
-              month: time.getMonth() + 1,
-            }),
-          );
-          break;
-        }
-
-        default:
-          break;
-      }
-    };
-
-    let hammertime;
-    import("hammerjs").then(({ default: Hammer }) => {
-      if (isActive) {
-        hammertime = new Hammer(container);
-        hammertime.on("swipe", handler);
-      }
-    });
-    return () => {
-      isActive = false;
-      if (hammertime) {
-        hammertime.off("swipe", handler);
-      }
-    };
-  }, [year, month, shiftModel, group, container, router]);
-
-  return setContainer;
 }

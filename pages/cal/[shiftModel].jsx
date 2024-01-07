@@ -48,6 +48,7 @@ export default function ShiftModel() {
       <Legend shiftKey={shiftModel} />
 
       <ByMonths
+        key="today"
         shiftModel={shiftModel}
         group={group}
         search={null}

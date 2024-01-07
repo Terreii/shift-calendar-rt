@@ -24,6 +24,17 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-bottom: 0.5rem;
+  touch-action: pan-y;
+}
+
+.swiping_container {
+  composes: container;
+  touch-action: none;
+  overflow-x: hidden;
+}
+
+.swiping_container > .calender_table {
+  translate: var(--swipe-offset, 0px);
 }
 
 /*
@@ -197,6 +208,10 @@ But then show the next month on small screen, then the next 2 months, then all o
   padding: 0.1rem;
   height: 100%;
   width: 100%;
+}
+
+.week_day[data-holiday] {
+  cursor: help;
 }
 
 .week_day:is([data-holiday="holiday"], [data-holiday="school"]) {
