@@ -152,7 +152,9 @@ describe("shift calendar current view", () => {
     cy.wait(100); // Needed for Firefox
     cy.url().should(
       "include",
-      `/cal/${model}/${today.getFullYear()}/${today.getMonth() + 1}`,
+      `/cal/${model}/${today.getFullYear()}/${String(
+        today.getMonth() + 1,
+      ).padStart(2, "0")}`,
     );
   });
 });
