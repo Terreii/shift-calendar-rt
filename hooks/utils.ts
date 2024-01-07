@@ -169,6 +169,10 @@ function reducer(state: State, action: Actions): State {
       };
 
     case "end":
+      return !state.isSwiping && state.id && state.id === action.id
+        ? initialState
+        : state;
+
     case "cancel":
       return state.id && state.id === action.id ? initialState : state;
 

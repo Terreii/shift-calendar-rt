@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/router";
 import addMonths from "date-fns/addMonths";
+import { useViewTransition } from "use-view-transitions/react";
 
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
@@ -35,11 +36,14 @@ export default function ByMonths({
   today,
 }) {
   const router = useRouter();
-  const { ref, isSwiping, direction } = useSwipe((direction) => {
+  const { startViewTransition } = useViewTransition();
+  const { ref, isSwiping, direction, x } = useSwipe((direction) => {
     if (direction) {
-      router.push(
-        getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
-      );
+      startViewTransition(() => {
+        router.push(
+          getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
+        );
+      });
     }
   });
   const monthsToRender = useMonthToRender();
@@ -90,6 +94,7 @@ export default function ByMonths({
     <div
       id="calendar_main_out"
       className={isSwiping ? style.swiping_container : style.container}
+      style={{ "--swipe-offset": `${x}px` }}
       onClick={clickHandler}
       ref={ref}
       aria-live="polite"
