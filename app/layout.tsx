@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Footer from "../components/footer";
 import Header from "../components/header/core";
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Footer />
         <InstallPrompt />
         {new Date().getDate() <= 2 && <Analytics />}
+        <SpeedInsights />
       </body>
     </html>
   );
