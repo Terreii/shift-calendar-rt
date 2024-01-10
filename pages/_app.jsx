@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { useNextRouterViewTransitions } from "use-view-transitions/next";
 
 import Footer from "../components/footer";
@@ -78,6 +79,7 @@ export default function MyApp({ Component, pageProps }) {
       <Footer />
       <InstallPrompt />
       {new Date().getDate() <= 2 && <Analytics />}
+      <SpeedInsights />
     </>
   );
 }
