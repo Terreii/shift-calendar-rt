@@ -83,12 +83,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding-right: 0.5rem;
   padding-right: env(safe-area-inset-right, 0.5rem);
   padding-bottom: env(safe-area-inset-bottom);
+  z-index: 10;
 }
 
 .ios_text {
   margin: 0.25rem 3rem;
-  margin-left: calc(3rem + env(safe-area-inset-right, 0px));
-  margin-right: calc(3rem + env(safe-area-inset-right, 0px));
+  margin-left: calc(4rem + env(safe-area-inset-right, 0px));
+  margin-right: calc(4rem + env(safe-area-inset-right, 0px));
   font-size: 0.875rem;
   text-align: center;
   color: #111827;
@@ -97,22 +98,20 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 .ios_icons_row {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  flex-direction: column;
+  align-items: center;
   margin-bottom: 0.25rem;
+  padding-inline: 3px;
 }
 
 .ios_icon {
+  height: 4.9rem;
+  border-radius: 0.25rem;
   object-fit: contain;
   object-position: center;
-  width: 4rem;
   padding: 0.25rem;
-  background-color: rgb(209, 213, 219);
-  border: 1px solid rgb(107, 114, 128);
   border-radius: 0.25rem;
-}
-.ios_icon > img {
-  height: 5rem;
+  box-shadow: 0 0 2rem var(--dialog-shadow-color);
 }
 
 .ios_icon_space {

@@ -162,13 +162,17 @@ export default function InstallButton() {
             um den Kalender wie eine App zu installieren:
           </span>
           <div className={style.ios_icons_row}>
-            <div className={style.ios_icon}>
-              <Image src={iOSShare} alt="klicke Teilen" />
-            </div>
-            <span className={style.ios_icon_space}>➡︎</span>
-            <div className={style.ios_icon}>
-              <Image src={iOSAddToHome} alt="klicke Zum Home-Bildschirm" />
-            </div>
+            <Image
+              className={style.ios_icon}
+              src={iOSShare}
+              alt="klicke Teilen"
+            />
+            <span className={style.ios_icon_space}>↓</span>
+            <Image
+              className={style.ios_icon}
+              src={iOSAddToHome}
+              alt="klicke Zum Home-Bildschirm"
+            />
           </div>
           <CloseButton onClick={dismiss} />
         </div>
