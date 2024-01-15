@@ -51,13 +51,13 @@ export default function Year({
   }
   const today = getTodayZeroIndex();
   const year = parseNumber(yearString, null);
-  const group = parseNumber(groupString ?? "0", 0);
+  const group = parseNumber(groupString ?? "0", 0) as number;
 
   if (year == null) {
     return <h2>{yearString} is not a valid year.</h2>;
   }
 
-  const monthsData = [];
+  const monthsData: [number, number][] = [];
   for (let i = 0; i < 12; i++) {
     monthsData.push([year, i]);
   }
@@ -77,6 +77,8 @@ export default function Year({
             data={selectMonthData(year, month, shiftModel)}
             today={today[0] === year && today[1] === month ? today : null}
             group={group}
+            shouldTranistionToNewPosition={false}
+            search={null}
           />
         ))}
       </Container>

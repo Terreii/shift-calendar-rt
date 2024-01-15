@@ -5,11 +5,12 @@ import {
   useRef,
   useReducer,
   type RefCallback,
+  MouseEventHandler,
 } from "react";
 // Common Hooks
 
 export function useTitleAlert() {
-  return useCallback((event: MouseEvent) => {
+  return useCallback((event) => {
     const title =
       (event.target as HTMLElement)
         .closest<HTMLElement>("[title]")
@@ -17,7 +18,7 @@ export function useTitleAlert() {
     if (title.length) {
       window.alert(title);
     }
-  }, []);
+  }, []) as MouseEventHandler;
 }
 
 /**
