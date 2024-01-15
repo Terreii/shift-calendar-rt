@@ -35,7 +35,7 @@
     "@testing-library/user-event": "^14.5.2",
     "@types/milliseconds": "^0.0.33",
     "@types/node": "^20.11.0",
-    "@types/react": "^18.2.47",
+    "@types/react": "^18.2.48",
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.11.3",
     "cypress": "^13.6.2",
