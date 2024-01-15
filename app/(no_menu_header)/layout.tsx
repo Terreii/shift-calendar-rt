@@ -6,12 +6,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import type { ReactNode } from "react";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Download",
-};
+import Header from "../../components/header/core";
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  return children;
+export default function Layout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  );
 }

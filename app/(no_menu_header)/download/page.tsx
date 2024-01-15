@@ -19,10 +19,10 @@ import {
   shiftModelNames,
   shiftModelText,
   monthNames,
-} from "../../lib/constants";
-import { useSupportsInputType } from "../../hooks/utils";
+} from "../../../lib/constants";
+import { useSupportsInputType } from "../../../hooks/utils";
 
-import styles from "../../styles/download.module.css";
+import styles from "../../../styles/download.module.css";
 
 export default function DownloadPage() {
   const [yearMonth, setYearMonth] = useState(() => {

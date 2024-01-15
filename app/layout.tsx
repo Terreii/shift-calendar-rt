@@ -11,7 +11,6 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import Footer from "../components/footer";
-import Header from "../components/header/core";
 import InstallPrompt from "../components/install-prompt";
 
 import "modern-css-reset";
@@ -60,7 +59,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="de">
       <body>
-        <Header />
         {children}
         <Footer />
         <InstallPrompt />

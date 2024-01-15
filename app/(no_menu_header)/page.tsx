@@ -14,11 +14,11 @@ import {
   shiftModelNames,
   shiftModelText,
   type ShiftModels,
-} from "../lib/constants";
-import { getToday, getTodayUrl } from "../lib/utils";
+} from "../../lib/constants";
+import { getToday, getTodayUrl } from "../../lib/utils";
 
-import hamburgerIcon from "../public/assets/icons/hamburger_icon.svg";
-import style from "../styles/layout.module.css";
+import hamburgerIcon from "../../public/assets/icons/hamburger_icon.svg";
+import style from "../../styles/layout.module.css";
 
 export default function Index({
   searchParams,

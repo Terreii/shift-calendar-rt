@@ -8,18 +8,18 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
-import ByMonths from "../../../components/by-month";
-import Downloader from "../../../components/download";
-import Legend from "../../../components/legend";
-import Revalidator from "../../../components/revalidator";
+import ByMonths from "../../../../components/by-month";
+import Downloader from "../../../../components/download";
+import Legend from "../../../../components/legend";
+import Revalidator from "../../../../components/revalidator";
 import {
   shiftModelNames,
   shiftModelText,
   type ShiftModels,
-} from "../../../lib/constants";
-import { parseNumber, getTodayZeroIndex } from "../../../lib/utils";
+} from "../../../../lib/constants";
+import { parseNumber, getTodayZeroIndex } from "../../../../lib/utils";
 
-import style from "../../../styles/calendar.module.css";
+import style from "../../../../styles/calendar.module.css";
 
 export const revalidate = 5; // revalidate the data at most every 5 minutes
 
