@@ -4,7 +4,15 @@ import { axe } from "jest-axe";
 import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
 
-jest.mock("next/router", () => require("next-router-mock"));
+jest.mock("next/navigation", () => require("next-router-mock"));
+jest.mock("next/navigation", () => ({
+  ...require("next-router-mock"),
+  useSearchParams: () => {
+    const router = require("next-router-mock").useRouter();
+    const path = router.asPath.split("?")?.[1] ?? "";
+    return new URLSearchParams(path);
+  },
+}));
 
 describe("components/month", () => {
   it("should display the correct month data", () => {

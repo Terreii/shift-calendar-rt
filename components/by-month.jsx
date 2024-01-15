@@ -1,3 +1,5 @@
+"use client";
+
 /*
 License:
 
@@ -6,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { useState, useEffect, useMemo, useRef } from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import addMonths from "date-fns/addMonths";
 import { useViewTransition } from "use-view-transitions/react";
 
@@ -14,6 +16,7 @@ import Month from "./month";
 import selectMonthData from "../lib/select-month-data";
 import { getCalUrl, scrollToADay } from "../lib/utils";
 import { useTitleAlert, useSwipe } from "../hooks/utils";
+import { useUnloadedFix } from "../hooks/time";
 
 import style from "../styles/calendar.module.css";
 
@@ -89,6 +92,11 @@ export default function ByMonths({
       scrollToADay(year, month, search);
     }
   }, [year, month, search]);
+
+  const shouldRemoveCalendar = useUnloadedFix();
+  if (shouldRemoveCalendar) {
+    return null;
+  }
 
   return (
     <div
