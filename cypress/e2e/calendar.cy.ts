@@ -132,7 +132,7 @@ describe("shift calendar current view", () => {
     triggerPointer("pointerdown", "topRight");
     triggerPointer("pointermove", "topLeft");
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1);
+    cy.wait(100);
     triggerPointer("pointerup", "topLeft");
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // Needed for Firefox
@@ -146,7 +146,7 @@ describe("shift calendar current view", () => {
     triggerPointer("pointerdown", "topLeft");
     triggerPointer("pointermove", "topRight");
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1);
+    cy.wait(100);
     triggerPointer("pointerup", "topRight");
     // eslint-disable-next-line cypress/no-unnecessary-waiting
     cy.wait(100); // Needed for Firefox
