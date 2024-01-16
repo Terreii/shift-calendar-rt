@@ -1,6 +1,8 @@
-import nextPwa from "next-pwa";
-const withPWA = nextPwa({
-  dest: "public",
+import withSerwistInit from "@serwist/next";
+
+const withSerwist = withSerwistInit({
+  swSrc: "app/sw.ts",
+  swDest: "public/sw.js",
 });
 
 /** @type {import('next').NextConfig} */
@@ -17,7 +19,7 @@ const config = {
 
 export default process.env.LINT_ENV || process.env.NODE_ENV === "development"
   ? config
-  : withPWA({
+  : withSerwist({
       ...config,
       pwa: {
         dest: "public",

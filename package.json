@@ -61,6 +61,9 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@serwist/next": "^8.4.2",
+    "@serwist/precaching": "^8.4.2",
+    "@serwist/sw": "^8.4.2",
     "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.3",
     "date-fns": "^3.2.0",
@@ -69,7 +72,6 @@
     "milliseconds": "^1.0.3",
     "modern-css-reset": "^1.4.0",
     "next": "^14.0.4",
-    "next-pwa": "^5.0.4",
     "re-reselect": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
