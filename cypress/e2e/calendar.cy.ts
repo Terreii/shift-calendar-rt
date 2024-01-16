@@ -128,13 +128,13 @@ describe("shift calendar current view", () => {
         eventConstructor: "PointerEvent",
       });
     };
-
+    cy.wait(250);
     triggerPointer("pointerdown", "topRight");
-    cy.wait(25);
+    cy.wait(250);
     triggerPointer("pointermove", "topLeft");
-    cy.wait(25);
+    cy.wait(250);
     triggerPointer("pointerup", "topLeft");
-    cy.wait(100); // Needed for Firefox
+    cy.wait(250); // Needed for Firefox
     cy.url().should(
       "include",
       `/cal/${model}/${nextMonth.getFullYear()}/${String(
@@ -143,11 +143,11 @@ describe("shift calendar current view", () => {
     );
 
     triggerPointer("pointerdown", "topLeft");
-    cy.wait(25);
+    cy.wait(250);
     triggerPointer("pointermove", "topRight");
-    cy.wait(25);
+    cy.wait(250);
     triggerPointer("pointerup", "topRight");
-    cy.wait(100); // Needed for Firefox
+    cy.wait(250); // Needed for Firefox
     cy.url().should(
       "include",
       `/cal/${model}/${today.getFullYear()}/${String(
