@@ -52,7 +52,7 @@ describe("download", () => {
     cy.contains("Es gibt mehr Download-Optionen!").click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100);
+    cy.wait(250);
     cy.url().should("include", "/download");
 
     const now = new Date();
