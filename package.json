@@ -61,7 +61,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "@serwist/next": "^8.4.2",
+    "@serwist/next": "^8.4.3",
     "@serwist/precaching": "^8.4.2",
     "@serwist/sw": "^8.4.3",
     "@vercel/analytics": "^1.1.1",
