@@ -7,7 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { Metadata } from "next";
 
-import style from "../../styles/impressum.module.css";
+import style from "../../../styles/impressum.module.css";
 
 export const metadata: Metadata = {
   title: "Impressum",

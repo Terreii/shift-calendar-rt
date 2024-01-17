@@ -1,4 +1,4 @@
-/* eslint-disable jest/expect-expect */
+/* eslint-disable jest/expect-expect, cypress/no-unnecessary-waiting */
 
 import { addMonths } from "date-fns/addMonths";
 import { formatISO } from "date-fns/formatISO";
@@ -128,14 +128,13 @@ describe("shift calendar current view", () => {
         eventConstructor: "PointerEvent",
       });
     };
-
+    cy.wait(250);
     triggerPointer("pointerdown", "topRight");
+    cy.wait(250);
     triggerPointer("pointermove", "topLeft");
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1);
+    cy.wait(250);
     triggerPointer("pointerup", "topLeft");
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // Needed for Firefox
+    cy.wait(250); // Needed for Firefox
     cy.url().should(
       "include",
       `/cal/${model}/${nextMonth.getFullYear()}/${String(
@@ -144,12 +143,11 @@ describe("shift calendar current view", () => {
     );
 
     triggerPointer("pointerdown", "topLeft");
+    cy.wait(250);
     triggerPointer("pointermove", "topRight");
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(1);
+    cy.wait(250);
     triggerPointer("pointerup", "topRight");
-    // eslint-disable-next-line cypress/no-unnecessary-waiting
-    cy.wait(100); // Needed for Firefox
+    cy.wait(250); // Needed for Firefox
     cy.url().should(
       "include",
       `/cal/${model}/${today.getFullYear()}/${String(

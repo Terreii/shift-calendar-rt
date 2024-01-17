@@ -4,7 +4,15 @@ import Header from ".";
 
 jest.mock("../../hooks/settings");
 jest.mock("../../hooks/time");
-jest.mock("next/router", () => require("next-router-mock"));
+jest.mock("next/navigation", () => require("next-router-mock"));
+jest.mock("next/navigation", () => ({
+  ...require("next-router-mock"),
+  useSearchParams: () => {
+    const router = require("next-router-mock").useRouter();
+    const path = router.asPath.split("?")?.[1] ?? "";
+    return new URLSearchParams(path);
+  },
+}));
 
 describe("components/Header", () => {
   it("should show the correct navigation links and buttons", () => {

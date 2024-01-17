@@ -1,3 +1,5 @@
+"use client";
+
 /*
 License:
 
@@ -5,7 +7,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useRouter } from "next/router";
+import { useParams, useSearchParams } from "next/navigation";
 
 import { useToday } from "./time";
 
@@ -22,17 +24,8 @@ import { useToday } from "./time";
  * }}
  */
 export function useQueryProps() {
-  const router = useRouter();
-
-  const {
-    query: {
-      shiftModel,
-      year: yearStr,
-      month: monthStr,
-      group: groupStr = "0",
-      search: searchStr,
-    },
-  } = router;
+  const { shiftModel, year: yearStr, month: monthStr } = useParams();
+  const { group: groupStr = "0", search: searchStr } = useSearchParams();
 
   const today = useToday();
   const isFullYear = !monthStr && yearStr != null;
