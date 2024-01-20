@@ -49,6 +49,8 @@ describe("download", () => {
         shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)]
       }`,
     );
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(250); // needed because it has to render the next month after load.
     cy.contains("Es gibt mehr Download-Optionen!").click();
 
     // eslint-disable-next-line cypress/no-unnecessary-waiting
