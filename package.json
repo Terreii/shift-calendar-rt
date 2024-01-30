@@ -38,7 +38,7 @@
     "@types/react": "^18.2.48",
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.11.3",
-    "cypress": "^13.6.3",
+    "cypress": "^13.6.4",
     "eslint": "^8.56.0",
     "eslint-config-next": "^14.1.0",
     "eslint-plugin-cypress": "^2.15.1",
