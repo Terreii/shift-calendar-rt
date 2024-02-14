@@ -36,6 +36,27 @@ export type MonthWorkData = {
   days: Workdata[][];
   workingCount: number[];
 };
+export type GroupMonthWorkData = {
+  days: Workdata[];
+  workingCount: number;
+};
+
+/**
+ * Calculate when a group will work in a month.
+ * @param year        Full Year of that month.
+ * @param month       Month number.
+ * @param shiftModel  Which shift model.
+ * @param group       Which group.
+ * @returns  Working data of the group.
+ */
+export function getGroupMonthData(
+  year: number,
+  month: number,
+  shiftModel: ShiftModelsWithFallbackKeys,
+  group: number,
+): GroupMonthWorkData {
+  return { days: [], workingCount: 0 };
+}
 
 /**
  * Calculate when all groups will work in a month.
@@ -47,7 +68,7 @@ export type MonthWorkData = {
  * @param year        Full Year of that month.
  * @param month       Month number.
  * @param shiftModel  Which shift model.
- * @returns  Working data of the group.
+ * @returns  Working data of all groups of a shift model.
  */
 export function getMonthData(
   year: number,
