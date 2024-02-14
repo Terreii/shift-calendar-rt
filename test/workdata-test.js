@@ -117,6 +117,19 @@ test("work data", async (t) => {
           );
         }
       });
+
+      await t.test("should handle group bigger then model group count", () => {
+        const groupCount = shiftModelNumberOfGroups[model] - 1;
+        const expected = getGroupMonthData(2024, 6, model, groupCount);
+        const actual = getGroupMonthData(2024, 6, model, groupCount + 1000000);
+        assert.deepStrictEqual(actual, expected);
+      });
+
+      await t.test("should handle group less then 0", () => {
+        const expected = getGroupMonthData(2024, 6, model, 0);
+        const actual = getGroupMonthData(2024, 6, model, -1);
+        assert.deepStrictEqual(actual, expected);
+      });
     });
   }
 
@@ -134,7 +147,7 @@ test("work data", async (t) => {
       await t.test("single group", () => {
         const shiftsBefore = "S S S N N K".split(" ");
         assert.deepStrictEqual(
-          getGroupMonthData(2010, 3, shift66Name, 5).days.slice(0, 6),
+          getGroupMonthData(2010, 3, shift66Name, 5 - 1).days.slice(0, 6),
           shiftsBefore,
         );
       });
