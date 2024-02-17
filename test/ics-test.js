@@ -23,6 +23,7 @@ test("ics generation", async (t) => {
       "WR-CALNAME": "6 - 6 Kontischicht Gruppe 5",
       "WR-TIMEZONE": "Europe/Berlin",
       calscale: "GREGORIAN",
+      prodid: "schichtkalender.app",
     });
     assert.deepStrictEqual(
       Object.values(calendarData).find((v) => v.type === "VTIMEZONE"),

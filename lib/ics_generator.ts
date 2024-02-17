@@ -93,6 +93,7 @@ METHOD:PUBLISH
 X-WR-CALNAME:${shiftModelText[model]} Gruppe ${group + 1}
 CALSCALE:GREGORIAN
 X-WR-TIMEZONE:Europe/Berlin
+PRODID:schichtkalender.app
 
 BEGIN:VTIMEZONE
 TZID:Europe/Berlin
