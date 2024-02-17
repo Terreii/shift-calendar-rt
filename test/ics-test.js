@@ -66,7 +66,7 @@ test("ics generation", async (t) => {
         now: new Date(2024, 1, 16, 8, 0, 0).getTime(),
       });
 
-      const icsFile = Array.from(generate(shift66Name, 5 - 1, 3, 1)).join("");
+      const icsFile = Array.from(generate(shift66Name, 5 - 1)).join("");
       const calendarData = ical.sync.parseICS(icsFile);
 
       const toDate = (string) => {
@@ -112,4 +112,41 @@ test("ics generation", async (t) => {
       });
     },
   );
+
+  await t.test("should be relative to today", (context) => {
+    context.mock.timers.enable({
+      apis: ["Date"],
+      now: new Date(2024, 1, 16, 8, 0, 0).getTime(),
+    });
+
+    const firstId = "SHIFT_6-6_GROUP_5_2023-2-3";
+    const middleId = "SHIFT_6-6_GROUP_5_2026-1-31";
+    const lastId = "SHIFT_6-6_GROUP_5_2026-3-31";
+
+    const icsFile = Array.from(generate(shift66Name, 5 - 1)).join("");
+    const calendarData = ical.sync.parseICS(icsFile);
+
+    assert.ok(calendarData[firstId], firstId + " is in data of 2024-02-16");
+    assert.ok(calendarData[middleId], middleId + " is in data of 2024-02-16");
+    assert.ok(
+      calendarData[lastId] == null,
+      lastId + " is not in data of 2024-02-16",
+    );
+
+    context.mock.timers.reset();
+    context.mock.timers.enable({
+      apis: ["Date"],
+      now: new Date(2025, 1, 16, 8, 0, 0).getTime(),
+    });
+
+    const icsFile2 = Array.from(generate(shift66Name, 5 - 1)).join("");
+    const calendarData2 = ical.sync.parseICS(icsFile2);
+
+    assert.ok(
+      calendarData2[firstId] == null,
+      firstId + " is not in data of 2025-02-16",
+    );
+    assert.ok(calendarData2[middleId], middleId + " is in data of 2025-02-16");
+    assert.ok(calendarData2[lastId], lastId + " is in data of 2025-02-16");
+  });
 });
