@@ -29,7 +29,7 @@ export default function* generate(model: ShiftModels, group: number) {
     date = addMonths(date, 1);
   }
 
-  yield "\nEND:VCALENDAR\n";
+  yield "END:VCALENDAR\r\n";
 }
 
 function generateMonth(
@@ -80,47 +80,42 @@ function generateDay(
     // shift goes to the next day
     endDate.setTime(addDays(endDate, 1).getTime());
   }
-  return `
-BEGIN:VEVENT
-UID:SHIFT_${model}_GROUP_${group + 1}_${year}-${month + 1}-${day}
-SUMMARY:${shift.name}
-DTSTART;TZID=Europe/Berlin:${toTimestamp(startDate)}
-DTEND;TZID=Europe/Berlin:${toTimestamp(endDate)}
-DTSTAMP:${creationDay}
-LOCATION:Tübingerstraße 123\\n72762 Reutlingen\\nDeutschland
-GEO:48.495252;9.192696
-END:VEVENT
-`;
+  return `BEGIN:VEVENT\r
+UID:SHIFT_${model}_GROUP_${group + 1}_${year}-${month + 1}-${day}\r
+SUMMARY:${shift.name}\r
+DTSTART;TZID=Europe/Berlin:${toTimestamp(startDate)}\r
+DTEND;TZID=Europe/Berlin:${toTimestamp(endDate)}\r
+DTSTAMP:${creationDay}\r
+LOCATION:Tübingerstraße 123\\n72762 Reutlingen\\nDeutschland\r
+GEO:48.495252;9.192696\r
+END:VEVENT\r\n`;
 }
 
 function metadata(model: ShiftModels, group: number): string {
-  return `BEGIN:VCALENDAR
-VERSION:2.0
-METHOD:PUBLISH
-X-WR-CALNAME:${shiftModelText[model]} Gruppe ${group + 1}
-CALSCALE:GREGORIAN
-X-WR-TIMEZONE:Europe/Berlin
-PRODID:schichtkalender.app
-
-BEGIN:VTIMEZONE
-TZID:Europe/Berlin
-BEGIN:STANDARD
-UID:EU_TIMEZONE_STANDARD
-DTSTART:16011028T030000
-RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10
-TZOFFSETFROM:+0200
-TZOFFSETTO:+0100
-END:STANDARD
-
-BEGIN:DAYLIGHT
-UID:EU_TIMEZONE_DAYLIGHT
-DTSTART:16010325T020000
-RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3
-TZOFFSETFROM:+0100
-TZOFFSETTO:+0200
-END:DAYLIGHT
-
-END:VTIMEZONE
+  return `BEGIN:VCALENDAR\r
+VERSION:2.0\r
+METHOD:PUBLISH\r
+X-WR-CALNAME:${shiftModelText[model]} Gruppe ${group + 1}\r
+CALSCALE:GREGORIAN\r
+X-WR-TIMEZONE:Europe/Berlin\r
+PRODID:schichtkalender.app\r
+BEGIN:VTIMEZONE\r
+TZID:Europe/Berlin\r
+BEGIN:STANDARD\r
+UID:EU_TIMEZONE_STANDARD\r
+DTSTART:16011028T030000\r
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=10\r
+TZOFFSETFROM:+0200\r
+TZOFFSETTO:+0100\r
+END:STANDARD\r
+BEGIN:DAYLIGHT\r
+UID:EU_TIMEZONE_DAYLIGHT\r
+DTSTART:16010325T020000\r
+RRULE:FREQ=YEARLY;BYDAY=-1SU;BYMONTH=3\r
+TZOFFSETFROM:+0100\r
+TZOFFSETTO:+0200\r
+END:DAYLIGHT\r
+END:VTIMEZONE\r
 `;
 }
 
@@ -135,7 +130,7 @@ export function toTimestamp(time: Date): string {
   const day = toCharNum(time.getDate());
   const hours = toCharNum(time.getHours());
   const minutes = toCharNum(time.getMinutes());
-  return year + month + day + "T" + hours + minutes + "00Z";
+  return year + month + day + "T" + hours + minutes + "00";
 }
 function toCharNum(num: number) {
   return String(num).padStart(2, "0");

@@ -63,7 +63,7 @@ export default function Download({
                 ? "localhost:" + (process.env.PORT ?? 3000)
                 : globalThis.location?.origin ?? "schichtkalender.app";
             // https://stackoverflow.com/questions/5329529/i-want-html-link-to-ics-file-to-open-in-calendar-app-when-clicked-currently-op
-            const href = `webcal://${host}/api/ics/${shiftModel}/${group}`;
+            const href = `webcal://${host}/api/ics/${shiftModel}/${group}.ics`;
             return (
               <a
                 key={shiftModel + group}
