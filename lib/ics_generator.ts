@@ -7,9 +7,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { addDays, addMonths, addYears, subYears, startOfMonth } from "date-fns";
 
-import shiftsConfig from "../config/shifts.js";
-import { type ShiftModels, shiftModelText } from "./constants.js";
-import { Workdata, getGroupMonthData } from "./workdata.js";
+import shiftsConfig from "../config/shifts.ts";
+import { type ShiftModels, shiftModelText } from "./constants.ts";
+import { Workdata, getGroupMonthData } from "./workdata.ts";
 
 /**
  * Generates an ics file of a shift group.

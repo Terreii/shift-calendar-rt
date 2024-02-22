@@ -8,47 +8,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import Link from "next/link";
 import {
   shiftModelText,
-  shift66Name,
-  shift64Name,
-  shiftWfW,
-  shiftAddedNight,
-  ShiftModels,
+  shiftModelNames,
+  shiftModelNumberOfGroups,
   excelExportName,
   excelExportModelFullYearName,
+  type ShiftModels,
 } from "../lib/constants";
 
 import style from "./download.module.css";
-
-const urls = {
-  [shift66Name]: [
-    "/assets/6-6_gruppe_1.ics",
-    "/assets/6-6_gruppe_2.ics",
-    "/assets/6-6_gruppe_3.ics",
-    "/assets/6-6_gruppe_4.ics",
-    "/assets/6-6_gruppe_5.ics",
-    "/assets/6-6_gruppe_6.ics",
-  ],
-  [shift64Name]: [
-    "/assets/6-4_gruppe_1.ics",
-    "/assets/6-4_gruppe_2.ics",
-    "/assets/6-4_gruppe_3.ics",
-    "/assets/6-4_gruppe_4.ics",
-    "/assets/6-4_gruppe_5.ics",
-  ],
-  [shiftWfW]: [
-    "/assets/wfw_gruppe_1.ics",
-    "/assets/wfw_gruppe_2.ics",
-    "/assets/wfw_gruppe_3.ics",
-    "/assets/wfw_gruppe_4.ics",
-    "/assets/wfw_gruppe_5.ics",
-    "/assets/wfw_gruppe_6.ics",
-  ],
-  [shiftAddedNight]: [
-    "/assets/nacht_gruppe_1.ics",
-    "/assets/nacht_gruppe_2.ics",
-    "/assets/nacht_gruppe_3.ics",
-  ],
-};
 
 export default function Download({
   shiftModel,
@@ -59,7 +26,7 @@ export default function Download({
   year: number;
   month?: number;
 }) {
-  if (!(shiftModel in urls)) {
+  if (!shiftModelNames.includes(shiftModel)) {
     return (
       <div className={style.container}>
         <section className={style.section}>
@@ -87,8 +54,16 @@ export default function Download({
         </p>
 
         <div className={style.link_list}>
-          {urls[shiftModel].map((href, index) => {
+          {Array.from({
+            length: shiftModelNumberOfGroups[shiftModel] ?? 0,
+          }).map((_, index) => {
             const group = index + 1;
+            const host =
+              process.env.NODE_ENV === "development"
+                ? "localhost:" + (process.env.PORT ?? 3000)
+                : globalThis.location?.origin ?? "schichtkalender.app";
+            // https://stackoverflow.com/questions/5329529/i-want-html-link-to-ics-file-to-open-in-calendar-app-when-clicked-currently-op
+            const href = `webcal://${host}/api/ics/${shiftModel}/${group}`;
             return (
               <a
                 key={shiftModel + group}

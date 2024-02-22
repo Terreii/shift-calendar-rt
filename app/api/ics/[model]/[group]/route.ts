@@ -63,7 +63,8 @@ export async function GET(
 
   return new Response(body, {
     headers: {
-      "Content-Type": "text/calendar",
+      "Content-Type": "text/calendar; charset=utf-8",
+      "Content-Disposition": `attachment; filename="${model}_group_${group}.ics"`,
       "Cache-Control": "s-maxage=2592000, public",
     },
   });
