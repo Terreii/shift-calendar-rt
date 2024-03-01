@@ -40,7 +40,7 @@
     "bootstrap-icons": "^1.11.3",
     "cypress": "^13.6.6",
     "eslint": "^8.57.0",
-    "eslint-config-next": "^14.1.0",
+    "eslint-config-next": "^14.1.1",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-testing-library": "^6.2.0",
