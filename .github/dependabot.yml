@@ -8,7 +8,15 @@ updates:
   - package-ecosystem: "npm" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "daily"
+      interval: "weekly"
+    versioning-strategy: increase
+    groups:
+      non-breaking-updates:
+        patterns:
+          - "*" # All dependecies that are minor or patch.
+        update-types:
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "github-actions"
     directory: "/"
