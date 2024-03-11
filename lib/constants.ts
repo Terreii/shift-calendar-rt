@@ -5,11 +5,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import shifts, { type ShiftModelKeys, shift44Name } from "../config/shifts.ts";
+import shifts, {
+  type ShiftModelKeys,
+  shift44Name,
+  shiftWfWOld,
+} from "../config/shifts.ts";
 export {
   shift66Name,
   shift64Name,
   shiftWfW,
+  shiftWfWOld,
   rotatingShift,
   shiftAddedNight,
   shiftAddedNight8,
@@ -33,7 +38,7 @@ export const monthNames = [
 ];
 
 export const shiftModelNames = Object.keys(shifts).filter(
-  (key) => key !== shift44Name,
+  (key) => key !== shift44Name && key !== shiftWfWOld,
 ) as ShiftModelKeys[];
 
 export const shiftModelText = Object.fromEntries(

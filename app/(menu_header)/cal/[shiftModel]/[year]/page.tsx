@@ -66,7 +66,7 @@ export default function Year({
     <main className={style.main}>
       <Revalidator today={today} />
 
-      <Legend shiftKey={shiftModel} />
+      <Legend shiftKey={shiftModel} year={year} month={0} />
 
       <Container>
         {monthsData.map(([year, month]) => (

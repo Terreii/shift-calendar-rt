@@ -8,7 +8,6 @@ import {
   shiftModelText,
   shiftModelNames,
   monthNames,
-  shiftModelNumberOfGroups,
 } from "../../lib/constants";
 import { getToday } from "../../lib/utils";
 import { getMonthData } from "../../lib/workdata";
@@ -41,12 +40,14 @@ describe("shift calendar current view", () => {
     const now = startOfMonth(
       new Date(today[0], today[1] - 1, today[2], today[3]),
     );
+    const data = getMonthData(now.getFullYear(), now.getMonth(), model);
+
     const getDayRow = () =>
       cy.get(`#day_${formatISO(now, { representation: "date" })}`);
     const getChild = (index: number) =>
       getDayRow().children(`:nth-child(${index + 2})`);
 
-    const childrenCount = 3 + shiftModelNumberOfGroups[model];
+    const childrenCount = 3 + data.workingCount.length;
     getDayRow().children().should("have.length", childrenCount);
 
     // day in month
@@ -60,7 +61,6 @@ describe("shift calendar current view", () => {
     );
 
     // shifts
-    const data = getMonthData(now.getFullYear(), now.getMonth(), model);
     const dataOfTheDay = data.days[0];
     dataOfTheDay.forEach((shift, index) => {
       if (shift === "K") {

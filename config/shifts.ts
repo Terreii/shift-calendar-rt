@@ -152,6 +152,7 @@ export type ClosingDay = {
 export const shift66Name = "6-6";
 export const shift64Name = "6-4";
 export const shiftWfW = "wfw";
+export const shiftWfWOld = "wfw-old";
 export const rotatingShift = "rotating";
 export const shiftAddedNight = "added-night";
 export const shiftAddedNight8 = "added-night-8";
@@ -167,7 +168,10 @@ export type ShiftModelKeys =
   | typeof shiftAddedNight8
   | typeof weekend;
 
-export type ShiftModelsWithFallbackKeys = ShiftModelKeys | typeof shift44Name;
+export type ShiftModelsWithFallbackKeys =
+  | ShiftModelKeys
+  | typeof shift44Name
+  | typeof shiftWfWOld;
 
 const boschKontiShifts: Record<ShiftKey, Shift> = {
   F: {
@@ -227,14 +231,29 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     closingDays: boschClosingDays,
     fallback: shift64Name,
   },
-  [shiftWfW]: {
-    name: "Werkfeuerwehr",
+  [shiftWfWOld]: {
+    name: "Werkfeuerwehr Old",
     shifts: boschKontiShifts,
     startDate: "2010-04-04",
     cycle: ["F", "F", "S", "S", "N", "N", null, null, null, null, null, null],
     groups: [4, 6, 8, 10, 0, 2],
     closingDays: boschClosingDays,
     fallback: shift44Name,
+  },
+  [shiftWfW]: {
+    name: "Werkfeuerwehr",
+    shifts: {
+      X: {
+        name: "Schicht",
+        start: [7, 0],
+        end: [7, 0],
+      },
+    },
+    startDate: "2024-04-01",
+    cycle: ["X", null, null, null],
+    groups: [1, 2, 3, 0],
+    closingDays: [],
+    fallback: "wfw-old",
   },
   [rotatingShift]: {
     name: "Wechselschicht",

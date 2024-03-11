@@ -6,7 +6,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 .main {
-  min-width: 100vw;
+  min-width: 100%;
   padding-top: 1rem;
   text-align: center;
 }
