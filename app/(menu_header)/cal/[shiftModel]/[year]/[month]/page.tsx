@@ -66,7 +66,7 @@ export default function MonthPage({
     <main className={style.main}>
       <Revalidator today={today} />
 
-      <Legend shiftKey={shiftModel} />
+      <Legend shiftKey={shiftModel} year={year} month={month} />
 
       <ByMonths
         key={`${year}-${month}`}

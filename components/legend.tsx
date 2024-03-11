@@ -5,20 +5,35 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { type ReactNode } from "react";
-import shifts, { type ShiftModelKeys } from "../config/shifts";
+import { useMemo, type ReactNode } from "react";
+import shifts, {
+  type Shift,
+  type ShiftModelKeys,
+  type ShiftModelsWithFallbackKeys,
+} from "../config/shifts";
 
 import style from "./legend.module.css";
 
 /**
  * Renders a legend of definitions for the table.
  */
-export default function Legend({ shiftKey }: { shiftKey: ShiftModelKeys }) {
-  const shift = shifts[shiftKey];
+export default function Legend({
+  shiftKey,
+  year,
+  month,
+}: {
+  shiftKey: ShiftModelKeys;
+  year: number;
+  month: number;
+}) {
+  const shiftTypes = useMemo(
+    () => getShifts(shiftKey, year, month),
+    [shiftKey, year, month],
+  );
   return (
     <div className={style.container}>
       <dl className={style.column}>
-        {Object.entries(shift.shifts).map(([key, data]) => (
+        {shiftTypes.map(([key, data]) => (
           <Cell key={shiftKey + key} id={key}>
             {data.name}
             <br />
@@ -55,6 +70,43 @@ export default function Legend({ shiftKey }: { shiftKey: ShiftModelKeys }) {
       </dl>
     </div>
   );
+}
+
+function getShifts(
+  shiftKey: ShiftModelKeys,
+  year: number,
+  month: number,
+): [string, Shift][] {
+  const fallbackShiftKey = getFallbackKey(shiftKey, year, month);
+  const fallbackShifts = fallbackShiftKey
+    ? shifts[fallbackShiftKey].shifts
+    : {};
+
+  const uniqueShiftsKeys = new Set<string>();
+
+  return Object.entries(shifts[shiftKey].shifts) // Get all shift types
+    .concat(Object.entries(fallbackShifts))
+    .filter(([key]) => {
+      // And filter out all not unique
+      if (uniqueShiftsKeys.has(key)) return false;
+      uniqueShiftsKeys.add(key);
+      return true;
+    });
+}
+
+function getFallbackKey(
+  shiftKey: ShiftModelsWithFallbackKeys,
+  year: number,
+  month: number,
+): ShiftModelsWithFallbackKeys | null {
+  const shift = shifts[shiftKey];
+  const [startYear, startMonth] = shift.startDate
+    .split("-")
+    .map((s) => parseInt(s, 10));
+  if (year < startYear || (year === startYear && month < startMonth)) {
+    return getFallbackKey(shift.fallback, year, month) ?? shift.fallback;
+  }
+  return null;
 }
 
 function toTimeString(time: [number, number]): string {
