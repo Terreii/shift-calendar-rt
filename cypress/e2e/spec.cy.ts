@@ -11,8 +11,8 @@ describe("basic usage", () => {
   it("should have all shift models on index", () => {
     cy.visit("http://localhost:3000/");
 
-    for (const [key, name] of Object.entries(shiftModelText)) {
-      if (key === shift44Name) continue;
+    for (const key of shiftModelNames) {
+      const name = shiftModelText[key];
       cy.contains("main a", name)
         .should("have.attr", "href")
         .and("include", key);
