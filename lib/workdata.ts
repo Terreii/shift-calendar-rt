@@ -105,8 +105,10 @@ function fullMonthAllGroupsShiftCalculation(
   year: number,
   month: number,
 ): MonthWorkData {
-  const daysSinceModelStart =
-    differenceInCalendarDays(new Date(year, month, 1), modelStartDate) + 1;
+  const daysSinceModelStart = differenceInCalendarDays(
+    new Date(year, month, 1),
+    modelStartDate,
+  );
   const groups = getGroupsConfig(config);
 
   const daysData: DayWorkdata[] = [];
@@ -139,11 +141,10 @@ function modelSwitchingAllGroupsCalculation(
   month: number,
 ): MonthWorkData {
   const fallbackConfig = shiftModels[config.fallback];
-  const daysSinceFallbackModelStart =
-    differenceInCalendarDays(
-      getTime(year, month, 1),
-      new Date(fallbackConfig.startDate + "T03:00:00.000Z"),
-    ) + 1;
+  const daysSinceFallbackModelStart = differenceInCalendarDays(
+    getTime(year, month, 1),
+    new Date(fallbackConfig.startDate + "T03:00:00.000Z"),
+  );
   const groups = getGroupsConfig(config);
   const fallbackGroups = getGroupsConfig(fallbackConfig);
 

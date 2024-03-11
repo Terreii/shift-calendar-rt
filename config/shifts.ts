@@ -251,7 +251,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
     },
     startDate: "2024-04-01",
     cycle: ["X", null, null, null],
-    groups: [1, 2, 3, 0],
+    groups: [0, 1, 2, 3],
     closingDays: [],
     fallback: "wfw-old",
   },
