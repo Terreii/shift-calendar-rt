@@ -101,4 +101,17 @@ test("work data", async (t) => {
       [shiftsBefore, shiftsBefore, shiftsBefore, "K S K F N K".split(" ")],
     );
   });
+
+  await t.test("WfW switches to the new model", () => {
+    const data = getMonthData(2024, 4 - 1, "wfw");
+    const workingShifts = [1, 2, 3, 4, 1, 2, 3, 4];
+    const base = new Array(4).fill("K");
+    const expected = workingShifts.map((group) => {
+      // base.with(group - 1, 'X")
+      const shift = [...base];
+      shift[group - 1] = "X";
+      return shift;
+    });
+    assert.deepStrictEqual(data.days.slice(0, 8), expected);
+  });
 });
