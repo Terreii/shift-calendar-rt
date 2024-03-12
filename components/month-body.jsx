@@ -102,6 +102,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
               isToday={isToday}
               isYesterday={isYesterday}
               hour={today[3]}
+              minues={today[4]}
               shiftModel={shiftModel}
             />
           );
