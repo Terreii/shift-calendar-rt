@@ -23,20 +23,17 @@ function useTodayCore(getterFn) {
     };
 
     // timeout for updating in the background and if the page is in focus.
-    const now = new Date();
-    const time = now.getTime();
-    // The next hour
-    now.setHours(now.getHours() + 1);
-    now.setMinutes(0);
-    now.setSeconds(0);
-    const timeout = setTimeout(update, now.getTime() - time);
-    const interval = setInterval(update, 60 * 1000);
+    const now = Date.now();
+    const then = new Date(now);
+    // The next 5 minutes
+    then.setMinutes(Math.floor(then.getMinutes() / 5) * 5 + 5);
+    then.setSeconds(1);
+    const timeout = setTimeout(update, then.getTime() - now);
 
     window.addEventListener("focus", update);
     return () => {
       window.removeEventListener("focus", update);
       clearTimeout(timeout);
-      clearInterval(interval);
     };
   }, [today, getterFn]);
 
@@ -47,7 +44,7 @@ function useTodayCore(getterFn) {
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 1-12.
  *
- * @returns {[number, number, number, number]}
+ * @returns {[number, number, number, number, number]}
  */
 export function useToday() {
   return useTodayCore(getToday);
@@ -57,7 +54,7 @@ export function useToday() {
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 0-11.
  *
- * @returns {[number, number, number, number]}
+ * @returns {[number, number, number, number, number]}
  */
 export function useTodayZeroIndex() {
   return useTodayCore(getTodayZeroIndex);

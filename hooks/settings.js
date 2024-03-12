@@ -25,13 +25,14 @@ import { useToday } from "./time";
  */
 export function useQueryProps() {
   const { shiftModel, year: yearStr, month: monthStr } = useParams();
-  const { group: groupStr = "0", search: searchStr } = useSearchParams();
+  const queryParams = useSearchParams();
+  const searchStr = queryParams.get("search");
 
   const today = useToday();
   const isFullYear = !monthStr && yearStr != null;
   const year = parseInt(yearStr) || today[0];
   const month = isFullYear ? 1 : parseInt(monthStr) || today[1];
-  const group = parseInt(groupStr);
+  const group = parseInt(queryParams.get("group") ?? "0", 10);
   const search =
     searchStr && !Number.isNaN(searchStr) ? parseInt(searchStr, 10) : null;
 

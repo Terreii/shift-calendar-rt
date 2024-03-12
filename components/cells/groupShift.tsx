@@ -27,6 +27,7 @@ export default function GroupShiftCell({
   isToday,
   isYesterday,
   hour,
+  minues,
   shiftModel: shiftModelKey,
 }: {
   group: number;
@@ -34,6 +35,7 @@ export default function GroupShiftCell({
   isToday: boolean;
   isYesterday: boolean;
   hour: number;
+  minues: number;
   shiftModel: ShiftModelKeys;
 }) {
   if (shift === "K") {
@@ -41,15 +43,21 @@ export default function GroupShiftCell({
   }
 
   const {
-    start: [startHour],
-    end: [endHour],
+    start: [startHour, startMinues],
+    end: [endHour, endMinues],
   } = getShift(shiftModelKey, shift);
+
   const isTodayShift =
     isToday &&
-    ((hour >= startHour && hour < endHour) || // shift starts and ends today.
-      (startHour >= endHour && hour >= startHour)); // shift starts today and ends tomorrow.
+    ((hour > startHour && hour < endHour) || // shift starts and ends today.
+      (hour === startHour && minues >= startMinues) || // start hour.
+      (hour === endHour && minues < endMinues) || // End hour
+      (startHour >= endHour && // shift starts today and ends tomorrow.
+        (hour > startHour || (hour === startHour && minues >= startMinues))));
   const isYesterdayShift =
-    isYesterday && startHour >= endHour && hour < endHour;
+    isYesterday &&
+    startHour >= endHour &&
+    (hour < endHour || (hour === endHour && minues < endMinues));
 
   return (
     <td
