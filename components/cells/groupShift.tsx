@@ -66,10 +66,10 @@ export default function GroupShiftCell({
 }
 
 function getShift(
-  shiftModelKey: ShiftModelsWithFallbackKeys,
+  modelKey: ShiftModelsWithFallbackKeys,
   shiftKey: Workdata,
 ): Shift {
-  const shift = shiftModels[shiftModelKey];
+  const shift = shiftModels[modelKey];
   if (shiftKey in shift.shifts) return shift.shifts[shiftKey];
   return getShift(shift.fallback, shiftKey);
 }
