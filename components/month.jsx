@@ -11,6 +11,7 @@ import { memo } from "react";
 
 import MonthBody from "./month-body";
 import { monthNames } from "../lib/constants";
+import { useTodayZeroIndex } from "../hooks/time";
 
 import style from "../styles/calendar.module.css";
 
@@ -20,7 +21,6 @@ import style from "../styles/calendar.module.css";
  * @param {number}    arg0.year     Year of the month.
  * @param {number}    arg0.month    Month number in the year of this month.
  * @param {Object}    arg0.data     Month-data that contains all workdays and holidays of that month.
- * @param {[number,number,number,number]|null}  arg0.today    Array of numbers that contains todays date. [year, month, day].
  * @param {?number}   arg0.search   Date of the search result. Or null.
  * @param {number}    arg0.group    Group to display. 0 = All, 1 - 6 is group number
  * @param {boolean?}  arg0.shouldTranistionToNewPosition  This is the only displayed month. This is for mobile.
@@ -31,7 +31,6 @@ function Month({
   year,
   month,
   data,
-  today,
   search,
   group,
   shouldTranistionToNewPosition = false,
@@ -48,7 +47,8 @@ function Month({
     groups.push(group - 1);
   }
 
-  const isToday = today != null && today[0] === year && today[1] === month;
+  const today = useTodayZeroIndex();
+  const isToday = today[0] === year && today[1] === month;
 
   return (
     <table

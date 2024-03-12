@@ -11,13 +11,12 @@ import { redirect } from "next/navigation";
 import ByMonths from "../../../../../../components/by-month";
 import Downloader from "../../../../../../components/download";
 import Legend from "../../../../../../components/legend";
-import Revalidator from "../../../../../../components/revalidator";
 import {
   shiftModelNames,
   shiftModelText,
   type ShiftModels,
 } from "../../../../../../lib/constants";
-import { parseNumber, getTodayZeroIndex } from "../../../../../../lib/utils";
+import { parseNumber } from "../../../../../../lib/utils";
 
 import style from "../../../../../../styles/calendar.module.css";
 
@@ -48,7 +47,6 @@ export default function MonthPage({
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
-  const today = getTodayZeroIndex();
   const year = parseNumber(yearString, null);
   const monthQuery = parseNumber(monthString, null);
   const month = monthQuery ? monthQuery - 1 : monthQuery;
@@ -64,8 +62,6 @@ export default function MonthPage({
 
   return (
     <main className={style.main}>
-      <Revalidator today={today} />
-
       <Legend shiftKey={shiftModel} year={year} month={month} />
 
       <ByMonths
@@ -75,7 +71,6 @@ export default function MonthPage({
         search={search}
         year={year}
         month={month}
-        today={today}
       />
 
       <Downloader shiftModel={shiftModel} year={year} month={month + 1} />

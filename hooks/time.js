@@ -7,16 +7,16 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect } from "react";
 
-import { getToday } from "../lib/utils";
+import { getToday, getTodayZeroIndex } from "../lib/utils";
 
-export function useToday() {
-  const [today, setToday] = useState(getToday);
+function useTodayCore(getterFn) {
+  const [today, setToday] = useState(getterFn);
 
   useEffect(() => {
     const update = () => {
-      const nextToday = getToday();
+      const nextToday = getterFn();
       if (nextToday.some((v, i) => v !== today[i])) {
         setToday(nextToday);
       }
@@ -36,23 +36,29 @@ export function useToday() {
       window.removeEventListener("focus", update);
       clearTimeout(timeout);
     };
-  }, [today]);
+  }, [today, getterFn]);
 
   return today;
 }
 
 /**
- * Today, but the month is zero indexed.
+ * Returns today [year, month, day, hour] and auto updates.
+ * Month is 1-12.
+ *
+ * @returns {[number, number, number, number]}
+ */
+export function useToday() {
+  return useTodayCore(getToday);
+}
+
+/**
+ * Returns today [year, month, day, hour] and auto updates.
+ * Month is 0-11.
+ *
+ * @returns {[number, number, number, number]}
  */
 export function useTodayZeroIndex() {
-  const today = useToday();
-
-  // useMemo is more performant, because this hook is used in the month component.
-  return useMemo(() => {
-    const result = [...today];
-    result[1] -= 1;
-    return result;
-  }, [today]);
+  return useTodayCore(getTodayZeroIndex);
 }
 
 /**
@@ -61,7 +67,7 @@ export function useTodayZeroIndex() {
  *
  * It does it by completely re-render the calendar's tables. By removing them and the add them back.
  *
- * @returns {boolean}  If true, then the calendar should not be rendered.
+ * @returns {boolean} If true, then the calendar should not be rendered.
  */
 export function useUnloadedFix() {
   const [shouldRemoveCalendar, setRemoveCalendar] = useState(false);

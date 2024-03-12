@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import ByMonths from "../../../../components/by-month";
 import Downloader from "../../../../components/download";
 import Legend from "../../../../components/legend";
-import Revalidator from "../../../../components/revalidator";
+import Revalidator from "./revalidator";
 import {
   shiftModelNames,
   shiftModelText,
@@ -54,14 +54,12 @@ export default function ShiftModel({
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
-  const today = getTodayZeroIndex();
+  const [year, month] = getTodayZeroIndex();
   const group = parseNumber(groupString ?? "0", 0);
-  const year = today[0];
-  const month = today[1];
 
   return (
     <main className={style.main}>
-      <Revalidator today={today} />
+      <Revalidator year={year} month={month} />
 
       <Legend shiftKey={shiftModel} year={year} month={month} />
 
@@ -72,7 +70,6 @@ export default function ShiftModel({
         search={null}
         year={year}
         month={month}
-        today={today}
       />
 
       <Downloader shiftModel={shiftModel} year={year} month={month + 1} />
