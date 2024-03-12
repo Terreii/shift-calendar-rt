@@ -31,14 +31,13 @@ import style from "../styles/calendar.module.css";
  * @param {number}     arg.year     Year of the month.
  * @param {number}     arg.month    Month of this month.
  * @param {MonthData}  arg.data     Data of this month.
- * @param {number[]}   [arg.today]  Array of numbers that contains todays date. [year, month, day].
+ * @param {number[]}   arg.today    Array of numbers that contains todays date. [year, month, day].
  * @param {number}     [arg.search] Date of the search result. Or null.
  * @param {number}     arg.group    Group to display. 0 = All, 1 - 6 is group number
  * @returns {JSX.Element}
  */
 export default function MonthBody({ year, month, data, today, search, group }) {
-  const todayInThisMonth =
-    today != null && today[0] === year && today[1] === month;
+  const todayInThisMonth = today[0] === year && today[1] === month;
   const { shiftModel } = useParams();
 
   // Render every row/day.
@@ -102,7 +101,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
               shift={shift}
               isToday={isToday}
               isYesterday={isYesterday}
-              hour={today?.[3]}
+              hour={today[3]}
               shiftModel={shiftModel}
             />
           );

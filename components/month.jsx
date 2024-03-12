@@ -48,7 +48,7 @@ function Month({
   }
 
   const today = useTodayZeroIndex();
-  const isToday = today != null && today[0] === year && today[1] === month;
+  const isToday = today[0] === year && today[1] === month;
 
   return (
     <table

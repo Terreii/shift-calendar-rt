@@ -26,14 +26,14 @@ export default function GroupShiftCell({
   shift,
   isToday,
   isYesterday,
-  hour = 25, // impossible hour, if no hour is passed to the function (today is not in current month)
+  hour,
   shiftModel: shiftModelKey,
 }: {
   group: number;
   shift: Workdata;
   isToday: boolean;
   isYesterday: boolean;
-  hour?: number;
+  hour: number;
   shiftModel: ShiftModelKeys;
 }) {
   if (shift === "K") {
