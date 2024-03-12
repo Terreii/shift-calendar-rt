@@ -9,7 +9,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import classNames from "classnames";
 
-import shiftModels, { type ShiftModelKeys } from "../../config/shifts";
+import shiftModels, {
+  type Shift,
+  type ShiftModelKeys,
+  type ShiftModelsWithFallbackKeys,
+} from "../../config/shifts";
 import { Workdata } from "../../lib/workdata";
 import style from "../../styles/calendar.module.css";
 
@@ -40,7 +44,7 @@ export default function GroupShiftCell({
   const {
     start: [startHour],
     end: [endHour],
-  } = shiftModels[shiftModelKey].shifts[shift];
+  } = getShift(shiftModelKey, shift);
   const isTodayShift =
     isToday &&
     ((hour >= startHour && hour < endHour) || // shift starts and ends today.
@@ -59,4 +63,13 @@ export default function GroupShiftCell({
       {shift}
     </td>
   );
+}
+
+function getShift(
+  shiftModelKey: ShiftModelsWithFallbackKeys,
+  shiftKey: Workdata,
+): Shift {
+  const shift = shiftModels[shiftModelKey];
+  if (shiftKey in shift.shifts) return shift.shifts[shiftKey];
+  return getShift(shift.fallback, shiftKey);
 }
