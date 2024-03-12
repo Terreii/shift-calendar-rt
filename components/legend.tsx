@@ -43,6 +43,8 @@ export default function Legend({
       </dl>
 
       <dl className={style.column}>
+        <Cell className={style.current}>Aktuelle Schicht</Cell>
+
         <Cell className={style.closing}>
           Schließtage (Ostern und Weihnachten)
         </Cell>

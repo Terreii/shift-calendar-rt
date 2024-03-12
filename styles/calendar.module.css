@@ -296,6 +296,13 @@ But then show the next month on small screen, then the next 2 months, then all o
   color: var(--group-6-text);
 }
 
+.group[data-current] {
+  border-width: 3px !important;
+  border-color: var(--table-color);
+  font-weight: bold;
+  text-decoration: underline;
+}
+
 .row:is([data-interest="search"], [data-interest="today"])
   > :is(.group, .week_day) {
   border-top: var(--interest-width) solid var(--interest-border-color);

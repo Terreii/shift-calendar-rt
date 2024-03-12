@@ -30,7 +30,7 @@ function getTime(year: number, month: number, day: number): number {
   return time;
 }
 
-export type Workdata = "F" | "S" | "N" | "Normal" | "K";
+export type Workdata = "F" | "S" | "N" | "Normal" | "X" | "K";
 type DayWorkdata = Workdata[];
 export type MonthWorkData = {
   days: Workdata[][];
