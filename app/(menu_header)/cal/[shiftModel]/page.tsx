@@ -11,7 +11,7 @@ import { redirect } from "next/navigation";
 import ByMonths from "../../../../components/by-month";
 import Downloader from "../../../../components/download";
 import Legend from "../../../../components/legend";
-import Revalidator from "../../../../components/revalidator";
+import Revalidator from "./revalidator";
 import {
   shiftModelNames,
   shiftModelText,

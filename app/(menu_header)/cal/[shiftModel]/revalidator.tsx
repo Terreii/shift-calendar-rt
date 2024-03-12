@@ -10,7 +10,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { useTodayZeroIndex } from "../hooks/time";
+import { useTodayZeroIndex } from "../../../../hooks/time";
 
 export default function Revalidator({
   today: currentToday,
