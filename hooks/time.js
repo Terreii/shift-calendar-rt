@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 
 import { getToday, getTodayZeroIndex } from "../lib/utils";
 
-function useTodayCore(getterFn: () => [number, number, number, number]) {
+function useTodayCore(getterFn) {
   const [today, setToday] = useState(getterFn);
 
   useEffect(() => {
@@ -44,6 +44,8 @@ function useTodayCore(getterFn: () => [number, number, number, number]) {
 /**
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 1-12.
+ *
+ * @returns {[number, number, number, number]}
  */
 export function useToday() {
   return useTodayCore(getToday);
@@ -52,6 +54,8 @@ export function useToday() {
 /**
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 0-11.
+ *
+ * @returns {[number, number, number, number]}
  */
 export function useTodayZeroIndex() {
   return useTodayCore(getTodayZeroIndex);
@@ -63,9 +67,9 @@ export function useTodayZeroIndex() {
  *
  * It does it by completely re-render the calendar's tables. By removing them and the add them back.
  *
- * @returns If true, then the calendar should not be rendered.
+ * @returns {boolean} If true, then the calendar should not be rendered.
  */
-export function useUnloadedFix(): boolean {
+export function useUnloadedFix() {
   const [shouldRemoveCalendar, setRemoveCalendar] = useState(false);
 
   useEffect(() => {
