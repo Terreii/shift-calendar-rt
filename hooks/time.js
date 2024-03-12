@@ -30,11 +30,13 @@ function useTodayCore(getterFn) {
     now.setMinutes(0);
     now.setSeconds(0);
     const timeout = setTimeout(update, now.getTime() - time);
+    const interval = setInterval(update, 60 * 1000);
 
     window.addEventListener("focus", update);
     return () => {
       window.removeEventListener("focus", update);
       clearTimeout(timeout);
+      clearInterval(interval);
     };
   }, [today, getterFn]);
 

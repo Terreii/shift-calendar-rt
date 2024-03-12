@@ -47,7 +47,7 @@ export default function GroupShiftCell({
   const isTodayShift =
     isToday &&
     ((hour >= startHour && hour < endHour) || // shift starts and ends today.
-      (startHour >= endHour && hour > startHour)); // shift starts today and ends tomorrow.
+      (startHour >= endHour && hour >= startHour)); // shift starts today and ends tomorrow.
   const isYesterdayShift =
     isYesterday && startHour >= endHour && hour < endHour;
 
