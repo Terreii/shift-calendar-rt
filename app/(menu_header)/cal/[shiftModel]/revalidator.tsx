@@ -13,16 +13,18 @@ import { useRouter } from "next/navigation";
 import { useTodayZeroIndex } from "../../../../hooks/time";
 
 export default function Revalidator({
-  today: currentToday,
+  year,
+  month,
 }: {
-  today: [number, number, number, number];
+  year: number;
+  month: number;
 }) {
   const router = useRouter();
-  const today = useTodayZeroIndex();
+  const [yearNow, monthNow] = useTodayZeroIndex();
   useEffect(() => {
-    if (currentToday.some((item, index) => item !== today[index])) {
+    if (yearNow !== year || monthNow !== month) {
       router.refresh();
     }
-  }, [router, currentToday, today]);
+  }, [router, yearNow, monthNow, year, month]);
   return null;
 }

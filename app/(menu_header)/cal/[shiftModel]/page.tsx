@@ -54,14 +54,12 @@ export default function ShiftModel({
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
-  const today = getTodayZeroIndex();
+  const [year, month] = getTodayZeroIndex();
   const group = parseNumber(groupString ?? "0", 0);
-  const year = today[0];
-  const month = today[1];
 
   return (
     <main className={style.main}>
-      <Revalidator today={today} />
+      <Revalidator year={year} month={month} />
 
       <Legend shiftKey={shiftModel} year={year} month={month} />
 
