@@ -12,14 +12,13 @@ import Container from "./monthsContainer.tsx";
 import Month from "../../../../../components/month";
 import Downloader from "../../../../../components/download";
 import Legend from "../../../../../components/legend";
-import Revalidator from "../../../../../components/revalidator";
 import {
   shiftModelNames,
   shiftModelText,
   type ShiftModels,
 } from "../../../../../lib/constants";
 import selectMonthData from "../../../../../lib/select-month-data";
-import { getTodayZeroIndex, parseNumber } from "../../../../../lib/utils";
+import { parseNumber } from "../../../../../lib/utils";
 
 import style from "../../../../../styles/calendar.module.css";
 
@@ -49,7 +48,6 @@ export default function Year({
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
-  const today = getTodayZeroIndex();
   const year = parseNumber(yearString, null);
   const group = parseNumber(groupString ?? "0", 0) as number;
 
@@ -64,8 +62,6 @@ export default function Year({
 
   return (
     <main className={style.main}>
-      <Revalidator today={today} />
-
       <Legend shiftKey={shiftModel} year={year} month={0} />
 
       <Container>
@@ -75,7 +71,6 @@ export default function Year({
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
-            today={today[0] === year && today[1] === month ? today : null}
             group={group}
             shouldTranistionToNewPosition={false}
             search={null}

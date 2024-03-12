@@ -72,7 +72,6 @@ export default function ShiftModel({
         search={null}
         year={year}
         month={month}
-        today={today}
       />
 
       <Downloader shiftModel={shiftModel} year={year} month={month + 1} />

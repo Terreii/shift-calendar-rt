@@ -28,16 +28,8 @@ import style from "../styles/calendar.module.css";
  * @param {number|null} param.search    Searched day.
  * @param {number} param.year           Year to display.
  * @param {number} param.month          Month to display.
- * @param {number[]} param.today        Todays date as an array of numbers [yyyy, mm, dd].
  */
-export default function ByMonths({
-  shiftModel,
-  group,
-  search,
-  year,
-  month,
-  today,
-}) {
+export default function ByMonths({ shiftModel, group, search, year, month }) {
   const router = useRouter();
   const { startViewTransition } = useViewTransition();
   const { ref, isSwiping, direction, x } = useSwipe((direction) => {
@@ -115,7 +107,6 @@ export default function ByMonths({
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
-            today={today[0] === year && today[1] === month ? today : null}
             search={search != null ? +search : null}
             group={group}
             shouldTranistionToNewPosition={multiMonthView}
