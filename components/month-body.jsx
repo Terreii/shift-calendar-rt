@@ -43,9 +43,9 @@ export default function MonthBody({ year, month, data, today, search, group }) {
 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
-    const thatDay = index + 1;
-    const time = new Date(year, month, thatDay);
-    const holidayData = data.holidays[thatDay];
+    const dayInMonth = index + 1;
+    const time = new Date(year, month, dayInMonth);
+    const holidayData = data.holidays[dayInMonth];
 
     const shifts =
       group === 0
@@ -54,10 +54,10 @@ export default function MonthBody({ year, month, data, today, search, group }) {
 
     // isToday is true when the date is: actual today and up to 6:00am the day before.
     // Because the shifts work until 6am.
-    const isToday =
-      todayInThisMonth &&
-      (thatDay === today[2] || (today[3] < 6 && thatDay + 1 === today[2]));
-    const isSearchResult = search === thatDay;
+    const isToday = todayInThisMonth && dayInMonth === today[2];
+    const isYesterday =
+      !isToday && todayInThisMonth && dayInMonth + 1 === today[2];
+    const isSearchResult = search === dayInMonth;
 
     const isClosingHoliday =
       holidayData != null && holidayData.type === "closing";
@@ -95,7 +95,17 @@ export default function MonthBody({ year, month, data, today, search, group }) {
 
         {shifts.map((shift, index) => {
           const gr = group === 0 ? index : group - 1;
-          return <GroupShiftCell key={gr} group={gr} shift={shift} />;
+          return (
+            <GroupShiftCell
+              key={gr}
+              group={gr}
+              shift={shift}
+              isToday={isToday}
+              isYesterday={isYesterday}
+              hour={today?.[3]}
+              shiftModel={shiftModel}
+            />
+          );
         })}
       </tr>
     );

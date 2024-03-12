@@ -302,3 +302,8 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-bottom: calc(var(--interest-width) + 1px) solid
     var(--interest-border-color);
 }
+
+.currentShift {
+  border-width: 3px !important;
+  border-color: var(--table-color);
+}
