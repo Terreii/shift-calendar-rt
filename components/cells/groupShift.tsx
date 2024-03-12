@@ -7,8 +7,6 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import classNames from "classnames";
-
 import shiftModels, {
   type Shift,
   type ShiftModelKeys,
@@ -54,10 +52,9 @@ export default function GroupShiftCell({
 
   return (
     <td
-      className={classNames(style.group, {
-        [style.currentShift]: isTodayShift || isYesterdayShift,
-      })}
+      className={style.group}
       data-group={group + 1}
+      data-current={isTodayShift || isYesterdayShift ? true : null}
       aria-describedby={shift + "_description"}
     >
       {shift}
