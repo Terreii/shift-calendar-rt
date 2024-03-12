@@ -39,6 +39,7 @@ export default function GroupShiftCell({
   if (shift === "K") {
     return <td className={style.group} />;
   }
+
   const {
     start: [startHour],
     end: [endHour],
@@ -55,6 +56,7 @@ export default function GroupShiftCell({
       className={style.group}
       data-group={group + 1}
       data-current={isTodayShift || isYesterdayShift ? true : null}
+      title={isTodayShift || isYesterdayShift ? "Aktuelle Schicht" : undefined}
       aria-describedby={shift + "_description"}
     >
       {shift}
