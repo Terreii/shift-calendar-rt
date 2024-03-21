@@ -21,7 +21,7 @@ import { parseNumber, getTodayZeroIndex } from "../../../../lib/utils";
 
 import style from "../../../../styles/calendar.module.css";
 
-export const revalidate = 5; // revalidate the data at most every 5 minutes
+export const revalidate = 600; // revalidate the data at most every 10 minutes
 
 type Args = { shiftModel: ShiftModels };
 type SearchParams = { group?: string };
