@@ -17,14 +17,13 @@ import {
   shiftModelText,
   type ShiftModels,
 } from "../../../../lib/constants";
-import { parseNumber, getTodayZeroIndex } from "../../../../lib/utils";
+import { getTodayZeroIndex } from "../../../../lib/utils";
 
 import style from "../../../../styles/calendar.module.css";
 
 export const revalidate = 600; // revalidate the data at most every 10 minutes
 
 type Args = { shiftModel: ShiftModels };
-type SearchParams = { group?: string };
 
 export async function generateMetadata({
   params: { shiftModel },
@@ -46,16 +45,13 @@ export async function generateMetadata({
  */
 export default function ShiftModel({
   params: { shiftModel },
-  searchParams: { group: groupString },
 }: {
   params: Args;
-  searchParams: SearchParams;
 }) {
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
   const [year, month] = getTodayZeroIndex();
-  const group = parseNumber(groupString ?? "0", 0);
 
   return (
     <main className={style.main}>
@@ -66,7 +62,7 @@ export default function ShiftModel({
       <ByMonths
         key="today"
         shiftModel={shiftModel}
-        group={group}
+        group={0}
         search={null}
         year={year}
         month={month}
