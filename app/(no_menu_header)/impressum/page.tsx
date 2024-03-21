@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   title: "Impressum",
 };
 
+export const dynamic = "force-static";
+
 /**
  * Renders the Impressum.
  * This is required by the German Low.

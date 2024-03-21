@@ -23,8 +23,9 @@ describe("basic usage", () => {
   it("should redirect a user to their last viewed shift model on /?pwa", () => {
     const shiftModel =
       shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
-    // Workaround: When visiting a /cal/[model] page, then the next visit would not finish.
-    cy.setCookie("shift_model", shiftModel);
+    cy.visit("/?pwa");
+    cy.contains(shiftModelText[shiftModel]).click();
+    cy.url().should("include", "/cal/" + shiftModel);
 
     cy.visit("/?pwa");
     cy.url().should("include", "/cal/" + shiftModel);
