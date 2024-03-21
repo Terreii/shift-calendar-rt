@@ -22,10 +22,9 @@ import { parseNumber } from "../../../../../lib/utils";
 
 import style from "../../../../../styles/calendar.module.css";
 
-export const revalidate = 5; // revalidate the data at most every 5 minutes
+export const revalidate = 600; // revalidate the data at most every 10 minutes
 
 type Args = { shiftModel: ShiftModels; year: string };
-type SearchParams = { group?: string };
 
 export async function generateMetadata({
   params: { shiftModel, year },
@@ -40,16 +39,13 @@ export async function generateMetadata({
 
 export default function Year({
   params: { shiftModel, year: yearString },
-  searchParams: { group: groupString },
 }: {
   params: Args;
-  searchParams: SearchParams;
 }) {
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
   }
   const year = parseNumber(yearString, null);
-  const group = parseNumber(groupString ?? "0", 0) as number;
 
   if (year == null) {
     return <h2>{yearString} is not a valid year.</h2>;
@@ -67,11 +63,11 @@ export default function Year({
       <Container>
         {monthsData.map(([year, month]) => (
           <Month
-            key={`${year}-${month}-${shiftModel}-${group}`}
+            key={`${year}-${month}-${shiftModel}-${0}`}
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
-            group={group}
+            group={0}
             shouldTranistionToNewPosition={false}
             search={null}
           />

@@ -11,12 +11,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-import {
-  monthNames,
-  shiftModelNames,
-  shiftModelText,
-  shiftModelNumberOfGroups,
-} from "../lib/constants";
+import { monthNames, shiftModelNames, shiftModelText } from "../lib/constants";
 import { getCalUrl } from "../lib/utils";
 import { useSupportsInputType } from "../hooks/utils";
 
@@ -28,7 +23,6 @@ export default function Menu({
   year,
   isFullYear,
   search,
-  group,
   shiftModel,
   setShowMenu,
   onShare,
@@ -42,19 +36,6 @@ export default function Menu({
     const searchMonth = String(month).padStart(2, "0");
     const searchDay = String(search).padStart(2, "0");
     searchValue = `${year}-${searchMonth}-${searchDay}`;
-  }
-
-  const groupOptions = [];
-  for (
-    let gr = 1, max = shiftModelNumberOfGroups[shiftModel] || 1;
-    gr <= max;
-    gr += 1
-  ) {
-    groupOptions.push(
-      <option key={"group_" + gr} value={gr}>
-        Nur Gruppe {gr}
-      </option>,
-    );
   }
 
   return (
@@ -90,7 +71,6 @@ export default function Menu({
                 onChange={(event) => {
                   router.push(
                     getCalUrl({
-                      group,
                       shiftModel,
                       isFullYear: false,
                       month: +event.target.value,
@@ -124,7 +104,6 @@ export default function Menu({
                     if (Number.isNaN(year) || year < 1990) return;
                     router.push(
                       getCalUrl({
-                        group,
                         shiftModel,
                         isFullYear,
                         year,
@@ -153,7 +132,6 @@ export default function Menu({
 
                     router.push(
                       getCalUrl({
-                        group,
                         shiftModel,
                         isFullYear,
                         month: value.getMonth() + 1,
@@ -182,8 +160,6 @@ export default function Menu({
                     if (value == null || value.length === 0) {
                       router.push(
                         getCalUrl({
-                          search: null,
-                          group,
                           shiftModel,
                           isFullYear,
                           month,
@@ -194,12 +170,11 @@ export default function Menu({
                       const date = event.target.valueAsDate || new Date(value);
                       router.push(
                         getCalUrl({
-                          group,
                           shiftModel,
                           isFullYear: false,
                           year: date.getFullYear(),
                           month: date.getMonth() + 1,
-                          search: date.getDate(),
+                          day: date.getDate(),
                         }),
                       );
                     }
@@ -212,7 +187,6 @@ export default function Menu({
           <Link
             key={isFullYear}
             href={getCalUrl({
-              group,
               shiftModel,
               isFullYear: !isFullYear,
               year,
@@ -236,7 +210,6 @@ export default function Menu({
               onChange={(event) => {
                 router.push(
                   getCalUrl({
-                    group: 0,
                     shiftModel: event.target.value,
                     isFullYear,
                     year,
@@ -252,27 +225,6 @@ export default function Menu({
               ))}
             </select>
           </label>
-
-          <select
-            className={style.groups}
-            aria-controls="calendar_main_out"
-            aria-label="Schichtgruppen"
-            value={group}
-            onChange={(event) => {
-              router.push(
-                getCalUrl({
-                  group: +event.target.value,
-                  shiftModel,
-                  isFullYear,
-                  year,
-                  month,
-                }),
-              );
-            }}
-          >
-            <option value="0">Alle Gruppen</option>
-            {groupOptions}
-          </select>
 
           <button
             type="button"

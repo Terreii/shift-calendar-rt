@@ -10,6 +10,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect, useMemo } from "react";
 
 import { getCalUrl } from "../lib/utils";
+import { type ShiftModels } from "../lib/constants";
 
 import style from "./menu.module.css";
 import formStyle from "../styles/form.module.css";
@@ -17,7 +18,6 @@ import formStyle from "../styles/form.module.css";
 /**
  * Display the share menu.
  * @param params             - Preact props.
- * @param params.group       - Number of selected group. 0 = no group selected/all
  * @param params.month       - Searched day's month.
  * @param params.year        - Searched day's year.
  * @param params.search      - Searched day.
@@ -25,29 +25,20 @@ import formStyle from "../styles/form.module.css";
  * @param hide               - Hide the share menu.
  */
 export default function ShareMenu({
-  group,
   year,
   month,
   search,
   shiftModel,
   hide,
 }: {
-  group: number;
   year?: number;
   month?: number;
   search?: number;
-  shiftModel: string;
+  shiftModel: ShiftModels;
   hide: () => void;
 }) {
-  const [addGroup, setAddGroup] = useState(false);
   const [addSearch, setAddSearch] = useState(false);
   const [addShiftModel, setAddShiftModel] = useState(false);
-
-  useEffect(() => {
-    if (group === 0 && addGroup) {
-      setAddGroup(false);
-    }
-  }, [group, addGroup]);
 
   useEffect(() => {
     if (search == null && addSearch) {
@@ -67,38 +58,21 @@ export default function ShareMenu({
 
   const url = useMemo(() => {
     try {
-      const url = new URL("/", window.location.href);
+      const base = addShiftModel
+        ? getCalUrl({
+            shiftModel,
+            isFullYear: false,
+            year: addSearch ? year! : undefined,
+            month: addSearch ? month : undefined,
+            day: addSearch && search !== null ? search : null,
+          })
+        : "/";
 
-      if (addShiftModel) {
-        url.pathname = getCalUrl({
-          shiftModel,
-          isFullYear: false,
-          year: addSearch ? year : null,
-          month: addSearch ? month : null,
-        });
-
-        if (addSearch && search != null) {
-          url.searchParams.set("search", search.toString());
-        }
-        if (addGroup && group > 0) {
-          url.searchParams.set("group", group.toString());
-        }
-      }
-
-      return url;
+      return new URL(base, window.location.href);
     } catch (err) {
       return "";
     }
-  }, [
-    year,
-    month,
-    addGroup,
-    group,
-    addSearch,
-    search,
-    addShiftModel,
-    shiftModel,
-  ]);
+  }, [year, month, addSearch, search, addShiftModel, shiftModel]);
 
   return (
     <div id="share_menu" className={style.container}>
@@ -126,39 +100,12 @@ export default function ShareMenu({
             checked={addShiftModel}
             onChange={(event) => {
               setAddShiftModel(event.target.checked);
-              if (!event.target.checked && addGroup) {
-                setAddGroup(false);
-              }
               if (!event.target.checked && addSearch) {
                 setAddSearch(false);
               }
             }}
           />
           Schichtmodell
-        </label>
-
-        <label className={style.share_label}>
-          <input
-            className={formStyle.checkbox}
-            type="checkbox"
-            checked={addGroup}
-            disabled={group === 0}
-            onChange={(event) => {
-              if (group === 0 || group == null) return;
-
-              setAddGroup(event.target.checked);
-              if (event.target.checked && !addShiftModel) {
-                setAddShiftModel(true);
-              }
-            }}
-          />
-          Gruppe
-          {group === 0 && (
-            <small>
-              <br />
-              Momentan sind alle Gruppen ausgewählt.
-            </small>
-          )}
         </label>
 
         <label className={style.share_label}>

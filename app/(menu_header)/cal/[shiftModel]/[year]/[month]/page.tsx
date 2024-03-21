@@ -20,10 +20,9 @@ import { parseNumber } from "../../../../../../lib/utils";
 
 import style from "../../../../../../styles/calendar.module.css";
 
-export const revalidate = 5; // revalidate the data at most every 5 minutes
+export const revalidate = 600; // revalidate the data at most every 10 minutes
 
 type Args = { shiftModel: ShiftModels; year: string; month: string };
-type SearchParams = { group?: string; search?: string };
 
 export async function generateMetadata({
   params: { shiftModel, year, month },
@@ -39,10 +38,8 @@ export async function generateMetadata({
 
 export default function MonthPage({
   params: { shiftModel, year: yearString, month: monthString },
-  searchParams: { group: groupString, search: searchString },
 }: {
   params: Args;
-  searchParams: SearchParams;
 }) {
   if (!shiftModelNames.includes(shiftModel)) {
     redirect("/");
@@ -50,8 +47,6 @@ export default function MonthPage({
   const year = parseNumber(yearString, null);
   const monthQuery = parseNumber(monthString, null);
   const month = monthQuery ? monthQuery - 1 : monthQuery;
-  const group = parseNumber(groupString, 0);
-  const search = parseNumber(searchString, null);
 
   if (year == null) {
     return <h2>{yearString} is not a valid year.</h2>;
@@ -67,8 +62,8 @@ export default function MonthPage({
       <ByMonths
         key={`${year}-${month}`}
         shiftModel={shiftModel}
-        group={group}
-        search={search}
+        group={0}
+        search={null}
         year={year}
         month={month}
       />

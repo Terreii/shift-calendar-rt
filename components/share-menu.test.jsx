@@ -6,7 +6,13 @@ import ShareMenu from "./share-menu";
 describe("components/ShareMenu", () => {
   it("should render", () => {
     render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />,
+      <ShareMenu
+        search={null}
+        shiftModel="6-6"
+        year={2020}
+        month={4}
+        hide={() => {}}
+      />,
     );
 
     const address = screen.queryByLabelText("Adresse zum teilen:");
@@ -20,39 +26,19 @@ describe("components/ShareMenu", () => {
     expect(shiftModel.nodeName).toBe("INPUT");
     expect(shiftModel).toHaveAttribute("type", "checkbox");
 
-    expect(screen.queryByLabelText("Gruppe")).toBeNull();
-    const group = screen.queryByText("Momentan sind alle Gruppen ausgewählt.");
-    expect(group).toBeTruthy();
-    expect(group.nodeName).toBe("SMALL");
-
     expect(screen.queryByLabelText("Der gesuchte Tag")).toBeNull();
     const search = screen.queryByText("Momentan gibt es kein Suchergebnis.");
     expect(search).toBeTruthy();
     expect(search.nodeName).toBe("SMALL");
   });
 
-  it("should allow to share the group if a group is selected", () => {
-    render(
-      <ShareMenu group={5} search={null} shiftModel="6-6" hide={() => {}} />,
-    );
-
-    const group = screen.queryByLabelText("Gruppe");
-    expect(group).toBeTruthy();
-    expect(group.nodeName).toBe("INPUT");
-    expect(group).toHaveAttribute("type", "checkbox");
-    expect(group).toBeEnabled();
-
-    expect(
-      screen.queryByText("Momentan sind alle Gruppen ausgewählt."),
-    ).toBeNull();
-  });
-
   it("should allow to share the search result if a there is one", () => {
     render(
       <ShareMenu
-        group={0}
-        search={[2020, 4, 5]}
+        search={5}
         shiftModel="6-6"
+        year={2020}
+        month={4}
         hide={() => {}}
       />,
     );
@@ -71,9 +57,10 @@ describe("components/ShareMenu", () => {
   it("should update the url", async () => {
     render(
       <ShareMenu
-        group={5}
-        search={[2020, 4, 5]}
+        search={5}
         shiftModel="6-6"
+        year={2020}
+        month={4}
         hide={() => {}}
       />,
     );
@@ -95,89 +82,41 @@ describe("components/ShareMenu", () => {
     expect(address).toHaveValue("http://localhost/cal/6-6");
     expect(shareButton.href).toMatch(/mailto.*http:\/\/localhost\/cal\/6-6/);
 
-    fireEvent.click(screen.queryByLabelText("Gruppe"));
-    expect(await screen.findByLabelText("Gruppe")).toBeChecked();
-    expect(address).toHaveValue("http://localhost/cal/6-6?group=5");
-    expect(shareButton.href).toMatch(
-      /mailto.*http:\/\/localhost\/cal\/6-6\?group=5/,
-    );
-
     fireEvent.click(screen.queryByLabelText("Der gesuchte Tag"));
     expect(await screen.findByLabelText("Der gesuchte Tag")).toBeChecked();
     expect(address).toHaveValue(
-      "http://localhost/cal/6-6?search=2020%2C4%2C5&group=5",
+      "http://localhost/cal/6-6/2020/04#day_2020-04-05",
     );
     expect(shareButton.href).toMatch(
-      /mailto.*http:\/\/localhost\/cal\/6-6\?search=2020%2C4%2C5%26group=5/,
+      /mailto.*http:\/\/localhost\/cal\/6-6\/2020\/04#day_2020-04-05/,
     );
-  });
-
-  it("should update the shift model and group together", async () => {
-    render(
-      <ShareMenu
-        group={2}
-        search={[2020, 4, 5]}
-        shiftModel="6-6"
-        hide={() => {}}
-      />,
-    );
-
-    expect(screen.queryByLabelText("Schichtmodell")).not.toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
-    expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-
-    fireEvent.click(screen.queryByLabelText("Gruppe"));
-    expect(await screen.findByLabelText("Gruppe")).toBeChecked();
-    expect(screen.queryByLabelText("Schichtmodell")).toBeChecked();
-    expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-
-    fireEvent.click(screen.queryByLabelText("Schichtmodell"));
-    expect(await screen.findByLabelText("Schichtmodell")).not.toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
-    expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-
-    fireEvent.click(screen.queryByLabelText("Schichtmodell"));
-    expect(await screen.findByLabelText("Schichtmodell")).toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
-    expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-
-    fireEvent.click(screen.queryByLabelText("Gruppe"));
-    expect(await screen.findByLabelText("Gruppe")).toBeChecked();
-
-    fireEvent.click(screen.queryByLabelText("Gruppe"));
-    expect(await screen.findByLabelText("Gruppe")).not.toBeChecked();
-    expect(screen.queryByLabelText("Schichtmodell")).toBeChecked();
-    expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
   });
 
   it("should update the shift model and search together", async () => {
     render(
       <ShareMenu
-        group={2}
-        search={[2020, 4, 5]}
+        search={5}
         shiftModel="6-6"
+        year={2020}
+        month={4}
         hide={() => {}}
       />,
     );
 
     expect(screen.queryByLabelText("Schichtmodell")).not.toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
     expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
 
     fireEvent.click(screen.queryByLabelText("Der gesuchte Tag"));
     expect(await screen.findByLabelText("Der gesuchte Tag")).toBeChecked();
     expect(screen.queryByLabelText("Schichtmodell")).toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
 
     fireEvent.click(screen.queryByLabelText("Schichtmodell"));
     expect(await screen.findByLabelText("Schichtmodell")).not.toBeChecked();
     expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
 
     fireEvent.click(screen.queryByLabelText("Schichtmodell"));
     expect(await screen.findByLabelText("Schichtmodell")).toBeChecked();
     expect(screen.queryByLabelText("Der gesuchte Tag")).not.toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
 
     fireEvent.click(screen.queryByLabelText("Der gesuchte Tag"));
     expect(await screen.findByLabelText("Der gesuchte Tag")).toBeChecked();
@@ -185,7 +124,6 @@ describe("components/ShareMenu", () => {
     fireEvent.click(screen.queryByLabelText("Der gesuchte Tag"));
     expect(await screen.findByLabelText("Der gesuchte Tag")).not.toBeChecked();
     expect(screen.queryByLabelText("Schichtmodell")).toBeChecked();
-    expect(screen.queryByLabelText("Gruppe")).not.toBeChecked();
   });
 
   it("should close if the cancel button is clicked", () => {
@@ -193,9 +131,10 @@ describe("components/ShareMenu", () => {
 
     render(
       <ShareMenu
-        group={0}
         search={null}
         shiftModel="6-6"
+        year={2020}
+        month={4}
         hide={hideCallback}
       />,
     );
@@ -215,9 +154,10 @@ describe("components/ShareMenu", () => {
 
     render(
       <ShareMenu
-        group={0}
         search={null}
         shiftModel="6-6"
+        year={2020}
+        month={4}
         hide={hideCallback}
       />,
     );
@@ -241,7 +181,13 @@ describe("components/ShareMenu", () => {
 
   it("should pass aXe", async () => {
     const { container } = render(
-      <ShareMenu group={0} search={null} shiftModel="6-6" hide={() => {}} />,
+      <ShareMenu
+        search={null}
+        shiftModel="6-6"
+        year={2020}
+        month={4}
+        hide={() => {}}
+      />,
     );
 
     expect(await axe(container)).toHaveNoViolations();

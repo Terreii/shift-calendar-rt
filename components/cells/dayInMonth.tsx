@@ -10,6 +10,8 @@ import type { ShiftModels } from "../../lib/constants";
 import { formatISO } from "date-fns/formatISO";
 import Link from "next/link";
 
+import { getCalUrl } from "../../lib/utils";
+
 import style from "../../styles/calendar.module.css";
 
 /**
@@ -28,9 +30,12 @@ export default function DayInMonthCell({
   return (
     <td className={style.day_in_month}>
       <Link
-        href={`/cal/${shiftModel}/${time.getFullYear()}/${(time.getMonth() + 1)
-          .toString()
-          .padStart(2, "0")}?search=${time.getDate()}`}
+        href={getCalUrl({
+          shiftModel,
+          year: time.getFullYear(),
+          month: time.getMonth() + 1,
+          day: time.getDate(),
+        })}
         className={style.day_in_month__link}
       >
         <time dateTime={formatISO(time, { representation: "date" })}>
