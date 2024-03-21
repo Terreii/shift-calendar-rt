@@ -22,8 +22,7 @@ import style from "./header.module.css";
  * Renders the Header.
  */
 export default function Header() {
-  const { year, month, isFullYear, group, search, shiftModel } =
-    useQueryProps();
+  const { year, month, isFullYear, search, shiftModel } = useQueryProps();
 
   const [showMenu, setShowMenu] = useShowMenu("nav");
   const [showShareMenu, setShowShareMenu] = useShowMenu("#share_menu");
@@ -35,7 +34,6 @@ export default function Header() {
           isFullYear={isFullYear}
           month={month}
           year={year}
-          group={group}
           shiftModel={shiftModel}
         />
 
@@ -45,7 +43,6 @@ export default function Header() {
           month={month}
           year={year}
           search={search}
-          group={group}
           shiftModel={shiftModel}
           setShowMenu={setShowMenu}
           onShare={(event) => {
@@ -58,7 +55,6 @@ export default function Header() {
 
       {showShareMenu && (
         <ShareMenu
-          group={group}
           month={month}
           year={year}
           search={search ?? undefined}

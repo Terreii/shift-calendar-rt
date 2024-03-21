@@ -22,14 +22,12 @@ import style from "./header.module.css";
  * @param {number}   param.month       Current active month.
  * @param {boolean}  param.isFullYear  Is the full year shown?
  * @param {string}   param.shiftModel  The current shift model.
- * @param {number}   param.group       Selected group to display. 0 = all, >= 1 only one.
  */
 export default function HeaderNavLinks({
   year,
   month,
   isFullYear,
   shiftModel,
-  group,
 }) {
   const today = useToday();
 
@@ -37,14 +35,12 @@ export default function HeaderNavLinks({
     if (isFullYear) {
       return {
         lastMonth: getCalUrl({
-          group,
           shiftModel,
           isFullYear: true,
           year: year - 1,
           month: 1,
         }),
         nextMonth: getCalUrl({
-          group,
           shiftModel,
           isFullYear: true,
           year: year + 1,
@@ -56,10 +52,10 @@ export default function HeaderNavLinks({
     const then = new Date(year, month - 1, 1, 0, 0, 0);
 
     return {
-      lastMonth: getMonthUrl(then, -1, shiftModel, group),
-      nextMonth: getMonthUrl(then, +1, shiftModel, group),
+      lastMonth: getMonthUrl(then, -1, shiftModel),
+      nextMonth: getMonthUrl(then, +1, shiftModel),
     };
-  }, [year, month, isFullYear, shiftModel, group]);
+  }, [year, month, isFullYear, shiftModel]);
 
   return (
     <>
@@ -73,7 +69,7 @@ export default function HeaderNavLinks({
       </Link>
 
       <Link
-        href={getTodayUrl({ group, shiftModel, today })}
+        href={getTodayUrl({ shiftModel, today })}
         className={style.navi_link}
         title="zeige aktuellen Monat"
       >
@@ -92,10 +88,9 @@ export default function HeaderNavLinks({
   );
 }
 
-function getMonthUrl(time, change, shiftModel, group) {
+function getMonthUrl(time, change, shiftModel) {
   const month = addMonths(time, change);
   return getCalUrl({
-    group,
     shiftModel,
     isFullYear: false,
     year: month.getFullYear(),

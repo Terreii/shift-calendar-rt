@@ -2,17 +2,19 @@ import { render, screen } from "@testing-library/react";
 
 import Header from ".";
 
-jest.mock("../../hooks/settings");
-jest.mock("../../hooks/time");
-jest.mock("next/navigation", () => require("next-router-mock"));
-jest.mock("next/navigation", () => ({
-  ...require("next-router-mock"),
-  useSearchParams: () => {
-    const router = require("next-router-mock").useRouter();
-    const path = router.asPath.split("?")?.[1] ?? "";
-    return new URLSearchParams(path);
+jest.mock("../../hooks/settings", () => ({
+  useQueryProps() {
+    return {
+      shiftModel: "6-6",
+      isFullYear: false,
+      year: 2021,
+      month: 1,
+      search: null,
+    };
   },
 }));
+jest.mock("../../hooks/time");
+jest.mock("next/navigation", () => require("next-router-mock"));
 
 describe("components/Header", () => {
   it("should show the correct navigation links and buttons", () => {
