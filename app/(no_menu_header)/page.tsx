@@ -6,13 +6,13 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import Image from "next/image";
-import Link from "next/link";
 
-import { shiftModelNames, shiftModelText } from "../../lib/constants";
+import { shiftModelNames } from "../../lib/constants";
 
 import hamburgerIcon from "../../public/assets/icons/hamburger_icon.svg";
 import style from "../../styles/layout.module.css";
 import Redirector from "./redirector";
+import ShiftLink from "./shiftLink";
 
 export const dynamic = "force-static";
 
@@ -45,11 +45,7 @@ export default function Index() {
 
         <ul className={style.shift_button_list}>
           {shiftModelNames.map((name) => (
-            <li key={name}>
-              <Link href={`/cal/${name}`} className={style.shift_button}>
-                {shiftModelText[name]}
-              </Link>
-            </li>
+            <ShiftLink key={name} name={name} />
           ))}
         </ul>
       </div>

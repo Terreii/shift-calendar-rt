@@ -11,10 +11,13 @@ import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
 import { getToday, getTodayUrl } from "../../lib/utils";
+import { type Settings } from "./shiftLink";
 
 export default function Redirector() {
   useEffect(() => {
-    const settings = JSON.parse(localStorage.getItem("settings") ?? "{}");
+    const settings: Settings = JSON.parse(
+      localStorage.getItem("settings") ?? "{}",
+    );
     if (
       new URLSearchParams(window.location.search).has("pwa") &&
       settings.shiftModel
