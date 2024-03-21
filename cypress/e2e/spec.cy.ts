@@ -23,14 +23,11 @@ describe("basic usage", () => {
   it("should redirect a user to their last viewed shift model on /?pwa", () => {
     const shiftModel =
       shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
-    cy.visit("/?pwa", {
-      onBeforeLoad(win) {
-        win.localStorage.setItem(
-          "settings",
-          JSON.stringify({ didSelectModel: true, shiftModel, group: 0 }),
-        );
-      },
-    });
+    cy.visit("/?pwa");
+    cy.contains(shiftModelText[shiftModel]).click();
+    cy.url().should("include", "/cal/" + shiftModel);
+
+    cy.visit("/?pwa");
     cy.url().should("include", "/cal/" + shiftModel);
   });
 
