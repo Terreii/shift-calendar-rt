@@ -47,23 +47,24 @@ export default function GroupShiftCell({
     end: [endHour, endMinues],
   } = getShift(shiftModelKey, shift);
 
+  const shiftSpansTwoDays = startHour >= endHour;
   const isTodayShift =
     isToday &&
     ((hour > startHour && hour < endHour) || // shift starts and ends today.
       (hour === startHour && minues >= startMinues) || // start hour.
-      (hour === endHour && minues < endMinues) || // End hour
-      (startHour >= endHour && // shift starts today and ends tomorrow.
+      (!shiftSpansTwoDays && hour === endHour && minues < endMinues) || // End hour
+      (shiftSpansTwoDays && // shift starts today and ends tomorrow.
         (hour > startHour || (hour === startHour && minues >= startMinues))));
   const isYesterdayShift =
     isYesterday &&
-    startHour >= endHour &&
+    shiftSpansTwoDays &&
     (hour < endHour || (hour === endHour && minues < endMinues));
 
   return (
     <td
       className={style.group}
       data-group={group + 1}
-      data-current={isTodayShift || isYesterdayShift ? true : null}
+      data-current={isTodayShift || isYesterdayShift ? true : undefined}
       title={isTodayShift || isYesterdayShift ? "Aktuelle Schicht" : undefined}
       aria-describedby={shift + "_description"}
     >
