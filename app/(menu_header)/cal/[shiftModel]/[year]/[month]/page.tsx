@@ -7,6 +7,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { addMonths } from "date-fns/addMonths";
 
 import ByMonths from "../../../../../../components/by-month";
 import Downloader from "../../../../../../components/download";
@@ -19,8 +20,6 @@ import {
 import { parseNumber } from "../../../../../../lib/utils";
 
 import style from "../../../../../../styles/calendar.module.css";
-
-export const revalidate = 600; // revalidate the data at most every 10 minutes
 
 type Args = { shiftModel: ShiftModels; year: string; month: string };
 
@@ -71,4 +70,24 @@ export default function MonthPage({
       <Downloader shiftModel={shiftModel} year={year} month={month + 1} />
     </main>
   );
+}
+
+export function generateStaticParams(): Args[] {
+  const now = new Date();
+  let pointer = addMonths(now, -3);
+  const end = addMonths(now, 12).getTime();
+
+  const params: Args[] = [];
+
+  while (pointer.getTime() < end) {
+    const year = pointer.getFullYear().toString();
+    const month = pointer.getMonth().toString();
+
+    for (const shiftModel of shiftModelNames) {
+      params.push({ shiftModel, year, month });
+    }
+
+    pointer = addMonths(pointer, 1);
+  }
+  return params;
 }
