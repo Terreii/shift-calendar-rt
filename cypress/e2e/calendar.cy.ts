@@ -183,14 +183,16 @@ describe("full year", () => {
 
     cy.contains("nav a", "<").should("have.attr", "href", `/cal/${model}/2021`);
     cy.contains("nav a", ">").should("have.attr", "href", `/cal/${model}/2023`);
+    cy.contains("Heute").should(
+      "have.attr",
+      "href",
+      `/cal/${model}#day_${formatISO(now, { representation: "date" })}`,
+    );
 
     cy.contains("Heute").click();
 
     cy.url()
       .should("not.include", `/cal/${model}/${now.getFullYear()}`)
-      .and(
-        "include",
-        `/cal/${model}#day_${formatISO(now, { representation: "date" })}`,
-      );
+      .and("include", `/cal/${model}`);
   });
 });
