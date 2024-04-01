@@ -10,6 +10,7 @@ import Link from "next/link";
 import { addMonths } from "date-fns/addMonths";
 
 import { useToday } from "../../hooks/time";
+import { useIsClient } from "../../hooks/utils";
 import { getCalUrl, getTodayUrl } from "../../lib/utils";
 
 import style from "./header.module.css";
@@ -30,6 +31,7 @@ export default function HeaderNavLinks({
   shiftModel,
 }) {
   const today = useToday();
+  const isClient = useIsClient();
 
   const { lastMonth, nextMonth } = useMemo(() => {
     if (isFullYear) {
@@ -69,7 +71,7 @@ export default function HeaderNavLinks({
       </Link>
 
       <Link
-        href={getTodayUrl({ shiftModel, today })}
+        href={getTodayUrl({ shiftModel, today: isClient ? today : undefined })}
         className={style.navi_link}
         title="zeige aktuellen Monat"
       >

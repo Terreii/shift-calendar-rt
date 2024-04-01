@@ -22,8 +22,6 @@ import { parseNumber } from "../../../../../lib/utils";
 
 import style from "../../../../../styles/calendar.module.css";
 
-export const revalidate = 600; // revalidate the data at most every 10 minutes
-
 type Args = { shiftModel: ShiftModels; year: string };
 
 export async function generateMetadata({
@@ -76,5 +74,16 @@ export default function Year({
 
       <Downloader shiftModel={shiftModel} year={year} />
     </main>
+  );
+}
+
+export function generateStaticParams(): Args[] {
+  const now = new Date().getUTCFullYear();
+
+  return [-1, 0, 1, 2].flatMap((diff) =>
+    shiftModelNames.map((model) => ({
+      shiftModel: model,
+      year: (now + diff).toString(),
+    })),
   );
 }

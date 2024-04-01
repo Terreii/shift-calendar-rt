@@ -9,6 +9,23 @@ import {
 } from "react";
 // Common Hooks
 
+let isFirstRender = true;
+
+/**
+ * Is this on the client.
+ * Because of hydration it always starts as false. On the next render it will have the true value.
+ */
+export function useIsClient(): boolean {
+  const [isClient, setIsClient] = useState(!isFirstRender);
+  useEffect(() => {
+    if (isFirstRender) {
+      isFirstRender = false;
+      setIsClient(true);
+    }
+  }, []);
+  return isClient;
+}
+
 export function useTitleAlert() {
   return useCallback((event) => {
     const title =

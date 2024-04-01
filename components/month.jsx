@@ -12,6 +12,7 @@ import { memo } from "react";
 import MonthBody from "./month-body";
 import { monthNames } from "../lib/constants";
 import { useTodayZeroIndex } from "../hooks/time";
+import { useIsClient } from "../hooks/utils";
 
 import style from "../styles/calendar.module.css";
 
@@ -47,7 +48,7 @@ function Month({
     groups.push(group - 1);
   }
 
-  const today = useTodayZeroIndex();
+  const today = useToday();
   const isToday = today[0] === year && today[1] === month;
 
   return (
@@ -121,6 +122,16 @@ function Month({
       </tfoot>
     </table>
   );
+}
+
+/**
+ * Only render today on the client/browser.
+ */
+function useToday() {
+  const today = useTodayZeroIndex();
+  const isClient = useIsClient();
+
+  return isClient ? today : [0, 0, 0, 0, 0];
 }
 
 export default memo(Month);
