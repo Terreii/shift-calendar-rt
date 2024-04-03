@@ -87,3 +87,6 @@ export function generateStaticParams(): Args[] {
     })),
   );
 }
+
+
+export const dynamicParams = true;
