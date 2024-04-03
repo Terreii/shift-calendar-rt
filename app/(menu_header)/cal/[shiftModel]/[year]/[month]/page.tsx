@@ -91,3 +91,5 @@ export function generateStaticParams(): Args[] {
   }
   return params;
 }
+
+export const dynamicParams = true;
