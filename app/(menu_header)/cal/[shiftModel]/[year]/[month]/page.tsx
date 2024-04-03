@@ -7,7 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { addMonths } from "date-fns/addMonths";
 
 import ByMonths from "../../../../../../components/by-month";
 import Downloader from "../../../../../../components/download";
