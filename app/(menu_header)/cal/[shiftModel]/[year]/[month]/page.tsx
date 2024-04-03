@@ -81,7 +81,7 @@ export function generateStaticParams(): Args[] {
 
   while (pointer.getTime() < end) {
     const year = pointer.getFullYear().toString();
-    const month = pointer.getMonth().toString();
+    const month = (pointer.getMonth() + 1).toString().padStart(2, "0");
 
     for (const shiftModel of shiftModelNames) {
       params.push({ shiftModel, year, month });
