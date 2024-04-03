@@ -77,16 +77,4 @@ export default function Year({
   );
 }
 
-export function generateStaticParams(): Args[] {
-  const now = new Date().getUTCFullYear();
-
-  return [-1, 0, 1, 2].flatMap((diff) =>
-    shiftModelNames.map((model) => ({
-      shiftModel: model,
-      year: (now + diff).toString(),
-    })),
-  );
-}
-
-
-export const dynamicParams = true;
+export const revalidate = false;
