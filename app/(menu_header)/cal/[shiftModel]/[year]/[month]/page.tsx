@@ -7,7 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { addMonths } from "date-fns/addMonths";
 
 import ByMonths from "../../../../../../components/by-month";
 import Downloader from "../../../../../../components/download";
@@ -72,22 +71,4 @@ export default function MonthPage({
   );
 }
 
-export function generateStaticParams(): Args[] {
-  const now = new Date();
-  let pointer = addMonths(now, -3);
-  const end = addMonths(now, 12).getTime();
-
-  const params: Args[] = [];
-
-  while (pointer.getTime() < end) {
-    const year = pointer.getFullYear().toString();
-    const month = (pointer.getMonth() + 1).toString().padStart(2, "0");
-
-    for (const shiftModel of shiftModelNames) {
-      params.push({ shiftModel, year, month });
-    }
-
-    pointer = addMonths(pointer, 1);
-  }
-  return params;
-}
+export const revalidate = false;
