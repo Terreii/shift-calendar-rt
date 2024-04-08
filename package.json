@@ -31,14 +31,14 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.4.2",
-    "@testing-library/react": "^14.2.2",
+    "@testing-library/react": "^14.3.0",
     "@testing-library/user-event": "^14.5.2",
     "@types/milliseconds": "^0.0.33",
-    "@types/node": "^20.12.2",
-    "@types/react": "^18.2.73",
+    "@types/node": "^20.12.5",
+    "@types/react": "^18.2.74",
     "babel-jest": "^29.6.4",
     "bootstrap-icons": "^1.11.3",
-    "cypress": "^13.7.1",
+    "cypress": "^13.7.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "^14.1.4",
     "eslint-plugin-cypress": "^2.15.1",
@@ -58,7 +58,7 @@
     "react-test-renderer": "^18.0.0",
     "start-server-and-test": "^2.0.3",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.4"
   },
   "dependencies": {
     "@serwist/next": "^8.4.4",
