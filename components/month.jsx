@@ -74,22 +74,26 @@ function Month({
       </caption>
       <thead>
         <tr>
-          <th>
+          <th rowSpan={2}>
             <span className="sr-only">Woche</span>
             <span aria-hidden="true" title="Woche">
               Wo
             </span>
           </th>
-          <th>Tag</th>
-          <th>
+          <th rowSpan={2} className={style.clickable_column}>
+            Tag
+          </th>
+          <th rowSpan={2} className={style.clickable_column}>
             <span className="sr-only">Wochentag</span>
           </th>
+          <th colSpan={groups.length} className={style.groups_th}>
+            Gruppen
+          </th>
+        </tr>
+        <tr>
           {groups.map((gr) => (
-            <th key={gr}>
-              <span className="sr-only">{"Gruppe " + (gr + 1)}</span>
-              <span aria-hidden="true" title={"Gruppe " + (gr + 1)}>
-                Gr. {gr + 1}
-              </span>
+            <th key={gr} className={style.group_column}>
+              {gr + 1}
             </th>
           ))}
         </tr>
