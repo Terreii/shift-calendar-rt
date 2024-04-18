@@ -224,12 +224,12 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 
 .day_in_month {
-  padding: 0.2rem 0;
+  padding: 0;
 }
 .day_in_month__link {
   display: inline-block;
   color: inherit;
-  padding: 0.1rem;
+  padding: 0.2rem 0.1rem;
   height: 100%;
   width: 100%;
 }
