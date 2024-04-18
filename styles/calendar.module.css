@@ -54,6 +54,18 @@ But then show the next month on small screen, then the next 2 months, then all o
   border: 1px solid black;
   border: 1px solid var(--table-color);
 }
+
+.table caption,
+.table th,
+.table td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.table caption {
+  border-bottom: 1px solid white;
+  border-bottom: 1px solid var(--main-bg-color);
+}
+
 .table {
   margin-top: 2rem;
   text-align: center;
@@ -65,6 +77,18 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-spacing: 0px;
   --interest-width: 3px;
   view-transition-name: month-table; /* animation is in index.css */
+}
+
+.table .groups_th {
+  border-bottom-width: 0px;
+}
+
+.clickable_column {
+  min-width: 50px;
+}
+
+.group_column {
+  min-width: 2rem;
 }
 
 .table th {
@@ -81,8 +105,8 @@ But then show the next month on small screen, then the next 2 months, then all o
 
 .table thead {
   position: sticky;
-  top: 4.5rem;
-  top: calc(3rem + 1.5rem - 1px);
+  top: 5rem;
+  top: calc(3.5rem + 1.5rem - 1px);
   z-index: 1;
 }
 
@@ -205,7 +229,7 @@ But then show the next month on small screen, then the next 2 months, then all o
 .day_in_month__link {
   display: inline-block;
   color: inherit;
-  padding: 0.1rem;
+  padding: 0.2rem 0.1rem;
   height: 100%;
   width: 100%;
 }
@@ -254,8 +278,8 @@ But then show the next month on small screen, then the next 2 months, then all o
 }
 .week_number {
   position: sticky;
-  top: 6.4rem;
-  top: calc(3rem + 1.5rem + 1.9rem);
+  top: 9.1rem;
+  top: calc(3.5rem + 3.6rem + 2rem);
   bottom: 0.2rem;
 }
 
