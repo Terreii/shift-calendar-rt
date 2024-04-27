@@ -17,6 +17,11 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      serwist-updates:
+        patterns:
+          - "@serwist/*"
+        update-types:
+          - "major"
 
   - package-ecosystem: "github-actions"
     directory: "/"
