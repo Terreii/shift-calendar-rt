@@ -61,9 +61,9 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@serwist/next": "^8.4.4",
-    "@serwist/precaching": "^8.4.4",
-    "@serwist/sw": "^8.4.4",
+    "@serwist/next": "^9.0.2",
+    "@serwist/precaching": "^9.0.2",
+    "@serwist/sw": "^9.0.2",
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "date-fns": "^3.6.0",
