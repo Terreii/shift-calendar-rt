@@ -19,9 +19,4 @@ const config = {
 
 export default process.env.LINT_ENV || process.env.NODE_ENV === "development"
   ? config
-  : withSerwist({
-      ...config,
-      pwa: {
-        dest: "public",
-      },
-    });
+  : withSerwist(config);
