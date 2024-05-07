@@ -333,3 +333,28 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-bottom: calc(var(--interest-width) + 1px) solid
     var(--interest-border-color);
 }
+
+@media (max-width: 365px) {
+  .main {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
+  .container {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .group_column {
+    min-width: initial;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+  }
+}
+
+@media (max-width: 280px) {
+  .clickable_column {
+    min-width: 100%;
+  }
+}
