@@ -20,6 +20,7 @@ updates:
       serwist-updates:
         patterns:
           - "@serwist/*"
+          - "serwist"
         update-types:
           - "major"
 
