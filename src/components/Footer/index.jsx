@@ -10,7 +10,7 @@ import style from "./style.module.css";
 export default function Footer() {
   return (
     <footer>
-      <p className={style.container}>
+      <p class={style.container}>
         <b>Der inoffizielle Schichtkalender für Bosch Reutlingen.</b>
         <br />
         Made by Christopher Astfalk.
@@ -30,14 +30,14 @@ export default function Footer() {
         {"Lizenz: "}
         <a
           href="https://www.mozilla.org/en-US/MPL/2.0/"
-          className="link"
+          class="link"
           target="_blank"
           rel="noopener noreferrer"
         >
           Mozilla Public License 2.0
         </a>
         <br />
-        <a href="/impressum" className="link">
+        <a href="/impressum" class="link">
           Impressum
         </a>
       </p>

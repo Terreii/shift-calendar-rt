@@ -2,19 +2,21 @@ import {
   LocationProvider,
   Router,
   Route,
+  lazy,
   hydrate,
   prerender as ssr,
 } from "preact-iso";
 import Helmet from "preact-helmet";
 
-import Home from "./pages/Home.jsx";
-import Impressum from "./pages/impressum";
+import Home from "./pages/Home";
 import { NotFound } from "./pages/_404.jsx";
 
-import Footer from "./components/footer";
+import Footer from "./components/Footer";
 
 import "modern-css-reset";
 import "../styles/index.css";
+
+const Impressum = lazy(() => import("./pages/Impressum"));
 
 export function App() {
   return (
@@ -36,7 +38,7 @@ export function App() {
 }
 
 if (typeof window !== "undefined") {
-  hydrate(<App />, document.getElementById("app"));
+  hydrate(<App />, document.getElementById("app")!);
 }
 
 export async function prerender(data) {

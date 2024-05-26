@@ -8,12 +8,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
 
-import { type ShiftModelKeys } from "../../config/shifts";
-import { shiftModelNames, shiftModelText } from "../../lib/constants";
-import { getToday, getTodayUrl } from "../../lib/utils";
+import { type ShiftModelKeys } from "../../../config/shifts";
+import { shiftModelNames, shiftModelText } from "../../../lib/constants";
+import { getToday, getTodayUrl } from "../../../lib/utils";
 
-import hamburgerIcon from "../assets/hamburger_icon.svg";
-import style from "../../styles/layout.module.css";
+import hamburgerIcon from "../../assets/hamburger_icon.svg";
+import style from "./style.module.css";
 
 type Settings = {
   didSelectModel: boolean;
@@ -48,7 +48,7 @@ export default function Index() {
           umändern.
         </div>
 
-        <ul className={style.shift_button_list}>
+        <ul class={style.shift_button_list}>
           {shiftModelNames.map((name) => (
             <ShiftLink key={name} name={name} />
           ))}
@@ -63,7 +63,7 @@ function ShiftLink({ name }: { name: ShiftModelKeys }) {
     <li>
       <a
         href={`/cal/${name}`}
-        className={style.shift_button}
+        class={style.shift_button}
         onClick={() => {
           if (new URLSearchParams(window.location.search).has("pwa")) {
             const settings: Settings = JSON.parse(

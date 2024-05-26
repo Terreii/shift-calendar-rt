@@ -15,11 +15,11 @@ import style from "./style.module.css";
  */
 export default function Impressum() {
   return (
-    <main className={style.container}>
+    <main class={style.container}>
       <Helmet title="Impressum" />
 
-      <div id="calendar_main_out" className={style.main}>
-        <h2 id="dsg-general-intro" className={style.header}>
+      <div id="calendar_main_out" class={style.main}>
+        <h2 id="dsg-general-intro" class={style.header}>
           Datenschutzerklärung
         </h2>
         <p>
@@ -34,11 +34,11 @@ export default function Impressum() {
           Definitionen im Art. 4 der Datenschutzgrundverordnung (DSGVO).
         </p>
         <br />
-        <h3 id="dsg-general-controller" className={style.section_header}>
+        <h3 id="dsg-general-controller" class={style.section_header}>
           Verantwortlicher
         </h3>
         <p>
-          <span className="tsmcontroller">
+          <span class="tsmcontroller">
             Christopher Astfalk
             <br />
             <i>Adresse auf Nachfrage</i>
@@ -50,7 +50,7 @@ export default function Impressum() {
             work email: christopher.astfalk {"{dieses at Zeichen}"} de.bosch.com
           </span>
         </p>
-        <h3 id="dsg-general-datatype" className={style.section_header}>
+        <h3 id="dsg-general-datatype" class={style.section_header}>
           Arten der verarbeiteten Daten
         </h3>
         <p>
@@ -65,7 +65,7 @@ export default function Impressum() {
           <br />- Meta-/Kommunikationsdaten (z.B., Geräte-Informationen,
           IP-Adressen).
         </p>
-        <h3 id="dsg-general-datasubjects" className={style.section_header}>
+        <h3 id="dsg-general-datasubjects" class={style.section_header}>
           Kategorien betroffener Personen
         </h3>
         <p>
@@ -73,7 +73,7 @@ export default function Impressum() {
           die betroffenen Personen zusammenfassend auch als „Nutzer“).
           <br />
         </p>
-        <h3 id="dsg-general-purpose" className={style.section_header}>
+        <h3 id="dsg-general-purpose" class={style.section_header}>
           Zweck der Verarbeitung
         </h3>
         <p>
@@ -86,9 +86,9 @@ export default function Impressum() {
           <br />
           - Reichweitenmessung/Marketing
           <br />
-          <span className="tsmcom" />
+          <span class="tsmcom" />
         </p>
-        <h3 id="dsg-general-terms" className={style.section_header}>
+        <h3 id="dsg-general-terms" class={style.section_header}>
           Verwendete Begrifflichkeiten
         </h3>
         <p>
@@ -141,7 +141,7 @@ export default function Impressum() {
           Auftrag des Verantwortlichen verarbeitet.
           <br />
         </p>
-        <h3 id="dsg-general-legalbasis" className={style.section_header}>
+        <h3 id="dsg-general-legalbasis" class={style.section_header}>
           Maßgebliche Rechtsgrundlagen
         </h3>
         <p>
@@ -182,7 +182,7 @@ export default function Impressum() {
           DSGVO.
           <br />
         </p>
-        <h3 id="dsg-general-securitymeasures" className={style.section_header}>
+        <h3 id="dsg-general-securitymeasures" class={style.section_header}>
           Sicherheitsmaßnahmen
         </h3>
         <p>
@@ -208,7 +208,7 @@ export default function Impressum() {
           durch datenschutzfreundliche Voreinstellungen.
           <br />
         </p>
-        <h3 id="dsg-general-coprocessing" className={style.section_header}>
+        <h3 id="dsg-general-coprocessing" class={style.section_header}>
           Zusammenarbeit mit Auftragsverarbeitern, gemeinsam Verantwortlichen
           und Dritten
         </h3>
@@ -232,7 +232,7 @@ export default function Impressum() {
           entsprechenden Grundlage.
           <br />
         </p>
-        <h3 id="dsg-general-thirdparty" className={style.section_header}>
+        <h3 id="dsg-general-thirdparty" class={style.section_header}>
           Übermittlungen in Drittländer
         </h3>
         <p>
@@ -252,7 +252,7 @@ export default function Impressum() {
           „Privacy Shield“) oder Beachtung offiziell anerkannter spezieller
           vertraglicher Verpflichtungen.
         </p>
-        <h3 id="dsg-general-rightssubject" className={style.section_header}>
+        <h3 id="dsg-general-rightssubject" class={style.section_header}>
           Rechte der betroffenen Personen
         </h3>
         <p>
@@ -282,7 +282,7 @@ export default function Impressum() {
           eine Beschwerde bei der zuständigen Aufsichtsbehörde einzureichen.
           <br />
         </p>
-        <h3 id="dsg-general-revokeconsent" className={style.section_header}>
+        <h3 id="dsg-general-revokeconsent" class={style.section_header}>
           Widerrufsrecht
         </h3>
         <p>
@@ -298,7 +298,7 @@ export default function Impressum() {
             Direktwerbung erfolgen.
           </strong>
         </p>
-        <h3 id="dsg-general-cookies" className={style.section_header}>
+        <h3 id="dsg-general-cookies" class={style.section_header}>
           Cookies und Widerspruchsrecht bei Direktwerbung
         </h3>
         <p>
@@ -352,7 +352,7 @@ export default function Impressum() {
           Bitte beachten Sie, dass dann gegebenenfalls nicht alle Funktionen
           dieses Onlineangebotes genutzt werden können.
         </p>
-        <h3 id="dsg-general-erasure" className={style.section_header}>
+        <h3 id="dsg-general-erasure" class={style.section_header}>
           Löschung von Daten
         </h3>
         <p>
@@ -370,7 +370,7 @@ export default function Impressum() {
           Zwecke verarbeitet. Das gilt z.B. für Daten, die aus handels- oder
           steuerrechtlichen Gründen aufbewahrt werden müssen.
         </p>
-        <h3 id="dsg-general-changes" className={style.section_header}>
+        <h3 id="dsg-general-changes" class={style.section_header}>
           Änderungen und Aktualisierungen der Datenschutzerklärung
         </h3>
         <p>
@@ -383,12 +383,12 @@ export default function Impressum() {
           Benachrichtigung erforderlich wird.
         </p>
         <p />
-        <h3 id="dsg-hostingprovider" className={style.section_header}>
+        <h3 id="dsg-hostingprovider" class={style.section_header}>
           Hosting und E-Mail-Versand
         </h3>
         <p />
         <p>
-          <span className="ts-muster-content">
+          <span class="ts-muster-content">
             Die von uns in Anspruch genommenen Hosting-Leistungen dienen der
             Zurverfügungstellung der folgenden Leistungen: Infrastruktur- und
             Plattformdienstleistungen, Rechenkapazität, Speicherplatz und
@@ -406,12 +406,12 @@ export default function Impressum() {
           </span>
         </p>
         <p />
-        <h3 id="dsg-logfiles" className={style.section_header}>
+        <h3 id="dsg-logfiles" class={style.section_header}>
           Erhebung von Zugriffsdaten und Logfiles
         </h3>
         <p />
         <p>
-          <span className="ts-muster-content">
+          <span class="ts-muster-content">
             Wir, bzw. unser Hostinganbieter, erhebt auf Grundlage unserer
             berechtigten Interessen im Sinne des Art. 6 Abs. 1 lit. f. DSGVO
             Daten über jeden Zugriff auf den Server, auf dem sich dieser Dienst
@@ -432,7 +432,7 @@ export default function Impressum() {
         </p>
         <a
           href="https://datenschutz-generator.de"
-          className={style.link}
+          class={style.link}
           rel="nofollow noopener noreferrer"
           target="_blank"
         >
