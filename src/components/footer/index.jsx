@@ -5,9 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Link from "next/link";
-
-import style from "./footer.module.css";
+import style from "./style.module.css";
 
 export default function Footer() {
   return (
@@ -39,9 +37,9 @@ export default function Footer() {
           Mozilla Public License 2.0
         </a>
         <br />
-        <Link href="/impressum" className="link">
+        <a href="/impressum" className="link">
           Impressum
-        </Link>
+        </a>
       </p>
     </footer>
   );

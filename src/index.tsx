@@ -6,17 +6,22 @@ import {
   prerender as ssr,
 } from "preact-iso";
 
+import Home from "./pages/Home.jsx";
 import { NotFound } from "./pages/_404.jsx";
+
+import Footer from "./components/footer";
+
+import "modern-css-reset";
+import "../styles/index.css";
 
 export function App() {
   return (
     <LocationProvider>
-      <main>
-        <Router>
-          <Route path="/" component={() => <h1>Hello World</h1>} />
-          <Route default component={NotFound} />
-        </Router>
-      </main>
+      <Router>
+        <Route path="/" component={Home} />
+        <Route default component={NotFound} />
+      </Router>
+      <Footer />
     </LocationProvider>
   );
 }
