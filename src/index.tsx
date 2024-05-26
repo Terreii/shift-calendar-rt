@@ -11,6 +11,7 @@ import Helmet from "preact-helmet";
 import Home from "./pages/Home";
 import { NotFound } from "./pages/_404.jsx";
 
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 import "modern-css-reset";
@@ -25,6 +26,7 @@ export function App() {
         titleTemplate="%s | Schichtkalender für Bosch Reutlingen"
         defaultTitle="Schichtkalender für Bosch Reutlingen"
       />
+      <Header />
 
       <Router>
         <Route path="/" component={Home} />

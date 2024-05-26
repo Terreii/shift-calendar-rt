@@ -7,11 +7,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useEffect, useState } from "preact/hooks";
+import { useLocation } from "preact-iso";
 
-import { useToday } from "./time";
-import { type ShiftModels } from "../lib/constants";
+import { useToday } from "../../../hooks/time";
+import { shift66Name, type ShiftModels } from "../../../lib/constants";
 
 export type Result = {
   isFullYear: boolean;
@@ -21,15 +21,24 @@ export type Result = {
   search: number | null;
 };
 
-type Params = { shiftModel: string; year?: string; month?: string };
-
 /**
  * Get the stored or current month.
  */
 export function useQueryProps(): Result {
-  const { shiftModel, year: yearStr, month: monthStr } = useParams<Params>();
-
+  const { path } = useLocation();
   const today = useToday();
+
+  if (!path.startsWith("/cal")) {
+    return {
+      isFullYear: false,
+      year: today[0],
+      month: today[1],
+      shiftModel: shift66Name,
+      search: null,
+    };
+  }
+  const [_index, _cal, shiftModel, yearStr, monthStr] = path.split("/");
+
   const isFullYear = !monthStr && yearStr != null;
   const year =
     yearStr && !Number.isNaN(yearStr) ? parseInt(yearStr, 10) : today[0];
@@ -38,7 +47,7 @@ export function useQueryProps(): Result {
     : monthStr && !Number.isNaN(yearStr)
       ? parseInt(monthStr, 10)
       : today[1];
-  const search = useSearchHash();
+  const search = useSearchHash(path);
 
   return {
     isFullYear,
@@ -49,9 +58,8 @@ export function useQueryProps(): Result {
   };
 }
 
-function useSearchHash(): number | null {
+function useSearchHash(path: string): number | null {
   const [search, setSearch] = useState<number | null>(null);
-  const params = useParams();
 
   useEffect(() => {
     const reg = /day_\d{4}-\d{1,2}-(\d{1,2})/;
@@ -74,7 +82,7 @@ function useSearchHash(): number | null {
     return () => {
       window.removeEventListener("hashchange", handler);
     };
-  }, [params]);
+  }, [path]);
 
   return search;
 }

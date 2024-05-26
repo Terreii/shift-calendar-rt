@@ -5,30 +5,35 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useMemo } from "react";
-import Link from "next/link";
+import { useMemo } from "preact/hooks";
 import { addMonths } from "date-fns/addMonths";
 
-import { useToday } from "../../hooks/time";
-import { useIsClient } from "../../hooks/utils";
-import { getCalUrl, getTodayUrl } from "../../lib/utils";
+import { useToday } from "../../../hooks/time";
+import { useIsClient } from "../../../hooks/utils";
+import { getCalUrl, getTodayUrl } from "../../../lib/utils";
+import { type ShiftModelKeys } from "../../../config/shifts";
 
-import style from "./header.module.css";
+import style from "./style.module.css";
 
 /**
  * Display 3 links to move in the calendar.
  * One button is move to today. And the other once are to move to the next/previous month/year.
- * @param {object}   param             Preact params.
- * @param {number}   param.year        Current active year.
- * @param {number}   param.month       Current active month.
- * @param {boolean}  param.isFullYear  Is the full year shown?
- * @param {string}   param.shiftModel  The current shift model.
+ * @param param             Preact params.
+ * @param param.year        Current active year.
+ * @param param.month       Current active month.
+ * @param param.isFullYear  Is the full year shown?
+ * @param param.shiftModel  The current shift model.
  */
 export default function HeaderNavLinks({
   year,
   month,
   isFullYear,
   shiftModel,
+}: {
+  year: number;
+  month: number;
+  isFullYear: boolean;
+  shiftModel: ShiftModelKeys;
 }) {
   const today = useToday();
   const isClient = useIsClient();
@@ -61,31 +66,35 @@ export default function HeaderNavLinks({
 
   return (
     <>
-      <Link
+      <a
         key={`previous_${year}_${month}`}
         href={lastMonth}
-        className={style.navi_link}
+        class={style.navi_link}
         title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
       >
         {"<"}
-      </Link>
+      </a>
 
-      <Link
-        href={getTodayUrl({ shiftModel, today: isClient ? today : undefined })}
-        className={style.navi_link}
+      <a
+        href={getTodayUrl({
+          shiftModel,
+          today: isClient ? today : undefined,
+          group: 0,
+        })}
+        class={style.navi_link}
         title="zeige aktuellen Monat"
       >
         Heute
-      </Link>
+      </a>
 
-      <Link
+      <a
         key={`next_${year}_${month}`}
         href={nextMonth}
-        className={style.navi_link}
+        class={style.navi_link}
         title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
       >
         {">"}
-      </Link>
+      </a>
     </>
   );
 }

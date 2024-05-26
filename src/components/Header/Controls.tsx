@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,16 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "preact/hooks";
 
-import Core from "./core";
-import Menu from "../menu";
-import ShareMenu from "../share-menu";
-import NavLinks from "./header-nav-links";
+// import Menu from "../menu";
+// import ShareMenu from "../share-menu";
+import NavLinks from "./Nav-Links";
 
-import { useQueryProps } from "../../hooks/settings";
+import { useQueryProps } from "./useQueryProps";
 
-import style from "./header.module.css";
+import style from "./style.module.css";
 
 /**
  * Renders the Header.
@@ -28,7 +25,7 @@ export default function Header() {
   const [showShareMenu, setShowShareMenu] = useShowMenu("#share_menu");
 
   return (
-    <Core>
+    <>
       <nav className={style.navi}>
         <NavLinks
           isFullYear={isFullYear}
@@ -64,7 +61,7 @@ export default function Header() {
           }}
         />
       )}
-    </Core>
+    </>
   );
 }
 
@@ -110,4 +107,13 @@ function useShowMenu(
   }, [show, insideSelector]);
 
   return [show, setShow];
+}
+
+function Menu(args: any) {
+  console.warn("TODO: Move Menu");
+  return null;
+}
+function ShareMenu(args: any) {
+  console.warn("TODO: Move ShareMenu");
+  return null;
 }
