@@ -9,6 +9,7 @@
     "eslint:recommended",
     "plugin:jest/recommended",
     "plugin:cypress/recommended",
+    "preact",
     "next/core-web-vitals"
   ],
   "plugins": ["testing-library", "cypress"],
