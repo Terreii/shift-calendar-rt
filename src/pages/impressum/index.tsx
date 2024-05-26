@@ -5,15 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import type { Metadata } from "next";
+import Helmet from "preact-helmet";
 
-import style from "../../../styles/impressum.module.css";
-
-export const metadata: Metadata = {
-  title: "Impressum",
-};
-
-export const dynamic = "force-static";
+import style from "./style.module.css";
 
 /**
  * Renders the Impressum.
@@ -22,6 +16,8 @@ export const dynamic = "force-static";
 export default function Impressum() {
   return (
     <main className={style.container}>
+      <Helmet title="Impressum" />
+
       <div id="calendar_main_out" className={style.main}>
         <h2 id="dsg-general-intro" className={style.header}>
           Datenschutzerklärung
