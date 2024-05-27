@@ -44,5 +44,9 @@ if (typeof window !== "undefined") {
 }
 
 export async function prerender(data) {
-  return await ssr(<App {...data} />);
+  const { links = [], ...rest } = await ssr(<App {...data} />);
+  const filteredLinks = Array.from(links).filter(
+    (link) => !link.startsWith("/cal"),
+  );
+  return { ...rest, links: new Set(filteredLinks) };
 }
