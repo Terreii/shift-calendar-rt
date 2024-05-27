@@ -11,6 +11,12 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   text-align: center;
 }
 
+.not_found {
+  composes: main;
+  margin-top: 5rem;
+  margin-bottom: 10rem;
+}
+
 .inline_menu_icon {
   display: inline-block;
   margin-left: 0.25rem;
