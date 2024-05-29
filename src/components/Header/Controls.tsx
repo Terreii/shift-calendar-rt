@@ -5,10 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect } from "preact/hooks";
+import {
+  useState,
+  useEffect,
+  type Dispatch,
+  type StateUpdater,
+} from "preact/hooks";
 
-// import Menu from "../menu";
-// import ShareMenu from "../share-menu";
+import Menu from "../Menu";
+import ShareMenu from "../Menu/ShareMenu";
 import NavLinks from "./Nav-Links";
 
 import { useQueryProps } from "./useQueryProps";
@@ -72,7 +77,7 @@ export default function Header() {
  */
 function useShowMenu(
   insideSelector: string,
-): ReturnType<typeof useState<boolean>> {
+): [boolean, Dispatch<StateUpdater<boolean>>] {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -107,13 +112,4 @@ function useShowMenu(
   }, [show, insideSelector]);
 
   return [show, setShow];
-}
-
-function Menu(args: any) {
-  console.warn("TODO: Move Menu");
-  return null;
-}
-function ShareMenu(args: any) {
-  console.warn("TODO: Move ShareMenu");
-  return null;
 }

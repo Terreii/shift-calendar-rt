@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,15 +5,20 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { type JSX } from "preact";
+import { useLocation } from "preact-iso";
 
-import { monthNames, shiftModelNames, shiftModelText } from "../lib/constants";
-import { getCalUrl } from "../lib/utils";
-import { useSupportsInputType } from "../hooks/utils";
+import { useSupportsInputType } from "../../../hooks/utils";
+import {
+  monthNames,
+  shiftModelNames,
+  shiftModelText,
+} from "../../../lib/constants";
+import { getCalUrl } from "../../../lib/utils";
+import { ShiftModelKeys } from "../../../config/shifts";
 
-import style from "./menu.module.css";
+import style from "./style.module.css";
+import hambugerIcon from "../../assets/hamburger_icon.svg";
 
 export default function Menu({
   show,
@@ -26,8 +29,17 @@ export default function Menu({
   shiftModel,
   setShowMenu,
   onShare,
+}: {
+  show: boolean;
+  month: number;
+  year: number;
+  isFullYear: boolean;
+  search?: number | string | null;
+  shiftModel: ShiftModelKeys;
+  setShowMenu: (boolean) => void;
+  onShare: (event: JSX.TargetedMouseEvent<HTMLButtonElement>) => void;
 }) {
-  const router = useRouter();
+  const { route } = useLocation();
   const supportsMonthInput = useSupportsInputType("month");
   const supportsDateInput = useSupportsInputType("date");
 
@@ -42,13 +54,13 @@ export default function Menu({
     <details
       open={show}
       onToggle={(event) => {
-        setShowMenu(event.target.open);
+        setShowMenu((event.target! as HTMLDetailsElement).open);
       }}
     >
-      <summary id="menu_summary" className={style.menu_button}>
-        <Image
-          src="/assets/icons/hamburger_icon.svg"
-          className={style.menu_button_img}
+      <summary id="menu_summary" class={style.menu_button}>
+        <img
+          src={hambugerIcon}
+          class={style.menu_button_img}
           height="45"
           width="45"
           alt="Menu"
@@ -59,21 +71,21 @@ export default function Menu({
         id="hamburger_menu"
         aria-live="polite"
         aria-label="Menü"
-        className={style.container}
+        class={style.container}
       >
-        <div className={style.scroll_container}>
-          <div className={style.element_container}>
+        <div class={style.scroll_container}>
+          <div class={style.element_container}>
             {!(supportsMonthInput || isFullYear) && (
               <select
-                className={style.month_select}
+                class={style.month_select}
                 title="Gehe zum Monat"
                 value={month}
                 onChange={(event) => {
-                  router.push(
+                  route(
                     getCalUrl({
                       shiftModel,
                       isFullYear: false,
-                      month: +event.target.value,
+                      month: +(event.target! as HTMLSelectElement).value,
                       year,
                     }),
                   );
@@ -89,20 +101,21 @@ export default function Menu({
             )}
           </div>
 
-          <div className={style.element_container}>
+          <div class={style.element_container}>
             {(!supportsMonthInput || isFullYear) && (
-              <label className={style.label}>
+              <label class={style.label}>
                 Jahr
                 <input
-                  className={style.form_item}
+                  class={style.form_item}
                   type="number"
                   min={1990}
                   aria-controls="calendar_main_out"
-                  defaultValue={year}
-                  onChange={(event) => {
-                    const year = event.target.valueAsNumber;
+                  defaultValue={year.toString()}
+                  onInput={(event) => {
+                    const year = (event.target! as HTMLInputElement)
+                      .valueAsNumber;
                     if (Number.isNaN(year) || year < 1990) return;
-                    router.push(
+                    route(
                       getCalUrl({
                         shiftModel,
                         isFullYear,
@@ -116,21 +129,22 @@ export default function Menu({
             )}
           </div>
 
-          <div className={style.element_container}>
+          <div class={style.element_container}>
             {supportsMonthInput && !isFullYear && (
-              <label className={style.label}>
+              <label class={style.label}>
                 Gehe zum Monat
                 <input
-                  className={style.form_item}
+                  class={style.form_item}
                   type="month"
                   aria-controls="calendar_main_out"
                   min="1990-01"
                   value={`${year}-${String(month).padStart(2, "0")}`}
-                  onChange={(event) => {
-                    const value = event.target.valueAsDate;
+                  onInput={(event) => {
+                    const value = (event.target as HTMLInputElement)
+                      .valueAsDate;
                     if (value == null) return;
 
-                    router.push(
+                    route(
                       getCalUrl({
                         shiftModel,
                         isFullYear,
@@ -144,21 +158,21 @@ export default function Menu({
             )}
           </div>
 
-          <div className={style.element_container}>
+          <div class={style.element_container}>
             {supportsDateInput && (
-              <label className={style.label}>
+              <label class={style.label}>
                 Suche einen Tag
                 <input
-                  className={style.form_item}
+                  class={style.form_item}
                   type="date"
                   aria-controls="calendar_main_out"
                   min="1990-01-01"
                   defaultValue={searchValue}
-                  onChange={(event) => {
-                    const value = event.target.value;
+                  onInput={(event) => {
+                    const value = (event.target! as HTMLInputElement).value;
 
                     if (value == null || value.length === 0) {
-                      router.push(
+                      route(
                         getCalUrl({
                           shiftModel,
                           isFullYear,
@@ -167,8 +181,10 @@ export default function Menu({
                         }),
                       );
                     } else {
-                      const date = event.target.valueAsDate || new Date(value);
-                      router.push(
+                      const date =
+                        (event.target! as HTMLInputElement).valueAsDate ||
+                        new Date(value);
+                      route(
                         getCalUrl({
                           shiftModel,
                           isFullYear: false,
@@ -184,7 +200,7 @@ export default function Menu({
             )}
           </div>
 
-          <Link
+          <a
             key={isFullYear}
             href={getCalUrl({
               shiftModel,
@@ -192,25 +208,26 @@ export default function Menu({
               year,
               month,
             })}
-            className={style.month_full_year_toggle}
+            class={style.month_full_year_toggle}
             aria-controls="calendar_main_out"
             onClick={() => {
               setShowMenu(false);
             }}
           >
             Zeige {isFullYear ? "Monate" : "ganzes Jahr"}
-          </Link>
+          </a>
 
-          <label className={style.label}>
+          <label class={style.label}>
             Schichtmodell
             <select
-              className={style.form_item}
+              class={style.form_item}
               aria-controls="calendar_main_out"
               value={shiftModel}
               onChange={(event) => {
-                router.push(
+                route(
                   getCalUrl({
-                    shiftModel: event.target.value,
+                    shiftModel: (event.target! as HTMLSelectElement)
+                      .value as ShiftModelKeys,
                     isFullYear,
                     year,
                     month,
@@ -228,11 +245,11 @@ export default function Menu({
 
           <button
             type="button"
-            className={style.small_button}
+            class={style.small_button}
             onClick={onShare}
             aria-label="Teile deine Schicht"
           >
-            <Image
+            <img
               src="/assets/icons/share21.svg"
               height="32"
               width="32"

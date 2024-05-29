@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -9,11 +7,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect, useMemo } from "react";
 
-import { getCalUrl } from "../lib/utils";
-import { type ShiftModels } from "../lib/constants";
+import { getCalUrl } from "../../../lib/utils";
+import { type ShiftModels } from "../../../lib/constants";
 
-import style from "./menu.module.css";
-import formStyle from "../styles/form.module.css";
+import style from "./style.module.css";
+import formStyle from "../../../styles/form.module.css";
 
 /**
  * Display the share menu.
@@ -75,32 +73,33 @@ export default function ShareMenu({
   }, [year, month, addSearch, search, addShiftModel, shiftModel]);
 
   return (
-    <div id="share_menu" className={style.container}>
-      <div className={style.scroll_container}>
-        <label className={style.element_container}>
+    <div id="share_menu" class={style.container}>
+      <div class={style.scroll_container}>
+        <label class={style.element_container}>
           Adresse zum teilen:
           <input
             id="share_url"
-            className={style.share_address}
+            class={style.share_address}
             type="url"
             readOnly
             value={url.toString()}
             onFocus={(event) => {
-              event.target.select();
+              (event.target! as HTMLInputElement).select();
             }}
           />
         </label>
 
-        <h6 className={style.title}>Füge hinzu:</h6>
+        <h6 class={style.title}>Füge hinzu:</h6>
 
-        <label className={style.share_label}>
+        <label class={style.share_label}>
           <input
-            className={formStyle.checkbox}
+            class={formStyle.checkbox}
             type="checkbox"
             checked={addShiftModel}
-            onChange={(event) => {
-              setAddShiftModel(event.target.checked);
-              if (!event.target.checked && addSearch) {
+            onInput={(event) => {
+              const element = event.target as HTMLInputElement;
+              setAddShiftModel(element.checked);
+              if (!element.checked && addSearch) {
                 setAddSearch(false);
               }
             }}
@@ -108,17 +107,18 @@ export default function ShareMenu({
           Schichtmodell
         </label>
 
-        <label className={style.share_label}>
+        <label class={style.share_label}>
           <input
-            className={formStyle.checkbox}
+            class={formStyle.checkbox}
             type="checkbox"
             checked={addSearch}
             disabled={search == null}
-            onChange={(event) => {
+            onInput={(event) => {
               if (search == null) return;
 
-              setAddSearch(event.target.checked);
-              if (event.target.checked && !addShiftModel) {
+              const element = event.target as HTMLInputElement;
+              setAddSearch(element.checked);
+              if (element.checked && !addShiftModel) {
                 setAddShiftModel(true);
               }
             }}
@@ -132,18 +132,14 @@ export default function ShareMenu({
           )}
         </label>
 
-        <div className={style.buttons_row}>
-          <button
-            type="button"
-            className={formStyle.cancel_button}
-            onClick={hide}
-          >
+        <div class={style.buttons_row}>
+          <button type="button" class={formStyle.cancel_button} onClick={hide}>
             Abbrechen
           </button>
           {"navigator" in globalThis && "share" in window.navigator ? ( // eslint-disable-line
             <button
               type="button"
-              className={formStyle.accept_button}
+              class={formStyle.accept_button}
               onClick={(event) => {
                 event.preventDefault();
 
@@ -162,7 +158,7 @@ export default function ShareMenu({
             </button>
           ) : (
             <a
-              className={formStyle.accept_button}
+              class={formStyle.accept_button}
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${url
                 .toString()
                 .replace(/&/g, "%26")}`}
