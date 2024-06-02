@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo } from "preact/hooks";
 
 import { getCalUrl } from "../../../lib/utils";
 import { type ShiftModels } from "../../../lib/constants";

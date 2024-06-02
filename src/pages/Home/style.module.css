@@ -47,14 +47,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   padding: 0.75rem 1rem;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
-  color: white;
-  color: var(--form-accept-color);
-  background-color: #6d28d9;
-  background-color: var(--form-accept-bg-color);
+  color: var(--form-accept-color) !important;
+  background-color: var(--form-accept-bg-color) !important;
 }
 .shift_button:is(:hover, :focus) {
-  background-color: #4c1d95;
-  background-color: var(--form-accept-interact-bg-color);
+  background-color: var(--form-accept-interact-bg-color) !important;
 }
 
 .no_break {
