@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,18 +5,18 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useMemo, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useMemo, useRef } from "preact/hooks";
+import { useLocation } from "preact-iso";
 import addMonths from "date-fns/addMonths";
 import { useViewTransition } from "use-view-transitions/react";
 
-import Month from "./month";
-import selectMonthData from "../lib/select-month-data";
-import { getCalUrl, scrollToADay } from "../lib/utils";
-import { useTitleAlert, useSwipe } from "../hooks/utils";
-import { useUnloadedFix } from "../hooks/time";
+import Month from "./Month";
+import selectMonthData from "../../../lib/select-month-data";
+import { getCalUrl, scrollToADay } from "../../../lib/utils";
+import { useTitleAlert, useSwipe } from "../../../hooks/utils";
+import { useUnloadedFix } from "../../../hooks/time";
 
-import style from "../styles/calendar.module.css";
+import style from "./style.module.css";
 
 /**
  * Display this month and the next 2 and the last one.
@@ -30,28 +28,18 @@ import style from "../styles/calendar.module.css";
  * @param {number} param.month          Month to display.
  */
 export default function ByMonths({ shiftModel, group, search, year, month }) {
-  const router = useRouter();
+  const { route } = useLocation();
   const { startViewTransition } = useViewTransition();
-  const { ref, isSwiping, direction, x } = useSwipe((direction) => {
+  const { ref, isSwiping, x } = useSwipe((direction) => {
     if (direction) {
       startViewTransition(() => {
-        router.push(
-          getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
-        );
+        route(getSwipeNextMonthUrl(direction, year, month, group, shiftModel));
       });
     }
   });
   const monthsToRender = useMonthToRender();
   const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
-
-  useEffect(() => {
-    if (direction) {
-      router.prefetch(
-        getSwipeNextMonthUrl(direction, year, month, group, shiftModel),
-      );
-    }
-  }, [direction, group, month, router, shiftModel, year]);
 
   const monthsData = useMemo(() => {
     const monthsData = [];

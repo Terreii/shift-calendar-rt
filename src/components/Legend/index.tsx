@@ -5,14 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useMemo, type ReactNode } from "react";
+import { type ComponentChildren } from "preact";
+import { useMemo } from "preact/hooks";
 import shifts, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
-} from "../config/shifts";
+} from "../../../config/shifts";
 
-import style from "./legend.module.css";
+import style from "./style.module.css";
 
 /**
  * Renders a legend of definitions for the table.
@@ -132,7 +133,7 @@ function Cell({
   id?: string;
   className?: string;
   href?: string;
-  children?: ReactNode;
+  children?: ComponentChildren;
 }) {
   return (
     <>

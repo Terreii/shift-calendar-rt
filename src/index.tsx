@@ -17,6 +17,7 @@ import Footer from "./components/Footer";
 import "modern-css-reset";
 import "../styles/index.css";
 
+const Calendar = lazy(() => import("./pages/Calendar"));
 const Impressum = lazy(() => import("./pages/Impressum"));
 
 export function App() {
@@ -30,6 +31,7 @@ export function App() {
 
       <Router>
         <Route path="/" component={Home} />
+        <Route path="/cal/:shiftModel" component={Calendar} />
         <Route path="/impressum" component={Impressum} />
         <Route default component={NotFound} />
       </Router>

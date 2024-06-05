@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -10,14 +8,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { formatISO } from "date-fns/formatISO";
 import { isWeekend } from "date-fns/isWeekend";
 import { isMonday } from "date-fns/isMonday";
-import { useParams } from "next/navigation";
+import { useRoute } from "preact-iso";
 
-import WeekCell from "./cells/week";
-import DayInMonthCell from "./cells/dayInMonth";
-import WeekDayCell from "./cells/weekDay";
-import GroupShiftCell from "./cells/groupShift";
+import WeekCell from "./cells/Week";
+import DayInMonthCell from "./cells/DayInMonth";
+import WeekDayCell from "./cells/WeekDay";
+import GroupShiftCell from "./cells/GroupShift";
 
-import style from "../styles/calendar.module.css";
+import style from "./style.module.css";
 
 /**
  * @typedef {Object} MonthData
@@ -38,7 +36,9 @@ import style from "../styles/calendar.module.css";
  */
 export default function MonthBody({ year, month, data, today, search, group }) {
   const todayInThisMonth = today[0] === year && today[1] === month;
-  const { shiftModel } = useParams();
+  const {
+    params: { shiftModel },
+  } = useRoute();
 
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {

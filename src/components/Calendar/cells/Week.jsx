@@ -10,7 +10,7 @@ import { endOfISOWeek } from "date-fns/endOfISOWeek";
 import { getDaysInMonth } from "date-fns/getDaysInMonth";
 import { getISOWeek } from "date-fns/getISOWeek";
 
-import style from "../../styles/calendar.module.css";
+import style from "../style.module.css";
 
 /**
  * Render the weekday.

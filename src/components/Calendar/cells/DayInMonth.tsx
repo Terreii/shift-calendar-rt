@@ -5,14 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import type { ShiftModels } from "../../lib/constants";
+import type { ShiftModels } from "../../../../lib/constants";
 
 import { formatISO } from "date-fns/formatISO";
-import Link from "next/link";
 
-import { getCalUrl } from "../../lib/utils";
+import { getCalUrl } from "../../../../lib/utils";
 
-import style from "../../styles/calendar.module.css";
+import style from "../style.module.css";
 
 /**
  * Render the day in month cell.
@@ -29,7 +28,7 @@ export default function DayInMonthCell({
 }) {
   return (
     <td className={style.day_in_month}>
-      <Link
+      <a
         href={getCalUrl({
           shiftModel,
           year: time.getFullYear(),
@@ -41,7 +40,7 @@ export default function DayInMonthCell({
         <time dateTime={formatISO(time, { representation: "date" })}>
           {time.getDate()}
         </time>
-      </Link>
+      </a>
     </td>
   );
 }

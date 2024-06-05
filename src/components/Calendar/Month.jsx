@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,14 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { memo } from "react";
+import { memo } from "preact/compat";
 
-import MonthBody from "./month-body";
-import { monthNames } from "../lib/constants";
-import { useTodayZeroIndex } from "../hooks/time";
-import { useIsClient } from "../hooks/utils";
+import MonthBody from "./MonthBody";
+import { monthNames } from "../../../lib/constants";
+import { useTodayZeroIndex } from "../../../hooks/time";
 
-import style from "../styles/calendar.module.css";
+import style from "./style.module.css";
 
 /**
  * Render a month
@@ -48,7 +45,7 @@ function Month({
     groups.push(group - 1);
   }
 
-  const today = useToday();
+  const today = useTodayZeroIndex();
   const isToday = today[0] === year && today[1] === month;
 
   return (
@@ -126,16 +123,6 @@ function Month({
       </tfoot>
     </table>
   );
-}
-
-/**
- * Only render today on the client/browser.
- */
-function useToday() {
-  const today = useTodayZeroIndex();
-  const isClient = useIsClient();
-
-  return isClient ? today : [0, 0, 0, 0, 0];
 }
 
 export default memo(Month);

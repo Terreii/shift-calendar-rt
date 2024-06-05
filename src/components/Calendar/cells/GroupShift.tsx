@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -11,9 +9,9 @@ import shiftModels, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
-} from "../../config/shifts";
-import { Workdata } from "../../lib/workdata";
-import style from "../../styles/calendar.module.css";
+} from "../../../../config/shifts";
+import { Workdata } from "../../../../lib/workdata";
+import style from "../style.module.css";
 
 /**
  * Render a cell that displays if that shift group is working and what shift.
