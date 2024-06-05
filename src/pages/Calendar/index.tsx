@@ -8,6 +8,7 @@ import { Router, Route, useLocation } from "preact-iso";
 
 import CurrentMonth from "./CurrentMonth";
 import FullYear from "./FullYear";
+import Month from "./Month";
 import { shiftModelNames } from "../../../lib/constants";
 import { ShiftModelKeys } from "../../../config/shifts";
 
@@ -22,6 +23,7 @@ export default function CalendarRouter({ rest }: { rest: string }) {
     <Router>
       <Route path="/:shiftModel" component={CurrentMonth} />
       <Route path="/:shiftModel/:year" component={FullYear} />
+      <Route path="/:shiftModel/:year/:month" component={Month} />
       <Route default component={Redirector} />
     </Router>
   );

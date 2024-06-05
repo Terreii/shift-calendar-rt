@@ -5,43 +5,21 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import type { Metadata } from "next";
-import { redirect } from "next/navigation";
+import Helmet from "preact-helmet";
 
-import ByMonths from "../../../../../../components/by-month";
-import Downloader from "../../../../../../components/download";
-import Legend from "../../../../../../components/legend";
-import {
-  shiftModelNames,
-  shiftModelText,
-  type ShiftModels,
-} from "../../../../../../lib/constants";
-import { parseNumber } from "../../../../../../lib/utils";
+import ByMonths from "../../components/Calendar/ByMonth";
+import Downloader from "../../components/Download";
+import Legend from "../../components/Legend";
+import { shiftModelText, type ShiftModels } from "../../../lib/constants";
+import { parseNumber } from "../../../lib/utils";
 
-import style from "../../../../../../styles/calendar.module.css";
-
-type Args = { shiftModel: ShiftModels; year: string; month: string };
-
-export async function generateMetadata({
-  params: { shiftModel, year, month },
-}: {
-  params: Args;
-}): Promise<Metadata> {
-  return {
-    title: `Monat ${year}-${month.padStart(2, "0")} | ${
-      shiftModelText[shiftModel]
-    }`,
-  };
-}
+import style from "../../components/Calendar/style.module.css";
 
 export default function MonthPage({
   params: { shiftModel, year: yearString, month: monthString },
 }: {
-  params: Args;
+  params: { shiftModel: ShiftModels; year: string; month: string };
 }) {
-  if (!shiftModelNames.includes(shiftModel)) {
-    redirect("/");
-  }
   const year = parseNumber(yearString, null);
   const monthQuery = parseNumber(monthString, null);
   const month = monthQuery ? monthQuery - 1 : monthQuery;
@@ -54,7 +32,13 @@ export default function MonthPage({
   }
 
   return (
-    <main className={style.main}>
+    <main class={style.main}>
+      <Helmet
+        title={`Monat ${year}-${monthString.padStart(2, "0")} | ${
+          shiftModelText[shiftModel]
+        }`}
+      />
+
       <Legend shiftKey={shiftModel} year={year} month={month} />
 
       <ByMonths
@@ -70,5 +54,3 @@ export default function MonthPage({
     </main>
   );
 }
-
-export const revalidate = false;
