@@ -72,7 +72,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
       <tr
         key={index}
         id={"day_" + formatISO(time, { representation: "date" })}
-        className={style.row}
+        class={style.row}
         data-interest={interesting}
         data-weekend={isWeekend(time)}
         data-closing={isClosingHoliday ? "closing" : undefined}

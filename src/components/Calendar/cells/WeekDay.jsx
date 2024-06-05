@@ -31,12 +31,12 @@ export default function WeekDayCell({ time, holidayData, dayLightSaving }) {
 
   return (
     <td
-      className={style.week_day}
+      class={style.week_day}
       title={title}
       data-holiday={holidayData?.type}
       data-daylight={isDayLightSaving ? true : null}
     >
-      <span className="sr-only">{longFormat.format(time)}</span>
+      <span class="sr-only">{longFormat.format(time)}</span>
       <span aria-hidden="true">{shortFormat.format(time)}</span>
     </td>
   );

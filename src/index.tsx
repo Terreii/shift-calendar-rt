@@ -2,6 +2,7 @@ import {
   LocationProvider,
   Router,
   Route,
+  useLocation,
   lazy,
   hydrate,
   prerender as ssr,
@@ -31,7 +32,8 @@ export function App() {
 
       <Router>
         <Route path="/" component={Home} />
-        <Route path="/cal/:shiftModel" component={Calendar} />
+        <Route path="/cal" component={Redirector} />
+        <Route path="/cal/*" component={Calendar} />
         <Route path="/impressum" component={Impressum} />
         <Route default component={NotFound} />
       </Router>
@@ -39,6 +41,12 @@ export function App() {
       <Footer />
     </LocationProvider>
   );
+}
+
+function Redirector() {
+  const { route } = useLocation();
+  route("/", true);
+  return null;
 }
 
 if (typeof window !== "undefined") {

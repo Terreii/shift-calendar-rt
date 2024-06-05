@@ -37,7 +37,7 @@ export default function GroupShiftCell({
   shiftModel: ShiftModelKeys;
 }) {
   if (shift === "K") {
-    return <td className={style.group} />;
+    return <td class={style.group} />;
   }
 
   const {
@@ -60,7 +60,7 @@ export default function GroupShiftCell({
 
   return (
     <td
-      className={style.group}
+      class={style.group}
       data-group={group + 1}
       data-current={isTodayShift || isYesterdayShift ? true : undefined}
       title={isTodayShift || isYesterdayShift ? "Aktuelle Schicht" : undefined}

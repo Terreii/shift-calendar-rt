@@ -27,7 +27,7 @@ export default function DayInMonthCell({
   shiftModel: ShiftModels;
 }) {
   return (
-    <td className={style.day_in_month}>
+    <td class={style.day_in_month}>
       <a
         href={getCalUrl({
           shiftModel,
@@ -35,7 +35,7 @@ export default function DayInMonthCell({
           month: time.getMonth() + 1,
           day: time.getDate(),
         })}
-        className={style.day_in_month__link}
+        class={style.day_in_month__link}
       >
         <time dateTime={formatISO(time, { representation: "date" })}>
           {time.getDate()}

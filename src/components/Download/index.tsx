@@ -60,8 +60,8 @@ export default function Download({
 }) {
   if (!(shiftModel in urls)) {
     return (
-      <div className={style.container}>
-        <section className={style.section}>
+      <div class={style.container}>
+        <section class={style.section}>
           Für dieses Schichtmodell sind die Kalender noch in Arbeit
           <SheetDownload
             shiftModel={shiftModel}
@@ -75,23 +75,23 @@ export default function Download({
   }
 
   return (
-    <div className={style.container}>
-      <section className={style.section}>
-        <h4 className={style.header}>
+    <div class={style.container}>
+      <section class={style.section}>
+        <h4 class={style.header}>
           Downloade einen {shiftModelText[shiftModel]} Kalender
         </h4>
 
-        <p className={style.text}>
+        <p class={style.text}>
           Füge deine Schichtgruppe zu deiner Kalender-App hinzu!
         </p>
 
-        <div className={style.link_list}>
+        <div class={style.link_list}>
           {urls[shiftModel].map((href, index) => {
             const group = index + 1;
             return (
               <a
                 key={shiftModel + group}
-                className="link"
+                class="link"
                 href={href}
                 download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
                 target="_blank"
@@ -128,7 +128,7 @@ function SheetDownload({
     : `/api/excel_export/shift/${shiftModel}/${year}`;
 
   return (
-    <p className={style.text}>
+    <p class={style.text}>
       Oder lade ihn {inWork && "schon"} als Excel/
       <a
         href="https://de.libreoffice.org/discover/libreoffice/"
@@ -138,7 +138,7 @@ function SheetDownload({
       </a>{" "}
       Tabelle runter:
       <br />
-      <a href={url} target="_blank" download={name} className="link">
+      <a href={url} target="_blank" download={name} class="link">
         {name}
       </a>
       <br />

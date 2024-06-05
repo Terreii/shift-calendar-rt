@@ -81,7 +81,7 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
   return (
     <div
       id="calendar_main_out"
-      className={isSwiping ? style.swiping_container : style.container}
+      class={isSwiping ? style.swiping_container : style.container}
       style={{ "--swipe-offset": `${x}px` }}
       onClick={clickHandler}
       ref={ref}
@@ -91,7 +91,7 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
         monthsToRender[index] ? (
           <Month
             key={`${year}-${month}-${shiftModel}-${group}`}
-            className={style.calender_table}
+            class={style.calender_table}
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
@@ -103,7 +103,7 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
           <table
             key={`${year}-${month}-${shiftModel}-${group}`}
             id={`month_${year}-${month + 1}`}
-            className={`${style.table} ${style.calender_table} ${style.calender_table_placeholder}`}
+            class={`${style.table} ${style.calender_table} ${style.calender_table_placeholder}`}
             aria-hidden
           />
         ),

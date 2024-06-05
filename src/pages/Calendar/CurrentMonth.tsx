@@ -5,20 +5,15 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useLocation } from "preact-iso";
 import Helmet from "preact-helmet";
 
-import ByMonths from "../components/Calendar/ByMonth";
-import Downloader from "../components/Download";
-import Legend from "../components/Legend";
-import {
-  shiftModelNames,
-  shiftModelText,
-  type ShiftModels,
-} from "../../lib/constants";
-import { useTodayZeroIndex } from "../../hooks/time";
+import ByMonths from "../../components/Calendar/ByMonth";
+import Downloader from "../../components/Download";
+import Legend from "../../components/Legend";
+import { shiftModelText, type ShiftModels } from "../../../lib/constants";
+import { useTodayZeroIndex } from "../../../hooks/time";
 
-import style from "../components/Calendar/style.module.css";
+import style from "../../components/Calendar/style.module.css";
 
 /**
  * Route that always displays today.
@@ -28,14 +23,10 @@ export default function ShiftModel({
 }: {
   params: { shiftModel: ShiftModels };
 }) {
-  const { route } = useLocation();
-  if (!shiftModelNames.includes(shiftModel)) {
-    route("/", true);
-  }
   const [year, month] = useTodayZeroIndex();
 
   return (
-    <main className={style.main}>
+    <main class={style.main}>
       <Helmet
         title={`Monat ${year}-${String(month + 1).padStart(2, "0")} | ${
           shiftModelText[shiftModel]

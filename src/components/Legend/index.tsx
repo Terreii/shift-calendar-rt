@@ -32,8 +32,8 @@ export default function Legend({
     [shiftKey, year, month],
   );
   return (
-    <div className={style.container}>
-      <dl className={style.column}>
+    <div class={style.container}>
+      <dl class={style.column}>
         {shiftTypes.map(([key, data]) => (
           <Cell key={shiftKey + key} id={key}>
             {data.name}
@@ -43,7 +43,7 @@ export default function Legend({
         ))}
       </dl>
 
-      <dl className={style.column}>
+      <dl class={style.column}>
         <Cell className={style.current}>Aktuelle Schicht</Cell>
 
         <Cell className={style.closing}>
@@ -137,16 +137,13 @@ function Cell({
 }) {
   return (
     <>
-      <dt className={className ? `${style.cell} ${className}` : style.cell}>
+      <dt class={className ? `${style.cell} ${className}` : style.cell}>
         {id || "1"}
       </dt>
 
-      <dd
-        id={id ? id + "_description" : undefined}
-        className={style.definition}
-      >
+      <dd id={id ? id + "_description" : undefined} class={style.definition}>
         {href ? (
-          <a href={href} className={style.link} rel="noopener noreferrer">
+          <a href={href} class={style.link} rel="noopener noreferrer">
             {children}
           </a>
         ) : (

@@ -51,7 +51,7 @@ function Month({
   return (
     <table
       id={`month_${year}-${month + 1}`}
-      className={`${style.table} ${className}`}
+      class={`${style.table} ${className}`}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
       style={
         shouldTranistionToNewPosition
@@ -64,7 +64,7 @@ function Month({
       <caption
         id={`month_${year}-${month + 1}_caption`}
         data-is-today={isToday}
-        className={style.title}
+        class={style.title}
       >
         {monthNames[month]} {year}
         {isToday ? " (Jetzt)" : ""}
@@ -72,24 +72,24 @@ function Month({
       <thead>
         <tr>
           <th rowSpan={2}>
-            <span className="sr-only">Woche</span>
+            <span class="sr-only">Woche</span>
             <span aria-hidden="true" title="Woche">
               Wo
             </span>
           </th>
-          <th rowSpan={2} className={style.clickable_column}>
+          <th rowSpan={2} class={style.clickable_column}>
             Tag
           </th>
-          <th rowSpan={2} className={style.clickable_column}>
-            <span className="sr-only">Wochentag</span>
+          <th rowSpan={2} class={style.clickable_column}>
+            <span class="sr-only">Wochentag</span>
           </th>
-          <th colSpan={groups.length} className={style.groups_th}>
+          <th colSpan={groups.length} class={style.groups_th}>
             Gruppen
           </th>
         </tr>
         <tr>
           {groups.map((gr) => (
-            <th key={gr} className={style.group_column}>
+            <th key={gr} class={style.group_column}>
               {gr + 1}
             </th>
           ))}
@@ -105,10 +105,10 @@ function Month({
         group={group}
       />
 
-      <tfoot className={style.footer}>
+      <tfoot class={style.footer}>
         <tr>
           <td
-            className={style.sum}
+            class={style.sum}
             colSpan="3"
             title="Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet."
           >

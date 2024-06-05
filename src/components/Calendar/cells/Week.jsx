@@ -20,7 +20,7 @@ import style from "../style.module.css";
 export default function WeekCell({ time }) {
   return (
     <td
-      className={style.week_cell}
+      class={style.week_cell}
       rowSpan={
         Math.min(
           differenceInDays(endOfISOWeek(time), time),
@@ -28,7 +28,7 @@ export default function WeekCell({ time }) {
         ) + 1
       }
     >
-      <span className={style.week_number}>{getISOWeek(time)}</span>
+      <span class={style.week_number}>{getISOWeek(time)}</span>
     </td>
   );
 }
