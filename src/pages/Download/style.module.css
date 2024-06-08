@@ -18,6 +18,11 @@
   display: inline;
 }
 
+.header_img {
+  composes: inline_img;
+  margin-left: 0.5rem;
+}
+
 .download_img {
   composes: inline_img;
   filter: invert(0.5) sepia(1) saturate(5) hue-rotate(75deg);
@@ -77,4 +82,12 @@
   margin-top: 0.5rem;
   padding: 0.5rem;
   border-radius: 0.25rem;
+}
+
+.today_btn {
+  composes: accept_button from "/styles/form.module.css";
+  align-self: end;
+  grid-column: 2;
+  width: min-content;
+  margin-left: auto;
 }

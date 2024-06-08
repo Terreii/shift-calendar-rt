@@ -19,6 +19,7 @@ import "modern-css-reset";
 import "../styles/index.css";
 
 const Calendar = lazy(() => import("./pages/Calendar"));
+const Download = lazy(() => import("./pages/Download"));
 const Impressum = lazy(() => import("./pages/Impressum"));
 
 export function App() {
@@ -34,6 +35,7 @@ export function App() {
         <Route path="/" component={Home} />
         <Route path="/cal" component={Redirector} />
         <Route path="/cal/*" component={Calendar} />
+        <Route path="/download" component={Download} />
         <Route path="/impressum" component={Impressum} />
         <Route default component={NotFound} />
       </Router>

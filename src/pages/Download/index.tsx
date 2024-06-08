@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,8 +5,9 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useId, ReactNode } from "react";
-import Image from "next/image";
+import { type ComponentChildren } from "preact";
+import { useState, useId } from "preact/hooks";
+import Helmet from "preact-helmet";
 import downloadIcon from "bootstrap-icons/icons/download.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
 import sheetIcon from "bootstrap-icons/icons/file-spreadsheet.svg";
@@ -22,32 +21,30 @@ import {
 } from "../../../lib/constants";
 import { useSupportsInputType } from "../../../hooks/utils";
 
-import styles from "../../../styles/download.module.css";
+import styles from "./style.module.css";
 
 export default function DownloadPage() {
-  const [yearMonth, setYearMonth] = useState(() => {
-    const now = new Date();
-    const month = String(now.getUTCMonth() + 1).padStart(2, "0");
-    return `${now.getUTCFullYear()}-${month}`;
-  });
+  const [yearMonth, setYearMonth] = useState(getToday);
   const [year, month] = yearMonth.split("-").map((v) => parseInt(v, 10));
 
   return (
-    <main className={styles.main}>
-      <h1 className={styles.header}>
-        Download Optionen{" "}
+    <main class={styles.main}>
+      <Helmet title="Download" />
+
+      <h1 class={styles.header}>
+        Download Optionen
         {
-          <Image
+          <img
             src={downloadIcon}
             width="32"
             height="32"
             alt=""
-            className={styles.inline_img}
+            class={styles.header_img}
           />
         }
       </h1>
-      <label className={styles.month_label}>
-        <span className={styles.month_label_text}>Für den Monat:</span>
+      <label class={styles.month_label}>
+        <span class={styles.month_label_text}>Für den Monat:</span>
         <MonthInput value={yearMonth} onChange={setYearMonth} />
       </label>
 
@@ -61,7 +58,7 @@ export default function DownloadPage() {
         </strong>
       </DownloadSection>
 
-      <h2 className={styles.header_2}>
+      <h2 class={styles.header_2}>
         Tabellen für das ganze Jahr <em>{year}</em>
       </h2>
 
@@ -88,31 +85,31 @@ function DownloadSection({
   href: string;
   name: string;
   alt: string;
-  children: ReactNode;
+  children: ComponentChildren;
 }) {
   return (
-    <section className={styles.section}>
+    <section class={styles.section}>
       {children}
       <a
         href={href}
         target="_blank"
         download={name}
-        className={styles.sheet_download_link}
+        class={styles.sheet_download_link}
         title={`Download ${name}`}
       >
-        <Image
+        <img
           src={sheetIcon}
           width="32"
           height="32"
           alt={alt}
-          className={styles.download_img}
+          class={styles.download_img}
         />
-        <Image
+        <img
           src={cloudDownloadIcon}
           width="10"
           height="10"
           alt=""
-          className={styles.download_arrow_img}
+          class={styles.download_arrow_img}
         />
       </a>
     </section>
@@ -132,13 +129,16 @@ function MonthInput({
   const [year, month] = value.split("-");
   return supportsMonth ? (
     <input
-      className={styles.month_input}
+      class={styles.month_input}
       type="month"
       value={value}
-      onChange={(event) => event.target.value && onChange(event.target.value)}
+      onInput={(event) =>
+        (event.target as HTMLInputElement).value &&
+        onChange((event.target as HTMLInputElement).value)
+      }
     />
   ) : (
-    <span className={styles.own_month_input}>
+    <span class={styles.own_month_input}>
       <label htmlFor={id + "year"}>Jahr:</label>
       <input
         id={id + "year"}
@@ -146,14 +146,18 @@ function MonthInput({
         min="2010"
         max="2100"
         value={year}
-        onChange={(event) => onChange(`${event.target.value}-${month}`)}
+        onInput={(event) =>
+          onChange(`${(event.target as HTMLInputElement).value}-${month}`)
+        }
       />
 
       <label htmlFor={id + "month"}>Monat:</label>
       <select
         id={id + "month"}
         value={month}
-        onChange={(event) => onChange(`${year}-${event.target.value}`)}
+        onInput={(event) =>
+          onChange(`${year}-${(event.target as HTMLInputElement).value}`)
+        }
       >
         {monthNames.map((name, i) => (
           <option key={i} value={String(i + 1).padStart(2, "0")}>
@@ -161,6 +165,20 @@ function MonthInput({
           </option>
         ))}
       </select>
+
+      <button
+        type="button"
+        class={styles.today_btn}
+        onClick={() => onChange(getToday())}
+      >
+        Heute
+      </button>
     </span>
   );
+}
+
+function getToday(): string {
+  const now = new Date();
+  const month = String(now.getUTCMonth() + 1).padStart(2, "0");
+  return `${now.getUTCFullYear()}-${month}`;
 }
