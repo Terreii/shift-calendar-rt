@@ -9,7 +9,7 @@ import { type ComponentChildren } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
 import style from "./style.module.css";
-import formStyles from "../../../styles/form.module.css";
+import formStyles from "../../form.module.css";
 
 const hiddenState = { scale: 0.99, translate: "0 0.5rem", opacity: 0 };
 const shownState = { scale: 1, translate: "none", opacity: 1 };

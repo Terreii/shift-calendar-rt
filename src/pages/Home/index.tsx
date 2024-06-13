@@ -12,7 +12,7 @@ import { type ShiftModelKeys } from "../../../config/shifts";
 import { shiftModelNames, shiftModelText } from "../../../lib/constants";
 import { getToday, getTodayUrl } from "../../../lib/utils";
 
-import hamburgerIcon from "../../assets/hamburger_icon.svg";
+import menuIcon from "bootstrap-icons/icons/three-dots-vertical.svg";
 import style from "./style.module.css";
 
 type Settings = {
@@ -39,7 +39,7 @@ export default function Index() {
             Menü
             <img
               class={style.inline_menu_icon}
-              src={hamburgerIcon}
+              src={menuIcon}
               height="20"
               width="20"
               alt="das Menü ist oben rechts"

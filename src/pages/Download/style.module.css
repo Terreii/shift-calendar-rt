@@ -85,7 +85,7 @@
 }
 
 .today_btn {
-  composes: accept_button from "/styles/form.module.css";
+  composes: accept_button from "/src/form.module.css";
   align-self: end;
   grid-column: 2;
   width: min-content;

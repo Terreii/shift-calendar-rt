@@ -14,6 +14,8 @@ import { getCalUrl, getTodayUrl } from "../../../lib/utils";
 import { type ShiftModelKeys } from "../../../config/shifts";
 
 import style from "./style.module.css";
+import leftArrow from "bootstrap-icons/icons/caret-left-fill.svg";
+import rightArrow from "bootstrap-icons/icons/caret-right-fill.svg";
 
 /**
  * Display 3 links to move in the calendar.
@@ -72,7 +74,13 @@ export default function HeaderNavLinks({
         class={style.navi_link}
         title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
       >
-        {"<"}
+        <img
+          src={leftArrow}
+          height="22"
+          width="22"
+          alt=""
+          class={style.button_img}
+        />
       </a>
 
       <a
@@ -93,13 +101,19 @@ export default function HeaderNavLinks({
         class={style.navi_link}
         title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
       >
-        {">"}
+        <img
+          src={rightArrow}
+          height="22"
+          width="22"
+          alt=""
+          class={style.button_img}
+        />
       </a>
     </>
   );
 }
 
-function getMonthUrl(time, change, shiftModel) {
+function getMonthUrl(time: Date, change: number, shiftModel: ShiftModelKeys) {
   const month = addMonths(time, change);
   return getCalUrl({
     shiftModel,

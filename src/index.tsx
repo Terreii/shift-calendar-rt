@@ -19,7 +19,7 @@ import Header from "./components/Header";
 import InstallPrompt from "./components/InstallPrompt";
 
 import "modern-css-reset";
-import "../styles/index.css";
+import "./index.css";
 
 const Calendar = lazy(() => import("./pages/Calendar"));
 const Download = lazy(() => import("./pages/Download"));

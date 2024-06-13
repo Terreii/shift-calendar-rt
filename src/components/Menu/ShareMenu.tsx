@@ -11,7 +11,7 @@ import { getCalUrl } from "../../../lib/utils";
 import { type ShiftModels } from "../../../lib/constants";
 
 import style from "./style.module.css";
-import formStyle from "../../../styles/form.module.css";
+import formStyle from "../../form.module.css";
 
 /**
  * Display the share menu.

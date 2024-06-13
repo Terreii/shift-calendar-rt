@@ -18,7 +18,8 @@ import { getCalUrl } from "../../../lib/utils";
 import { ShiftModelKeys } from "../../../config/shifts";
 
 import style from "./style.module.css";
-import hambugerIcon from "../../assets/hamburger_icon.svg";
+import menuIcon from "bootstrap-icons/icons/three-dots-vertical.svg";
+import shareIcon from "bootstrap-icons/icons/share-fill.svg";
 
 export default function Menu({
   show,
@@ -59,7 +60,7 @@ export default function Menu({
     >
       <summary id="menu_summary" class={style.menu_button}>
         <img
-          src={hambugerIcon}
+          src={menuIcon}
           class={style.menu_button_img}
           height="45"
           width="45"
@@ -249,12 +250,7 @@ export default function Menu({
             onClick={onShare}
             aria-label="Teile deine Schicht"
           >
-            <img
-              src="/assets/icons/share21.svg"
-              height="32"
-              width="32"
-              alt="teilen"
-            />
+            <img src={shareIcon} height="32" width="32" alt="teilen" />
           </button>
         </div>
       </div>

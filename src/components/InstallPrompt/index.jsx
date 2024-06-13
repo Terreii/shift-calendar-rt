@@ -11,6 +11,7 @@ import ms from "milliseconds";
 import Confirm from "./Confirm";
 
 import style from "./style.module.css";
+import addOutline from "bootstrap-icons/icons/plus-circle.svg";
 import iOSShare from "../../assets/ios-share.png";
 import iOSAddToHome from "../../assets/ios-add-to-home-screen.png";
 
@@ -122,12 +123,7 @@ export default function InstallButton() {
         <Confirm
           confirmText={
             <>
-              <img
-                src="/assets/icons/add-outline.svg"
-                height="25"
-                width="25"
-                alt=""
-              />
+              <img src={addOutline} height="25" width="25" alt="" />
               <span>Installieren</span>
             </>
           }
