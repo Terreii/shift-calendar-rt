@@ -5,25 +5,34 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useEffect, useRef, useState } from "react";
+import { type ComponentChildren } from "preact";
+import { useEffect, useRef, useState } from "preact/hooks";
 
-import style from "./prompts.module.css";
-import formStyles from "../styles/form.module.css";
+import style from "./style.module.css";
+import formStyles from "../../../styles/form.module.css";
 
 const hiddenState = { scale: 0.99, translate: "0 0.5rem", opacity: 0 };
 const shownState = { scale: 1, translate: "none", opacity: 1 };
 
-export default function Confirm({ children, confirmText, onClick }) {
-  const container = useRef(null);
+export default function Confirm({
+  children,
+  confirmText,
+  onClick,
+}: {
+  children: ComponentChildren;
+  confirmText: string | ComponentChildren;
+  onClick: (didConfirm: boolean) => void;
+}) {
+  const container = useRef<HTMLDivElement>(null);
   const [isShowing, setIsShowing] = useState(false);
   useEffect(() => {
     if (shouldAnimate(container.current)) {
       let isActive = true;
-      const animation = container.current.animate([hiddenState, shownState], {
+      const animation = container.current?.animate([hiddenState, shownState], {
         duration: 250,
         fill: "both",
       });
-      animation.finished.then(() => {
+      animation?.finished.then(() => {
         if (isActive) {
           setIsShowing(true);
         }
@@ -36,9 +45,9 @@ export default function Confirm({ children, confirmText, onClick }) {
     }
   }, []);
 
-  const onClose = async (confirmed) => {
+  const onClose = async (confirmed: boolean) => {
     if (shouldAnimate(container.current)) {
-      await container.current.animate([shownState, hiddenState], {
+      await container.current?.animate([shownState, hiddenState], {
         duration: 250,
         fill: "forwards",
       }).finished;
@@ -48,15 +57,15 @@ export default function Confirm({ children, confirmText, onClick }) {
 
   return (
     <aside
-      className={isShowing ? style.container : style.container_initial}
+      class={isShowing ? style.container : style.container_initial}
       ref={container}
     >
-      <div className={style.content}>{children}</div>
+      <div class={style.content}>{children}</div>
 
-      <div className={style.buttons_row}>
+      <div class={style.buttons_row}>
         <button
           type="button"
-          className={formStyles.accept_button_with_img}
+          class={formStyles.accept_button_with_img}
           onClick={() => {
             onClose(true);
           }}
@@ -69,7 +78,7 @@ export default function Confirm({ children, confirmText, onClick }) {
             onClose(false);
           }}
           title="Klicke um den Kalender nicht zu installieren"
-          className={formStyles.cancel_button}
+          class={formStyles.cancel_button}
         >
           Abbrechen
         </button>

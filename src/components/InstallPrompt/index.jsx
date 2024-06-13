@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,15 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "preact/hooks";
 import ms from "milliseconds";
-import Image from "next/image";
 
-import Confirm from "./confirm";
+import Confirm from "./Confirm";
 
-import style from "./prompts.module.css";
-import iOSShare from "../public/assets/icons/ios-share.png";
-import iOSAddToHome from "../public/assets/icons/ios-add-to-home-screen.png";
+import style from "./style.module.css";
+import iOSShare from "../../assets/ios-share.png";
+import iOSAddToHome from "../../assets/ios-add-to-home-screen.png";
 
 /**
  * Renders an install button for add-to-home-screen of PWA.
@@ -25,11 +22,11 @@ export default function InstallButton() {
   const deferredPrompt = useRef(null);
 
   useEffect(() => {
-    const isIos = /iphone|ipad|ipod/i.test(window.navigator.platform);
+    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
     const isInStandaloneMode =
       "standalone" in window.navigator && window.navigator.standalone;
     const dismissedTime = new Date(
-      window.localStorage.getItem("dismissedInstallMessage"),
+      window.localStorage.getItem("dismissedInstallMessage") ?? 0,
     ).getTime();
 
     if (
@@ -125,7 +122,7 @@ export default function InstallButton() {
         <Confirm
           confirmText={
             <>
-              <Image
+              <img
                 src="/assets/icons/add-outline.svg"
                 height="25"
                 width="25"
@@ -162,13 +159,13 @@ export default function InstallButton() {
             um den Kalender wie eine App zu installieren:
           </span>
           <div className={style.ios_icons_row}>
-            <Image
+            <img
               className={style.ios_icon}
               src={iOSShare}
               alt="klicke Teilen"
             />
             <span className={style.ios_icon_space}>↓</span>
-            <Image
+            <img
               className={style.ios_icon}
               src={iOSAddToHome}
               alt="klicke Zum Home-Bildschirm"

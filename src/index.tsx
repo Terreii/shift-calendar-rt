@@ -1,3 +1,5 @@
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import {
   LocationProvider,
   Router,
@@ -12,8 +14,9 @@ import Helmet from "preact-helmet";
 import Home from "./pages/Home";
 import { NotFound } from "./pages/_404.jsx";
 
-import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
+import InstallPrompt from "./components/InstallPrompt";
 
 import "modern-css-reset";
 import "../styles/index.css";
@@ -41,6 +44,9 @@ export function App() {
       </Router>
 
       <Footer />
+      <InstallPrompt />
+      {new Date().getDate() <= 2 && <Analytics />}
+      <SpeedInsights />
     </LocationProvider>
   );
 }
