@@ -11,7 +11,7 @@ import ByMonths from "../../components/Calendar/ByMonth";
 import Downloader from "../../components/Download";
 import Legend from "../../components/Legend";
 import { shiftModelText, type ShiftModels } from "../../../lib/constants";
-import { useTodayZeroIndex } from "../../../hooks/time";
+import { useTodayZeroIndex } from "../../hooks/time";
 
 import style from "../../components/Calendar/style.module.css";
 

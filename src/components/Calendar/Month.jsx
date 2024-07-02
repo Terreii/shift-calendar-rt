@@ -9,7 +9,7 @@ import { memo } from "preact/compat";
 
 import MonthBody from "./MonthBody";
 import { monthNames } from "../../../lib/constants";
-import { useTodayZeroIndex } from "../../../hooks/time";
+import { useTodayZeroIndex } from "../../hooks/time";
 
 import style from "./style.module.css";
 

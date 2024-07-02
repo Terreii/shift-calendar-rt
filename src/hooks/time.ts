@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -7,11 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "preact/hooks";
 
-import { getToday, getTodayZeroIndex } from "../lib/utils";
+import { getToday, getTodayZeroIndex } from "../../lib/utils";
 
-function useTodayCore(getterFn) {
+export type TimeArray = [number, number, number, number, number];
+
+function useTodayCore(getterFn: () => TimeArray): TimeArray {
   const [today, setToday] = useState(getterFn);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function useTodayCore(getterFn) {
     const then = new Date(now);
     // The next 5 minutes
     then.setMinutes(Math.floor(then.getMinutes() / 5) * 5 + 5);
-    then.setSeconds(1);
+    then.setSeconds(0);
     const timeout = setTimeout(update, then.getTime() - now);
 
     window.addEventListener("focus", update);
@@ -43,20 +43,16 @@ function useTodayCore(getterFn) {
 /**
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 1-12.
- *
- * @returns {[number, number, number, number, number]}
  */
-export function useToday() {
+export function useToday(): TimeArray {
   return useTodayCore(getToday);
 }
 
 /**
  * Returns today [year, month, day, hour] and auto updates.
  * Month is 0-11.
- *
- * @returns {[number, number, number, number, number]}
  */
-export function useTodayZeroIndex() {
+export function useTodayZeroIndex(): TimeArray {
   return useTodayCore(getTodayZeroIndex);
 }
 
@@ -64,11 +60,11 @@ export function useTodayZeroIndex() {
  * Fix to update the today border and switching of months in the [shiftModel] page,
  * after a tab was unloaded and restored.
  *
- * It does it by completely re-render the calendar's tables. By removing them and the add them back.
+ * It does it by completely re-render the calendar's tables. By removing them and then add them back.
  *
- * @returns {boolean} If true, then the calendar should not be rendered.
+ * If the result is true, then the calendar should not be rendered.
  */
-export function useUnloadedFix() {
+export function useUnloadedFix(): boolean {
   const [shouldRemoveCalendar, setRemoveCalendar] = useState(false);
 
   useEffect(() => {

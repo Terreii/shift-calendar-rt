@@ -10,7 +10,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect, useState } from "preact/hooks";
 import { useLocation } from "preact-iso";
 
-import { useToday } from "../../../hooks/time";
+import { useToday } from "../../hooks/time";
 import { shift66Name, type ShiftModels } from "../../../lib/constants";
 
 export type Result = {

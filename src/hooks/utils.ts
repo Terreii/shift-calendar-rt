@@ -1,12 +1,5 @@
-import {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useReducer,
-  type RefCallback,
-  MouseEventHandler,
-} from "react";
+import { type RefCallback } from "preact";
+import { useState, useEffect, useRef, useReducer } from "preact/hooks";
 // Common Hooks
 
 let isFirstRender = true;
@@ -24,18 +17,6 @@ export function useIsClient(): boolean {
     }
   }, []);
   return isClient;
-}
-
-export function useTitleAlert() {
-  return useCallback((event) => {
-    const title =
-      (event.target as HTMLElement)
-        .closest<HTMLElement>("[title]")
-        ?.title?.trim() ?? "";
-    if (title.length) {
-      window.alert(title);
-    }
-  }, []) as MouseEventHandler;
 }
 
 /**

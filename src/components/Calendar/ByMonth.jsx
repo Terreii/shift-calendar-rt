@@ -12,9 +12,9 @@ import { useViewTransition } from "use-view-transitions/react";
 
 import Month from "./Month";
 import selectMonthData from "../../../lib/select-month-data";
-import { getCalUrl, scrollToADay } from "../../../lib/utils";
-import { useTitleAlert, useSwipe } from "../../../hooks/utils";
-import { useUnloadedFix } from "../../../hooks/time";
+import { getCalUrl, scrollToADay, titleAlertHandler } from "../../../lib/utils";
+import { useSwipe } from "../../hooks/utils";
+import { useUnloadedFix } from "../../hooks/time";
 
 import style from "./style.module.css";
 
@@ -38,7 +38,6 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
     }
   });
   const monthsToRender = useMonthToRender();
-  const clickHandler = useTitleAlert();
   const multiMonthView = monthsToRender[2]; // if next month (or more) is rendered.
 
   const monthsData = useMemo(() => {
@@ -83,7 +82,7 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
       id="calendar_main_out"
       class={isSwiping ? style.swiping_container : style.container}
       style={{ "--swipe-offset": `${x}px` }}
-      onClick={clickHandler}
+      onClick={titleAlertHandler}
       ref={ref}
       aria-live="polite"
     >

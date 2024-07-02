@@ -8,8 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useMemo } from "preact/hooks";
 import { addMonths } from "date-fns/addMonths";
 
-import { useToday } from "../../../hooks/time";
-import { useIsClient } from "../../../hooks/utils";
+import { useToday } from "../../hooks/time";
+import { useIsClient } from "../../hooks/utils";
 import { getCalUrl, getTodayUrl } from "../../../lib/utils";
 import { type ShiftModelKeys } from "../../../config/shifts";
 

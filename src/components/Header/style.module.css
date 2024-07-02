@@ -59,6 +59,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 .text_as_icon {
   width: 1.5rem;
   height: 1.5rem;
+  filter: invert(100%);
 }
 .short_text {
   display: none;

@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { type JSX } from "preact";
 import { useLocation } from "preact-iso";
 
-import { useSupportsInputType } from "../../../hooks/utils";
+import { useSupportsInputType } from "../../hooks/utils";
 import {
   monthNames,
   shiftModelNames,

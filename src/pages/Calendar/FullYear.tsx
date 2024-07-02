@@ -13,9 +13,8 @@ import Downloader from "../../components/Download";
 import Legend from "../../components/Legend";
 import { shiftModelText, type ShiftModels } from "../../../lib/constants";
 import selectMonthData from "../../../lib/select-month-data";
-import { parseNumber } from "../../../lib/utils";
-import { useTitleAlert } from "../../../hooks/utils";
-import { useUnloadedFix } from "../../../hooks/time";
+import { parseNumber, titleAlertHandler } from "../../../lib/utils";
+import { useUnloadedFix } from "../../hooks/time";
 
 import style from "../../components/Calendar/style.module.css";
 
@@ -61,8 +60,6 @@ export default function Year({
 }
 
 function Container({ children }: { children: ComponentChildren }) {
-  const clickHandler = useTitleAlert();
-
   const shouldRemoveCalendar = useUnloadedFix();
   if (shouldRemoveCalendar) {
     return null;
@@ -72,7 +69,7 @@ function Container({ children }: { children: ComponentChildren }) {
     <div
       id="calendar_main_out"
       class={style.container}
-      onClick={clickHandler}
+      onClick={titleAlertHandler}
       aria-live="polite"
     >
       {children}
