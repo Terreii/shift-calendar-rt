@@ -10,7 +10,8 @@ import Helmet from "preact-helmet";
 import ByMonths from "../../components/Calendar/ByMonth";
 import Downloader from "../../components/Download";
 import Legend from "../../components/Legend";
-import { shiftModelText, type ShiftModels } from "../../../lib/constants";
+import { shiftModelText } from "../../../lib/constants";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 import { useTodayZeroIndex } from "../../hooks/time";
 
 import style from "../../components/Calendar/style.module.css";
@@ -21,7 +22,7 @@ import style from "../../components/Calendar/style.module.css";
 export default function ShiftModel({
   params: { shiftModel },
 }: {
-  params: { shiftModel: ShiftModels };
+  params: { shiftModel: ShiftModelKeys };
 }) {
   const [year, month] = useTodayZeroIndex();
 

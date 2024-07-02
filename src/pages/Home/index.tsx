@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
 
-import { type ShiftModelKeys } from "../../../config/shifts";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 import { shiftModelNames, shiftModelText } from "../../../lib/constants";
 import { getToday, getTodayUrl } from "../../../lib/utils";
 

@@ -6,12 +6,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import {
-  shiftModelText,
   shift66Name,
   shift64Name,
   shiftWfW,
   shiftAddedNight,
-  ShiftModels,
+  type ShiftModelKeys,
+} from "../../../lib/shifts";
+import {
+  shiftModelText,
   excelExportName,
   excelExportModelFullYearName,
 } from "../../../lib/constants";
@@ -54,7 +56,7 @@ export default function Download({
   year,
   month,
 }: {
-  shiftModel: ShiftModels;
+  shiftModel: ShiftModelKeys;
   year: number;
   month?: number;
 }) {
@@ -115,7 +117,7 @@ function SheetDownload({
   month,
   inWork = false,
 }: {
-  shiftModel: ShiftModels;
+  shiftModel: ShiftModelKeys;
   year: number;
   month?: number;
   inWork?: boolean;

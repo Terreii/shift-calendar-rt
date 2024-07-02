@@ -5,7 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import type { ShiftModels } from "../../../../lib/constants";
+import { type ShiftModelKeys } from "../../../../lib/shifts";
 
 import { formatISO } from "date-fns/formatISO";
 
@@ -24,7 +24,7 @@ export default function DayInMonthCell({
   shiftModel,
 }: {
   time: Date;
-  shiftModel: ShiftModels;
+  shiftModel: ShiftModelKeys;
 }) {
   return (
     <td class={style.day_in_month}>

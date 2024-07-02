@@ -12,7 +12,7 @@ import shiftModels, {
   type Cycle,
   type ShiftModel,
   type ShiftModelsWithFallbackKeys,
-} from "../config/shifts.ts";
+} from "./shifts.ts";
 import { getDaysInMonth } from "./utils.js";
 
 /**

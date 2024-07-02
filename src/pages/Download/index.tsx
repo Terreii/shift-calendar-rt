@@ -19,7 +19,7 @@ import {
   shiftModelText,
   monthNames,
 } from "../../../lib/constants";
-import { useSupportsInputType } from "../../../hooks/utils";
+import { useSupportsInputType } from "../../hooks/utils";
 
 import styles from "./style.module.css";
 

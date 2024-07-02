@@ -11,7 +11,7 @@ import { addMonths } from "date-fns/addMonths";
 import { useToday } from "../../hooks/time";
 import { useIsClient } from "../../hooks/utils";
 import { getCalUrl, getTodayUrl } from "../../../lib/utils";
-import { type ShiftModelKeys } from "../../../config/shifts";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 
 import style from "./style.module.css";
 import leftArrow from "bootstrap-icons/icons/caret-left-fill.svg";

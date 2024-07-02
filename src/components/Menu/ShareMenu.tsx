@@ -8,7 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useState, useEffect, useMemo } from "preact/hooks";
 
 import { getCalUrl } from "../../../lib/utils";
-import { type ShiftModels } from "../../../lib/constants";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 
 import style from "./style.module.css";
 import formStyle from "../../form.module.css";
@@ -32,7 +32,7 @@ export default function ShareMenu({
   year?: number;
   month?: number;
   search?: number;
-  shiftModel: ShiftModels;
+  shiftModel: ShiftModelKeys;
   hide: () => void;
 }) {
   const [addSearch, setAddSearch] = useState(false);

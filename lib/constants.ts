@@ -9,18 +9,7 @@ import shifts, {
   type ShiftModelKeys,
   shift44Name,
   shiftWfWOld,
-} from "../config/shifts.ts";
-export {
-  shift66Name,
-  shift64Name,
-  shiftWfW,
-  shiftWfWOld,
-  rotatingShift,
-  shiftAddedNight,
-  shiftAddedNight8,
-  weekend,
-  type ShiftModelKeys as ShiftModels,
-} from "../config/shifts.ts";
+} from "./shifts.ts";
 
 export const monthNames = [
   "Januar",

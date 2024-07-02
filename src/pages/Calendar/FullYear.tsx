@@ -11,7 +11,8 @@ import Helmet from "preact-helmet";
 import Month from "../../components/Calendar/Month";
 import Downloader from "../../components/Download";
 import Legend from "../../components/Legend";
-import { shiftModelText, type ShiftModels } from "../../../lib/constants";
+import { shiftModelText } from "../../../lib/constants";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber, titleAlertHandler } from "../../../lib/utils";
 import { useUnloadedFix } from "../../hooks/time";
@@ -21,7 +22,7 @@ import style from "../../components/Calendar/style.module.css";
 export default function Year({
   params: { shiftModel, year: yearString },
 }: {
-  params: { shiftModel: ShiftModels; year: string };
+  params: { shiftModel: ShiftModelKeys; year: string };
 }) {
   const year = parseNumber(yearString, null);
 

@@ -10,7 +10,7 @@ import CurrentMonth from "./CurrentMonth";
 import FullYear from "./FullYear";
 import Month from "./Month";
 import { shiftModelNames } from "../../../lib/constants";
-import { ShiftModelKeys } from "../../../config/shifts";
+import { ShiftModelKeys } from "../../../lib/shifts";
 
 export default function CalendarRouter({ rest }: { rest: string }) {
   const { route } = useLocation();

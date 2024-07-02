@@ -1,5 +1,3 @@
-"use client";
-
 /*
 License:
 
@@ -11,13 +9,13 @@ import { useEffect, useState } from "preact/hooks";
 import { useLocation } from "preact-iso";
 
 import { useToday } from "../../hooks/time";
-import { shift66Name, type ShiftModels } from "../../../lib/constants";
+import { shift66Name, type ShiftModelKeys } from "../../../lib/shifts";
 
 export type Result = {
   isFullYear: boolean;
   year: number;
   month: number;
-  shiftModel: ShiftModels;
+  shiftModel: ShiftModelKeys;
   search: number | null;
 };
 
@@ -53,7 +51,7 @@ export function useQueryProps(): Result {
     isFullYear,
     year,
     month,
-    shiftModel: shiftModel as ShiftModels,
+    shiftModel: shiftModel as ShiftModelKeys,
     search,
   };
 }

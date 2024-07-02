@@ -9,7 +9,7 @@ import shiftModels, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
-} from "../../../../config/shifts";
+} from "../../../../lib/shifts";
 import { Workdata } from "../../../../lib/workdata";
 import style from "../style.module.css";
 

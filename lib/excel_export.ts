@@ -1,10 +1,10 @@
 import xl from "excel4node";
 
+import { type ShiftModelKeys } from "./shifts";
 import {
   shiftModelNumberOfGroups,
   shiftModelText,
   maxGroupCount,
-  type ShiftModels,
 } from "./constants";
 import { getMonthData } from "./workdata";
 
@@ -36,7 +36,7 @@ export function createDocument() {
  */
 export function createShiftSheet(
   sheet: any,
-  model: ShiftModels,
+  model: ShiftModelKeys,
   year: number,
   month: number,
   styles: Styles,
@@ -77,7 +77,7 @@ export function createShiftSheet(
  */
 function buildBody(
   sheet: any,
-  model: ShiftModels,
+  model: ShiftModelKeys,
   year: number,
   month: number,
   styles: Styles,

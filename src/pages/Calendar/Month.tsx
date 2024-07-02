@@ -10,7 +10,8 @@ import Helmet from "preact-helmet";
 import ByMonths from "../../components/Calendar/ByMonth";
 import Downloader from "../../components/Download";
 import Legend from "../../components/Legend";
-import { shiftModelText, type ShiftModels } from "../../../lib/constants";
+import { shiftModelText } from "../../../lib/constants";
+import { type ShiftModelKeys } from "../../../lib/shifts";
 import { parseNumber } from "../../../lib/utils";
 
 import style from "../../components/Calendar/style.module.css";
@@ -18,7 +19,7 @@ import style from "../../components/Calendar/style.module.css";
 export default function MonthPage({
   params: { shiftModel, year: yearString, month: monthString },
 }: {
-  params: { shiftModel: ShiftModels; year: string; month: string };
+  params: { shiftModel: ShiftModelKeys; year: string; month: string };
 }) {
   const year = parseNumber(yearString, null);
   const monthQuery = parseNumber(monthString, null);

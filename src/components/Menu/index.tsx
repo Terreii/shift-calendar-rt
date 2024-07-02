@@ -15,7 +15,7 @@ import {
   shiftModelText,
 } from "../../../lib/constants";
 import { getCalUrl } from "../../../lib/utils";
-import { ShiftModelKeys } from "../../../config/shifts";
+import { ShiftModelKeys } from "../../../lib/shifts";
 
 import style from "./style.module.css";
 import menuIcon from "bootstrap-icons/icons/three-dots-vertical.svg";

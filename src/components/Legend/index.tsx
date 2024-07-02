@@ -11,7 +11,7 @@ import shifts, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
-} from "../../../config/shifts";
+} from "../../../lib/shifts";
 
 import style from "./style.module.css";
 
