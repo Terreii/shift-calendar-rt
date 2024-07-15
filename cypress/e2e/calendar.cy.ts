@@ -3,7 +3,7 @@
 import { addMonths } from "date-fns/addMonths";
 import { formatISO } from "date-fns/formatISO";
 import { startOfMonth } from "date-fns/startOfMonth";
-import shifts from "../../config/shifts";
+import shifts from "../../lib/shifts";
 import {
   shiftModelText,
   shiftModelNames,
@@ -12,12 +12,13 @@ import {
 import { getToday } from "../../lib/utils";
 import { getMonthData } from "../../lib/workdata";
 
+const baseUrl = Cypress.config("baseUrl")!;
 const model =
   shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
 
 describe("shift calendar current view", () => {
   it(`renders ${model}`, () => {
-    cy.visit("http://localhost:3000/");
+    cy.visit(baseUrl);
 
     cy.contains("main a", shiftModelText[model]).click();
 
@@ -34,7 +35,7 @@ describe("shift calendar current view", () => {
   });
 
   it("renders the shifts of " + model, () => {
-    cy.visit("http://localhost:3000/cal/" + model);
+    cy.visit(`${baseUrl}/cal/${model}`);
 
     const today = getToday();
     const now = startOfMonth(
@@ -74,7 +75,7 @@ describe("shift calendar current view", () => {
   });
 
   it("should render all shifts in legend", () => {
-    cy.visit("http://localhost:3000/cal/" + model);
+    cy.visit(`${baseUrl}/cal/${model}`);
 
     const shift = shifts[model];
     for (const key in shift.shifts) {
@@ -84,7 +85,7 @@ describe("shift calendar current view", () => {
   });
 
   it("should have nav buttons", () => {
-    cy.visit("http://localhost:3000/cal/" + model);
+    cy.visit(`${baseUrl}/cal/${model}`);
 
     const today = getToday();
     const now = new Date(today[0], today[1] - 1, today[2], today[3]);
@@ -93,24 +94,32 @@ describe("shift calendar current view", () => {
       const monthString = (month.getMonth() + 1).toString().padStart(2, "0");
       return `/cal/${model}/${month.getFullYear()}/${monthString}`;
     };
-    cy.contains("nav a", "<").should("have.attr", "href", getMonthPath(-1));
-    cy.contains("nav a", ">").should("have.attr", "href", getMonthPath(1));
+    cy.get('nav a[title="vorigen Monat"]').should(
+      "have.attr",
+      "href",
+      getMonthPath(-1),
+    );
+    cy.get('nav a[title="nächster Monat"]').should(
+      "have.attr",
+      "href",
+      getMonthPath(1),
+    );
   });
 
   it("should render holidays", () => {
     // school breaks
-    cy.visit(`http://localhost:3000/cal/${model}/2023/07`);
+    cy.visit(`${baseUrl}/cal/${model}/2023/07`);
     cy.get('#day_2023-07-27 > td[title="Sommerferien"][data-holiday="school"]');
 
     // holidays
-    cy.visit(`http://localhost:3000/cal/${model}/2023/10`);
+    cy.visit(`${baseUrl}/cal/${model}/2023/10`);
     cy.get(
       '#day_2023-10-03 > td[title="Tag der deutschen Einheit"][data-holiday="holiday"]',
     );
   });
 
   it("should navigate to next and previous month on swipe on mobile", () => {
-    cy.visit("http://localhost:3000/cal/" + model);
+    cy.visit(`${baseUrl}/cal/${model}`);
     const today = new Date();
     const nextMonth = addMonths(today, 1);
 
@@ -159,7 +168,7 @@ describe("shift calendar current view", () => {
 
 describe("full year", () => {
   it("should be accessible by the menu", () => {
-    cy.visit("http://localhost:3000/");
+    cy.visit(baseUrl);
 
     cy.contains("main a", shiftModelText[model]).click();
 
@@ -177,12 +186,20 @@ describe("full year", () => {
   });
 
   it("today button should go back to current month view", () => {
-    cy.visit(`http://localhost:3000/cal/${model}/2022`);
+    cy.visit(`${baseUrl}/cal/${model}/2022`);
     const today = getToday();
     const now = new Date(today[0], today[1] - 1, today[2], today[3]);
 
-    cy.contains("nav a", "<").should("have.attr", "href", `/cal/${model}/2021`);
-    cy.contains("nav a", ">").should("have.attr", "href", `/cal/${model}/2023`);
+    cy.get('nav a[title="voriges Jahr"]').should(
+      "have.attr",
+      "href",
+      `/cal/${model}/2021`,
+    );
+    cy.get('nav a[title="nächstes Jahr"]').should(
+      "have.attr",
+      "href",
+      `/cal/${model}/2023`,
+    );
     cy.contains("Heute").should(
       "have.attr",
       "href",

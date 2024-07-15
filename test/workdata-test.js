@@ -4,8 +4,8 @@ import { readFile } from "node:fs/promises";
 
 import { getMonthData } from "../lib/workdata.js";
 
+import { shiftModelNames } from "../lib/constants.js";
 import {
-  shiftModelNames,
   shift66Name,
   shift64Name,
   shiftWfW,
@@ -13,7 +13,7 @@ import {
   shiftAddedNight,
   shiftAddedNight8,
   weekend,
-} from "../lib/constants.js";
+} from "../lib/shifts.js";
 
 test("work data", async (t) => {
   // 2024-06
