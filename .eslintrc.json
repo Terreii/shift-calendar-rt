@@ -5,22 +5,12 @@
     "jest": true,
     "es2022": true
   },
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
-    "plugin:jest/recommended",
+    "plugin:@typescript-eslint/recommended",
     "plugin:cypress/recommended",
-    "preact",
-    "next/core-web-vitals"
+    "preact"
   ],
-  "plugins": ["testing-library", "cypress"],
-  "overrides": [
-    // Only uses Testing Library lint rules in test files
-    {
-      "files": [
-        "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
-      ],
-      "extends": ["plugin:testing-library/react"]
-    }
-  ]
+  "plugins": ["@typescript-eslint", "testing-library", "cypress"]
 }
