@@ -261,11 +261,11 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
       F: {
         name: "Frühschicht",
         start: [6, 15],
-        end: [13, 45],
+        end: [14, 0],
       },
       S: {
         name: "Spätschicht",
-        start: [13, 15],
+        start: [13, 45],
         end: [21, 45],
       },
     },
@@ -284,7 +284,13 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftAddedNight]: {
     name: "aufgesetzte Nachtarbeit",
-    shifts: { N: boschKontiShifts.N },
+    shifts: {
+      N: {
+        ...boschKontiShifts.N,
+        start: [21, 30],
+        end: [6, 15],
+      },
+    },
     startDate: "2000-01-01",
     cycle: [
       "N",
