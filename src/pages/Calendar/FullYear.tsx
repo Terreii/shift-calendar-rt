@@ -55,7 +55,7 @@ export default function Year({
         ))}
       </Container>
 
-      <Downloader shiftModel={shiftModel} year={year} />
+      <Downloader shiftModel={shiftModel} />
     </main>
   );
 }

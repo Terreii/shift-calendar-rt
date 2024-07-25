@@ -51,7 +51,7 @@ export default function MonthPage({
         month={month}
       />
 
-      <Downloader shiftModel={shiftModel} year={year} month={month + 1} />
+      <Downloader shiftModel={shiftModel} />
     </main>
   );
 }

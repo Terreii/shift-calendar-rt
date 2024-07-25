@@ -12,11 +12,7 @@ import {
   shiftAddedNight,
   type ShiftModelKeys,
 } from "../../../lib/shifts";
-import {
-  shiftModelText,
-  excelExportName,
-  excelExportModelFullYearName,
-} from "../../../lib/constants";
+import { shiftModelText } from "../../../lib/constants";
 
 import style from "./style.module.css";
 
@@ -53,24 +49,15 @@ const urls = {
 
 export default function Download({
   shiftModel,
-  year,
-  month,
 }: {
   shiftModel: ShiftModelKeys;
-  year: number;
-  month?: number;
 }) {
   if (!(shiftModel in urls)) {
     return (
       <div class={style.container}>
         <section class={style.section}>
           Für dieses Schichtmodell sind die Kalender noch in Arbeit
-          <SheetDownload
-            shiftModel={shiftModel}
-            year={year}
-            month={month}
-            inWork
-          />
+          <SheetDownload inWork />
         </section>
       </div>
     );
@@ -105,30 +92,13 @@ export default function Download({
           })}
         </div>
 
-        <SheetDownload shiftModel={shiftModel} year={year} month={month} />
+        <SheetDownload />
       </section>
     </div>
   );
 }
 
-function SheetDownload({
-  shiftModel,
-  year,
-  month,
-  inWork = false,
-}: {
-  shiftModel: ShiftModelKeys;
-  year: number;
-  month?: number;
-  inWork?: boolean;
-}) {
-  const name = month
-    ? excelExportName(year, month)
-    : excelExportModelFullYearName(shiftModel, year);
-  const url = month
-    ? `/api/excel_export/all/${year}/${month}`
-    : `/api/excel_export/shift/${shiftModel}/${year}`;
-
+function SheetDownload({ inWork = false }: { inWork?: boolean }) {
   return (
     <p class={style.text}>
       Oder lade ihn {inWork && "schon"} als Excel/
@@ -141,18 +111,10 @@ function SheetDownload({
       </a>{" "}
       Tabelle runter:
       <br />
-      <a
-        href={url}
-        target="_blank"
-        download={name}
-        class="link"
-        rel="noreferrer"
-      >
-        {name}
+      <br />
+      <a href="/download">
+        <strong>Alle Download-Optionen!</strong>
       </a>
-      <br />
-      <br />
-      <a href="/download">Es gibt mehr Download-Optionen!</a>
     </p>
   );
 }
