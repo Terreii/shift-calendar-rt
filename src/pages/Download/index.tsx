@@ -22,9 +22,11 @@ import {
 import { useSupportsInputType } from "../../hooks/utils";
 
 import styles from "./style.module.css";
+import { DownloadDialog, type ModelToShow } from "./Dialog";
 
 export default function DownloadPage() {
   const [yearMonth, setYearMonth] = useState(getToday);
+  const [dialog, setDialog] = useState<ModelToShow | null>(null);
   const [year, month] = yearMonth.split("-").map((v) => parseInt(v, 10));
 
   return (
@@ -49,9 +51,10 @@ export default function DownloadPage() {
       </label>
 
       <DownloadSection
-        href={`/api/excel_export/all/${year}/${month}`}
         name={excelExportName(year, month)}
         alt={`Alle Schichten für ${monthNames[month - 1]} ${year} als Tabelle.`}
+        onClickArg={{ type: "all_in_month", year, month }}
+        onClick={setDialog}
       >
         <strong>
           Alle Schichten für {monthNames[month - 1]} {year} als Tabelle:
@@ -65,38 +68,46 @@ export default function DownloadPage() {
       {shiftModelNames.map((model) => (
         <DownloadSection
           key={model}
-          href={`/api/excel_export/shift/${model}/${year}`}
           name={excelExportModelFullYearName(model, year)}
           alt={`Ganze Jahr ${year} für ${shiftModelText[model]}`}
+          onClickArg={{ type: "model_year", model, year }}
+          onClick={setDialog}
         >
           <strong>{shiftModelText[model]}:</strong>
         </DownloadSection>
       ))}
+
+      {dialog && (
+        <DownloadDialog data={dialog} onClose={() => setDialog(null)} />
+      )}
     </main>
   );
 }
 
 function DownloadSection({
-  href,
   name,
   alt,
+  onClickArg,
+  onClick,
   children,
 }: {
-  href: string;
   name: string;
   alt: string;
+  onClickArg: ModelToShow;
+  onClick: (arg: ModelToShow) => void;
   children: ComponentChildren;
 }) {
   return (
     <section class={styles.section}>
       {children}
-      <a
-        href={href}
-        target="_blank"
-        download={name}
-        class={styles.sheet_download_link}
+      <button
+        type="button"
+        class={styles.sheet_download_button}
         title={`Download ${name}`}
-        rel="noreferrer"
+        onClick={(event) => {
+          event.preventDefault();
+          onClick(onClickArg);
+        }}
       >
         <img
           src={sheetIcon}
@@ -112,7 +123,7 @@ function DownloadSection({
           alt=""
           class={styles.download_arrow_img}
         />
-      </a>
+      </button>
     </section>
   );
 }
@@ -133,6 +144,8 @@ function MonthInput({
       class={styles.month_input}
       type="month"
       value={value}
+      min="2010-01"
+      max="2100-12"
       onInput={(event) =>
         (event.target as HTMLInputElement).value &&
         onChange((event.target as HTMLInputElement).value)
@@ -147,9 +160,10 @@ function MonthInput({
         min="2010"
         max="2100"
         value={year}
-        onInput={(event) =>
-          onChange(`${(event.target as HTMLInputElement).value}-${month}`)
-        }
+        onInput={(event) => {
+          const year = (event.target as HTMLInputElement).valueAsNumber;
+          onChange(`${Math.max(Math.min(2100, year), 2010)}-${month}`);
+        }}
       />
 
       <label htmlFor={`${id}month`}>Monat:</label>

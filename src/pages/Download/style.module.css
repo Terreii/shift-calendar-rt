@@ -28,9 +28,17 @@
   filter: invert(0.5) sepia(1) saturate(5) hue-rotate(75deg);
 }
 
-.sheet_download_link {
+.sheet_download_button {
+  background-color: transparent;
+  border: 0px;
   position: relative;
   margin-left: 1rem;
+  cursor: pointer;
+}
+.sheet_download_button:hover,
+.sheet_download_button:focus {
+  box-shadow: 0 0 2px var(--dialog-shadow-color);
+  filter: sepia(1);
 }
 
 .download_arrow_img {
@@ -90,4 +98,28 @@
   grid-column: 2;
   width: min-content;
   margin-left: auto;
+}
+
+.dialog {
+  padding: 0;
+}
+
+.dialog_body {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 2rem;
+}
+
+.dialog > h2 {
+  background-color: var(--header-bg-color);
+  color: var(--header-color);
+  padding: 0.5rem 1rem;
+}
+
+.sheet_download_link {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  font-size: 1.1rem;
 }

@@ -1,10 +1,12 @@
 import { defineConfig } from "vite";
 import preact from "@preact/preset-vite";
+import { nodePolyfills } from "vite-plugin-node-polyfills";
 import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    nodePolyfills({ include: ["events"] }),
     preact({
       prerender: {
         enabled: true,
