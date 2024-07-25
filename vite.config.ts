@@ -6,7 +6,7 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    nodePolyfills({ include: ["events"] }),
+    nodePolyfills({ include: ["events", "fs", "http", "path"] }),
     preact({
       prerender: {
         enabled: true,

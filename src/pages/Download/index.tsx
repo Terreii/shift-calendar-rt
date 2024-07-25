@@ -6,7 +6,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { type ComponentChildren } from "preact";
+import { Suspense } from "preact/compat";
 import { useState, useId } from "preact/hooks";
+import { lazy } from "preact-iso";
 import Helmet from "preact-helmet";
 import downloadIcon from "bootstrap-icons/icons/download.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
@@ -22,7 +24,11 @@ import {
 import { useSupportsInputType } from "../../hooks/utils";
 
 import styles from "./style.module.css";
-import { DownloadDialog, type ModelToShow } from "./Dialog";
+import { type ModelToShow } from "./Dialog";
+
+const DownloadDialog = lazy(() =>
+  import("./Dialog").then((im) => im.DownloadDialog),
+);
 
 export default function DownloadPage() {
   const [yearMonth, setYearMonth] = useState(getToday);
@@ -78,7 +84,9 @@ export default function DownloadPage() {
       ))}
 
       {dialog && (
-        <DownloadDialog data={dialog} onClose={() => setDialog(null)} />
+        <Suspense fallback={<div />}>
+          <DownloadDialog data={dialog} onClose={() => setDialog(null)} />
+        </Suspense>
       )}
     </main>
   );

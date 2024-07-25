@@ -2,6 +2,8 @@ import {
   shiftModelText,
   shiftModelNames,
   monthNames,
+  excelExportName,
+  excelExportModelFullYearName,
 } from "../../lib/constants";
 import { shift44Name } from "../../lib/shifts";
 
@@ -59,17 +61,18 @@ describe("download", () => {
     cy.url().should("include", "/download");
 
     const now = new Date();
-    const href = `/api/excel_export/all/${now.getFullYear()}/${
-      now.getMonth() + 1
-    }`;
     cy.contains(
       `Alle Schichten für ${
         monthNames[now.getMonth()]
       } ${now.getFullYear()} als Tabelle:`,
     )
       .next()
-      .should("have.attr", "href")
-      .and("include", href);
+      .click();
+    cy.get("dialog").contains("Downloade Tabelle");
+    cy.get("dialog").contains(
+      `Download ${excelExportName(now.getFullYear(), now.getMonth() + 1)}`,
+    );
+    cy.contains("Schließen").click();
 
     cy.get("header h1").click();
     cy.url().should("not.include", "/download");
@@ -82,8 +85,13 @@ describe("download", () => {
     for (const name of shiftModelNames) {
       cy.contains(shiftModelText[name] + ":")
         .next()
-        .should("have.attr", "href")
-        .and("include", `/api/excel_export/shift/${name}/${year}`);
+        .click();
+
+      cy.get("dialog").contains("Downloade Tabelle");
+      cy.get("dialog").contains(
+        `Download ${excelExportModelFullYearName(name, year)}`,
+      );
+      cy.contains("Schließen").click();
     }
   });
 });
