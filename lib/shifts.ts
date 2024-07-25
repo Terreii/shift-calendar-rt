@@ -190,6 +190,24 @@ const boschKontiShifts: Record<ShiftKey, Shift> = {
     end: [6, 30],
   },
 };
+const boschRotatingShifts: Record<ShiftKey, Shift> = {
+  F: {
+    name: "Frühschicht",
+    start: [6, 15],
+    end: [14, 0],
+  },
+  S: {
+    name: "Spätschicht",
+    start: [13, 45],
+    end: [21, 45],
+  },
+  N: {
+    name: "Nachtschicht",
+    start: [21, 30],
+    end: [6, 15],
+  },
+};
+
 const boschClosingDays: ClosingDay[] = [
   { name: "Ostern", relative: -2, from: "easter" },
   { name: "Ostern", relative: -1, from: "easter" },
@@ -258,16 +276,8 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   [rotatingShift]: {
     name: "Wechselschicht",
     shifts: {
-      F: {
-        name: "Frühschicht",
-        start: [6, 15],
-        end: [13, 45],
-      },
-      S: {
-        name: "Spätschicht",
-        start: [13, 15],
-        end: [21, 45],
-      },
+      F: boschRotatingShifts.F,
+      S: boschRotatingShifts.S,
     },
     startDate: "1989-11-06",
     cycle: [
@@ -284,7 +294,9 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftAddedNight]: {
     name: "aufgesetzte Nachtarbeit",
-    shifts: { N: boschKontiShifts.N },
+    shifts: {
+      N: boschRotatingShifts.N,
+    },
     startDate: "2000-01-01",
     cycle: [
       "N",
@@ -315,7 +327,7 @@ const shifts: Record<ShiftModelsWithFallbackKeys, ShiftModel> = {
   },
   [shiftAddedNight8]: {
     name: "8 Wochen Nachtarbeit",
-    shifts: boschKontiShifts,
+    shifts: boschRotatingShifts,
     startDate: "2000-01-03",
     cycle: [],
     groups: (() =>
