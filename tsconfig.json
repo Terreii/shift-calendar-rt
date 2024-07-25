@@ -15,28 +15,18 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    /* Preact Config */
     "jsx": "preserve",
     "jsxImportSource": "preact",
     "paths": {
       "react": ["./node_modules/preact/compat/"],
       "react-dom": ["./node_modules/preact/compat/"]
     },
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
+    "plugins": [],
     "strictNullChecks": true
   },
   "ts-node": {
     "esm": true
   },
-  "include": [
-    "node_modules/vite/client.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts"
-  ],
+  "include": ["node_modules/vite/client.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

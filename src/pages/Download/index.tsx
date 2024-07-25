@@ -96,6 +96,7 @@ function DownloadSection({
         download={name}
         class={styles.sheet_download_link}
         title={`Download ${name}`}
+        rel="noreferrer"
       >
         <img
           src={sheetIcon}
@@ -139,9 +140,9 @@ function MonthInput({
     />
   ) : (
     <span class={styles.own_month_input}>
-      <label htmlFor={id + "year"}>Jahr:</label>
+      <label htmlFor={`${id}year`}>Jahr:</label>
       <input
-        id={id + "year"}
+        id={`${id}year`}
         type="number"
         min="2010"
         max="2100"
@@ -151,9 +152,9 @@ function MonthInput({
         }
       />
 
-      <label htmlFor={id + "month"}>Monat:</label>
+      <label htmlFor={`${id}month`}>Monat:</label>
       <select
-        id={id + "month"}
+        id={`${id}month`}
         value={month}
         onInput={(event) =>
           onChange(`${year}-${(event.target as HTMLInputElement).value}`)

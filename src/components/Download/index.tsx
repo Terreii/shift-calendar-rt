@@ -135,12 +135,19 @@ function SheetDownload({
       <a
         href="https://de.libreoffice.org/discover/libreoffice/"
         target="_blank"
+        rel="noreferrer"
       >
         LibreOffice
       </a>{" "}
       Tabelle runter:
       <br />
-      <a href={url} target="_blank" download={name} class="link">
+      <a
+        href={url}
+        target="_blank"
+        download={name}
+        class="link"
+        rel="noreferrer"
+      >
         {name}
       </a>
       <br />

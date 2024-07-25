@@ -1,4 +1,4 @@
-/* eslint-disable jest/expect-expect, cypress/no-unnecessary-waiting */
+/* eslint-disable cypress/no-unnecessary-waiting */
 
 import { addMonths } from "date-fns/addMonths";
 import { formatISO } from "date-fns/formatISO";

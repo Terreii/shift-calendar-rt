@@ -55,7 +55,7 @@ export function getMonthData(
   shiftModel: ShiftModelsWithFallbackKeys,
 ): MonthWorkData {
   const config: ShiftModel = shiftModels[shiftModel];
-  const modelStartDate = new Date(config.startDate + "T03:00:00.000Z");
+  const modelStartDate = new Date(`${config.startDate}T03:00:00.000Z`);
   const modelStartYear = modelStartDate.getUTCFullYear();
   const modelStartMonth = modelStartDate.getUTCMonth();
   if (
@@ -143,7 +143,7 @@ function modelSwitchingAllGroupsCalculation(
   const fallbackConfig = shiftModels[config.fallback];
   const daysSinceFallbackModelStart = differenceInCalendarDays(
     getTime(year, month, 1),
-    new Date(fallbackConfig.startDate + "T03:00:00.000Z"),
+    new Date(`${fallbackConfig.startDate}T03:00:00.000Z`),
   );
   const groups = getGroupsConfig(config);
   const fallbackGroups = getGroupsConfig(fallbackConfig);

@@ -8,7 +8,37 @@ import {
 } from "./constants";
 import { getMonthData } from "./workdata";
 
-export type Styles = Map<string | number, any>;
+type ExcelStyle = unknown;
+export type Workbook = {
+  createStyle: (styles: {
+    [key: string]: { [key: string]: string | boolean | number };
+  }) => ExcelStyle;
+};
+export type Cell = {
+  string: (text: string | string[]) => Cell;
+  number: (number: number) => Cell;
+  formula: (formula: unknown) => Cell;
+  date: (date: Date | string) => Cell;
+  link: (url: URL | string, displayStr?: string, tooltip?: string) => Cell;
+  bool: (boolean: boolean) => Cell;
+  style: (style: ExcelStyle) => Cell;
+};
+type RowOrColumn = {
+  setHeight: (height: number) => RowOrColumn;
+  setWidth: (width: number) => RowOrColumn;
+};
+export type Sheet = {
+  cell: (
+    startRow: number,
+    startColumn: number,
+    endRow?: number,
+    endColumn?: number,
+    isMerged?: boolean,
+  ) => Cell;
+  row: (row: number) => RowOrColumn;
+  column: (column: number) => RowOrColumn;
+};
+export type Styles = Map<string | number, ExcelStyle>;
 
 const titleStyleKey = "title";
 const dayCellStyleKey = "day";
@@ -35,7 +65,7 @@ export function createDocument() {
  * @param styles    Predefined Styles from createStyles
  */
 export function createShiftSheet(
-  sheet: any,
+  sheet: Sheet,
   model: ShiftModelKeys,
   year: number,
   month: number,
@@ -47,9 +77,9 @@ export function createShiftSheet(
     .string(
       `${shiftModelText[model]} ${year}-${String(month).padStart(2, "0")}`,
     )
-    .style(styles.get(titleStyleKey));
+    .style(styles.get(titleStyleKey)!);
 
-  const headerStyle = styles.get(headerCellsStyleKey);
+  const headerStyle = styles.get(headerCellsStyleKey)!;
 
   sheet.cell(headerRow, dayCol).string("Tag").style(headerStyle);
   for (let i = 0, max = shiftModelNumberOfGroups[model]; i < max; i++) {
@@ -76,7 +106,7 @@ export function createShiftSheet(
  * @param styles  Map of all styles.
  */
 function buildBody(
-  sheet: any,
+  sheet: Sheet,
   model: ShiftModelKeys,
   year: number,
   month: number,
@@ -92,7 +122,7 @@ function buildBody(
     sheet
       .cell(dayRow, dayCol)
       .number(i + 1)
-      .style(styles.get(dayCellStyleKey));
+      .style(styles.get(dayCellStyleKey)!);
     sheet.cell(dayRow, weekDayCol).string(weekDay[date.getDay()]);
 
     for (let j = 0, groupCount = day.length; j < groupCount; j++) {
@@ -101,7 +131,7 @@ function buildBody(
         sheet
           .cell(dayRow, startGroupCol + j)
           .string(shift)
-          .style(styles.get(j));
+          .style(styles.get(j)!);
       }
     }
   }
@@ -112,7 +142,7 @@ function buildBody(
  * @param wb An Instance of a excel4node Workbook.
  * @returns  A map of all predefined styles.
  */
-export function createStyles(wb: any): Styles {
+export function createStyles(wb: Workbook): Styles {
   const styles: Styles = new Map();
 
   styles.set(

@@ -25,6 +25,7 @@ export type Result = {
 export function useQueryProps(): Result {
   const { path } = useLocation();
   const today = useToday();
+  const search = useSearchHash(path);
 
   if (!path.startsWith("/cal")) {
     return {
@@ -35,7 +36,7 @@ export function useQueryProps(): Result {
       search: null,
     };
   }
-  const [_index, _cal, shiftModel, yearStr, monthStr] = path.split("/");
+  const [shiftModel, yearStr, monthStr] = path.split("/").slice(2);
 
   const isFullYear = !monthStr && yearStr != null;
   const year =
@@ -45,7 +46,6 @@ export function useQueryProps(): Result {
     : monthStr && !Number.isNaN(yearStr)
       ? parseInt(monthStr, 10)
       : today[1];
-  const search = useSearchHash(path);
 
   return {
     isFullYear,

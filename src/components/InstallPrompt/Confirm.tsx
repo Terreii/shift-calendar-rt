@@ -40,9 +40,8 @@ export default function Confirm({
       return () => {
         isActive = false;
       };
-    } else {
-      setIsShowing(true);
     }
+    setIsShowing(true);
   }, []);
 
   const onClose = async (confirmed: boolean) => {

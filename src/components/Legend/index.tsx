@@ -113,7 +113,7 @@ function getFallbackKey(
 }
 
 function toTimeString(time: [number, number]): string {
-  return time[0] + ":" + String(time[1]).padStart(2, "0");
+  return `${time[0]}:${String(time[1]).padStart(2, "0")}`;
 }
 
 /**
@@ -141,7 +141,7 @@ function Cell({
         {id || "1"}
       </dt>
 
-      <dd id={id ? id + "_description" : undefined} class={style.definition}>
+      <dd id={id ? `${id}_description` : undefined} class={style.definition}>
         {href ? (
           <a href={href} class={style.link} rel="noopener noreferrer">
             {children}

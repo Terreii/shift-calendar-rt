@@ -64,7 +64,7 @@ export default function GroupShiftCell({
       data-group={group + 1}
       data-current={isTodayShift || isYesterdayShift ? true : undefined}
       title={isTodayShift || isYesterdayShift ? "Aktuelle Schicht" : undefined}
-      aria-describedby={shift + "_description"}
+      aria-describedby={`${shift}_description`}
     >
       {shift}
     </td>

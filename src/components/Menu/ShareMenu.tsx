@@ -147,7 +147,7 @@ export default function ShareMenu({
                   .share({
                     url: url.toString(),
                     title: "Schichtkalender",
-                    text: "Meine Schichten beim Bosch Reutlingen: " + url,
+                    text: `Meine Schichten beim Bosch Reutlingen: ${url}`,
                   })
                   .then(() => {
                     hide();
