@@ -1,3 +1,5 @@
+/* eslint-disable cypress/no-unnecessary-waiting */
+
 import {
   shiftModelText,
   shiftModelNames,
@@ -29,6 +31,7 @@ describe("basic usage", () => {
     cy.contains(shiftModelText[shiftModel]).click();
     cy.url().should("include", "/cal/" + shiftModel);
 
+    cy.wait(100);
     cy.visit("/?pwa");
     cy.url().should("include", "/cal/" + shiftModel);
   });
