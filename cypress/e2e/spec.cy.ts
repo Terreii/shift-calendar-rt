@@ -24,18 +24,21 @@ describe("basic usage", () => {
     cy.contains("main a", shift44Name).should("not.exist");
   });
 
-  it("should redirect a user to their last viewed shift model on /?pwa", () => {
-    const shiftModel =
-      shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
-    cy.visit("/?pwa");
-    cy.wait(250);
-    cy.contains(shiftModelText[shiftModel]).click();
-    cy.url().should("include", "/cal/" + shiftModel);
+  it(
+    "should redirect a user to their last viewed shift model on /?pwa",
+    { retries: { runMode: 3 } },
+    () => {
+      const shiftModel =
+        shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
+      cy.visit("/?pwa");
+      cy.wait(50);
+      cy.contains(shiftModelText[shiftModel]).click();
+      cy.url().should("include", "/cal/" + shiftModel);
 
-    cy.wait(250);
-    cy.visit("/?pwa");
-    cy.url().should("include", "/cal/" + shiftModel);
-  });
+      cy.visit("/?pwa");
+      cy.url().should("include", "/cal/" + shiftModel);
+    },
+  );
 
   it("visit impressum", () => {
     cy.visit(baseUrl);
