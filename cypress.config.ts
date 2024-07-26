@@ -2,7 +2,7 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:5173",
+    baseUrl: `http://localhost:${process.env.port || 5173}`,
   },
 
   component: {
