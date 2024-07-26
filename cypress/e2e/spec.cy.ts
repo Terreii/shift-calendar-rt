@@ -28,10 +28,11 @@ describe("basic usage", () => {
     const shiftModel =
       shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
     cy.visit("/?pwa");
+    cy.wait(250);
     cy.contains(shiftModelText[shiftModel]).click();
     cy.url().should("include", "/cal/" + shiftModel);
 
-    cy.wait(100);
+    cy.wait(250);
     cy.visit("/?pwa");
     cy.url().should("include", "/cal/" + shiftModel);
   });
