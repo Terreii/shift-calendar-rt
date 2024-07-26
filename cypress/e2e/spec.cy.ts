@@ -9,11 +9,9 @@ import {
 } from "../../lib/constants";
 import { shift44Name } from "../../lib/shifts";
 
-const baseUrl = Cypress.config("baseUrl")!;
-
 describe("basic usage", () => {
   it("should have all shift models on index", () => {
-    cy.visit(baseUrl);
+    cy.visit("/");
 
     for (const key of shiftModelNames) {
       const name = shiftModelText[key];
@@ -25,7 +23,7 @@ describe("basic usage", () => {
   });
 
   it("visit impressum", () => {
-    cy.visit(baseUrl);
+    cy.visit("/");
     cy.contains("Impressum").click();
 
     cy.url().should("include", "/impressum");
@@ -39,7 +37,7 @@ describe("basic usage", () => {
 describe("download", () => {
   it("should be accessable by the calendars", () => {
     cy.visit(
-      `${baseUrl}/cal/${
+      `/cal/${
         shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)]
       }`,
     );
@@ -70,7 +68,7 @@ describe("download", () => {
   });
 
   it("should have a year calendar for every shift model", () => {
-    cy.visit(baseUrl + "/download");
+    cy.visit("/download");
     const year = new Date().getFullYear();
 
     for (const name of shiftModelNames) {
