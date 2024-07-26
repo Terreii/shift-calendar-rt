@@ -21,4 +21,4 @@ jobs:
         with:
           browser: ${{ matrix.browser }}
           build: npm run build
-          start: npm start
+          start: npm run dev
