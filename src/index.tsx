@@ -23,7 +23,7 @@ import "./index.css";
 
 const Calendar = lazy(() => import("./pages/Calendar"));
 const Download = lazy(() => import("./pages/Download"));
-const Impressum = lazy(() => import("./pages/Impressum"));
+const Impressum = lazy(() => import("./pages/impressum"));
 
 export function App() {
   return (
