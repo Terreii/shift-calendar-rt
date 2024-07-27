@@ -2,12 +2,13 @@ import { defineConfig } from "cypress";
 
 export default defineConfig({
   e2e: {
-    baseUrl: "http://localhost:3000",
+    baseUrl: `http://localhost:${process.env.port || 5173}`,
   },
+
   component: {
     devServer: {
-      framework: "next",
-      bundler: "webpack",
+      framework: "react",
+      bundler: "vite",
     },
   },
 });

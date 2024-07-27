@@ -1,0 +1,183 @@
+/*
+License:
+
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+:root {
+  --group-1: #ff69b4;
+  --group-2: #ff0;
+  --group-3: #f00;
+  --group-4: #0f0;
+  --group-5: #1e90ff;
+  --group-6: #cd853f;
+  --group-1-text: black;
+  --group-2-text: black;
+  --group-3-text: black;
+  --group-4-text: black;
+  --group-5-text: black;
+  --group-6-text: black;
+
+  --table-color: black;
+  --search-color: #a78bfa;
+  --weekend-bg-color: #d1d5db;
+  --holiday-bg-color: #2dd4bf;
+  --ramadan-bg-color: #06b6d4;
+  --closing-bg-color: #047857;
+  --closing-color: white;
+  --daylight-saving-bg-color: #fcd34d;
+  --daylight-saving-border-color: #dc2626;
+
+  --main-bg-color: white;
+  --main-color: black;
+  --soft-text-color: #111827;
+  --link-color: #1d4ed8;
+  --link-interact-color: #3b82f6;
+  --header-bg-color: #064e3b;
+  --header-hover-bg-color: #16a34a;
+  --header-color: white;
+
+  --form-bg-color: #f3f4f6;
+  --form-interact-bg-color: #d1d5db;
+  --form-color: black;
+  --form-accept-bg-color: #6d28d9;
+  --form-accept-interact-bg-color: #4c1d95;
+  --form-accept-color: white;
+
+  --dialog-bg-color: #d1d5db;
+  --dialog-border-color: #e5e8f4;
+  --dialog-shadow-color: rgba(0, 0, 0, 0.25);
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif,
+    Apple Color Emoji,
+    Segoe UI Emoji;
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+}
+
+#app {
+  min-height: 100dvh;
+}
+
+td,
+th {
+  border: 1px solid black;
+  border: 1px solid var(--table-color);
+  padding: 0.1rem;
+}
+
+[id] {
+  /*
+  Header is 3rem height + 3rem of table headers.
+  Always scroll so that the element is not hidden by the header.
+  */
+  scroll-margin-top: 10rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+a.link,
+.link {
+  color: #1d4ed8;
+  color: var(--link-color);
+  text-decoration: underline;
+}
+.link:is(:hover, :focus, :active) {
+  color: #3b82f6;
+  color: var(--link-interact-color);
+}
+.link:focus {
+  box-shadow:
+    0 0 0 3px rgba(59, 130, 246, 0.5),
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow:
+    0 0 0 3px highlight,
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+@keyframes table-enter {
+  from {
+    scale: 0.99;
+    translate: 1rem;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+}
+
+@keyframes table-exit {
+  from {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+  to {
+    scale: 0.99;
+    translate: -1rem;
+    opacity: 0;
+  }
+}
+
+@keyframes slide-bottom-enter {
+  from {
+    scale: 0.99;
+    translate: 0 1rem;
+    opacity: 0;
+  }
+  to {
+    scale: 1;
+    translate: none;
+    opacity: 1;
+  }
+}
+
+::view-transition-old(month-table),
+::view-transition-new(month-table) {
+  height: auto;
+  right: 0;
+  left: auto;
+  transform-origin: right center;
+}
+
+::view-transition-old(month-table) {
+  animation: 0.25s linear both table-exit;
+}
+
+::view-transition-new(month-table) {
+  animation: 0.25s linear 0.2s both table-enter;
+}
