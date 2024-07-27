@@ -17,7 +17,8 @@ export default defineConfig({
     VitePWA({
       injectRegister: "inline",
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png"],
+      includeAssets: ["apple-touch-icon.png"],
+      includeManifestIcons: false,
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg,ics}"],
         navigateFallbackDenylist: [/^\/api/],
@@ -33,30 +34,30 @@ export default defineConfig({
         theme_color: "#064E3B",
         icons: [
           {
-            src: "./assets/icons/favicon-32x32.png",
+            src: "assets/icons/favicon-32x32.png",
             type: "image/png",
             purpose: "any maskable",
             sizes: "32x32",
           },
           {
-            src: "./assets/icons/favicon-16x16.png",
+            src: "assets/icons/favicon-16x16.png",
             type: "image/png",
             purpose: "any maskable",
             sizes: "16x16",
           },
           {
-            src: "./assets/icons/android-chrome-192x192.png",
+            src: "assets/icons/android-chrome-192x192.png",
             type: "image/png",
             purpose: "any maskable",
             sizes: "192x192",
           },
           {
-            src: "./assets/icons/apple-touch-icon.png",
+            src: "assets/icons/apple-touch-icon.png",
             type: "image/png",
             sizes: "180x180",
           },
           {
-            src: "./assets/icons/android-chrome-512x512.png",
+            src: "assets/icons/android-chrome-512x512.png",
             type: "image/png",
             purpose: "any maskable",
             sizes: "512x512",
