@@ -13,7 +13,7 @@ import Helmet from "preact-helmet";
  */
 export default function Impressum() {
   return (
-    <main class="prose lg:prose-xl mx-auto">
+    <main class="prose mx-auto lg:prose-xl">
       <Helmet title="Impressum" />
 
       <div id="calendar_main_out">
