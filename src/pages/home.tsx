@@ -8,12 +8,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { useEffect } from "preact/hooks";
 import { useLocation } from "preact-iso";
 
-import { type ShiftModelKeys } from "../../../lib/shifts";
-import { shiftModelNames, shiftModelText } from "../../../lib/constants";
-import { getToday, getTodayUrl } from "../../../lib/utils";
+import { type ShiftModelKeys } from "../../lib/shifts";
+import { shiftModelNames, shiftModelText } from "../../lib/constants";
+import { getToday, getTodayUrl } from "../../lib/utils";
 
 import menuIcon from "bootstrap-icons/icons/three-dots-vertical.svg";
-import style from "./style.module.css";
 
 type Settings = {
   didSelectModel: boolean;
@@ -23,7 +22,7 @@ type Settings = {
 
 export default function Index() {
   return (
-    <main class={style.main}>
+    <main class="min-w-full pt-4 text-center">
       <Redirector />
 
       <div id="calendar_main_out">
@@ -35,10 +34,10 @@ export default function Index() {
           Welches Schichtmodell interessiert sie?
           <br />
           Sie können das Modell später jederzeit im{" "}
-          <span class={style.no_break}>
+          <span class="whitespace-nowrap">
             Menü
             <img
-              class={style.inline_menu_icon}
+              class="ml-1 mr-2 inline-block"
               src={menuIcon}
               height="20"
               width="20"
@@ -48,7 +47,7 @@ export default function Index() {
           umändern.
         </div>
 
-        <ul class={style.shift_button_list}>
+        <ul class="mx-auto mb-16 mt-2 flex w-64 list-none flex-col justify-center gap-3 p-0">
           {shiftModelNames.map((name) => (
             <ShiftLink key={name} name={name} />
           ))}
@@ -63,7 +62,7 @@ function ShiftLink({ name }: { name: ShiftModelKeys }) {
     <li>
       <a
         href={`/cal/${name}`}
-        class={style.shift_button}
+        class="mx-3 inline-block min-h-10 w-full rounded bg-violet-700 px-4 py-3 text-center text-white shadow hover:bg-violet-900 focus-visible:bg-violet-900"
         onClick={() => {
           if (new URLSearchParams(window.location.search).has("pwa")) {
             const settings: Settings = JSON.parse(

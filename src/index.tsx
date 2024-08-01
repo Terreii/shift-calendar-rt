@@ -11,7 +11,7 @@ import {
 } from "preact-iso";
 import Helmet from "preact-helmet";
 
-import Home from "./pages/Home";
+import Home from "./pages/home";
 import { NotFound } from "./pages/_404.jsx";
 
 import Footer from "./components/Footer";
