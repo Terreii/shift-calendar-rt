@@ -13,7 +13,6 @@ import { useIsClient } from "../../hooks/utils";
 import { getCalUrl, getTodayUrl } from "../../../lib/utils";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 
-import style from "./style.module.css";
 import leftArrow from "bootstrap-icons/icons/caret-left-fill.svg";
 import rightArrow from "bootstrap-icons/icons/caret-right-fill.svg";
 
@@ -71,16 +70,10 @@ export default function HeaderNavLinks({
       <a
         key={`previous_${year}_${month}`}
         href={lastMonth}
-        class={style.navi_link}
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
         title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
       >
-        <img
-          src={leftArrow}
-          height="22"
-          width="22"
-          alt=""
-          class={style.button_img}
-        />
+        <img src={leftArrow} height="22" width="22" alt="" class="invert" />
       </a>
 
       <a
@@ -89,7 +82,7 @@ export default function HeaderNavLinks({
           today: isClient ? today : undefined,
           group: 0,
         })}
-        class={style.navi_link}
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
         title="zeige aktuellen Monat"
       >
         Heute
@@ -98,16 +91,10 @@ export default function HeaderNavLinks({
       <a
         key={`next_${year}_${month}`}
         href={nextMonth}
-        class={style.navi_link}
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
         title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
       >
-        <img
-          src={rightArrow}
-          height="22"
-          width="22"
-          alt=""
-          class={style.button_img}
-        />
+        <img src={rightArrow} height="22" width="22" alt="" class="invert" />
       </a>
     </>
   );

@@ -18,8 +18,6 @@ import NavLinks from "./Nav-Links";
 
 import { useQueryProps } from "./useQueryProps";
 
-import style from "./style.module.css";
-
 /**
  * Renders the Header.
  */
@@ -31,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className={style.navi}>
+      <nav class="flex h-full flex-row items-stretch text-base">
         <NavLinks
           isFullYear={isFullYear}
           month={month}

@@ -26,7 +26,7 @@ export default function Index() {
       <Redirector />
 
       <div id="calendar_main_out">
-        <h2>
+        <h2 class="text-2xl font-bold">
           Willkommen zum inoffiziellen Schichtkalender für Bosch Reutlingen!
         </h2>
 
@@ -62,7 +62,7 @@ function ShiftLink({ name }: { name: ShiftModelKeys }) {
     <li>
       <a
         href={`/cal/${name}`}
-        class="mx-3 inline-block min-h-10 w-full rounded bg-violet-700 px-4 py-3 text-center text-white shadow hover:bg-violet-900 focus-visible:bg-violet-900"
+        class="mx-3 inline-block min-h-10 w-full rounded bg-violet-700 px-4 py-3 text-center text-lg text-white shadow hover:bg-violet-900 focus-visible:bg-violet-900"
         onClick={() => {
           if (new URLSearchParams(window.location.search).has("pwa")) {
             const settings: Settings = JSON.parse(
