@@ -14,7 +14,7 @@ import Helmet from "preact-helmet";
 import Home from "./pages/home";
 import { NotFound } from "./pages/_404.jsx";
 
-import Footer from "./components/Footer";
+import Footer from "./components/footer";
 import Header from "./components/Header";
 import InstallPrompt from "./components/InstallPrompt";
 

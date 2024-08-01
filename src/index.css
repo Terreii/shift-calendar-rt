@@ -54,25 +54,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   --dialog-shadow-color: rgba(0, 0, 0, 0.25);
 }
 
-body {
-  font-family:
-    system-ui,
-    -apple-system,
-    Segoe UI,
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    Apple Color Emoji,
-    Segoe UI Emoji;
-  background-color: var(--main-bg-color);
-  color: var(--main-color);
-}
-
-#app {
-  min-height: 100dvh;
-}
-
 td,
 th {
   border: 1px solid black;
@@ -86,41 +67,6 @@ th {
   Always scroll so that the element is not hidden by the header.
   */
   scroll-margin-top: 10rem;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-a.link,
-.link {
-  color: #1d4ed8;
-  color: var(--link-color);
-  text-decoration: underline;
-}
-.link:is(:hover, :focus, :active) {
-  color: #3b82f6;
-  color: var(--link-interact-color);
-}
-.link:focus {
-  box-shadow:
-    0 0 0 3px rgba(59, 130, 246, 0.5),
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  box-shadow:
-    0 0 0 3px highlight,
-    0 1px 3px 0 rgba(0, 0, 0, 0.1),
-    0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  outline: 2px solid transparent;
-  outline-offset: 2px;
 }
 
 @media (prefers-reduced-motion) {
