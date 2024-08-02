@@ -7,6 +7,11 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 @tailwind base;
 @tailwind components;
+
+.btn {
+  @apply flex min-h-10 flex-row items-center justify-center rounded border-0 bg-gray-100 text-center tracking-wide text-gray-950 shadow hover:bg-gray-300 focus-visible:bg-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+}
+
 @tailwind utilities;
 
 :root {

@@ -12,8 +12,8 @@ import {
   type StateUpdater,
 } from "preact/hooks";
 
-import Menu from "../Menu";
-import ShareMenu from "../Menu/ShareMenu";
+import Menu from "../menu";
+import ShareMenu from "../shareMenu";
 import NavLinks from "./Nav-Links";
 
 import { useQueryProps } from "./useQueryProps";
