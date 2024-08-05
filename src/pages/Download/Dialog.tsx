@@ -24,8 +24,7 @@ import {
 import { createShiftSheet, createStyles } from "../../../lib/excel_export";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 
-import styles from "./style.module.css";
-import formStyles from "../../form.module.css";
+import Button from "../../components/button";
 
 export type ModelToShow =
   | { type: "all_in_month"; year: number; month: number }
@@ -56,18 +55,20 @@ export function DownloadDialog({
       onClose={() => {
         onClose();
       }}
-      class={styles.dialog}
+      class="p-0"
     >
-      <h2>Downloade Tabelle</h2>
+      <h2 class="bg-emerald-900 px-4 py-2 text-2xl font-bold text-white">
+        Downloade Tabelle
+      </h2>
 
-      <div class={styles.dialog_body}>
+      <div class="flex flex-col gap-8 p-4">
         {link ? (
           <a
             href={link.url}
             download={link.name}
             target="_blank"
             rel="noreferrer"
-            class={styles.sheet_download_link}
+            class="flex flex-row gap-2 text-lg underline hover:text-gray-500 focus-visible:text-gray-500 focus-visible:outline-none focus-visible:ring-2"
           >
             <img src={cloudDownloadIcon} width="20" height="20" alt="" />
             <span>
@@ -79,16 +80,15 @@ export function DownloadDialog({
         )}
 
         <div>
-          <button
-            type="button"
+          <Button
+            type="accept"
             onClick={(event) => {
               event.preventDefault();
               dialogRef.current?.close();
             }}
-            class={formStyles.button}
           >
             Schließen
-          </button>
+          </Button>
         </div>
       </div>
     </dialog>
