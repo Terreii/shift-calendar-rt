@@ -19,8 +19,12 @@ export default function Button({
   children,
   class: className,
   type,
+  hasImg,
   ...args
-}: JSX.HTMLAttributes<HTMLButtonElement> & { type: "cancel" | "accept" }) {
+}: JSX.HTMLAttributes<HTMLButtonElement> & {
+  type: "cancel" | "accept";
+  hasImg?: boolean;
+}) {
   return (
     <button
       {...args}
@@ -28,6 +32,8 @@ export default function Button({
       class={classnames("btn", className, {
         [cancel]: type === "cancel",
         [accept]: type === "accept",
+        "px-3 py-1 first:*:size-7 first:*:-translate-x-1 first:*:pr-1 first:*:invert":
+          hasImg,
       })}
     >
       {children}

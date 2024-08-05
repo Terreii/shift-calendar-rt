@@ -16,7 +16,7 @@ import { NotFound } from "./pages/_404.jsx";
 
 import Footer from "./components/footer";
 import Header from "./components/Header";
-import InstallPrompt from "./components/InstallPrompt";
+import InstallPrompt from "./components/Prompt/InstallPrompt.jsx";
 
 import "./index.css";
 

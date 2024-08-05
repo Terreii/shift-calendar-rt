@@ -5,11 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { type ComponentChildren } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 
-import style from "./style.module.css";
-import formStyles from "../../form.module.css";
+import Button from "../button";
 
 const hiddenState = { scale: 0.99, translate: "0 0.5rem", opacity: 0 };
 const shownState = { scale: 1, translate: "none", opacity: 1 };
@@ -56,31 +56,33 @@ export default function Confirm({
 
   return (
     <aside
-      class={isShowing ? style.container : style.container_initial}
+      class={classNames(
+        "sticky bottom-0 left-0 flex w-full flex-col border-0 border-t border-gray-200 bg-white text-gray-900 shadow-lg sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded sm:border sm:mb-safe sm:ml-safe",
+        { "translate-y-4 scale-95 opacity-0": isShowing },
+      )}
       ref={container}
     >
-      <div class={style.content}>{children}</div>
+      <div class="p-5">{children}</div>
 
-      <div class={style.buttons_row}>
-        <button
-          type="button"
-          class={formStyles.accept_button_with_img}
+      <div class="m-3 mr-5 flex flex-row items-center justify-end gap-5">
+        <Button
+          type="accept"
+          hasImg
           onClick={() => {
             onClose(true);
           }}
         >
           {confirmText}
-        </button>
-        <button
-          type="button"
+        </Button>
+        <Button
+          type="cancel"
           onClick={() => {
             onClose(false);
           }}
           title="Klicke um den Kalender nicht zu installieren"
-          class={formStyles.cancel_button}
         >
           Abbrechen
-        </button>
+        </Button>
       </div>
     </aside>
   );
