@@ -9,8 +9,8 @@ import { type ComponentChildren } from "preact";
 import Helmet from "preact-helmet";
 
 import Month from "../../components/Calendar/Month";
-import Downloader from "../../components/Download";
-import Legend from "../../components/Legend";
+import Downloader from "../../components/download";
+import Legend from "../../components/legend";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import selectMonthData from "../../../lib/select-month-data";

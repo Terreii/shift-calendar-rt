@@ -5,15 +5,14 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { type ComponentChildren } from "preact";
 import { useMemo } from "preact/hooks";
 import shifts, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
-} from "../../../lib/shifts";
-
-import style from "./style.module.css";
+} from "../../lib/shifts";
 
 /**
  * Renders a legend of definitions for the table.
@@ -32,8 +31,8 @@ export default function Legend({
     [shiftKey, year, month],
   );
   return (
-    <div class={style.container}>
-      <dl class={style.column}>
+    <div class="mx-auto mb-8 flex flex-col items-start text-gray-900 px-safe md:flex-row">
+      <dl class="grid grid-cols-[auto_1fr] items-start gap-2 px-4 py-2 md:px-2 md:py-0">
         {shiftTypes.map(([key, data]) => (
           <Cell key={shiftKey + key} id={key}>
             {data.name}
@@ -43,29 +42,31 @@ export default function Legend({
         ))}
       </dl>
 
-      <dl class={style.column}>
-        <Cell className={style.current}>Aktuelle Schicht</Cell>
+      <dl class="grid grid-cols-[auto_1fr] items-start gap-2 px-4 py-2 md:px-2 md:py-0">
+        <Cell class="border-4 border-black font-bold underline">
+          Aktuelle Schicht
+        </Cell>
 
-        <Cell className={style.closing}>
+        <Cell class="bg-emerald-700 text-white">
           Schließtage (Ostern und Weihnachten)
         </Cell>
 
         <Cell
-          className={style.holiday}
+          class="bg-teal-400"
           href="https://www.schulferien.org/Baden-Wurttemb_/baden-wurttemb_.html"
         >
           Schulferien / Feiertage in Baden-Württemberg
         </Cell>
 
         <Cell
-          className={style.ramadan}
+          class="bg-cyan-500"
           href="https://www.ramadan.de/wann-ist-ramadan/"
         >
           Ramadan (erster / letzter Fastentag)
         </Cell>
 
         <Cell
-          className={style.daylight_saving}
+          class="border-4 border-red-600 bg-amber-300 px-0 text-black"
           href="https://www.zeitumstellung.de/termin-zeitumstellung.html"
         >
           Zeitumstellung
@@ -126,24 +127,33 @@ function toTimeString(time: [number, number]): string {
  */
 function Cell({
   id,
-  className,
+  class: className,
   href,
   children,
 }: {
   id?: string;
-  className?: string;
+  class?: string;
   href?: string;
   children?: ComponentChildren;
 }) {
   return (
     <>
-      <dt class={className ? `${style.cell} ${className}` : style.cell}>
+      <dt
+        class={classNames(
+          "h-fit w-8 border border-black p-1 text-center",
+          className,
+        )}
+      >
         {id || "1"}
       </dt>
 
-      <dd id={id ? `${id}_description` : undefined} class={style.definition}>
+      <dd id={id ? `${id}_description` : undefined} class="text-gray-900">
         {href ? (
-          <a href={href} class={style.link} rel="noopener noreferrer">
+          <a
+            href={href}
+            class="text-gray-900 underline decoration-blue-700 hover:decoration-blue-500 hover:decoration-2 focus-visible:decoration-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
+            rel="noopener noreferrer"
+          >
             {children}
           </a>
         ) : (

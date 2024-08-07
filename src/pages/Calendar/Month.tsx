@@ -8,8 +8,8 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import Helmet from "preact-helmet";
 
 import ByMonths from "../../components/Calendar/ByMonth";
-import Downloader from "../../components/Download";
-import Legend from "../../components/Legend";
+import Downloader from "../../components/download";
+import Legend from "../../components/legend";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import { parseNumber } from "../../../lib/utils";
