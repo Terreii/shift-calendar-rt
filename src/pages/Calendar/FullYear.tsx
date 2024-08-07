@@ -6,11 +6,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { type ComponentChildren } from "preact";
-import Helmet from "preact-helmet";
 
+import Container from "../../components/Calendar/container";
 import Month from "../../components/Calendar/Month";
-import Downloader from "../../components/download";
-import Legend from "../../components/legend";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import selectMonthData from "../../../lib/select-month-data";
@@ -36,12 +34,13 @@ export default function Year({
   }
 
   return (
-    <main class={style.main}>
-      <Helmet title={`Jahr ${year} - ${shiftModelText[shiftModel]}`} />
-
-      <Legend shiftKey={shiftModel} year={year} month={0} />
-
-      <Container>
+    <Container
+      title={`Jahr ${year} - ${shiftModelText[shiftModel]}`}
+      model={shiftModel}
+      year={year}
+      month={0}
+    >
+      <UnloadFixContainer>
         {monthsData.map(([year, month]) => (
           <Month
             key={`${year}-${month}-${shiftModel}-${0}`}
@@ -53,14 +52,12 @@ export default function Year({
             search={null}
           />
         ))}
-      </Container>
-
-      <Downloader shiftModel={shiftModel} />
-    </main>
+      </UnloadFixContainer>
+    </Container>
   );
 }
 
-function Container({ children }: { children: ComponentChildren }) {
+function UnloadFixContainer({ children }: { children: ComponentChildren }) {
   const shouldRemoveCalendar = useUnloadedFix();
   if (shouldRemoveCalendar) {
     return null;

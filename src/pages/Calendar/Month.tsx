@@ -5,16 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Helmet from "preact-helmet";
-
 import ByMonths from "../../components/Calendar/ByMonth";
-import Downloader from "../../components/download";
-import Legend from "../../components/legend";
+import Container from "../../components/Calendar/container";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import { parseNumber } from "../../../lib/utils";
-
-import style from "../../components/Calendar/style.module.css";
 
 export default function MonthPage({
   params: { shiftModel, year: yearString, month: monthString },
@@ -33,15 +28,14 @@ export default function MonthPage({
   }
 
   return (
-    <main class={style.main}>
-      <Helmet
-        title={`Monat ${year}-${monthString.padStart(2, "0")} | ${
-          shiftModelText[shiftModel]
-        }`}
-      />
-
-      <Legend shiftKey={shiftModel} year={year} month={month} />
-
+    <Container
+      title={`Monat ${year}-${monthString.padStart(2, "0")} | ${
+        shiftModelText[shiftModel]
+      }`}
+      model={shiftModel}
+      year={year}
+      month={month}
+    >
       <ByMonths
         key={`${year}-${month}`}
         shiftModel={shiftModel}
@@ -50,8 +44,6 @@ export default function MonthPage({
         year={year}
         month={month}
       />
-
-      <Downloader shiftModel={shiftModel} />
-    </main>
+    </Container>
   );
 }
