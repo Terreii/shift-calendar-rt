@@ -71,7 +71,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
     return (
       <tr
         key={index}
-        id={"day_" + formatISO(time, { representation: "date" })}
+        id={`day_${formatISO(time, { representation: "date" })}`}
         class={style.row}
         data-interest={interesting}
         data-weekend={isWeekend(time)}
@@ -85,11 +85,16 @@ export default function MonthBody({ year, month, data, today, search, group }) {
         }
       >
         {(isMonday(time) || index === 0) && <WeekCell time={time} />}
-        <DayInMonthCell time={time} shiftModel={shiftModel} />
+        <DayInMonthCell
+          time={time}
+          shiftModel={shiftModel}
+          active={interesting}
+        />
         <WeekDayCell
           time={time}
           holidayData={holidayData}
           dayLightSaving={data.holidays.daylightSavingSwitch}
+          active={interesting}
         />
 
         {shifts.map((shift, index) => {
@@ -104,6 +109,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
               hour={today[3]}
               minues={today[4]}
               shiftModel={shiftModel}
+              active={interesting}
             />
           );
         })}

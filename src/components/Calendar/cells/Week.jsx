@@ -10,8 +10,6 @@ import { endOfISOWeek } from "date-fns/endOfISOWeek";
 import { getDaysInMonth } from "date-fns/getDaysInMonth";
 import { getISOWeek } from "date-fns/getISOWeek";
 
-import style from "../style.module.css";
-
 /**
  * Render the weekday.
  * @param {object}   param        React arguments.
@@ -20,7 +18,7 @@ import style from "../style.module.css";
 export default function WeekCell({ time }) {
   return (
     <td
-      class={style.week_cell}
+      class="border border-black bg-white text-gray-800"
       rowSpan={
         Math.min(
           differenceInDays(endOfISOWeek(time), time),
@@ -28,7 +26,7 @@ export default function WeekCell({ time }) {
         ) + 1
       }
     >
-      <span class={style.week_number}>{getISOWeek(time)}</span>
+      <span class="sticky bottom-1 top-36 pt-1">{getISOWeek(time)}</span>
     </td>
   );
 }

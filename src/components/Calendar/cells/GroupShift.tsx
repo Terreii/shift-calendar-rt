@@ -5,13 +5,13 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import shiftModels, {
   type Shift,
   type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
 } from "../../../../lib/shifts";
 import { Workdata } from "../../../../lib/workdata";
-import style from "../style.module.css";
 
 /**
  * Render a cell that displays if that shift group is working and what shift.
@@ -27,6 +27,7 @@ export default function GroupShiftCell({
   hour,
   minues,
   shiftModel: shiftModelKey,
+  active,
 }: {
   group: number;
   shift: Workdata;
@@ -35,9 +36,21 @@ export default function GroupShiftCell({
   hour: number;
   minues: number;
   shiftModel: ShiftModelKeys;
+  active?: "search" | "today";
 }) {
   if (shift === "K") {
-    return <td class={style.group} />;
+    return (
+      <td
+        class={classNames(
+          "border-b border-l-0 border-r border-t-0 py-1 text-black",
+          {
+            "border-b-4 border-t-4 last:border-r-4": active != null,
+            "border-b-violet-400 border-t-violet-400 last:border-r-violet-400":
+              active === "search",
+          },
+        )}
+      />
+    );
   }
 
   const {
@@ -60,9 +73,22 @@ export default function GroupShiftCell({
 
   return (
     <td
-      class={style.group}
-      data-group={group + 1}
-      data-current={isTodayShift || isYesterdayShift ? true : undefined}
+      class={classNames(
+        "border-b border-l-0 border-r border-t-0 py-1 text-black",
+        {
+          "border-b-4 border-l-4 border-r-4 border-t-4 font-bold underline":
+            isTodayShift || isYesterdayShift,
+          "border-b-4 border-t-4 last:border-r-4": active != null,
+          "border-b-violet-400 border-t-violet-400 last:border-r-violet-400":
+            active === "search",
+          "bg-[#ff69b4]": group === 0, // Group 1
+          "bg-[#ff0]": group === 1, // Group 2
+          "bg-[#f00]": group === 2, // Group 3
+          "bg-[#0f0]": group === 3, // Group 4
+          "bg-[#1e90ff]": group === 4, // Group 5
+          "bg-[#cd853f]": group === 5, // Group 6
+        },
+      )}
       title={isTodayShift || isYesterdayShift ? "Aktuelle Schicht" : undefined}
       aria-describedby={`${shift}_description`}
     >
