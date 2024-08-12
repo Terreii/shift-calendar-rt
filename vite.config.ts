@@ -9,7 +9,7 @@ export default defineConfig({
     nodePolyfills({ include: ["events", "fs", "http", "path"] }),
     preact({
       prerender: {
-        enabled: true,
+        enabled: false,
         renderTarget: "#app",
         additionalPrerenderRoutes: ["/404"],
       },
