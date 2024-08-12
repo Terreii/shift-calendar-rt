@@ -1,5 +1,6 @@
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import { useState } from "preact/hooks";
 import {
   LocationProvider,
   Router,
@@ -44,9 +45,21 @@ export function App() {
 
       <Footer />
       <InstallPrompt />
-      {new Date().getDate() <= 2 && <Analytics />}
-      <SpeedInsights />
+      <AnalyticsContainer />
     </LocationProvider>
+  );
+}
+
+function AnalyticsContainer() {
+  const [shouldRender] = useState(() => ({
+    analytics: new Date().getDate() <= 2, // Only render analytics for the first 2 days in a month.
+    speed: Math.floor(Math.random() * 20) === 0, // Only render speed insights for 5% of visits.
+  }));
+  return (
+    <>
+      {shouldRender.analytics && <Analytics />}
+      {shouldRender.speed && <SpeedInsights />}
+    </>
   );
 }
 

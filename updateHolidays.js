@@ -1,5 +1,3 @@
-"use strict";
-
 /*
  * Load Baden-Württemberg holidays from https://www.schulferien.org/
  * and saves them at ./src/lib/ferien.json
@@ -7,11 +5,11 @@
  * First load iCal from https://www.schulferien.org/deutschland/ical/
  */
 
-const fs = require("fs");
-const path = require("path");
+import fs from "node:fs/promises";
+import path from "node:path";
 
-const iCal = require("node-ical");
-const prompt = require("prompt");
+import iCal from "node-ical";
+import prompt from "prompt";
 
 prompt.get(
   [
@@ -30,7 +28,7 @@ prompt.get(
 
     const outPath = path.resolve("lib", "ferien.json");
     const allHolidays = JSON.parse(
-      await fs.promises.readFile(outPath, { encoding: "utf8" }),
+      await fs.readFile(outPath, { encoding: "utf8" }),
     );
 
     const holidays = allHolidays.ferien.filter((event) => event.year > 2018);
@@ -74,6 +72,6 @@ prompt.get(
         null,
         2,
       ) + "\n";
-    await fs.promises.writeFile(outPath, ferienJSON);
+    await fs.writeFile(outPath, ferienJSON);
   },
 );
