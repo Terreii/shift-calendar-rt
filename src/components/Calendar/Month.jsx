@@ -55,13 +55,11 @@ function Month({
         className,
       )}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
-      style={
-        shouldTranistionToNewPosition
-          ? {
-              viewTransitionName: `month_table_${year}-${month + 1}`,
-            }
-          : null
-      }
+      style={{
+        viewTransitionName: shouldTranistionToNewPosition
+          ? `month_table_${year}-${month + 1}`
+          : "month-table",
+      }}
     >
       <caption
         id={`month_${year}-${month + 1}_caption`}

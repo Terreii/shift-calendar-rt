@@ -14,52 +14,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 @tailwind utilities;
 
-:root {
-  --group-1: #ff69b4;
-  --group-2: #ff0;
-  --group-3: #f00;
-  --group-4: #0f0;
-  --group-5: #1e90ff;
-  --group-6: #cd853f;
-  --group-1-text: black;
-  --group-2-text: black;
-  --group-3-text: black;
-  --group-4-text: black;
-  --group-5-text: black;
-  --group-6-text: black;
-
-  --table-color: black;
-  --search-color: #a78bfa;
-  --weekend-bg-color: #d1d5db;
-  --holiday-bg-color: #2dd4bf;
-  --ramadan-bg-color: #06b6d4;
-  --closing-bg-color: #047857;
-  --closing-color: white;
-  --daylight-saving-bg-color: #fcd34d;
-  --daylight-saving-border-color: #dc2626;
-
-  --main-bg-color: white;
-  --main-color: black;
-  --soft-text-color: #111827;
-  --link-color: #1d4ed8;
-  --link-interact-color: #3b82f6;
-  --header-bg-color: #064e3b;
-  --header-hover-bg-color: #16a34a;
-  --header-color: white;
-
-  --form-bg-color: #f3f4f6;
-  --form-interact-bg-color: #d1d5db;
-  --form-color: black;
-  --form-accept-bg-color: #6d28d9;
-  --form-accept-interact-bg-color: #4c1d95;
-  --form-accept-color: white;
-
-  --dialog-bg-color: #d1d5db;
-  --dialog-border-color: #e5e8f4;
-  --dialog-shadow-color: rgba(0, 0, 0, 0.25);
-}
-
-[id] {
+:root [id] {
   /*
   Header is 3rem height + 3rem of table headers.
   Always scroll so that the element is not hidden by the header.
