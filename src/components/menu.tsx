@@ -49,6 +49,7 @@ export default function Menu({
     const searchDay = String(search).padStart(2, "0");
     searchValue = `${year}-${searchMonth}-${searchDay}`;
   }
+  console.log(show);
 
   return (
     <details
@@ -68,9 +69,9 @@ export default function Menu({
         id="hamburger_menu"
         aria-live="polite"
         aria-label="Menü"
-        class="absolute overflow-y-auto overscroll-contain bg-emerald-900 text-white shadow-lg -max-h-screen-safe-offset-12 right-safe-offset-0 top-safe-offset-12"
+        class="absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg right-safe-offset-0 top-safe-offset-12"
       >
-        <div class="flex flex-col items-stretch justify-center p-3">
+        <div class="flex flex-col items-stretch justify-center p-3 -max-h-screen-safe-offset-12">
           {!(supportsMonthInput || isFullYear) && (
             <select
               class="btn h-10"
@@ -97,7 +98,7 @@ export default function Menu({
           )}
 
           {(!supportsMonthInput || isFullYear) && (
-            <label class="mt-5 flex flex-col items-stretch text-center text-white">
+            <label class="mt-5 flex flex-col items-stretch text-center text-white first:mt-0">
               Jahr
               <input
                 class="btn mt-1 h-10 flex-auto"
@@ -123,7 +124,7 @@ export default function Menu({
           )}
 
           {supportsMonthInput && !isFullYear && (
-            <label class="mt-5 flex flex-col items-stretch text-center text-white">
+            <label class="mt-5 flex flex-col items-stretch text-center text-white first:mt-0">
               Gehe zum Monat
               <input
                 class="btn mt-1 h-10 flex-auto"

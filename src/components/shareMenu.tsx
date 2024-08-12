@@ -73,9 +73,9 @@ export default function ShareMenu({
   return (
     <div
       id="share_menu"
-      class="absolute overflow-y-auto overscroll-contain bg-emerald-900 text-white shadow-lg -max-h-screen-safe-offset-12 right-safe-offset-0 top-safe-offset-12"
+      class="absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg right-safe-offset-0 top-safe-offset-12"
     >
-      <div class="flex flex-col items-stretch justify-center p-3">
+      <div class="flex flex-col items-stretch justify-center p-3 -max-h-screen-safe-offset-12">
         <label class="flex flex-col">
           Adresse zum teilen:
           <input
