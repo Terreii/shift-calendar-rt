@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { formatISO } from "date-fns/formatISO";
 import { isWeekend } from "date-fns/isWeekend";
 import { isMonday } from "date-fns/isMonday";
@@ -14,8 +15,6 @@ import WeekCell from "./cells/Week";
 import DayInMonthCell from "./cells/DayInMonth";
 import WeekDayCell from "./cells/WeekDay";
 import GroupShiftCell from "./cells/GroupShift";
-
-import style from "./style.module.css";
 
 /**
  * @typedef {Object} MonthData
@@ -72,10 +71,10 @@ export default function MonthBody({ year, month, data, today, search, group }) {
       <tr
         key={index}
         id={`day_${formatISO(time, { representation: "date" })}`}
-        class={style.row}
-        data-interest={interesting}
-        data-weekend={isWeekend(time)}
-        data-closing={isClosingHoliday ? "closing" : undefined}
+        class={classNames({
+          "bg-gray-300": isWeekend(time),
+          "bg-emerald-700 text-white": isClosingHoliday,
+        })}
         title={
           isToday || isClosingHoliday
             ? `${isToday ? "Heute" : ""} ${
@@ -84,7 +83,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
             : null
         }
       >
-        {(isMonday(time) || index === 0) && <WeekCell time={time} />}
+        {(index === 0 || isMonday(time)) && <WeekCell time={time} />}
         <DayInMonthCell
           time={time}
           shiftModel={shiftModel}

@@ -40,6 +40,7 @@ export default function WeekDayCell({
       class={classNames("border-b border-l-0 border-r border-t-0 p-1", {
         "border-b-4 border-t-4": active != null,
         "border-b-violet-400 border-t-violet-400": active === "search",
+        "border-black": !isDayLightSaving && active !== "search",
         "border-b-4 border-l-4 border-r-4 border-t-4 border-red-600 bg-amber-300 text-black":
           isDayLightSaving,
         "cursor-help": holidayData?.type || isDayLightSaving,

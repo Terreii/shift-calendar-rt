@@ -39,79 +39,6 @@ But then show the next month on small screen, then the next 2 months, then all o
   display: table;
 }
 
-.table,
-.table th,
-.table td {
-  border: 1px solid black;
-  border: 1px solid var(--table-color);
-}
-
-.table caption,
-.table th,
-.table td {
-  padding-top: 3px;
-  padding-bottom: 3px;
-}
-.table caption {
-  border-bottom: 1px solid white;
-  border-bottom: 1px solid var(--main-bg-color);
-}
-
-.table {
-  margin-top: 2rem;
-  text-align: center;
-  border: 1px solid black;
-  border: 1px solid var(--table-color);
-  border-top-width: 0px;
-  color: var(--table-color);
-  table-layout: fixed;
-  border-spacing: 0px;
-  --interest-width: 3px;
-  view-transition-name: month-table; /* animation is in index.css */
-}
-
-.table .groups_th {
-  border-bottom-width: 0px;
-}
-
-.clickable_column {
-  min-width: 50px;
-}
-
-.group_column {
-  min-width: 2rem;
-}
-
-.table th {
-  border-left-width: 0px;
-}
-.table td {
-  border-top-width: 0px;
-  border-left-width: 0px;
-}
-.table th:last-child,
-.table td:last-child {
-  border-right-width: 0px;
-}
-
-.table thead {
-  position: sticky;
-  top: 5rem;
-  top: calc(3.5rem + 1.5rem - 1px);
-  z-index: 1;
-}
-
-.table th {
-  background-color: white;
-  background-color: var(--main-bg-color);
-}
-
-@media (min-width: 1280px) {
-  .table {
-    margin-top: 0px;
-  }
-}
-
 @media (min-width: 768px) {
   .container {
     display: grid;
@@ -147,65 +74,9 @@ But then show the next month on small screen, then the next 2 months, then all o
   border-width: 0px;
 }
 
-.title {
-  position: sticky;
-  top: 3rem;
-  font-weight: 700;
-  background-color: white;
-  background-color: var(--main-bg-color);
-  z-index: 1;
-}
-.title[data-is-today="true"] {
-  border: 1px solid black;
-  border: 1px solid var(--table-color);
-  border-bottom-width: 0px;
-  background-color: #d1d5db;
-  background-color: var(--weekend-bg-color);
-  color: black;
-  color: var(--table-color);
-}
-
-.footer {
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 700;
-}
-.footer td {
-  border-bottom-width: 0px;
-}
-.sum {
-  padding: 0.25rem;
-  border: 1px solid black;
-  border: 1px solid var(--table-color);
-  cursor: help;
-}
-
-.row[data-weekend="true"] {
-  background-color: #d1d5db;
-  background-color: var(--weekend-bg-color);
-}
-.row[data-closing="closing"] {
-  background-color: #047857;
-  background-color: var(--closing-bg-color);
-  color: white;
-  color: var(--closing-color);
-}
-
 @media (max-width: 365px) {
   .container {
     padding-left: 0px;
     padding-right: 0px;
-  }
-
-  .group_column {
-    min-width: initial;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
-  }
-}
-
-@media (max-width: 280px) {
-  .clickable_column {
-    min-width: 100%;
   }
 }

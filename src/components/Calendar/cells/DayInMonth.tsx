@@ -30,9 +30,10 @@ export default function DayInMonthCell({
   return (
     <td
       class={classNames("border-b border-r p-0", {
-        "border-y-4 border-l-4": active != null,
+        "border-b-4 border-l-4 border-t-4": active != null,
         "border-y-violet-400 border-l-violet-400": active === "search",
         "border-l-0 border-t-0": active == null,
+        "border-black": active !== "search",
       })}
     >
       <a

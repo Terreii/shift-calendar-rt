@@ -18,7 +18,7 @@ import { getISOWeek } from "date-fns/getISOWeek";
 export default function WeekCell({ time }) {
   return (
     <td
-      class="border border-black bg-white text-gray-800"
+      class="border border-t-0 border-black bg-white text-gray-800"
       rowSpan={
         Math.min(
           differenceInDays(endOfISOWeek(time), time),

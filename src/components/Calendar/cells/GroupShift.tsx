@@ -47,6 +47,7 @@ export default function GroupShiftCell({
             "border-b-4 border-t-4 last:border-r-4": active != null,
             "border-b-violet-400 border-t-violet-400 last:border-r-violet-400":
               active === "search",
+            "border-black": active !== "search",
           },
         )}
       />
@@ -81,6 +82,7 @@ export default function GroupShiftCell({
           "border-b-4 border-t-4 last:border-r-4": active != null,
           "border-b-violet-400 border-t-violet-400 last:border-r-violet-400":
             active === "search",
+          "border-black": active !== "search",
           "bg-[#ff69b4]": group === 0, // Group 1
           "bg-[#ff0]": group === 1, // Group 2
           "bg-[#f00]": group === 2, // Group 3

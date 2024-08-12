@@ -5,13 +5,12 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { memo } from "preact/compat";
 
 import MonthBody from "./MonthBody";
 import { monthNames } from "../../../lib/constants";
 import { useTodayZeroIndex } from "../../hooks/time";
-
-import style from "./style.module.css";
 
 /**
  * Render a month
@@ -51,7 +50,10 @@ function Month({
   return (
     <table
       id={`month_${year}-${month + 1}`}
-      class={`${style.table} ${className}`}
+      class={classNames(
+        "mt-8 table-fixed border-separate border-spacing-0 border border-t-0 text-center text-black xl:mt-0",
+        className,
+      )}
       aria-labelledby={`month_${year}-${month + 1}_caption`}
       style={
         shouldTranistionToNewPosition
@@ -63,33 +65,47 @@ function Month({
     >
       <caption
         id={`month_${year}-${month + 1}_caption`}
-        data-is-today={isToday}
-        class={style.title}
+        class={classNames("sticky top-12 z-10 border-b-white py-1 font-bold", {
+          "border border-b-0 border-black bg-gray-300": isToday,
+          "border-b bg-white": !isToday,
+        })}
       >
         {monthNames[month]} {year}
         {isToday ? " (Jetzt)" : ""}
       </caption>
-      <thead>
+      <thead class="sticky top-20 z-10 border-t border-black">
         <tr>
-          <th rowSpan={2}>
+          <th rowSpan={2} class="border border-black bg-white">
             <span class="sr-only">Woche</span>
             <span aria-hidden="true" title="Woche">
               Wo
             </span>
           </th>
-          <th rowSpan={2} class={style.clickable_column}>
+          <th
+            rowSpan={2}
+            class="border border-l-0 border-black bg-white min-[280px]:min-w-12"
+          >
             Tag
           </th>
-          <th rowSpan={2} class={style.clickable_column}>
+          <th
+            rowSpan={2}
+            class="border border-l-0 border-black bg-white min-[280px]:min-w-12"
+          >
             <span class="sr-only">Wochentag</span>
           </th>
-          <th colSpan={groups.length} class={style.groups_th}>
+          <th
+            colSpan={groups.length}
+            class="border border-b-0 border-l-0 border-black bg-white"
+          >
             Gruppen
           </th>
         </tr>
         <tr>
           {groups.map((gr) => (
-            <th key={gr} class={style.group_column}>
+            <th
+              key={gr}
+              class="border border-l-0 border-black bg-white last:border-r max-[365px]:px-2 min-[365px]:min-w-8"
+            >
               {gr + 1}
             </th>
           ))}
@@ -105,17 +121,17 @@ function Month({
         group={group}
       />
 
-      <tfoot class={style.footer}>
+      <tfoot class="text-sm font-bold">
         <tr>
           <td
-            class={style.sum}
+            class="cursor-help border border-b-0 p-1"
             colSpan="3"
             title="Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet."
           >
             Summe
           </td>
           {groups.map((gr) => (
-            <td key={gr} aria-label="Summe Arbeitstage">
+            <td key={gr} aria-label="Summe Arbeitstage" class="border-b-0 p-1">
               {data.workingCount[gr]}
             </td>
           ))}
