@@ -24,7 +24,7 @@ import { useTodayZeroIndex } from "../../hooks/time";
  * @returns {JSX.Element}
  */
 function Month({
-  className = "",
+  class: className = "",
   year,
   month,
   data,

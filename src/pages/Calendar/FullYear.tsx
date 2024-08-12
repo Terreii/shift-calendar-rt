@@ -15,8 +15,6 @@ import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber, titleAlertHandler } from "../../../lib/utils";
 import { useUnloadedFix } from "../../hooks/time";
 
-import style from "../../components/Calendar/style.module.css";
-
 export default function Year({
   params: { shiftModel, year: yearString },
 }: {
@@ -66,7 +64,7 @@ function UnloadFixContainer({ children }: { children: ComponentChildren }) {
   return (
     <div
       id="calendar_main_out"
-      class={style.container}
+      class="mx-auto flex touch-pan-y flex-col items-start gap-6 pb-2 min-[365px]:px-5 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
       onClick={titleAlertHandler}
       aria-live="polite"
     >
