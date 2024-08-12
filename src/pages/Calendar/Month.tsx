@@ -20,11 +20,25 @@ export default function MonthPage({
   const monthQuery = parseNumber(monthString, null);
   const month = monthQuery ? monthQuery - 1 : monthQuery;
 
-  if (year == null) {
-    return <h2>{yearString} is not a valid year.</h2>;
+  if (year == null || year < 1990) {
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {yearString} ist nicht ein erlaubtes Jahr.
+        </h2>
+        <p>Es werden nur Jahre zwischen 1990 und 2100 unterstützt.</p>
+      </section>
+    );
   }
   if (month == null || month < 0 || month > 11) {
-    return <h2>{monthString} is not a valid month.</h2>;
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {monthString} ist nicht ein erlaubter Monat.
+        </h2>
+        <p>Es gibt nur 12 Monate. Benutze eine Zahl von 1 bis 12.</p>
+      </section>
+    );
   }
 
   return (

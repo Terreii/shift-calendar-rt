@@ -22,8 +22,15 @@ export default function Year({
 }) {
   const year = parseNumber(yearString, null);
 
-  if (year == null) {
-    return <h2>{yearString} is not a valid year.</h2>;
+  if (year == null || year < 1990) {
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {yearString} ist nicht ein erlaubtes Jahr.
+        </h2>
+        <p>Es werden nur Jahre zwischen 1990 und 2100 unterstützt.</p>
+      </section>
+    );
   }
 
   const monthsData: [number, number][] = [];
