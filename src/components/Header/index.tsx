@@ -7,7 +7,6 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { Suspense } from "preact/compat";
 import { useLocation, lazy } from "preact-iso";
-import style from "./style.module.css";
 
 import home from "bootstrap-icons/icons/house-door-fill.svg";
 
@@ -20,15 +19,21 @@ export default function Header() {
   const { path } = useLocation();
 
   return (
-    <header class={style.container}>
+    <header
+      class="sticky left-0 top-0 z-50 flex h-12 flex-row items-center justify-between bg-emerald-900 shadow-lg px-safe"
+      style={{ viewTransitionName: "header" }}
+    >
       <h1
-        class={style.header}
+        class="m-0 pl-4 align-baseline text-2xl font-normal"
         title="Home. Gehe zur Auswahl der Schichtmodelle"
       >
-        <a href="/" class={style.header_link}>
-          <span class={style.short_text}>Kalender</span>
-          <span class={style.long_text}>Kontischichtkalender Rt</span>
-          <img src={home} class={style.text_as_icon} alt="" />
+        <a
+          href="/"
+          class="rounded text-white ring-offset-2 ring-offset-emerald-900 hover:underline focus-visible:underline focus-visible:outline-none focus-visible:ring-4"
+        >
+          <span class="hidden min-[350px]:inline sm:hidden">Kalender</span>
+          <span class="hidden sm:inline">Kontischichtkalender Rt</span>
+          <img src={home} class="size-6 invert min-[350px]:hidden" alt="" />
         </a>
       </h1>
 

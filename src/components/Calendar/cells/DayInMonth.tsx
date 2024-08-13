@@ -7,11 +7,10 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { type ShiftModelKeys } from "../../../../lib/shifts";
 
+import classNames from "classnames";
 import { formatISO } from "date-fns/formatISO";
 
 import { getCalUrl } from "../../../../lib/utils";
-
-import style from "../style.module.css";
 
 /**
  * Render the day in month cell.
@@ -22,12 +21,21 @@ import style from "../style.module.css";
 export default function DayInMonthCell({
   time,
   shiftModel,
+  active,
 }: {
   time: Date;
   shiftModel: ShiftModelKeys;
+  active?: "search" | "today";
 }) {
   return (
-    <td class={style.day_in_month}>
+    <td
+      class={classNames("border-b border-r p-0", {
+        "border-b-4 border-l-4 border-t-4": active != null,
+        "border-y-violet-400 border-l-violet-400": active === "search",
+        "border-l-0 border-t-0": active == null,
+        "border-black": active !== "search",
+      })}
+    >
       <a
         href={getCalUrl({
           shiftModel,
@@ -35,7 +43,7 @@ export default function DayInMonthCell({
           month: time.getMonth() + 1,
           day: time.getDate(),
         })}
-        class={style.day_in_month__link}
+        class="inline-block h-full w-full p-1 text-inherit underline"
       >
         <time dateTime={formatISO(time, { representation: "date" })}>
           {time.getDate()}

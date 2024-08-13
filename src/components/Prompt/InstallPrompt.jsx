@@ -10,7 +10,6 @@ import ms from "milliseconds";
 
 import Confirm from "./Confirm";
 
-import style from "./style.module.css";
 import addOutline from "bootstrap-icons/icons/plus-circle.svg";
 import iOSShare from "../../assets/ios-share.png";
 import iOSAddToHome from "../../assets/ios-add-to-home-screen.png";
@@ -148,21 +147,21 @@ export default function InstallButton() {
 
     case "ios":
       return (
-        <div className={style.ios_install}>
-          <span className={style.ios_text}>
+        <div class="sticky bottom-0 z-10 flex w-full flex-col items-center border-0 border-t border-gray-200 bg-white shadow-lg pb-safe px-safe-offset-2 sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded sm:border sm:mb-safe sm:ml-safe">
+          <span class="my-1 text-center text-sm text-gray-900 mx-safe-offset-16">
             Klicke auf Teilen &amp; dann{" "}
             <strong>&quot;Zum Home-Bildschirm&quot; </strong>
             um den Kalender wie eine App zu installieren:
           </span>
-          <div className={style.ios_icons_row}>
+          <div class="mb-1 flex flex-col items-center py-1">
             <img
-              className={style.ios_icon}
+              class="h-20 rounded object-contain object-center p-1 shadow"
               src={iOSShare}
               alt="klicke Teilen"
             />
-            <span className={style.ios_icon_space}>↓</span>
+            <span class="mx-3 my-auto block">↓</span>
             <img
-              className={style.ios_icon}
+              class="h-20 rounded object-contain object-center p-1 shadow"
               src={iOSAddToHome}
               alt="klicke Zum Home-Bildschirm"
             />
@@ -208,12 +207,12 @@ function CloseButton({ onClick }) {
   return (
     <button
       type="button"
-      className={style.close_icon}
+      class="absolute top-0 ml-1 border-0 bg-transparent right-safe"
       onClick={onClick}
       aria-label="schließe Meldung"
     >
       <svg
-        className={style.close_icon_svg}
+        class="size-12"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

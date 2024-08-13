@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { useState, useEffect, useMemo, useRef } from "preact/hooks";
 import { useLocation } from "preact-iso";
 import addMonths from "date-fns/addMonths";
@@ -15,8 +16,6 @@ import selectMonthData from "../../../lib/select-month-data";
 import { getCalUrl, scrollToADay, titleAlertHandler } from "../../../lib/utils";
 import { useSwipe } from "../../hooks/utils";
 import { useUnloadedFix } from "../../hooks/time";
-
-import style from "./style.module.css";
 
 /**
  * Display this month and the next 2 and the last one.
@@ -80,17 +79,23 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
   return (
     <div
       id="calendar_main_out"
-      class={isSwiping ? style.swiping_container : style.container}
+      class={classNames(
+        "mx-auto flex touch-pan-y flex-col items-start gap-6 pb-2 min-[365px]:px-5 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4",
+        { "touch-none overflow-x-hidden": isSwiping },
+      )}
       style={{ "--swipe-offset": `${x}px` }}
       onClick={titleAlertHandler}
       ref={ref}
       aria-live="polite"
     >
-      {monthsData.map(([year, month, search], index) =>
-        monthsToRender[index] ? (
+      {monthsData
+        .filter((_, index) => monthsToRender[index])
+        .map(([year, month, search]) => (
           <Month
             key={`${year}-${month}-${shiftModel}-${group}`}
-            class={style.calender_table}
+            class={classNames({
+              "translate-y-[var(--swipe-offset)]": isSwiping,
+            })}
             year={year}
             month={month}
             data={selectMonthData(year, month, shiftModel)}
@@ -98,15 +103,7 @@ export default function ByMonths({ shiftModel, group, search, year, month }) {
             group={group}
             shouldTranistionToNewPosition={multiMonthView}
           />
-        ) : (
-          <table
-            key={`${year}-${month}-${shiftModel}-${group}`}
-            id={`month_${year}-${month + 1}`}
-            class={`${style.table} ${style.calender_table} ${style.calender_table_placeholder}`}
-            aria-hidden
-          />
-        ),
-      )}
+        ))}
     </div>
   );
 }

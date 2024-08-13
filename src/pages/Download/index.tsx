@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import classNames from "classnames";
 import { type ComponentChildren } from "preact";
 import { Suspense } from "preact/compat";
 import { useState, useId } from "preact/hooks";
@@ -22,8 +23,8 @@ import {
   monthNames,
 } from "../../../lib/constants";
 import { useSupportsInputType } from "../../hooks/utils";
+import { acceptClasses } from "../../components/button";
 
-import styles from "./style.module.css";
 import { type ModelToShow } from "./Dialog";
 
 const DownloadDialog = lazy(() =>
@@ -36,10 +37,10 @@ export default function DownloadPage() {
   const [year, month] = yearMonth.split("-").map((v) => parseInt(v, 10));
 
   return (
-    <main class={styles.main}>
+    <main class="mx-auto mb-20 mt-8 max-w-fit rounded p-4 text-gray-900">
       <Helmet title="Download" />
 
-      <h1 class={styles.header}>
+      <h1 class="mb-5 text-4xl font-bold">
         Download Optionen
         {
           <img
@@ -47,17 +48,18 @@ export default function DownloadPage() {
             width="32"
             height="32"
             alt=""
-            class={styles.header_img}
+            class="ml-2 inline-block"
           />
         }
       </h1>
-      <label class={styles.month_label}>
-        <span class={styles.month_label_text}>Für den Monat:</span>
+      <label class="mb-4 block">
+        <span class="me-2">Für den Monat:</span>
         <MonthInput value={yearMonth} onChange={setYearMonth} />
       </label>
 
       <DownloadSection
         name={excelExportName(year, month)}
+        isLast
         alt={`Alle Schichten für ${monthNames[month - 1]} ${year} als Tabelle.`}
         onClickArg={{ type: "all_in_month", year, month }}
         onClick={setDialog}
@@ -67,15 +69,16 @@ export default function DownloadPage() {
         </strong>
       </DownloadSection>
 
-      <h2 class={styles.header_2}>
+      <h2 class="mt-8 text-2xl font-bold">
         Tabellen für das ganze Jahr <em>{year}</em>
       </h2>
 
-      {shiftModelNames.map((model) => (
+      {shiftModelNames.map((model, index, all) => (
         <DownloadSection
           key={model}
           name={excelExportModelFullYearName(model, year)}
           alt={`Ganze Jahr ${year} für ${shiftModelText[model]}`}
+          isLast={index + 1 === all.length}
           onClickArg={{ type: "model_year", model, year }}
           onClick={setDialog}
         >
@@ -95,22 +98,29 @@ export default function DownloadPage() {
 function DownloadSection({
   name,
   alt,
+  isLast,
   onClickArg,
   onClick,
   children,
 }: {
   name: string;
   alt: string;
+  isLast?: boolean;
   onClickArg: ModelToShow;
   onClick: (arg: ModelToShow) => void;
   children: ComponentChildren;
 }) {
   return (
-    <section class={styles.section}>
+    <section
+      class={classNames(
+        "mt-4 flex flex-row items-center justify-between border-b border-gray-400",
+        { "border-b-0": isLast },
+      )}
+    >
       {children}
       <button
         type="button"
-        class={styles.sheet_download_button}
+        class="relative ml-4 cursor-pointer border-0 bg-transparent hover:shadow hover:sepia focus-visible:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:sepia"
         title={`Download ${name}`}
         onClick={(event) => {
           event.preventDefault();
@@ -122,14 +132,17 @@ function DownloadSection({
           width="32"
           height="32"
           alt={alt}
-          class={styles.download_img}
+          class="inline"
+          style={{
+            filter: "invert(0.5) sepia(1) saturate(5) hue-rotate(75deg)",
+          }}
         />
         <img
           src={cloudDownloadIcon}
           width="10"
           height="10"
           alt=""
-          class={styles.download_arrow_img}
+          class="absolute -left-1 bottom-0 size-5"
         />
       </button>
     </section>
@@ -149,7 +162,7 @@ function MonthInput({
   const [year, month] = value.split("-");
   return supportsMonth ? (
     <input
-      class={styles.month_input}
+      class="ms-24 inline-block"
       type="month"
       value={value}
       min="2010-01"
@@ -160,7 +173,7 @@ function MonthInput({
       }
     />
   ) : (
-    <span class={styles.own_month_input}>
+    <span class="mt-1 grid gap-2 rounded border border-gray-400 p-2">
       <label htmlFor={`${id}year`}>Jahr:</label>
       <input
         id={`${id}year`}
@@ -191,7 +204,7 @@ function MonthInput({
 
       <button
         type="button"
-        class={styles.today_btn}
+        class={classNames(acceptClasses, "col-start-2 ml-auto w-min self-end")}
         onClick={() => onChange(getToday())}
       >
         Heute

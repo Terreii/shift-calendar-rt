@@ -5,16 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import Helmet from "preact-helmet";
-
 import ByMonths from "../../components/Calendar/ByMonth";
-import Downloader from "../../components/Download";
-import Legend from "../../components/Legend";
+import Container from "../../components/Calendar/container";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import { parseNumber } from "../../../lib/utils";
-
-import style from "../../components/Calendar/style.module.css";
 
 export default function MonthPage({
   params: { shiftModel, year: yearString, month: monthString },
@@ -25,23 +20,36 @@ export default function MonthPage({
   const monthQuery = parseNumber(monthString, null);
   const month = monthQuery ? monthQuery - 1 : monthQuery;
 
-  if (year == null) {
-    return <h2>{yearString} is not a valid year.</h2>;
+  if (year == null || year < 1990) {
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {yearString} ist nicht ein erlaubtes Jahr.
+        </h2>
+        <p>Es werden nur Jahre zwischen 1990 und 2100 unterstützt.</p>
+      </section>
+    );
   }
   if (month == null || month < 0 || month > 11) {
-    return <h2>{monthString} is not a valid month.</h2>;
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {monthString} ist nicht ein erlaubter Monat.
+        </h2>
+        <p>Es gibt nur 12 Monate. Benutze eine Zahl von 1 bis 12.</p>
+      </section>
+    );
   }
 
   return (
-    <main class={style.main}>
-      <Helmet
-        title={`Monat ${year}-${monthString.padStart(2, "0")} | ${
-          shiftModelText[shiftModel]
-        }`}
-      />
-
-      <Legend shiftKey={shiftModel} year={year} month={month} />
-
+    <Container
+      title={`Monat ${year}-${monthString.padStart(2, "0")} | ${
+        shiftModelText[shiftModel]
+      }`}
+      model={shiftModel}
+      year={year}
+      month={month}
+    >
       <ByMonths
         key={`${year}-${month}`}
         shiftModel={shiftModel}
@@ -50,8 +58,6 @@ export default function MonthPage({
         year={year}
         month={month}
       />
-
-      <Downloader shiftModel={shiftModel} />
-    </main>
+    </Container>
   );
 }

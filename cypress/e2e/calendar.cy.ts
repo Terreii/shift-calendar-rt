@@ -28,8 +28,8 @@ describe("shift calendar current view", () => {
     cy.contains(`${monthNames[now.getMonth()]} ${now.getFullYear()} (Jetzt)`);
     cy.get(`#day_${formatISO(now, { representation: "date" })}`).should(
       "have.attr",
-      "data-interest",
-      "today",
+      "title",
+      "Heute",
     );
   });
 
@@ -66,9 +66,7 @@ describe("shift calendar current view", () => {
       if (shift === "K") {
         getChild(index + 2).should("not.have.text");
       } else {
-        getChild(index + 2)
-          .should("have.text", shift)
-          .and("have.attr", "data-group", index + 1);
+        getChild(index + 2).should("have.text", shift);
       }
     });
   });
@@ -108,13 +106,11 @@ describe("shift calendar current view", () => {
   it("should render holidays", () => {
     // school breaks
     cy.visit(`/cal/${model}/2023/07`);
-    cy.get('#day_2023-07-27 > td[title="Sommerferien"][data-holiday="school"]');
+    cy.get('#day_2023-07-27 > td[title="Sommerferien"]');
 
     // holidays
     cy.visit(`/cal/${model}/2023/10`);
-    cy.get(
-      '#day_2023-10-03 > td[title="Tag der deutschen Einheit"][data-holiday="holiday"]',
-    );
+    cy.get('#day_2023-10-03 > td[title="Tag der deutschen Einheit"]');
   });
 
   it("should navigate to next and previous month on swipe on mobile", () => {
@@ -172,6 +168,7 @@ describe("full year", () => {
     cy.contains("main a", shiftModelText[model]).click();
 
     cy.get("#menu_summary").click();
+    cy.get("#hamburger_menu").should("be.visible");
     cy.get("#hamburger_menu").contains("Zeige ganzes Jahr").click();
 
     const today = getToday();

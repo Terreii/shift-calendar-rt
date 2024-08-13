@@ -6,18 +6,14 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { type ComponentChildren } from "preact";
-import Helmet from "preact-helmet";
 
+import Container from "../../components/Calendar/container";
 import Month from "../../components/Calendar/Month";
-import Downloader from "../../components/Download";
-import Legend from "../../components/Legend";
 import { shiftModelText } from "../../../lib/constants";
 import { type ShiftModelKeys } from "../../../lib/shifts";
 import selectMonthData from "../../../lib/select-month-data";
 import { parseNumber, titleAlertHandler } from "../../../lib/utils";
 import { useUnloadedFix } from "../../hooks/time";
-
-import style from "../../components/Calendar/style.module.css";
 
 export default function Year({
   params: { shiftModel, year: yearString },
@@ -26,8 +22,15 @@ export default function Year({
 }) {
   const year = parseNumber(yearString, null);
 
-  if (year == null) {
-    return <h2>{yearString} is not a valid year.</h2>;
+  if (year == null || year < 1990) {
+    return (
+      <section class="mb-40 mt-20 min-w-full pt-4 text-center">
+        <h2 class="text-xl font-bold">
+          {yearString} ist nicht ein erlaubtes Jahr.
+        </h2>
+        <p>Es werden nur Jahre zwischen 1990 und 2100 unterstützt.</p>
+      </section>
+    );
   }
 
   const monthsData: [number, number][] = [];
@@ -36,12 +39,13 @@ export default function Year({
   }
 
   return (
-    <main class={style.main}>
-      <Helmet title={`Jahr ${year} - ${shiftModelText[shiftModel]}`} />
-
-      <Legend shiftKey={shiftModel} year={year} month={0} />
-
-      <Container>
+    <Container
+      title={`Jahr ${year} - ${shiftModelText[shiftModel]}`}
+      model={shiftModel}
+      year={year}
+      month={0}
+    >
+      <UnloadFixContainer>
         {monthsData.map(([year, month]) => (
           <Month
             key={`${year}-${month}-${shiftModel}-${0}`}
@@ -53,14 +57,12 @@ export default function Year({
             search={null}
           />
         ))}
-      </Container>
-
-      <Downloader shiftModel={shiftModel} />
-    </main>
+      </UnloadFixContainer>
+    </Container>
   );
 }
 
-function Container({ children }: { children: ComponentChildren }) {
+function UnloadFixContainer({ children }: { children: ComponentChildren }) {
   const shouldRemoveCalendar = useUnloadedFix();
   if (shouldRemoveCalendar) {
     return null;
@@ -69,7 +71,7 @@ function Container({ children }: { children: ComponentChildren }) {
   return (
     <div
       id="calendar_main_out"
-      class={style.container}
+      class="mx-auto flex touch-pan-y flex-col items-start gap-6 pb-2 min-[365px]:px-5 md:grid md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
       onClick={titleAlertHandler}
       aria-live="polite"
     >

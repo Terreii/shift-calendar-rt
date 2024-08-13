@@ -11,10 +11,8 @@ import {
   shiftWfW,
   shiftAddedNight,
   type ShiftModelKeys,
-} from "../../../lib/shifts";
-import { shiftModelText } from "../../../lib/constants";
-
-import style from "./style.module.css";
+} from "../../lib/shifts";
+import { shiftModelText } from "../../lib/constants";
 
 const urls = {
   [shift66Name]: [
@@ -54,8 +52,8 @@ export default function Download({
 }) {
   if (!(shiftModel in urls)) {
     return (
-      <div class={style.container}>
-        <section class={style.section}>
+      <div class="my-4 flex flex-row justify-center px-1">
+        <section class="rounded bg-gray-300 p-4 text-center text-gray-900">
           Für dieses Schichtmodell sind die Kalender noch in Arbeit
           <SheetDownload inWork />
         </section>
@@ -64,23 +62,23 @@ export default function Download({
   }
 
   return (
-    <div class={style.container}>
-      <section class={style.section}>
-        <h4 class={style.header}>
+    <div class="my-4 flex flex-row justify-center px-1">
+      <section class="rounded bg-gray-300 p-4 text-center text-gray-900">
+        <h4 class="text-xl font-semibold">
           Downloade einen {shiftModelText[shiftModel]} Kalender
         </h4>
 
-        <p class={style.text}>
+        <p class="py-2">
           Füge deine Schichtgruppe zu deiner Kalender-App hinzu!
         </p>
 
-        <div class={style.link_list}>
+        <div class="my-2 grid grid-cols-3 gap-6">
           {urls[shiftModel].map((href, index) => {
             const group = index + 1;
             return (
               <a
                 key={shiftModel + group}
-                class="link"
+                class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
                 href={href}
                 download={`${shiftModelText[shiftModel]} - Gruppe ${group}.ics`}
                 target="_blank"
@@ -100,7 +98,7 @@ export default function Download({
 
 function SheetDownload({ inWork = false }: { inWork?: boolean }) {
   return (
-    <p class={style.text}>
+    <p class="py-2">
       Oder lade ihn {inWork && "schon"} als Excel/
       <a
         href="https://de.libreoffice.org/discover/libreoffice/"
@@ -112,7 +110,10 @@ function SheetDownload({ inWork = false }: { inWork?: boolean }) {
       Tabelle runter:
       <br />
       <br />
-      <a href="/download">
+      <a
+        href="/download"
+        class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
+      >
         <strong>Alle Download-Optionen!</strong>
       </a>
     </p>

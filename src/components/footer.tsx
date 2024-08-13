@@ -5,12 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-import style from "./style.module.css";
-
 export default function Footer() {
   return (
     <footer>
-      <p class={style.container}>
+      <p class="mt-4 text-center text-xs text-gray-900 mb-safe-offset-3 mx-safe-or-1">
         <b>Der inoffizielle Schichtkalender für Bosch Reutlingen.</b>
         <br />
         Made by Christopher Astfalk.
@@ -30,14 +28,17 @@ export default function Footer() {
         {"Lizenz: "}
         <a
           href="https://www.mozilla.org/en-US/MPL/2.0/"
-          class="link"
           target="_blank"
           rel="noopener noreferrer"
+          class="text-blue-700 underline hover:text-blue-500 focus-visible:text-blue-500"
         >
           Mozilla Public License 2.0
         </a>
         <br />
-        <a href="/impressum" class="link">
+        <a
+          href="/impressum"
+          class="text-blue-700 underline hover:text-blue-500 focus-visible:text-blue-500"
+        >
           Impressum
         </a>
       </p>

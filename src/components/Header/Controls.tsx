@@ -12,13 +12,11 @@ import {
   type StateUpdater,
 } from "preact/hooks";
 
-import Menu from "../Menu";
-import ShareMenu from "../Menu/ShareMenu";
+import Menu from "../menu";
+import ShareMenu from "../shareMenu";
 import NavLinks from "./Nav-Links";
 
 import { useQueryProps } from "./useQueryProps";
-
-import style from "./style.module.css";
 
 /**
  * Renders the Header.
@@ -31,7 +29,7 @@ export default function Header() {
 
   return (
     <>
-      <nav className={style.navi}>
+      <nav class="flex h-full flex-row items-stretch text-base">
         <NavLinks
           isFullYear={isFullYear}
           month={month}

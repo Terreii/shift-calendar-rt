@@ -7,11 +7,9 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 
 import { useState, useEffect, useMemo } from "preact/hooks";
 
-import { getCalUrl } from "../../../lib/utils";
-import { type ShiftModelKeys } from "../../../lib/shifts";
-
-import style from "./style.module.css";
-import formStyle from "../../form.module.css";
+import { getCalUrl } from "../../lib/utils";
+import { type ShiftModelKeys } from "../../lib/shifts";
+import Button, { acceptClasses } from "./button";
 
 /**
  * Display the share menu.
@@ -73,13 +71,16 @@ export default function ShareMenu({
   }, [year, month, addSearch, search, addShiftModel, shiftModel]);
 
   return (
-    <div id="share_menu" class={style.container}>
-      <div class={style.scroll_container}>
-        <label class={style.element_container}>
+    <div
+      id="share_menu"
+      class="absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg right-safe-offset-0 top-safe-offset-12"
+    >
+      <div class="flex flex-col items-stretch justify-center p-3 -max-h-screen-safe-offset-12">
+        <label class="flex flex-col">
           Adresse zum teilen:
           <input
             id="share_url"
-            class={style.share_address}
+            class="-ml-1 rounded border-0 bg-transparent p-1 text-white"
             type="url"
             readOnly
             value={url.toString()}
@@ -89,11 +90,11 @@ export default function ShareMenu({
           />
         </label>
 
-        <h6 class={style.title}>Füge hinzu:</h6>
+        <h6 class="m-0 mt-5 p-0 text-lg">Füge hinzu:</h6>
 
-        <label class={style.share_label}>
+        <label class="mt-5">
           <input
-            class={formStyle.checkbox}
+            class="mr-1 size-4 accent-violet-700"
             type="checkbox"
             checked={addShiftModel}
             onInput={(event) => {
@@ -107,9 +108,9 @@ export default function ShareMenu({
           Schichtmodell
         </label>
 
-        <label class={style.share_label}>
+        <label class="mt-5">
           <input
-            class={formStyle.checkbox}
+            class="mr-1 size-4 accent-violet-700"
             type="checkbox"
             checked={addSearch}
             disabled={search == null}
@@ -132,14 +133,13 @@ export default function ShareMenu({
           )}
         </label>
 
-        <div class={style.buttons_row}>
-          <button type="button" class={formStyle.cancel_button} onClick={hide}>
+        <div class="mt-5 grid grid-cols-2 gap-5">
+          <Button type="cancel" onClick={hide}>
             Abbrechen
-          </button>
+          </Button>
           {"navigator" in globalThis && "share" in window.navigator ? ( // eslint-disable-line
-            <button
-              type="button"
-              class={formStyle.accept_button}
+            <Button
+              type="accept"
               onClick={(event) => {
                 event.preventDefault();
 
@@ -155,10 +155,10 @@ export default function ShareMenu({
               }}
             >
               Teilen
-            </button>
+            </Button>
           ) : (
             <a
-              class={formStyle.accept_button}
+              class={acceptClasses}
               href={`mailto:?subject=Schichtkalender&body=Meine Schichten beim Bosch Reutlingen: ${url
                 .toString()
                 .replace(/&/g, "%26")}`}
