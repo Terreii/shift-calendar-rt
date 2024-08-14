@@ -6,9 +6,15 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 */
 
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
+import { formatISO } from "date-fns/formatISO";
+import { parseISO } from "date-fns/parseISO";
+import { subDays } from "date-fns/subDays";
 import ms from "milliseconds";
 
+import { shiftModelText } from "./constants.ts";
 import shiftModels, {
+  lastModified,
+  type Shift,
   type Cycle,
   type ShiftModel,
   type ShiftModelKeys,
@@ -200,12 +206,16 @@ function calculateAllGroupsDay(
 /**
  * Get and clean up the groups config of a shift config.
  * @param config  The Config of the shift.
+ * @param group   Optional group number. If omitted returns all groups.
  * @returns       Groups Config.
  */
-function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
-  return config.groups.map((data) =>
-    typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
-  );
+function getGroupsConfig(config: ShiftModel, group?: number): AllGroupsConfig {
+  group = group == null ? group : Math.min(group, config.groups.length - 1);
+  return config.groups
+    .filter((_, index) => group == null || index === group)
+    .map((data) =>
+      typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
+    );
 }
 
 export type IcsShiftItem = {
@@ -215,7 +225,7 @@ export type IcsShiftItem = {
   duration: { hours: number; minutes: number };
   recurrenceRule:
     | `FREQ=DAILY;INTERVAL=${number}`
-    | `FREQ=DAILY;INTERVAL=${number};UNTIL=${number}T000000Z`;
+    | `FREQ=DAILY;INTERVAL=${number};UNTIL=${string}T000000Z`;
   sequence: number;
   lastModified: [number, number, number, number, number];
   calName: `Bosch Rt ${string}`;
@@ -232,5 +242,83 @@ export function getShiftsList(
   group: number,
   year: number,
 ): IcsShiftItem[] {
-  return [];
+  const lastModifiedArray: [number, number, number, number, number] =
+    year > lastModified[0] ? [year, 1, 1, 0, 0] : lastModified;
+
+  return getAllShiftConfigs(model).flatMap(([modelKey, config], index, all) => {
+    const seq = index + 1;
+    const isLast = seq === all.length;
+    const endDate = isLast
+      ? new Date(year + 1000, 0, 1, 0, 0, 0, 0)
+      : subDays(parseISO(all[index + 1][1].startDate), 1);
+
+    // only process models that are active in that year or later
+    if (endDate.getFullYear() < year) return [];
+
+    const sequence =
+      year * 100 +
+      (isLast ? 0 : 20) +
+      (year > lastModified[0] ? 0 : lastModified[1]);
+    const endDateString = formatISO(endDate, {
+      format: "basic",
+      representation: "date",
+    });
+    const [{ cycle, offset }] = getGroupsConfig(config, group);
+
+    return cycle
+      .map((item, itemIndex): IcsShiftItem | undefined => {
+        if (item == null) return;
+
+        const shift = config.shifts[item];
+        return {
+          uid: `bosch-rt-${modelKey}-${shift.name.toLowerCase()}-${index + 1}-${itemIndex + 1}@schichtkalender.app`,
+          title: shift.name,
+          start: [0, 0, 0, 0, 0],
+          duration: shiftDuration(shift),
+          recurrenceRule: isLast
+            ? `FREQ=DAILY;INTERVAL=${cycle.length}`
+            : `FREQ=DAILY;INTERVAL=${cycle.length};UNTIL=${endDateString}T000000Z`,
+          sequence,
+          lastModified: lastModifiedArray,
+          calName: `Bosch Rt ${shiftModelText[modelKey]}`,
+        };
+      })
+      .filter((item) => item != null);
+  });
+}
+
+function getAllShiftConfigs(
+  modelKey: ShiftModelsWithFallbackKeys,
+): [ShiftModelsWithFallbackKeys, ShiftModel][] {
+  if (!(modelKey in shiftModels)) {
+    throw new Error(`Unknown Shift model: ${modelKey}`);
+  }
+  const model = shiftModels[modelKey];
+  if (model.fallback === modelKey) {
+    return [[modelKey, model]];
+  }
+  const previousConfig = getAllShiftConfigs(model.fallback);
+  previousConfig.push([modelKey, model]);
+  return previousConfig;
+}
+
+function shiftDuration({
+  start: [startHours, startMinues],
+  end: [endHours, endMinutes],
+}: Shift): {
+  hours: number;
+  minutes: number;
+} {
+  if (endHours <= startHours) {
+    // shift goes into next day
+    endHours += 24;
+  }
+  let hours = endHours - startHours;
+  let minutes = endMinutes - startMinues;
+
+  if (minutes < 0) {
+    hours--;
+    minutes += 60;
+  }
+  return { hours, minutes };
 }

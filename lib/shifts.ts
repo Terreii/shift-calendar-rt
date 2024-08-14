@@ -5,6 +5,10 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+export const lastModified: [number, number, number, number, number] = [
+  2024, 8, 14, 20, 0,
+]; //2024-08-14
+
 /**
  * A shift type. It is part of a shift model.
  *
