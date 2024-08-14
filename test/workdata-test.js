@@ -2,9 +2,9 @@ import { strict as assert } from "node:assert";
 import { test } from "node:test";
 import { readFile } from "node:fs/promises";
 
-import { getMonthData } from "../lib/workdata.js";
+import { getMonthData, getShiftsList } from "../lib/workdata.js";
 
-import { shiftModelNames } from "../lib/constants.js";
+import { shiftModelNames, shiftModelText } from "../lib/constants.js";
 import {
   shift66Name,
   shift64Name,
@@ -94,7 +94,7 @@ test("work data", async (t) => {
     });
   }
 
-  await t.test(shift66Name + " switches to old model before 2010-04-04", () => {
+  await t.test(`${shift66Name} switches to old model before 2010-04-04`, () => {
     const shiftsBefore = "N K F K S K".split(" ");
     assert.deepStrictEqual(
       getMonthData(2010, 3, shift66Name).days.slice(0, 4),
@@ -103,7 +103,7 @@ test("work data", async (t) => {
   });
 
   await t.test("WfW switches to the new model", () => {
-    const data = getMonthData(2024, 4 - 1, "wfw");
+    const data = getMonthData(2024, 4 - 1, shiftWfW);
     const workingShifts = [1, 2, 3, 4, 1, 2, 3, 4];
     const base = new Array(4).fill("K");
     const expected = workingShifts.map((group) => {
@@ -113,5 +113,72 @@ test("work data", async (t) => {
       return shift;
     });
     assert.deepStrictEqual(data.days.slice(0, 8), expected);
+  });
+
+  await t.test("should export a ics compatible shifts list", () => {
+    const data = getShiftsList(shift66Name, 0, 2024);
+
+    assert.deepStrictEqual(data, [
+      {
+        uid: `bosch-rt-${shift66Name}-frühschicht-2-1@schichtkalender.app`,
+        title: "Frühschicht",
+        start: [2024, 1, 1, 6, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+      {
+        uid: `bosch-rt-${shift66Name}-frühschicht-2-2@schichtkalender.app`,
+        title: "Frühschicht",
+        start: [2024, 1, 2, 6, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+      {
+        uid: `bosch-rt-${shift66Name}-spätschicht-2-3@schichtkalender.app`,
+        title: "Spätschicht",
+        start: [2024, 1, 3, 14, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+      {
+        uid: `bosch-rt-${shift66Name}-spätschicht-2-4@schichtkalender.app`,
+        title: "Spätschicht",
+        start: [2024, 1, 4, 14, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+      {
+        uid: `bosch-rt-${shift66Name}-nachtschicht-2-5@schichtkalender.app`,
+        title: "Nachtschicht",
+        start: [2024, 1, 5, 22, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+      {
+        uid: `bosch-rt-${shift66Name}-nachtschicht-2-6@schichtkalender.app`,
+        title: "Nachtschicht",
+        start: [2024, 1, 6, 22, 0],
+        duration: { hours: 8, minutes: 30 },
+        recurrenceRule: "FREQ=DAILY;INTERVAL=12",
+        sequence: 2,
+        lastModified: [2024, 8, 14, 20, 0],
+        calName: `Bosch Rt ${shiftModelText[shift66Name]}`,
+      },
+    ]);
   });
 });

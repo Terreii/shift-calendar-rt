@@ -11,6 +11,7 @@ import ms from "milliseconds";
 import shiftModels, {
   type Cycle,
   type ShiftModel,
+  type ShiftModelKeys,
   type ShiftModelsWithFallbackKeys,
 } from "./shifts.ts";
 import { getDaysInMonth } from "./utils.js";
@@ -205,4 +206,31 @@ function getGroupsConfig(config: ShiftModel): AllGroupsConfig {
   return config.groups.map((data) =>
     typeof data === "number" ? { offset: data, cycle: config.cycle } : data,
   );
+}
+
+export type IcsShiftItem = {
+  uid: `bosch-rt-${ShiftModelsWithFallbackKeys}-${string}-${number}-${number}@schichtkalender.app`;
+  title: string;
+  start: [number, number, number, number, number];
+  duration: { hours: number; minutes: number };
+  recurrenceRule:
+    | `FREQ=DAILY;INTERVAL=${number}`
+    | `FREQ=DAILY;INTERVAL=${number};UNTIL=${number}T000000Z`;
+  sequence: number;
+  lastModified: [number, number, number, number, number];
+  calName: `Bosch Rt ${string}`;
+};
+
+/**
+ * Generates a list of all items/events of a shift group for ics generators.
+ * @param model  Shift model key.
+ * @param group  Group of which the shifts to calculate.
+ * @param year   Start year.
+ */
+export function getShiftsList(
+  model: ShiftModelKeys,
+  group: number,
+  year: number,
+): IcsShiftItem[] {
+  return [];
 }
