@@ -8,6 +8,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { formatISO } from "date-fns/formatISO";
 import { parseISO } from "date-fns/parseISO";
+import { addDays } from "date-fns/addDays";
 import { subDays } from "date-fns/subDays";
 import ms from "milliseconds";
 
@@ -191,8 +192,11 @@ function calculateAllGroupsDay(
   workingCount: number[],
 ): Workdata[] {
   return groups.map(({ offset, cycle }, group) => {
-    const dayInCycle =
-      (daysSinceModelStart - offset + cycle.length) % cycle.length;
+    const dayInCycle = calculateGroupDayInCycle(
+      offset,
+      cycle,
+      daysSinceModelStart,
+    );
     const shift = cycle[dayInCycle] as Workdata | null;
     if (shift == null) {
       return "K";
@@ -201,6 +205,21 @@ function calculateAllGroupsDay(
     workingCount[group]++;
     return shift;
   });
+}
+
+/**
+ * Calculates the index in a groups cycle on a given day (since model start).
+ * @param offset               Group offset in Cycle.
+ * @param cycle                Group shift cycle.
+ * @param daysSinceModelStart  Days since the model did start.
+ * @returns Index in the cycle.
+ */
+function calculateGroupDayInCycle(
+  offset: number,
+  cycle: Cycle,
+  daysSinceModelStart: number,
+): number {
+  return (daysSinceModelStart - offset + cycle.length) % cycle.length;
 }
 
 /**
@@ -263,6 +282,10 @@ export function getShiftsList(
       format: "basic",
       representation: "date",
     });
+    const daysSinceStart = differenceInCalendarDays(
+      new Date(year, 0, 1, 0, 0, 0, 0),
+      config.startDate,
+    );
     const [{ cycle, offset }] = getGroupsConfig(config, group);
 
     return cycle
@@ -273,7 +296,14 @@ export function getShiftsList(
         return {
           uid: `bosch-rt-${modelKey}-${shift.name.toLowerCase()}-${index + 1}-${itemIndex + 1}@schichtkalender.app`,
           title: shift.name,
-          start: [0, 0, 0, 0, 0],
+          start: firstShiftOccurrenceAfterDate(
+            shift,
+            itemIndex,
+            config.startDate,
+            daysSinceStart,
+            cycle,
+            offset,
+          ),
           duration: shiftDuration(shift),
           recurrenceRule: isLast
             ? `FREQ=DAILY;INTERVAL=${cycle.length}`
@@ -300,6 +330,41 @@ function getAllShiftConfigs(
   const previousConfig = getAllShiftConfigs(model.fallback);
   previousConfig.push([modelKey, model]);
   return previousConfig;
+}
+
+/**
+ * Calculates the first occurrence of a shift after a date.
+ * @param shift                The shift config.
+ * @param shiftIndex           Shift index in the Cycle.
+ * @param modelStart           DateString (yyyy-mm-dd) of the model start.
+ * @param daysSinceModelStart  Days since the model did start.
+ * @param cycle                Groups shift cycle.
+ * @param offset               Groups shift cycle offset.
+ * @returns Date array usable in ics generation.
+ */
+function firstShiftOccurrenceAfterDate(
+  shift: Shift,
+  shiftIndex: number,
+  modelStart: `${number}-${number}-${number}`,
+  daysSinceModelStart: number,
+  cycle: Cycle,
+  offset: number,
+): [number, number, number, number, number] {
+  const dayInCycle = calculateGroupDayInCycle(
+    offset,
+    cycle,
+    daysSinceModelStart,
+  );
+  const toAdd = (shiftIndex - dayInCycle + cycle.length) % cycle.length;
+  const date = addDays(new Date(modelStart), daysSinceModelStart + toAdd);
+
+  return [
+    date.getFullYear(),
+    date.getMonth() + 1,
+    date.getDate(),
+    shift.start[0],
+    shift.start[1],
+  ];
 }
 
 function shiftDuration({
