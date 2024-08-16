@@ -282,9 +282,14 @@ export function getShiftsList(
       format: "basic",
       representation: "date",
     });
-    const daysSinceStart = differenceInCalendarDays(
-      new Date(year, 0, 1, 0, 0, 0, 0),
-      config.startDate,
+    const daysSinceStart = Math.max(
+      // start at beginning of year or the model start date.
+      differenceInCalendarDays(
+        new Date(year, 0, 1, 0, 0, 0, 0),
+        config.startDate,
+      ),
+      0, // if model starts in the year, daysSinceStart would be < 0.
+      // Math.max ensures, that the events start at/after the model starts.
     );
     const [{ cycle, offset }] = getGroupsConfig(config, group);
 
@@ -310,7 +315,7 @@ export function getShiftsList(
             : `FREQ=DAILY;INTERVAL=${cycle.length};UNTIL=${endDateString}T000000Z`,
           sequence,
           lastModified: lastModifiedArray,
-          calName: `Bosch Rt ${shiftModelText[modelKey]}`,
+          calName: `Bosch Rt ${shiftModelText[model]}`,
         };
       })
       .filter((item) => item != null);
