@@ -20,7 +20,7 @@ export default defineConfig({
       includeAssets: ["apple-touch-icon.png"],
       includeManifestIcons: false,
       workbox: {
-        globPatterns: ["**/*.{js,css,html,ico,png,svg,ics}"],
+        globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
         navigateFallbackDenylist: [/^\/api/],
       },
       manifest: {
