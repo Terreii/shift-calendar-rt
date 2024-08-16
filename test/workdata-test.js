@@ -201,32 +201,32 @@ test("work data", async (t) => {
           {
             start: [2024, 1, 1, 6, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 1, 2, 6, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 1, 3, 14, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 1, 4, 14, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 1, 5, 22, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 1, 6, 22, 0],
             duration: { hours: 8, minutes: 30 },
-            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240331T000000Z",
+            recurrenceRule: "FREQ=DAILY;INTERVAL=12;UNTIL=20240401T000000Z",
           },
           {
             start: [2024, 4, 1, 7, 0],
@@ -261,7 +261,7 @@ test("work data", async (t) => {
           ],
         },
         [shiftWfW]: {
-          recurrence: "12;UNTIL=20240331T000000Z",
+          recurrence: "12;UNTIL=20240401T000000Z",
           start: [
             [2024, 1, 1, 6, 0],
             [2024, 1, 3, 6, 0],

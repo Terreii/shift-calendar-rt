@@ -9,7 +9,6 @@ import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { formatISO } from "date-fns/formatISO";
 import { parseISO } from "date-fns/parseISO";
 import { addDays } from "date-fns/addDays";
-import { subDays } from "date-fns/subDays";
 import ms from "milliseconds";
 
 import { shiftModelText } from "./constants.ts";
@@ -269,7 +268,7 @@ export function getShiftsList(
     const isLast = seq === all.length;
     const endDate = isLast
       ? new Date(year + 1000, 0, 1, 0, 0, 0, 0)
-      : subDays(parseISO(all[index + 1][1].startDate), 1);
+      : parseISO(all[index + 1][1].startDate);
 
     // only process models that are active in that year or later
     if (endDate.getFullYear() < year) return [];
