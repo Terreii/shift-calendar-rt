@@ -62,7 +62,7 @@ export default function DownloadPage() {
         <p class="my-2 text-gray-600">
           Füge deine Schicht zu deiner Kalender App hinzu.
           <br />
-          Z.B.: Kalender auf dem Phone, Outlook.
+          Z.B.: Kalender auf dem iPhone, Google Kalender oder Outlook.
         </p>
 
         {shiftModelNames.map((model) => (
