@@ -25,7 +25,7 @@ import {
   shiftModelNumberOfGroups,
 } from "../../../lib/constants";
 import { useSupportsInputType } from "../../hooks/utils";
-import { acceptClasses } from "../../components/button";
+import { acceptClasses, cancelClasses } from "../../components/button";
 
 import { type ModelToShow } from "./Dialog";
 
@@ -73,13 +73,13 @@ export default function DownloadPage() {
             <strong>{shiftModelText[model]}</strong>
             <div class="mt-2 flex w-full flex-row items-center justify-between">
               <span class="text-gray-600">Gruppen:</span>
-              <div class="flex flex-row justify-end gap-8">
+              <div class="flex flex-row justify-end gap-6">
                 {Array.from({ length: shiftModelNumberOfGroups[model] }).map(
                   (_, gr) => (
                     <button
                       key={gr}
                       type="button"
-                      class="px-2 py-1 text-blue-700 underline hover:text-blue-500 focus-visible:text-blue-500"
+                      class={classNames("size-10", cancelClasses)}
                       onClick={(event) => {
                         event.preventDefault();
                         setDialog({ type: "ics", model, group: gr });
