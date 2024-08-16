@@ -35,6 +35,10 @@ export default function Download() {
           Tabelle runter.
           <br />
           <br />
+          <p class="mb-2 font-bold">
+            Jetzt mit aktualisierten Kalendern für <em>2024</em> und darüber
+            hinaus!
+          </p>
           <a
             href="/download"
             class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
@@ -49,15 +53,23 @@ export default function Download() {
 
 function Stars() {
   return (
-    <img
-      src={stars}
-      width="32"
-      height="32"
-      alt=""
-      class="inline-block first:mr-2 last:ml-2"
-      style={{
-        filter: "invert(0.9) sepia(1) saturate(5)",
-      }}
-    />
+    <>
+      <span class="mr-2 hidden font-extrabold uppercase text-yellow-600 first:inline-block">
+        neu
+      </span>
+      <img
+        src={stars}
+        width="32"
+        height="32"
+        alt=""
+        class="inline-block first:mr-2 last:ml-2"
+        style={{
+          filter: "invert(0.9) sepia(1) saturate(5)",
+        }}
+      />
+      <span class="mr-2 hidden font-extrabold uppercase text-yellow-600 last:inline-block">
+        neu
+      </span>
+    </>
   );
 }
