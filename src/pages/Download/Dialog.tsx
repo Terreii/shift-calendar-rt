@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { createEvents } from "ics";
 import xl from "excel4node";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
 import {
@@ -23,10 +24,14 @@ import {
 } from "../../../lib/constants";
 import { createShiftSheet, createStyles } from "../../../lib/excel_export";
 import { type ShiftModelKeys } from "../../../lib/shifts";
+import { getShiftsList } from "../../../lib/workdata";
 
 import Button from "../../components/button";
 
+type IcsData = { type: "ics"; model: ShiftModelKeys; group: number };
+
 export type ModelToShow =
+  | IcsData
   | { type: "all_in_month"; year: number; month: number }
   | { type: "model_year"; model: ShiftModelKeys; year: number };
 
@@ -40,9 +45,16 @@ export function DownloadDialog({
   onClose: () => void;
 }) {
   const [link, setLink] = useState<State | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
 
-  useEffect(() => createLink(data, setLink), [data]);
+  useEffect(
+    () =>
+      data.type === "ics"
+        ? createIcsLink(data, setLink, setError)
+        : createLink(data, setLink, setError),
+    [data],
+  );
   useEffect(() => {
     if (dialogRef.current) {
       dialogRef.current.showModal();
@@ -58,7 +70,7 @@ export function DownloadDialog({
       class="p-0"
     >
       <h2 class="bg-emerald-900 px-4 py-2 text-2xl font-bold text-white">
-        Downloade Tabelle
+        Downloade {data.type === "ics" ? "Kalender Datei" : "Tabelle"}
       </h2>
 
       <div class="flex flex-col gap-8 p-4">
@@ -75,8 +87,10 @@ export function DownloadDialog({
               Download <strong>{link.name}</strong>
             </span>
           </a>
+        ) : error ? (
+          <span class="font-bold text-red-600">{error}</span>
         ) : (
-          <span>Erstelle Tabelle...</span>
+          <span>Erstelle Datei...</span>
         )}
 
         <div>
@@ -95,11 +109,52 @@ export function DownloadDialog({
   );
 }
 
+function createIcsLink(
+  data: IcsData,
+  setLink: Dispatch<StateUpdater<State | null>>,
+  setError: Dispatch<StateUpdater<string | null>>,
+): (() => void) | void {
+  if (data.type !== "ics") return;
+  setLink(null);
+
+  let isActive = true;
+  let url: string | null = null;
+  const fileName = `${shiftModelText[data.model]} - Gruppe ${data.group + 1}.ics`;
+  const events = getShiftsList(
+    data.model,
+    data.group,
+    new Date().getFullYear(),
+  );
+
+  createEvents(events, (error, body) => {
+    if (error) {
+      console.error(error);
+      setError(error.message);
+      setLink(null);
+      return;
+    }
+    if (!isActive) return;
+
+    const file = new File([body], fileName, { type: "text/calendar" });
+    url = URL.createObjectURL(file);
+    setLink({ url, name: fileName });
+  });
+
+  return () => {
+    isActive = false;
+    if (url) {
+      URL.revokeObjectURL(url);
+    }
+  };
+}
+
 function createLink(
   data: ModelToShow,
   setLink: Dispatch<StateUpdater<State | null>>,
+  setError: Dispatch<StateUpdater<string | null>>,
 ): (() => void) | void {
   setLink(null);
+  setError(null);
 
   let isActive = true;
   let url: string | null = null;

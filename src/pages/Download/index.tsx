@@ -11,8 +11,9 @@ import { Suspense } from "preact/compat";
 import { useState, useId } from "preact/hooks";
 import { lazy } from "preact-iso";
 import Helmet from "preact-helmet";
-import downloadIcon from "bootstrap-icons/icons/download.svg";
+import calendarPlus from "bootstrap-icons/icons/calendar-plus-fill.svg";
 import cloudDownloadIcon from "bootstrap-icons/icons/cloud-download.svg";
+import downloadIcon from "bootstrap-icons/icons/download.svg";
 import sheetIcon from "bootstrap-icons/icons/file-spreadsheet.svg";
 
 import {
@@ -21,6 +22,7 @@ import {
   shiftModelNames,
   shiftModelText,
   monthNames,
+  shiftModelNumberOfGroups,
 } from "../../../lib/constants";
 import { useSupportsInputType } from "../../hooks/utils";
 import { acceptClasses } from "../../components/button";
@@ -52,6 +54,48 @@ export default function DownloadPage() {
           />
         }
       </h1>
+      <section>
+        <h2 class="mt-8 text-2xl font-bold">
+          ICS (Für Kalender Apps){" "}
+          <img class="ml-2 inline-block size-6" src={calendarPlus} alt="" />
+        </h2>
+        <p class="my-2 text-gray-600">
+          Füge deine Schicht zu deiner Kalender App hinzu.
+          <br />
+          Z.B.: Kalender auf dem Phone, Outlook.
+        </p>
+
+        {shiftModelNames.map((model) => (
+          <div
+            key={model}
+            class="mt-4 flex flex-col border-b border-gray-400 pb-2 last:border-b-0 last:pb-0"
+          >
+            <strong>{shiftModelText[model]}</strong>
+            <div class="mt-2 flex w-full flex-row items-center justify-between">
+              <span class="text-gray-600">Gruppen:</span>
+              <div class="flex flex-row justify-end gap-8">
+                {Array.from({ length: shiftModelNumberOfGroups[model] }).map(
+                  (_, gr) => (
+                    <button
+                      key={gr}
+                      type="button"
+                      class="px-2 py-1 text-blue-700 underline hover:text-blue-500 focus-visible:text-blue-500"
+                      onClick={(event) => {
+                        event.preventDefault();
+                        setDialog({ type: "ics", model, group: gr });
+                      }}
+                    >
+                      {gr + 1}
+                    </button>
+                  ),
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <h2 class="mt-8 text-2xl font-bold">Excel/LibreOffice Tabellen</h2>
       <label class="mb-4 block">
         <span class="me-2">Für den Monat:</span>
         <MonthInput value={yearMonth} onChange={setYearMonth} />
@@ -69,9 +113,9 @@ export default function DownloadPage() {
         </strong>
       </DownloadSection>
 
-      <h2 class="mt-8 text-2xl font-bold">
+      <h3 class="mt-8 text-xl font-bold">
         Tabellen für das ganze Jahr <em>{year}</em>
-      </h2>
+      </h3>
 
       {shiftModelNames.map((model, index, all) => (
         <DownloadSection

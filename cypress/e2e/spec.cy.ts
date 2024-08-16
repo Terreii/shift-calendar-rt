@@ -6,6 +6,7 @@ import {
   monthNames,
   excelExportName,
   excelExportModelFullYearName,
+  shiftModelNumberOfGroups,
 } from "../../lib/constants";
 import { shift44Name } from "../../lib/shifts";
 
@@ -67,14 +68,32 @@ describe("download", () => {
     cy.url().should("not.include", "/download");
   });
 
+  it("should have a ics file for every shift and group", () => {
+    const model =
+      shiftModelNames[Math.floor(Math.random() * shiftModelNames.length)];
+
+    cy.visit("/download");
+
+    for (let i = 0; i < shiftModelNumberOfGroups[model]; i++) {
+      cy.contains(shiftModelText[model])
+        .next()
+        .contains(i + 1)
+        .click();
+
+      cy.get("dialog").contains("Downloade Kalender Datei");
+      cy.get("dialog").contains(
+        `Download ${shiftModelText[model]} - Gruppe ${i + 1}.ics`,
+      );
+      cy.contains("Schließen").click();
+    }
+  });
+
   it("should have a year calendar for every shift model", () => {
     cy.visit("/download");
     const year = new Date().getFullYear();
 
     for (const name of shiftModelNames) {
-      cy.contains(shiftModelText[name] + ":")
-        .next()
-        .click();
+      cy.contains(`${shiftModelText[name]}:`).next().click();
 
       cy.get("dialog").contains("Downloade Tabelle");
       cy.get("dialog").contains(
