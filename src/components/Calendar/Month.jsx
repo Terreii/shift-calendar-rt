@@ -122,14 +122,18 @@ function Month({
       <tfoot class="text-sm font-bold">
         <tr>
           <td
-            class="cursor-help border border-b-0 p-1"
+            class="cursor-help border-b border-l border-r border-t-0 border-black p-1"
             colSpan="3"
             title="Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet."
           >
             Summe
           </td>
           {groups.map((gr) => (
-            <td key={gr} aria-label="Summe Arbeitstage" class="border-b-0 p-1">
+            <td
+              key={gr}
+              aria-label="Summe Arbeitstage"
+              class="border-b border-r border-black p-1"
+            >
               {data.workingCount[gr]}
             </td>
           ))}
