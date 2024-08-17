@@ -71,25 +71,23 @@ export default function DownloadPage() {
             class="mt-4 flex flex-col border-b border-gray-400 pb-2 last:border-b-0 last:pb-0"
           >
             <strong>{shiftModelText[model]}</strong>
-            <div class="mt-2 flex w-full flex-row items-center justify-between">
+            <div class="mt-2 flex w-full flex-row items-center gap-6">
               <span class="text-gray-600">Gruppen:</span>
-              <div class="flex flex-row justify-end gap-6">
-                {Array.from({ length: shiftModelNumberOfGroups[model] }).map(
-                  (_, gr) => (
-                    <button
-                      key={gr}
-                      type="button"
-                      class={classNames("size-10", cancelClasses)}
-                      onClick={(event) => {
-                        event.preventDefault();
-                        setDialog({ type: "ics", model, group: gr });
-                      }}
-                    >
-                      {gr + 1}
-                    </button>
-                  ),
-                )}
-              </div>
+              {Array.from({ length: shiftModelNumberOfGroups[model] }).map(
+                (_, gr) => (
+                  <button
+                    key={gr}
+                    type="button"
+                    class={classNames("size-10", cancelClasses)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setDialog({ type: "ics", model, group: gr });
+                    }}
+                  >
+                    {gr + 1}
+                  </button>
+                ),
+              )}
             </div>
           </div>
         ))}

@@ -122,7 +122,7 @@ function Month({
       <tfoot class="text-sm font-bold">
         <tr>
           <td
-            class="cursor-help border-b border-l border-r border-t-0 border-black p-1"
+            class="cursor-help border border-t-0 border-black p-1"
             colSpan="3"
             title="Summe der Tage an denen eine Schichtgruppe diesen Monat arbeitet."
           >
