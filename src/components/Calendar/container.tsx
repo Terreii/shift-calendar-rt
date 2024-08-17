@@ -33,7 +33,7 @@ export default function Container({
 
       {children}
 
-      <Downloader shiftModel={model} />
+      <Downloader />
     </main>
   );
 }

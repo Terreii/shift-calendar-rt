@@ -72,7 +72,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
         key={index}
         id={`day_${formatISO(time, { representation: "date" })}`}
         class={classNames({
-          "bg-gray-300": isWeekend(time),
+          "bg-gray-300": isWeekend(time) && !isClosingHoliday,
           "bg-emerald-700 text-white": isClosingHoliday,
         })}
         title={
