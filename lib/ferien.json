@@ -1,341 +1,215 @@
 {
-  "lastUpdate": "2024-08-09T17:37:59.640Z",
+  "lastUpdate": "2024-08-18T17:23:09.322Z",
   "ferien": [
     {
-      "start": "2019-04-15T00:00",
-      "end": "2019-04-28T00:00",
-      "year": 2019,
+      "start": [2023, 7, 27],
+      "end": [2023, 9, 10],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "osterferien-2019-BW"
+      "name": "Sommerferien"
     },
     {
-      "start": "2019-06-11T00:00",
-      "end": "2019-06-22T00:00",
-      "year": 2019,
+      "start": [2023, 10, 30],
+      "end": [2023, 11, 4],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "pfingstferien-2019-BW"
+      "name": "Herbstferien"
     },
     {
-      "start": "2019-07-29T00:00",
-      "end": "2019-09-11T00:00",
-      "year": 2019,
+      "start": [2023, 12, 23],
+      "end": [2024, 1, 6],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "sommerferien-2019-BW"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2019-10-28T00:00",
-      "end": "2019-10-31T00:00",
-      "year": 2019,
+      "start": [2024, 3, 23],
+      "end": [2024, 4, 6],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "herbstferien-2019-BW"
+      "name": "Osterferien"
     },
     {
-      "start": "2019-12-23T00:00",
-      "end": "2020-01-05T00:00",
-      "year": 2019,
+      "start": [2024, 5, 21],
+      "end": [2024, 6, 1],
       "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "weihnachtsferien-2019-BW"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2020-04-06T00:00",
-      "end": "2020-04-19T00:00",
-      "year": 2020,
+      "start": [2024, 7, 25],
+      "end": [2024, 9, 7],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "osterferien-2020-BW"
+      "name": "Sommerferien"
     },
     {
-      "start": "2020-06-02T00:00",
-      "end": "2020-06-14T00:00",
-      "year": 2020,
+      "start": [2024, 10, 28],
+      "end": [2024, 10, 31],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "pfingstferien-2020-BW"
+      "name": "Herbstferien"
     },
     {
-      "start": "2020-07-30T00:00",
-      "end": "2020-09-13T00:00",
-      "year": 2020,
+      "start": [2024, 12, 23],
+      "end": [2025, 1, 4],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "sommerferien-2020-BW"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2020-10-25T23:00:00.000Z",
-      "end": "2020-10-30T23:00:00.000Z",
-      "year": 2020,
+      "start": [2025, 4, 14],
+      "end": [2025, 4, 26],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2020 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2020-12-22T23:00:00.000Z",
-      "end": "2021-01-09T23:00:00.000Z",
-      "year": 2020,
+      "start": [2025, 6, 10],
+      "end": [2025, 6, 20],
       "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2020 Baden-Württemberg"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2021-03-31T22:00:00.000Z",
-      "end": "2021-04-01T22:00:00.000Z",
-      "year": 2021,
+      "start": [2025, 7, 31],
+      "end": [2025, 9, 13],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2021 Baden-Württemberg"
+      "name": "Sommerferien"
     },
     {
-      "start": "2021-04-05T22:00:00.000Z",
-      "end": "2021-04-10T22:00:00.000Z",
-      "year": 2021,
+      "start": [2025, 10, 27],
+      "end": [2025, 10, 31],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2021 Baden-Württemberg"
+      "name": "Herbstferien"
     },
     {
-      "start": "2021-05-24T22:00:00.000Z",
-      "end": "2021-06-05T22:00:00.000Z",
-      "year": 2021,
+      "start": [2025, 12, 22],
+      "end": [2026, 1, 5],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "Pfingstferien 2021 Baden-Württemberg"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2021-07-28T22:00:00.000Z",
-      "end": "2021-09-11T22:00:00.000Z",
-      "year": 2021,
+      "start": [2026, 3, 30],
+      "end": [2026, 4, 11],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "Sommerferien 2021 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2021-10-30T22:00:00.000Z",
-      "end": "2021-10-31T23:00:00.000Z",
-      "year": 2021,
+      "start": [2026, 5, 26],
+      "end": [2026, 6, 5],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2021 Baden-Württemberg"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2021-11-01T23:00:00.000Z",
-      "end": "2021-11-06T23:00:00.000Z",
-      "year": 2021,
+      "start": [2026, 7, 30],
+      "end": [2026, 9, 12],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2021 Baden-Württemberg"
+      "name": "Sommerferien"
     },
     {
-      "start": "2021-12-22T23:00:00.000Z",
-      "end": "2022-01-08T23:00:00.000Z",
-      "year": 2021,
+      "start": [2026, 10, 26],
+      "end": [2026, 10, 30],
       "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2021 Baden-Württemberg"
+      "name": "Herbstferien"
     },
     {
-      "start": "2022-04-13T22:00:00.000Z",
-      "end": "2022-04-14T22:00:00.000Z",
-      "year": 2022,
+      "start": [2026, 12, 23],
+      "end": [2027, 1, 9],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2022 Baden-Württemberg"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2022-04-18T22:00:00.000Z",
-      "end": "2022-04-23T22:00:00.000Z",
-      "year": 2022,
+      "start": [2027, 3, 30],
+      "end": [2027, 4, 3],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2022 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2022-06-06T22:00:00.000Z",
-      "end": "2022-06-18T22:00:00.000Z",
-      "year": 2022,
+      "start": [2027, 5, 18],
+      "end": [2027, 5, 29],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "Pfingstferien 2022 Baden-Württemberg"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2022-07-27T22:00:00.000Z",
-      "end": "2022-09-10T22:00:00.000Z",
-      "year": 2022,
+      "start": [2027, 7, 29],
+      "end": [2027, 9, 11],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "Sommerferien 2022 Baden-Württemberg"
+      "name": "Sommerferien"
     },
     {
-      "start": "2022-10-30T23:00:00.000Z",
-      "end": "2022-10-31T23:00:00.000Z",
-      "year": 2022,
+      "start": [2027, 11, 2],
+      "end": [2027, 11, 6],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2022 Baden-Württemberg"
+      "name": "Herbstferien"
     },
     {
-      "start": "2022-11-01T23:00:00.000Z",
-      "end": "2022-11-04T23:00:00.000Z",
-      "year": 2022,
+      "start": [2027, 12, 23],
+      "end": [2028, 1, 8],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2022 Baden-Württemberg"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2022-12-20T23:00:00.000Z",
-      "end": "2023-01-07T23:00:00.000Z",
-      "year": 2022,
+      "start": [2028, 4, 18],
+      "end": [2028, 4, 22],
       "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2022 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2023-04-05T22:00:00.000Z",
-      "end": "2023-04-06T22:00:00.000Z",
-      "year": 2023,
+      "start": [2028, 6, 6],
+      "end": [2028, 6, 17],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2023 Baden-Württemberg"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2023-04-10T22:00:00.000Z",
-      "end": "2023-04-15T22:00:00.000Z",
-      "year": 2023,
+      "start": [2028, 7, 27],
+      "end": [2028, 9, 9],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2023 Baden-Württemberg"
+      "name": "Sommerferien"
     },
     {
-      "start": "2023-05-29T22:00:00.000Z",
-      "end": "2023-06-09T22:00:00.000Z",
-      "year": 2023,
+      "start": [2028, 10, 30],
+      "end": [2028, 11, 3],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "Pfingstferien 2023 Baden-Württemberg"
+      "name": "Herbstferien"
     },
     {
-      "start": "2023-07-26T22:00:00.000Z",
-      "end": "2023-09-09T22:00:00.000Z",
-      "year": 2023,
+      "start": [2028, 12, 23],
+      "end": [2029, 1, 5],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "Sommerferien 2023 Baden-Württemberg"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2023-10-29T23:00:00.000Z",
-      "end": "2023-11-03T23:00:00.000Z",
-      "year": 2023,
+      "start": [2029, 3, 26],
+      "end": [2029, 4, 7],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2023 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2023-12-22T23:00:00.000Z",
-      "end": "2024-01-05T23:00:00.000Z",
-      "year": 2023,
+      "start": [2029, 5, 22],
+      "end": [2029, 6, 1],
       "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2023 Baden-Württemberg"
+      "name": "Pfingstferien"
     },
     {
-      "start": "2024-03-22T23:00:00.000Z",
-      "end": "2024-04-05T22:00:00.000Z",
-      "year": 2024,
+      "start": [2029, 7, 26],
+      "end": [2029, 9, 8],
       "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2024 Baden-Württemberg"
+      "name": "Sommerferien"
     },
     {
-      "start": "2024-05-20T22:00:00.000Z",
-      "end": "2024-05-31T22:00:00.000Z",
-      "year": 2024,
+      "start": [2029, 10, 29],
+      "end": [2029, 11, 2],
       "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "Pfingstferien 2024 Baden-Württemberg"
+      "name": "Herbstferien"
     },
     {
-      "start": "2024-07-24T22:00:00.000Z",
-      "end": "2024-09-07T22:00:00.000Z",
-      "year": 2024,
+      "start": [2029, 12, 22],
+      "end": [2030, 1, 5],
       "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "Sommerferien 2024 Baden-Württemberg"
+      "name": "Weihnachtsferien"
     },
     {
-      "start": "2024-10-27T23:00:00.000Z",
-      "end": "2024-10-30T23:00:00.000Z",
-      "year": 2024,
+      "start": [2030, 4, 15],
+      "end": [2030, 4, 26],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2024 Baden-Württemberg"
+      "name": "Osterferien"
     },
     {
-      "start": "2024-10-30T23:00:00.000Z",
-      "end": "2024-10-31T23:00:00.000Z",
-      "year": 2024,
+      "start": [2030, 6, 11],
+      "end": [2030, 6, 21],
       "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2024 Baden-Württemberg"
-    },
-    {
-      "start": "2024-12-22T23:00:00.000Z",
-      "end": "2025-01-04T23:00:00.000Z",
-      "year": 2024,
-      "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2024 Baden-Württemberg"
-    },
-    {
-      "start": "2025-04-13T22:00:00.000Z",
-      "end": "2025-04-26T22:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Osterferien",
-      "slug": "Osterferien 2025 Baden-Württemberg"
-    },
-    {
-      "start": "2025-06-09T22:00:00.000Z",
-      "end": "2025-06-20T22:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Pfingstferien",
-      "slug": "Pfingstferien 2025 Baden-Württemberg"
-    },
-    {
-      "start": "2025-07-30T22:00:00.000Z",
-      "end": "2025-09-13T22:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Sommerferien",
-      "slug": "Sommerferien 2025 Baden-Württemberg"
-    },
-    {
-      "start": "2025-10-26T23:00:00.000Z",
-      "end": "2025-10-30T23:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2025 Baden-Württemberg"
-    },
-    {
-      "start": "2025-10-30T23:00:00.000Z",
-      "end": "2025-10-31T23:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Herbstferien",
-      "slug": "Herbstferien 2025 Baden-Württemberg"
-    },
-    {
-      "start": "2025-12-21T23:00:00.000Z",
-      "end": "2026-01-05T23:00:00.000Z",
-      "year": 2025,
-      "stateCode": "BW",
-      "name": "Weihnachtsferien",
-      "slug": "Weihnachtsferien 2025 Baden-Württemberg"
+      "name": "Pfingstferien"
     }
   ]
 }

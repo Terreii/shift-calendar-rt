@@ -49,7 +49,6 @@ export default function Menu({
     const searchDay = String(search).padStart(2, "0");
     searchValue = `${year}-${searchMonth}-${searchDay}`;
   }
-  console.log(show);
 
   return (
     <details
