@@ -31,7 +31,9 @@ prompt.get(
       await fs.readFile(outPath, { encoding: "utf8" }),
     );
 
-    const holidays = allHolidays.ferien.filter((event) => event.year > 2018);
+    const holidays = allHolidays.ferien.filter(
+      (event) => event.start[0] > new Date().getFullYear() - 3,
+    );
 
     for (const event of Object.values(iCal.parseFile(result.filePath))) {
       if (typeof event !== "object" || event.type !== "VEVENT") {
@@ -45,21 +47,27 @@ prompt.get(
         return event.year === year && event.name === name;
       });
 
+      const toDateArray = (date) => [
+        date.getFullYear(),
+        date.getMonth() + 1,
+        date.getDate(),
+      ];
+
       if (exists < 0) {
         holidays.push({
-          start: event.start.toISOString(),
-          end: event.end.toISOString(),
-          year,
+          start: toDateArray(event.start),
+          end: toDateArray(event.end),
           stateCode: "BW",
           name,
-          slug: event.summary,
         });
       }
     }
 
     holidays.sort((a, b) => {
-      if (a.start < b.start) return -1;
-      if (a.start > b.start) return 1;
+      const aStart = a.start.join("-");
+      const bStart = b.start.join("-");
+      if (aStart < bStart) return -1;
+      if (aStart > bStart) return 1;
       return 0;
     });
 
