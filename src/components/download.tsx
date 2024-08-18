@@ -35,10 +35,11 @@ export default function Download() {
           Tabelle runter.
           <br />
           <br />
-          <p class="mb-2 font-bold">
+          <span class="mb-2 inline-block font-bold">
             Jetzt mit aktualisierten Kalendern für <em>2024</em> und darüber
             hinaus!
-          </p>
+          </span>
+          <br />
           <a
             href="/download"
             class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
