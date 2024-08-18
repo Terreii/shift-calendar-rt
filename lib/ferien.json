@@ -90,6 +90,126 @@
       "end": [2026, 6, 5],
       "stateCode": "BW",
       "name": "Pfingstferien"
+    },
+    {
+      "start": [2026, 7, 30],
+      "end": [2026, 9, 12],
+      "stateCode": "BW",
+      "name": "Sommerferien"
+    },
+    {
+      "start": [2026, 10, 26],
+      "end": [2026, 10, 30],
+      "stateCode": "BW",
+      "name": "Herbstferien"
+    },
+    {
+      "start": [2026, 12, 23],
+      "end": [2027, 1, 9],
+      "stateCode": "BW",
+      "name": "Weihnachtsferien"
+    },
+    {
+      "start": [2027, 3, 30],
+      "end": [2027, 4, 3],
+      "stateCode": "BW",
+      "name": "Osterferien"
+    },
+    {
+      "start": [2027, 5, 18],
+      "end": [2027, 5, 29],
+      "stateCode": "BW",
+      "name": "Pfingstferien"
+    },
+    {
+      "start": [2027, 7, 29],
+      "end": [2027, 9, 11],
+      "stateCode": "BW",
+      "name": "Sommerferien"
+    },
+    {
+      "start": [2027, 11, 2],
+      "end": [2027, 11, 6],
+      "stateCode": "BW",
+      "name": "Herbstferien"
+    },
+    {
+      "start": [2027, 12, 23],
+      "end": [2028, 1, 8],
+      "stateCode": "BW",
+      "name": "Weihnachtsferien"
+    },
+    {
+      "start": [2028, 4, 18],
+      "end": [2028, 4, 22],
+      "stateCode": "BW",
+      "name": "Osterferien"
+    },
+    {
+      "start": [2028, 6, 6],
+      "end": [2028, 6, 17],
+      "stateCode": "BW",
+      "name": "Pfingstferien"
+    },
+    {
+      "start": [2028, 7, 27],
+      "end": [2028, 9, 9],
+      "stateCode": "BW",
+      "name": "Sommerferien"
+    },
+    {
+      "start": [2028, 10, 30],
+      "end": [2028, 11, 3],
+      "stateCode": "BW",
+      "name": "Herbstferien"
+    },
+    {
+      "start": [2028, 12, 23],
+      "end": [2029, 1, 5],
+      "stateCode": "BW",
+      "name": "Weihnachtsferien"
+    },
+    {
+      "start": [2029, 3, 26],
+      "end": [2029, 4, 7],
+      "stateCode": "BW",
+      "name": "Osterferien"
+    },
+    {
+      "start": [2029, 5, 22],
+      "end": [2029, 6, 1],
+      "stateCode": "BW",
+      "name": "Pfingstferien"
+    },
+    {
+      "start": [2029, 7, 26],
+      "end": [2029, 9, 8],
+      "stateCode": "BW",
+      "name": "Sommerferien"
+    },
+    {
+      "start": [2029, 10, 29],
+      "end": [2029, 11, 2],
+      "stateCode": "BW",
+      "name": "Herbstferien"
+    },
+    {
+      "start": [2029, 12, 22],
+      "end": [2030, 1, 5],
+      "stateCode": "BW",
+      "name": "Weihnachtsferien"
+    },
+    {
+      "start": [2030, 4, 15],
+      "end": [2030, 4, 26],
+      "stateCode": "BW",
+      "name": "Osterferien"
+    },
+    {
+      "start": [2030, 6, 11],
+      "end": [2030, 6, 21],
+      "stateCode": "BW",
+      "name": "Pfingstferien"
     }
   ]
 }
