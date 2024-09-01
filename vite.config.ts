@@ -21,6 +21,7 @@ export default defineConfig({
       includeManifestIcons: false,
       workbox: {
         globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        inlineWorkboxRuntime: true,
         navigateFallbackDenylist: [/^\/api/],
       },
       manifest: {
