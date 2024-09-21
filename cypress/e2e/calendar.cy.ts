@@ -104,9 +104,8 @@ describe("shift calendar current view", () => {
   });
 
   it("should scroll to day in url hash", () => {
-    cy.visit(`/cal/${model}/2024/09`);
+    cy.visit(`/cal/${model}/2024/09#day_2024-09-30`);
 
-    cy.get("#day_2024-09-30 a").click();
     cy.get("#day_2024-09-30").should(($el) => {
       const bottom = Cypress.$(cy.state("window")).height();
       const rect = $el[0].getBoundingClientRect();

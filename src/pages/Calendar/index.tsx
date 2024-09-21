@@ -40,16 +40,35 @@ function Redirector() {
 
 /**
  * Replicate the scroll to element with ID in hash behaviour of the browser.
+ * It will try right away. And if this fails, it will attempt 5 more times to find the element.
  * @param pathWithHash  URL (path, query & hash) where to scroll to.
  */
 function useHashScroll(pathWithHash: string) {
   useEffect(() => {
-    const url = new URL(pathWithHash, window.location.href);
-    if (url.hash.length <= 1) return;
+    const scrollToHash = () => {
+      if (window.location.hash.length <= 1) return true;
 
-    const element = document.getElementById(url.hash.replace(/^#/, ""));
-    if (!element) return;
+      const element = document.getElementById(
+        window.location.hash.replace(/^#/, ""),
+      );
+      if (element) {
+        element.scrollIntoView();
+        return true;
+      }
+      return false;
+    };
 
-    element.scrollIntoView();
+    if (!scrollToHash()) {
+      let attempts = 5;
+      const id = setInterval(() => {
+        console.log(attempts);
+        if (scrollToHash() || --attempts === 0) {
+          clearInterval(id);
+        }
+      }, 25);
+      return () => {
+        clearInterval(id);
+      };
+    }
   }, [pathWithHash]);
 }
