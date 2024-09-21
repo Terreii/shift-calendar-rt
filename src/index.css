@@ -19,7 +19,7 @@ the MPL was not distributed with this file, You can obtain one at http://mozilla
   Header is 3rem height + 3rem of table headers.
   Always scroll so that the element is not hidden by the header.
   */
-  scroll-margin-top: 10rem;
+  scroll-margin-top: 14rem;
 }
 
 @media (prefers-reduced-motion) {

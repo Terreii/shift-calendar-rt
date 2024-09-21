@@ -103,6 +103,25 @@ describe("shift calendar current view", () => {
     );
   });
 
+  it("should scroll to day in url hash", () => {
+    cy.visit(`/cal/${model}/2024/09`);
+
+    cy.get("#day_2024-09-30 a").click();
+    cy.get("#day_2024-09-30").should(($el) => {
+      const bottom = Cypress.$(cy.state("window")).height();
+      const rect = $el[0].getBoundingClientRect();
+
+      expect(rect.top).not.to.be.greaterThan(
+        bottom,
+        `Expected element not to be below the visible scrolled area`,
+      );
+      expect(rect.top).to.be.greaterThan(
+        0 - rect.height,
+        `Expected element not to be above the visible scrolled area`,
+      );
+    });
+  });
+
   it("should render holidays", () => {
     // school breaks
     cy.visit(`/cal/${model}/2023/07`);
