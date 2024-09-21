@@ -61,7 +61,6 @@ function useHashScroll(pathWithHash: string) {
     if (!scrollToHash()) {
       let attempts = 5;
       const id = setInterval(() => {
-        console.log(attempts);
         if (scrollToHash() || --attempts === 0) {
           clearInterval(id);
         }
