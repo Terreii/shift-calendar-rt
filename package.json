@@ -35,7 +35,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/milliseconds": "^1.0.0",
     "@types/node": "^22.10.3",
-    "@types/react": "^18.3.12",
+    "@types/react": "^19.0.2",
     "autoprefixer": "^10.4.20",
     "bootstrap-icons": "^1.11.3",
     "cypress": "^13.17.0",
