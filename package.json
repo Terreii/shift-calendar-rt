@@ -64,11 +64,11 @@
     "vite-plugin-pwa": "^0.21.1"
   },
   "dependencies": {
+    "@date-fns/tz": "^1.2.0",
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "classnames": "^2.5.1",
     "date-fns": "^4.1.0",
-    "date-fns-tz": "^3.2.0",
     "excel4node": "^1.8.2",
     "ics": "^3.8.1",
     "milliseconds": "^1.0.3",
