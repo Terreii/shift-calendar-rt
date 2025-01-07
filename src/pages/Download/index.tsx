@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { TZDate } from "@date-fns/tz";
 import classNames from "classnames";
 import { type ComponentChildren } from "preact";
 import { Suspense } from "preact/compat";
@@ -256,7 +257,7 @@ function MonthInput({
 }
 
 function getToday(): string {
-  const now = new Date();
-  const month = String(now.getUTCMonth() + 1).padStart(2, "0");
-  return `${now.getUTCFullYear()}-${month}`;
+  const now = TZDate.tz("Europe/Berlin");
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  return `${now.getFullYear()}-${month}`;
 }
