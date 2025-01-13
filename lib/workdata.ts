@@ -5,11 +5,11 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { TZDate } from "@date-fns/tz";
 import { differenceInCalendarDays } from "date-fns/differenceInCalendarDays";
 import { formatISO } from "date-fns/formatISO";
 import { parseISO } from "date-fns/parseISO";
 import { addDays } from "date-fns/addDays";
-import ms from "milliseconds";
 
 import { shiftModelText } from "./constants.ts";
 import shiftModels, {
@@ -21,21 +21,6 @@ import shiftModels, {
   type ShiftModelsWithFallbackKeys,
 } from "./shifts.ts";
 import { getDaysInMonth } from "./utils.js";
-
-/**
- * Get the UTC Unix time in milliseconds.
- * @param   year  Year
- * @param   month Month with a zero index.
- * @param   day   Day in month
- */
-function getTime(year: number, month: number, day: number): number {
-  const monthStr = String(month + 1).padStart(2, "0");
-  const dayStr = String(day).padStart(2, "0");
-  // use JSON string, because if UTC is used on some days it calculates the wrong shift.
-  const date = new Date(`${year}-${monthStr}-${dayStr}T03:00:00.000Z`);
-  const time = date.getTime() - ms.days(1);
-  return time;
-}
 
 export type Workdata = "F" | "S" | "N" | "Normal" | "X" | "K";
 type DayWorkdata = Workdata[];
@@ -62,9 +47,9 @@ export function getMonthData(
   shiftModel: ShiftModelsWithFallbackKeys,
 ): MonthWorkData {
   const config: ShiftModel = shiftModels[shiftModel];
-  const modelStartDate = new Date(`${config.startDate}T03:00:00.000Z`);
-  const modelStartYear = modelStartDate.getUTCFullYear();
-  const modelStartMonth = modelStartDate.getUTCMonth();
+  const modelStartDate = new TZDate(config.startDate, "Europe/Berlin");
+  const modelStartYear = modelStartDate.getFullYear();
+  const modelStartMonth = modelStartDate.getMonth();
   if (
     year < modelStartYear ||
     (year === modelStartYear && month < modelStartMonth)
@@ -75,7 +60,7 @@ export function getMonthData(
   if (
     year === modelStartYear &&
     month === modelStartMonth &&
-    modelStartDate.getUTCDate() > 1
+    modelStartDate.getDate() > 1
   ) {
     // if all month is in new model use the new model.
     // This prevents empty group column if new model has fever groups.
@@ -143,14 +128,14 @@ function fullMonthAllGroupsShiftCalculation(
  */
 function modelSwitchingAllGroupsCalculation(
   config: ShiftModel,
-  modelStartDate: Date,
+  modelStartDate: TZDate,
   year: number,
   month: number,
 ): MonthWorkData {
   const fallbackConfig = shiftModels[config.fallback];
   const daysSinceFallbackModelStart = differenceInCalendarDays(
-    getTime(year, month, 1),
-    new Date(`${fallbackConfig.startDate}T03:00:00.000Z`),
+    new TZDate(year, month, 1, "Europe/Berlin"),
+    new TZDate(fallbackConfig.startDate, "Europe/Berlin"),
   );
   const groups = getGroupsConfig(config);
   const fallbackGroups = getGroupsConfig(fallbackConfig);
@@ -160,7 +145,7 @@ function modelSwitchingAllGroupsCalculation(
     Math.max(groups.length, fallbackGroups.length),
   ).fill(0);
 
-  const newModelStartDay = modelStartDate.getUTCDate() - 1;
+  const newModelStartDay = modelStartDate.getDate() - 1;
 
   for (let i = 0, days = getDaysInMonth(year, month); i < days; i++) {
     const [days, groupsConfig] =
@@ -267,7 +252,7 @@ export function getShiftsList(
     const seq = index + 1;
     const isLast = seq === all.length;
     const endDate = isLast
-      ? new Date(year + 1000, 0, 1, 0, 0, 0, 0)
+      ? new TZDate(year + 1000, 0, 1, 0, 0, 0, 0, "Europe/Berlin")
       : parseISO(all[index + 1][1].startDate);
 
     // only process models that are active in that year or later
@@ -284,7 +269,7 @@ export function getShiftsList(
     const daysSinceStart = Math.max(
       // start at beginning of year or the model start date.
       differenceInCalendarDays(
-        new Date(year, 0, 1, 0, 0, 0, 0),
+        new TZDate(year, 0, 1, 0, 0, 0, 0, "Europe/Berlin"),
         config.startDate,
       ),
       0, // if model starts in the year, daysSinceStart would be < 0.
@@ -360,7 +345,10 @@ function firstShiftOccurrenceAfterDate(
     daysSinceModelStart,
   );
   const toAdd = (shiftIndex - dayInCycle + cycle.length) % cycle.length;
-  const date = addDays(new Date(modelStart), daysSinceModelStart + toAdd);
+  const date = addDays(
+    new TZDate(modelStart, "Europe/Berlin"),
+    daysSinceModelStart + toAdd,
+  );
 
   return [
     date.getFullYear(),

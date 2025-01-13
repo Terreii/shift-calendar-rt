@@ -1,5 +1,6 @@
 /* eslint-disable cypress/no-unnecessary-waiting */
 
+import { TZDate } from "@date-fns/tz";
 import { addMonths } from "date-fns/addMonths";
 import { formatISO } from "date-fns/formatISO";
 import { startOfMonth } from "date-fns/startOfMonth";
@@ -38,7 +39,7 @@ describe("shift calendar current view", () => {
 
     const today = getToday();
     const now = startOfMonth(
-      new Date(today[0], today[1] - 1, today[2], today[3]),
+      new TZDate(today[0], today[1] - 1, today[2], today[3], "Europe/Berlin"),
     );
     const data = getMonthData(now.getFullYear(), now.getMonth(), model);
 
@@ -85,7 +86,13 @@ describe("shift calendar current view", () => {
     cy.visit(`/cal/${model}`);
 
     const today = getToday();
-    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
+    const now = new TZDate(
+      today[0],
+      today[1] - 1,
+      today[2],
+      today[3],
+      "Europe/Berlin",
+    );
     const getMonthPath = (diff: number) => {
       const month = addMonths(now, diff);
       const monthString = (month.getMonth() + 1).toString().padStart(2, "0");
@@ -133,7 +140,7 @@ describe("shift calendar current view", () => {
 
   it("should navigate to next and previous month on swipe on mobile", () => {
     cy.visit(`/cal/${model}`);
-    const today = new Date();
+    const today = TZDate.tz("Europe/Berlin");
     const nextMonth = addMonths(today, 1);
 
     const triggerPointer = (
@@ -190,7 +197,13 @@ describe("full year", () => {
     cy.get("#hamburger_menu").contains("Zeige ganzes Jahr").click();
 
     const today = getToday();
-    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
+    const now = new TZDate(
+      today[0],
+      today[1] - 1,
+      today[2],
+      today[3],
+      "Europe/Berlin",
+    );
     cy.url().should("include", `/cal/${model}/${now.getFullYear()}`);
 
     for (let i = 1; i <= 12; i++) {
@@ -202,7 +215,13 @@ describe("full year", () => {
   it("today button should go back to current month view", () => {
     cy.visit(`/cal/${model}/2022`);
     const today = getToday();
-    const now = new Date(today[0], today[1] - 1, today[2], today[3]);
+    const now = new TZDate(
+      today[0],
+      today[1] - 1,
+      today[2],
+      today[3],
+      "Europe/Berlin",
+    );
 
     cy.get('nav a[title="voriges Jahr"]').should(
       "have.attr",

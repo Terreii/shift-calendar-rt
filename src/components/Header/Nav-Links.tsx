@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { TZDate } from "@date-fns/tz";
 import { useMemo } from "preact/hooks";
 import { addMonths } from "date-fns/addMonths";
 
@@ -57,7 +58,7 @@ export default function HeaderNavLinks({
       };
     }
 
-    const then = new Date(year, month - 1, 1, 0, 0, 0);
+    const then = new TZDate(year, month - 1, 1, 0, 0, 0, "Europe/Berlin");
 
     return {
       lastMonth: getMonthUrl(then, -1, shiftModel),

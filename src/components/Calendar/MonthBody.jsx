@@ -5,6 +5,7 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
+import { TZDate } from "@date-fns/tz";
 import classNames from "classnames";
 import { formatISO } from "date-fns/formatISO";
 import { isWeekend } from "date-fns/isWeekend";
@@ -42,7 +43,7 @@ export default function MonthBody({ year, month, data, today, search, group }) {
   // Render every row/day.
   const dayRows = data.days.map((dayShiftsData, index) => {
     const dayInMonth = index + 1;
-    const time = new Date(year, month, dayInMonth);
+    const time = new TZDate(year, month, dayInMonth, "Europe/Berlin");
     const holidayData = data.holidays[dayInMonth];
 
     const shifts =
