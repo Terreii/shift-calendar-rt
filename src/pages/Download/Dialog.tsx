@@ -80,7 +80,7 @@ export function DownloadDialog({
             download={link.name}
             target="_blank"
             rel="noreferrer"
-            class="flex flex-row gap-2 text-lg underline hover:text-gray-500 focus-visible:text-gray-500 focus-visible:outline-none focus-visible:ring-2"
+            class="flex flex-row gap-2 text-lg underline hover:text-gray-500 focus-visible:text-gray-500 focus-visible:ring-2 focus-visible:outline-hidden"
           >
             <img src={cloudDownloadIcon} width="20" height="20" alt="" />
             <span>

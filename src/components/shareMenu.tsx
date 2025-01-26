@@ -73,14 +73,14 @@ export default function ShareMenu({
   return (
     <div
       id="share_menu"
-      class="absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg right-safe-offset-0 top-safe-offset-12"
+      class="right-safe-offset-0 top-safe-offset-12 absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg"
     >
-      <div class="flex flex-col items-stretch justify-center p-3 -max-h-screen-safe-offset-12">
+      <div class="-max-h-screen-safe-offset-12 flex flex-col items-stretch justify-center p-3">
         <label class="flex flex-col">
           Adresse zum teilen:
           <input
             id="share_url"
-            class="-ml-1 rounded border-0 bg-transparent p-1 text-white"
+            class="-ml-1 rounded-sm border-0 bg-transparent p-1 text-white"
             type="url"
             readOnly
             value={url.toString()}

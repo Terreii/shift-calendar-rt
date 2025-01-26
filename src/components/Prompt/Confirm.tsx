@@ -57,7 +57,7 @@ export default function Confirm({
   return (
     <aside
       class={classNames(
-        "sticky bottom-0 left-0 flex w-full flex-col border-0 border-t border-gray-200 bg-white text-gray-900 shadow-lg sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded sm:border sm:mb-safe sm:ml-safe",
+        "sm:mb-safe sm:ml-safe sticky bottom-0 left-0 flex w-full flex-col border-0 border-t border-gray-200 bg-white text-gray-900 shadow-lg sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded-sm sm:border",
         { "translate-y-4 scale-95 opacity-0": isShowing },
       )}
       ref={container}

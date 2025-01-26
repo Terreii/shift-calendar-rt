@@ -31,7 +31,7 @@ export default function Legend({
     [shiftKey, year, month],
   );
   return (
-    <div class="mx-auto mb-8 flex flex-col items-start text-gray-900 px-safe md:flex-row">
+    <div class="px-safe mx-auto mb-8 flex flex-col items-start text-gray-900 md:flex-row">
       <dl class="grid grid-cols-[auto_1fr] items-start gap-2 px-4 py-2 md:px-2 md:py-0">
         {shiftTypes.map(([key, data]) => (
           <Cell key={shiftKey + key} id={key}>
@@ -151,7 +151,7 @@ function Cell({
         {href ? (
           <a
             href={href}
-            class="text-gray-900 underline decoration-blue-700 hover:decoration-blue-500 hover:decoration-2 focus-visible:decoration-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
+            class="text-gray-900 underline decoration-blue-700 hover:decoration-blue-500 hover:decoration-2 focus-visible:decoration-blue-500 focus-visible:decoration-2 focus-visible:ring-1 focus-visible:outline-hidden"
             rel="noopener noreferrer"
           >
             {children}

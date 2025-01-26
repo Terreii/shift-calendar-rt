@@ -11,7 +11,7 @@ import stars from "bootstrap-icons/icons/stars.svg";
 export default function Download() {
   return (
     <div class="my-4 flex flex-row justify-center px-1">
-      <section class="rounded bg-gray-300 p-4 text-center text-gray-900">
+      <section class="rounded-sm bg-gray-300 p-4 text-center text-gray-900">
         <h2 class="text-xl font-semibold">
           <Stars />
           Downloade deinen Kalender!
@@ -28,7 +28,7 @@ export default function Download() {
             href="https://de.libreoffice.org/discover/libreoffice/"
             target="_blank"
             rel="noreferrer"
-            class="text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
+            class="text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:ring-1 focus-visible:outline-hidden"
           >
             LibreOffice
           </a>{" "}
@@ -42,7 +42,7 @@ export default function Download() {
           <br />
           <a
             href="/download"
-            class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:outline-none focus-visible:ring-1"
+            class="mx-auto inline-block text-blue-700 underline hover:text-blue-500 hover:decoration-2 focus-visible:text-blue-500 focus-visible:decoration-2 focus-visible:ring-1 focus-visible:outline-hidden"
           >
             <strong>Alle Download-Optionen!</strong>
           </a>
@@ -55,7 +55,7 @@ export default function Download() {
 function Stars() {
   return (
     <>
-      <span class="mr-2 hidden font-extrabold uppercase text-yellow-600 first:inline-block">
+      <span class="mr-2 hidden font-extrabold text-yellow-600 uppercase first:inline-block">
         neu
       </span>
       <img
@@ -68,7 +68,7 @@ function Stars() {
           filter: "invert(0.9) sepia(1) saturate(5)",
         }}
       />
-      <span class="mr-2 hidden font-extrabold uppercase text-yellow-600 last:inline-block">
+      <span class="mr-2 hidden font-extrabold text-yellow-600 uppercase last:inline-block">
         neu
       </span>
     </>

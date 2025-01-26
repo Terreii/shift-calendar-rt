@@ -71,7 +71,7 @@ export default function HeaderNavLinks({
       <a
         key={`previous_${year}_${month}`}
         href={lastMonth}
-        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:ring-2 focus-visible:outline-hidden"
         title={isFullYear ? "voriges Jahr" : "vorigen Monat"}
       >
         <img src={leftArrow} height="22" width="22" alt="" class="invert" />
@@ -83,7 +83,7 @@ export default function HeaderNavLinks({
           today: isClient ? today : undefined,
           group: 0,
         })}
-        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:ring-2 focus-visible:outline-hidden"
         title="zeige aktuellen Monat"
       >
         Heute
@@ -92,7 +92,7 @@ export default function HeaderNavLinks({
       <a
         key={`next_${year}_${month}`}
         href={nextMonth}
-        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
+        class="inline-block px-4 py-3 text-white hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:ring-2 focus-visible:outline-hidden"
         title={isFullYear ? "nächstes Jahr" : "nächster Monat"}
       >
         <img src={rightArrow} height="22" width="22" alt="" class="invert" />
