@@ -59,7 +59,7 @@ export default function Menu({
     >
       <summary
         id="menu_summary"
-        class="flex w-16 cursor-pointer list-none items-center justify-center bg-transparent hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:outline-none focus-visible:ring-2"
+        class="flex w-16 cursor-pointer list-none items-center justify-center bg-transparent hover:bg-emerald-600 focus-visible:bg-emerald-600 focus-visible:ring-2 focus-visible:outline-hidden"
       >
         <img src={menuIcon} class="invert" height="45" width="45" alt="Menu" />
       </summary>
@@ -68,9 +68,9 @@ export default function Menu({
         id="hamburger_menu"
         aria-live="polite"
         aria-label="Menü"
-        class="absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg right-safe-offset-0 top-safe-offset-12"
+        class="right-safe-offset-0 top-safe-offset-12 absolute overflow-y-visible overscroll-contain bg-emerald-900 text-white shadow-lg"
       >
-        <div class="flex flex-col items-stretch justify-center p-3 -max-h-screen-safe-offset-12">
+        <div class="-max-h-screen-safe-offset-12 flex flex-col items-stretch justify-center p-3">
           {!(supportsMonthInput || isFullYear) && (
             <select
               class="btn h-10"

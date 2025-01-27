@@ -32,7 +32,7 @@ export default function Button({
       class={classnames("btn", className, {
         [cancel]: type === "cancel",
         [accept]: type === "accept",
-        "px-3 py-1 first:*:size-7 first:*:-translate-x-1 first:*:pr-1 first:*:invert":
+        "px-3 py-1 *:first:size-7 *:first:-translate-x-1 *:first:pr-1 *:first:invert":
           hasImg,
       })}
     >

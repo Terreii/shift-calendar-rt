@@ -5,14 +5,35 @@ This Source Code Form is subject to the terms of the Mozilla Public License, v. 
 the MPL was not distributed with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 
-@tailwind base;
-@tailwind components;
+@import "tailwindcss";
 
-.btn {
-  @apply flex min-h-10 flex-row items-center justify-center rounded border-0 bg-gray-100 px-2 py-1 text-center tracking-wide text-gray-950 shadow hover:bg-gray-300 focus-visible:bg-gray-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent;
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+@plugin 'tailwindcss-safe-area';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
 }
 
-@tailwind utilities;
+@layer components {
+  .btn {
+    @apply flex min-h-10 flex-row items-center justify-center rounded-sm border-0 bg-gray-100 px-2 py-1 text-center tracking-wide text-gray-950 shadow-sm hover:bg-gray-300 focus-visible:bg-gray-300 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent focus-visible:outline-hidden;
+  }
+}
 
 :root [id] {
   /*

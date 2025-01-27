@@ -147,21 +147,21 @@ export default function InstallButton() {
 
     case "ios":
       return (
-        <div class="sticky bottom-0 z-10 flex w-full flex-col items-center border-0 border-t border-gray-200 bg-white shadow-lg pb-safe px-safe-offset-2 sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded sm:border sm:mb-safe sm:ml-safe">
-          <span class="my-1 text-center text-sm text-gray-900 mx-safe-offset-16">
+        <div class="pb-safe px-safe-offset-2 sm:mb-safe sm:ml-safe sticky bottom-0 z-10 flex w-full flex-col items-center border-0 border-t border-gray-200 bg-white shadow-lg sm:bottom-1 sm:left-1 sm:max-w-96 sm:rounded-sm sm:border">
+          <span class="mx-safe-offset-16 my-1 text-center text-sm text-gray-900">
             Klicke auf Teilen &amp; dann{" "}
             <strong>&quot;Zum Home-Bildschirm&quot; </strong>
             um den Kalender wie eine App zu installieren:
           </span>
           <div class="mb-1 flex flex-col items-center py-1">
             <img
-              class="h-20 rounded object-contain object-center p-1 shadow"
+              class="h-20 rounded-sm object-contain object-center p-1 shadow-sm"
               src={iOSShare}
               alt="klicke Teilen"
             />
             <span class="mx-3 my-auto block">↓</span>
             <img
-              class="h-20 rounded object-contain object-center p-1 shadow"
+              class="h-20 rounded-sm object-contain object-center p-1 shadow-sm"
               src={iOSAddToHome}
               alt="klicke Zum Home-Bildschirm"
             />
@@ -207,7 +207,7 @@ function CloseButton({ onClick }) {
   return (
     <button
       type="button"
-      class="absolute top-0 ml-1 border-0 bg-transparent right-safe"
+      class="right-safe absolute top-0 ml-1 border-0 bg-transparent"
       onClick={onClick}
       aria-label="schließe Meldung"
     >

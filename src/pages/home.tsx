@@ -37,7 +37,7 @@ export default function Index() {
           <span class="whitespace-nowrap">
             Menü
             <img
-              class="ml-1 mr-2 inline-block"
+              class="mr-2 ml-1 inline-block"
               src={menuIcon}
               height="20"
               width="20"
@@ -47,7 +47,7 @@ export default function Index() {
           umändern.
         </div>
 
-        <ul class="mx-auto mb-16 mt-2 flex w-64 list-none flex-col justify-center gap-3 p-0">
+        <ul class="mx-auto mt-2 mb-16 flex w-64 list-none flex-col justify-center gap-3 p-0">
           {shiftModelNames.map((name) => (
             <ShiftLink key={name} name={name} />
           ))}
@@ -62,7 +62,7 @@ function ShiftLink({ name }: { name: ShiftModelKeys }) {
     <li>
       <a
         href={`/cal/${name}`}
-        class="mx-3 inline-block min-h-10 w-full rounded bg-violet-700 px-4 py-3 text-center text-lg text-white shadow hover:bg-violet-900 focus-visible:bg-violet-900"
+        class="mx-3 inline-block min-h-10 w-full rounded-sm bg-violet-700 px-4 py-3 text-center text-lg text-white shadow-sm hover:bg-violet-900 focus-visible:bg-violet-900"
         onClick={() => {
           if (new URLSearchParams(window.location.search).has("pwa")) {
             const settings: Settings = JSON.parse(

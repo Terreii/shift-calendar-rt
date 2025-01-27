@@ -40,7 +40,7 @@ export default function DownloadPage() {
   const [year, month] = yearMonth.split("-").map((v) => parseInt(v, 10));
 
   return (
-    <main class="mx-auto mb-20 mt-8 max-w-fit rounded p-4 text-gray-900">
+    <main class="mx-auto mt-8 mb-20 max-w-fit rounded-sm p-4 text-gray-900">
       <Helmet title="Download" />
 
       <h1 class="mb-5 text-4xl font-bold">
@@ -163,7 +163,7 @@ function DownloadSection({
       {children}
       <button
         type="button"
-        class="relative ml-4 cursor-pointer border-0 bg-transparent hover:shadow hover:sepia focus-visible:shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:sepia"
+        class="relative ml-4 cursor-pointer border-0 bg-transparent hover:shadow-sm hover:sepia focus-visible:ring-2 focus-visible:shadow-sm focus-visible:outline-hidden focus-visible:sepia"
         title={`Download ${name}`}
         onClick={(event) => {
           event.preventDefault();
@@ -185,7 +185,7 @@ function DownloadSection({
           width="10"
           height="10"
           alt=""
-          class="absolute -left-1 bottom-0 size-5"
+          class="absolute bottom-0 -left-1 size-5"
         />
       </button>
     </section>
@@ -216,7 +216,7 @@ function MonthInput({
       }
     />
   ) : (
-    <span class="mt-1 grid gap-2 rounded border border-gray-400 p-2">
+    <span class="mt-1 grid gap-2 rounded-sm border border-gray-400 p-2">
       <label htmlFor={`${id}year`}>Jahr:</label>
       <input
         id={`${id}year`}

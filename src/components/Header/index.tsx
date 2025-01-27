@@ -20,7 +20,7 @@ export default function Header() {
 
   return (
     <header
-      class="sticky left-0 top-0 z-50 flex h-12 flex-row items-center justify-between bg-emerald-900 shadow-lg px-safe"
+      class="px-safe sticky top-0 left-0 z-50 flex h-12 flex-row items-center justify-between bg-emerald-900 shadow-lg"
       style={{ viewTransitionName: "header" }}
     >
       <h1
@@ -29,7 +29,7 @@ export default function Header() {
       >
         <a
           href="/"
-          class="rounded text-white ring-offset-2 ring-offset-emerald-900 hover:underline focus-visible:underline focus-visible:outline-none focus-visible:ring-4"
+          class="rounded-sm text-white ring-offset-2 ring-offset-emerald-900 hover:underline focus-visible:underline focus-visible:ring-4 focus-visible:outline-hidden"
         >
           <span class="hidden min-[350px]:inline sm:hidden">Kalender</span>
           <span class="hidden sm:inline">Kontischichtkalender Rt</span>
