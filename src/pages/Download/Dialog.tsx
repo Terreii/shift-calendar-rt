@@ -67,7 +67,7 @@ export function DownloadDialog({
       onClose={() => {
         onClose();
       }}
-      class="p-0"
+      class="m-auto p-0"
     >
       <h2 class="bg-emerald-900 px-4 py-2 text-2xl font-bold text-white">
         Downloade {data.type === "ics" ? "Kalender Datei" : "Tabelle"}
