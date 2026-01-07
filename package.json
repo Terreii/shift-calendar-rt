@@ -70,7 +70,7 @@
     "excel4node": "^1.8.2",
     "ics": "^3.8.1",
     "milliseconds": "^1.0.3",
-    "preact": "^10.27.2",
+    "preact": "^10.28.2",
     "preact-iso": "^2.11.0",
     "preact-render-to-string": "^6.6.2",
     "re-reselect": "^5.1.0",
